@@ -1,0 +1,58 @@
+/* Reset default browser margins and paddings */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #000; /* Black background */
+    color: #fff; /* White text */
+    font-family: Lato-Light, Arial, sans-serif;
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+}
+
+.container {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.logo {
+    width: 200px;
+    margin-bottom: 20px;
+}
+
+h1 {
+    font-family: 'Amatic SC', cursive;
+    font-size: 5em; /* Adjust font size as needed */
+    margin-bottom: 0px;
+    font-weight: bold; /* Use bold weight for prominence */
+    letter-spacing: 2px;
+    /* Optional styling */
+    /* text-transform: uppercase; */ /* Amatic SC is uppercase by default */
+}
+
+p {
+    font-size: 1.5em;
+}
+
+.background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.2; /* Adjust opacity as needed */
+    z-index: 1;
+}
+
+.background img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
