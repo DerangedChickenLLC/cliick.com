@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Connect with me on Cliick</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300&display=swap" rel="stylesheet" />
+
+    <!-- Open Graph & Twitter metadata -->
+    <meta property="og:title" content="Connect with me on Cliick" />
+    <meta property="og:description" content="You've received a private link to connect on Cliick — a privacy-first connection app." />
+    <meta property="og:image" content="/assets/cliick-logo.png" />
+    <meta property="og:url" content="https://cliick.com/connect/" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Connect with me on Cliick" />
+    <meta name="twitter:description" content="You've received a private link to connect on Cliick — a privacy-first connection app." />
+    <meta name="twitter:image" content="/assets/cliick-logo.png" />
+
+    <style>
+      html, body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Lato', sans-serif;
+        background-color: #333;
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        height: 100vh;
+        text-align: center;
+      }
+
+      .container {
+        padding: 2em;
+        max-width: 90%;
+        background-color: #000;
+        border-radius: 1em;
+        position: relative;
+      }
+
+      .profile-container {
+        width: 30vw;
+        height: 30vw;
+        max-width: 200px;
+        max-height: 200px;
+        border-radius: 50%;
+        background-color: #000;
+        background-image: url('profile_pic.png'), url('cliick-logo.png');
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        margin: 0 auto 1.5rem;
+        border: 1px solid #333;
+      }
+
+      h1 {
+        font-size: 1.3rem;
+        font-weight: 300;
+        font-style: italic;
+        margin-bottom: 1.5rem;
+        color: #ccc;
+      }
+
+      .button {
+        display: flex;
+        width: fit-content;
+        border-radius: 0.5em;
+        overflow: hidden;
+        text-decoration: none;
+        font-size: 1rem;
+        border: none;
+        margin: 0 auto;
+        cursor: pointer;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+        border-style: solid;
+        border-color: #fff;
+        border-width: 1px;
+      }
+
+      .button-left {
+        background-color: #000;
+        padding: 0.5em 0.75em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .button-left img {
+        width: auto;
+        height: 1.5em;
+      }
+
+      .button-right {
+        background-color: #fff;
+        color: #000;
+        padding: 0.5em 1em;
+        display: flex;
+        align-items: center;
+        font-weight: 500;
+      }
+
+      .fallback {
+        margin-top: 2em;
+        font-size: 0.85rem;
+        color: #aaa;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="profile-container" id="profileImage"></div>
+      <h1 id="headline">Connect with ${username} <br/> on Cliick</h1>
+      <a class="button" id="openAppBtn" href="#">
+        <div class="button-left">
+          <img src="cliick-logo.png" alt="Cliick logo" />
+        </div>
+        <div class="button-right">Open in App</div>
+      </a>
+      <div class="fallback" id="fallbackNote" style="display: none;">
+        If nothing happens, you can safely close this page.
+      </div>
+    </div>
+
+    <script>
+      function getConnectKeyFromURL() {
+        const match = window.location.pathname.match(/\/connect\/([^/?#]+)/);
+        return match ? match[1] : null;
+      }
+
+      const key = getConnectKeyFromURL();
+      const fallbackStore = "https://apps.apple.com/app/idYOUR_APP_ID"; // Replace this
+
+      if (!key || key.length < 6) {
+        document.getElementById("headline").innerText = "This connect link is invalid.";
+        document.getElementById("openAppBtn").remove();
+      } else {
+        // const appLink = `derangedchicken:///connectRequest/${key}`;
+        // document.getElementById("openAppBtn").href = appLink;
+        // window.location = appLink;
+
+        // setTimeout(() => {
+        //   document.getElementById("fallbackNote").style.display = "block";
+        //   window.location = fallbackStore;
+        // }, 1500);
+      }
+    </script>
+  </body>
+</html>
