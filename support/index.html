@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Support – Cliick"/>
+  <title>Support – Cliick</title>
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+  <nav class="navbar">
+    <div class="logo">
+        <a href="/">
+          <img src="../images/cliick-logo.png" alt="Cliick Logo" class="logo-image"/>
+        </a>
+    </div>
+    <ul class="nav-links">
+      <li><a href="/terms">Terms of Service</a></li>
+      <li><a href="/privacy">Privacy Policy</a></li>
+      <li><a href="/support">Support</a></li>
+    </ul>
+    <button class="mobile-menu-toggle" aria-label="Toggle navigation">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </nav>
+
+  <main>
+    <section class="content">
+      <h1>Need Help?</h1>
+      <p>If you're having trouble with the app, have billing issues, or just have questions, we're here to help. Our support team typically responds within 24 hours.</p>
+      
+      <div class="support-options">
+        <div class="support-option">
+          <h3>📧 Email Support</h3>
+          <p>Send us an email directly and we'll get back to you as soon as possible.</p>
+          <a href="mailto:support@cliick.app" class="contact-button">support@cliick.app</a>
+        </div>
+        
+        <div class="support-option">
+          <h3>💬 Contact Form</h3>
+          <p>Fill out the form below and we'll respond to your inquiry promptly.</p>
+        </div>
+      </div>
+
+      <form class="contact-form" id="supportForm">
+        <div class="form-group">
+          <label for="name">Your Name</label>
+          <input type="text" id="name" name="name" required />
+        </div>
+        
+        <div class="form-group">
+          <label for="email">Your Email</label>
+          <input type="email" id="email" name="email" required />
+        </div>
+        
+        <div class="form-group">
+          <label for="subject">Subject</label>
+          <select id="subject" name="subject" required>
+            <option value="">Select a topic</option>
+            <option value="technical">Technical Issue</option>
+            <option value="billing">Billing Question</option>
+            <option value="feature">Feature Request</option>
+            <option value="account">Account Help</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="message">How can we help?</label>
+          <textarea id="message" name="message" required placeholder="Please describe your issue or question in detail..."></textarea>
+        </div>
+        
+        <button type="submit" class="submit-btn">Send Message</button>
+      </form>
+
+      <div class="faq-section">
+        <h2>Frequently Asked Questions</h2>
+        
+        <div class="faq-item">
+          <h3>How do I create a private circle?</h3>
+          <p>To create a private circle, tap the "+" button on your main screen and select "Create Circle." You can then invite friends by sharing your unique circle code.</p>
+        </div>
+        
+        <div class="faq-item">
+          <h3>Can I change my display name?</h3>
+          <p>Yes! Go to Settings > Profile and tap on your current name to change it. Your new name will be visible to all your circle members.</p>
+        </div>
+        
+        <div class="faq-item">
+          <h3>Is my data private and secure?</h3>
+          <p>Absolutely. We use end-to-end encryption for all your messages and don't share your data with third parties. Read our <a href="/privacy">Privacy Policy</a> for more details.</p>
+        </div>
+        
+        <div class="faq-item">
+          <h3>How do I delete my account?</h3>
+          <p>You can delete your account by going to Settings > Account > Delete Account. Please note that this action is permanent and cannot be undone.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-content">
+      <p>&copy; 2025 Cliick. All rights reserved.</p>
+      <div class="footer-links">
+        <a href="/privacy">Privacy Policy</a>
+        <a href="/terms">Terms of Service</a>
+        <a href="/support">Support</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile menu toggle
+    const mobileToggle = document.querySelector('.mobile-menu-toggle');
+    const navLinks = document.querySelector('.nav-links');
+    
+    mobileToggle.addEventListener('click', () => {
+      navLinks.classList.toggle('active');
+      mobileToggle.classList.toggle('active');
+    });
+
+    // Form submission
+    document.getElementById('supportForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      // Get form data
+      const formData = new FormData(this);
+      const name = formData.get('name');
+      const email = formData.get('email');
+      const subject = formData.get('subject');
+      const message = formData.get('message');
+      
+      // Create mailto link
+      const mailtoLink = `mailto:support@cliick.app?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`)}`;
+      
+      // Open email client
+      window.location.href = mailtoLink;
+      
+      // Show success message
+      const submitBtn = this.querySelector('.submit-btn');
+      const originalText = submitBtn.textContent;
+      submitBtn.textContent = 'Message Prepared!';
+      submitBtn.style.background = 'linear-gradient(135deg, #22c55e, #16a34a)';
+      
+      setTimeout(() => {
+        submitBtn.textContent = originalText;
+        submitBtn.style.background = '';
+        this.reset();
+      }, 3000);
+    });
+  </script>
+</body>
+</html>

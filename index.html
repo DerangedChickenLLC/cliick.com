@@ -1,30 +1,117 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>Cliick - Coming Soon</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <!-- Link to your external CSS file -->
-        <link rel="stylesheet" href="styles.css">
-        <!-- Add Google Fonts link for Amatic SC -->
-        <link href="https://fonts.googleapis.com/css?family=Amatic+SC:400,700&display=swap" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap" rel="stylesheet">
-    </head>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Cliick – Private networking, made simple."/>
+  <title>Cliick</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
 <body>
-    <div class="container">
-        <!-- Logo Section -->
-        <img src="images/cliick-logo.png" alt="Cliick Logo" class="logo">
-        
-        <!-- Coming Soon Text -->
-        <h1>Coming Soon!</h1>
-        
-        <!-- Optional Subtitle -->
-        <p>Your private network.</p>
+  <nav class="navbar">
+    <div class="logo">
+        <a href="/">
+          <img src="images/cliick-logo.png" alt="Cliick Logo" class="logo-image"/>
+        </a>
     </div>
+    <ul class="nav-links">
+      <li><a href="/terms">Terms of Service</a></li>
+      <li><a href="/privacy">Privacy Policy</a></li>
+      <li><a href="/support">Support</a></li>
+    </ul>
+    <button class="mobile-menu-toggle" aria-label="Toggle navigation">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </nav>
+
+  <main>
+    <section class="hero">
+      <div class="hero-content">
+        <h1>Private networking, made simple.</h1>
+        <p>Cliick is a private networking app with a clean, distraction-free design that helps you connect meaningfully.</p>
+        <div class="download-buttons">
+          <a href="https://apps.apple.com" class="store-button app-store">
+            <span class="button-text">Download on the App Store</span>
+          </a>
+          <a href="https://play.google.com" class="store-button google-play">
+            <span class="button-text">Get it on Google Play</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="feature-details">
+      <div class="feature-details-container">
+        <article class="feature-detail">
+          <div class="feature-image">
+            <img src="images/feed.png" alt="Cliick Main Feed" />
+          </div>
+          <div class="feature-content">
+            <h2>Your space, your pace.</h2>
+            <ul>
+              <li>See posts from your Cliicks and connections</li>
+              <li>Thoughtfully designed to keep things calm and clear</li>
+              <li>Only the people you choose, nothing more</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="feature-detail">
+          <div class="feature-image">
+            <img src="images/navigation.png" alt="Cliick Navigation Menu" />
+          </div>
+          <div class="feature-content">
+            <h2>Everything in reach.</h2>
+            <ul>
+              <li>Intuitive navigation keeps things simple</li>
+              <li>Find photos, posts, and people fast</li>
+              <li>Designed for flow, not friction</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="feature-detail">
+          <div class="feature-image">
+            <img src="images/post.jpeg" alt="Cliick Individual Post" />
+          </div>
+          <div class="feature-content">
+            <h2>Conversations that count.</h2>
+            <ul>
+              <li>Cliicks make group interaction natural</li>
+              <li>Comment, react, and keep it real</li>
+              <li>Always know who sees what — no guesswork</li>
+            </ul>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-content">
+      <p>&copy; 2025 Cliick. All rights reserved.</p>
+      <div class="footer-links">
+        <a href="/privacy">Privacy Policy</a>
+        <a href="/terms">Terms of Service</a>
+        <a href="/support">Support</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile menu toggle
+    const mobileToggle = document.querySelector('.mobile-menu-toggle');
+    const navLinks = document.querySelector('.nav-links');
     
-    <!-- Background Abstract Image -->
-    <div class="background">
-        <img src="images/cliick-bg.png" alt="Abstract Background">
-    </div>
+    mobileToggle.addEventListener('click', () => {
+      navLinks.classList.toggle('active');
+      mobileToggle.classList.toggle('active');
+    });
+
+    // Smooth scrolling
+    document.documentElement.style.scrollBehavior = 'smooth';
+  </script>
 </body>
 </html>
