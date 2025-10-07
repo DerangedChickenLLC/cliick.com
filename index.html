@@ -3,115 +3,445 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <meta name="description" content="Cliick – Private networking, made simple."/>
-  <title>Cliick</title>
-  <link rel="stylesheet" href="styles.css" />
+  <title>Cliick | Welcome</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Bungee&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f8fafc;
+      color: #000000;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+    }
+
+    .hero-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 75vh;
+      padding: 2rem;
+    }
+
+    .hero {
+      max-width: 1200px;
+      width: 100%;
+      background-color: #000000;
+      color: #fff;
+      padding: 4rem 3rem;
+      border-radius: 24px;
+      box-shadow: 0 20px 60px rgba(15, 23, 42, 0.3);
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+      z-index: -1;
+    }
+
+    .hero-content {
+      position: relative;
+    }
+
+    .hero-image {
+      position: relative;
+      margin: 2rem 0;
+      transform: translateX(20%);
+      z-index: 1;
+    }
+
+    .hero-image img {
+      max-width: 300px;
+      height: auto;
+      border-radius: 12px;
+    }
+
+    h1.glitch {
+      font-size: 3.5rem;
+      color: #fef08a;
+      position: relative;
+      transform: rotate(-5deg);
+      animation: float 3s ease-in-out infinite;
+      font-family: 'Bungee', sans-serif;
+    }
+
+    h1.glitch::before,
+    h1.glitch::after {
+      content: "WELCOME TO CLIICK";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: -1;
+    }
+
+    h1.glitch::before {
+      color: #0ff;
+      transform: translate(2px, 0);
+      animation: glitch-anim-1 2s infinite linear alternate-reverse;
+    }
+
+    h1.glitch::after {
+      color: #f0f;
+      transform: translate(-2px, 0);
+      animation: glitch-anim-2 1.5s infinite linear alternate-reverse;
+    }
+
+    @keyframes glitch-anim-1 {
+      0% { transform: translate(2px, -2px); }
+      25% { transform: translate(-2px, 2px); }
+      50% { transform: translate(2px, 2px); }
+      75% { transform: translate(-2px, -2px); }
+      100% { transform: translate(2px, -2px); }
+    }
+
+    @keyframes glitch-anim-2 {
+      0% { transform: translate(-2px, 2px); }
+      25% { transform: translate(2px, -2px); }
+      50% { transform: translate(-2px, -2px); }
+      75% { transform: translate(2px, 2px); }
+      100% { transform: translate(-2px, 2px); }
+    }
+
+    @keyframes float {
+      0%, 100% { transform: rotate(-5deg) translateY(0); }
+      50% { transform: rotate(-5deg) translateY(-10px); }
+    }
+
+    .subtitle {
+      color: #ccc;
+      font-size: 1.2rem;
+      margin: 1.5rem 0;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .button-group {
+      margin-top: 2rem;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .store-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 10px;
+      background-color: #f472b6;
+      color: black;
+      font-weight: bold;
+      font-size: 1rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background-color 0.3s ease;
+    }
+
+    .store-button:hover {
+      background-color: #fb7185;
+    }
+
+    .feature-section {
+      display: flex;
+      flex-direction: column;
+      gap: 4rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+      background-color: #f8fafc;
+      color: #1e293b;
+    }
+
+    .feature-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 4rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .feature-row.reverse {
+      flex-direction: row-reverse;
+    }
+
+    .feature-image {
+      flex: 0 0 300px;
+      text-align: center;
+    }
+
+    .feature-image img {
+      width: 100%;
+      max-width: 300px;
+      height: auto;
+      border-radius: 20px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    }
+
+    .feature-text {
+      flex: 0 0 350px;
+      max-width: 350px;
+    }
+
+    .feature-text h3 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .feature-text p {
+      line-height: 1.6;
+      color: #64748b;
+    }
+
+    .feature-text h3 {
+      color: #1e293b;
+    }
+
+    @media (max-width: 768px) {
+      .hero-container {
+        padding: 3rem 1rem 1rem;
+      }
+
+      .hero {
+        padding: 2rem 1.5rem;
+      }
+
+      .hero-image {
+        transform: translateX(10%);
+      }
+
+      .hero-image img {
+        max-width: 250px;
+      }
+
+      h1.glitch {
+        font-size: 2.5rem;
+      }
+
+      .subtitle {
+        font-size: 1rem;
+      }
+
+      .feature-row,
+      .feature-row.reverse {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero-container {
+        padding: 2.5rem 0.5rem 0.5rem;
+      }
+
+      .hero {
+        padding: 1.5rem 1rem;
+      }
+
+      .hero-image {
+        transform: translateX(5%);
+      }
+
+      .hero-image img {
+        max-width: 200px;
+      }
+
+      h1.glitch {
+        font-size: 2rem;
+      }
+
+      .button-group {
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+
+      .store-button {
+        font-size: 0.9rem;
+        padding: 10px 16px;
+      }
+    }
+
+    /* Explore Section */
+    .explore-section {
+      text-align: center;
+      padding: 3rem 2rem 2rem;
+      background-color: #f8fafc;
+    }
+
+    .explore-text {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #1e293b;
+      margin-bottom: 1rem;
+      font-family: 'Bungee', sans-serif;
+    }
+
+    .explore-arrow {
+      display: inline-block;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+      animation: bounce 2s infinite;
+    }
+
+    .explore-arrow:hover {
+      transform: translateY(2px);
+    }
+
+    .explore-arrow svg {
+      width: 40px;
+      height: 40px;
+      fill: #1e293b;
+    }
+
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+      }
+      40% {
+        transform: translateY(-10px);
+      }
+      60% {
+        transform: translateY(-5px);
+      }
+    }
+
+  </style>
 </head>
 <body>
+
   <nav class="navbar">
-    <div class="logo">
-        <a href="/">
-          <img src="images/cliick-logo.png" alt="Cliick Logo" class="logo-image"/>
-        </a>
+    <div class="nav-container">
+      <a href="/" class="nav-logo">
+        <img src="images/cliick-logo.png" alt="Cliick Logo" class="logo-img">
+      </a>
+      <div class="nav-menu">
+        <a href="terms/" class="nav-link">Terms of Service</a>
+        <a href="privacy/" class="nav-link">Privacy Policy</a>
+        <a href="support/" class="nav-link">Support</a>
+      </div>
+      <div class="nav-toggle">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </div>
     </div>
-    <ul class="nav-links">
-      <li><a href="./terms">Terms of Service</a></li>
-      <li><a href="./privacy">Privacy Policy</a></li>
-      <li><a href="./support">Support</a></li>
-    </ul>
-    <button class="mobile-menu-toggle" aria-label="Toggle navigation">
-      <span></span>
-      <span></span>
-      <span></span>
-    </button>
   </nav>
 
-  <main>
-    <section class="hero">
+  <div class="hero-container">
+    <div class="hero">
       <div class="hero-content">
-        <h1>Welcome to Cliick!</h1>
-        <p>Cliick is a private networking app with a clean, distraction-free design that helps you connect meaningfully.</p>
-        <div class="download-buttons">
-          <a href="https://apps.apple.com" class="store-button app-store">
-            <span class="button-text">Download on the App Store</span>
+        <h1 class="glitch">WELCOME TO CLIICK</h1>
+        <div class="hero-image">
+          <img src="images/WebsiteFluffy.png" alt="Cliick App Preview">
+        </div>
+        
+        <div class="button-group">
+          <a class="store-button" href="https://apps.apple.com" target="_blank">
+            Download on iOS
           </a>
-          <a href="https://play.google.com" class="store-button google-play">
-            <span class="button-text">Get it on Google Play</span>
+          <a class="store-button" href="https://play.google.com/store" target="_blank">
+            Get it on Android
           </a>
         </div>
       </div>
-    </section>
+    </div>
+  </div>
 
-    <section class="feature-details">
-      <div class="feature-details-container">
-        <article class="feature-detail">
-          <div class="feature-image">
-            <img src="images/feed.png" alt="Cliick Main Feed" />
-          </div>
-          <div class="feature-content">
-            <h2>Your space, your pace.</h2>
-            <ul>
-              <li>See posts from your Cliicks and connections</li>
-              <li>Thoughtfully designed to keep things calm and clear</li>
-              <li>Only the people you choose, nothing more</li>
-            </ul>
-          </div>
-        </article>
+  <div class="explore-section">
+    <div class="explore-text">Explore</div>
+    <div class="explore-arrow" onclick="scrollToFeatures()">
+      <svg viewBox="0 0 24 24">
+        <path d="M7.41 8.84L12 13.42l4.59-4.58L18 10.25l-6 6-6-6 1.41-1.41z"/>
+      </svg>
+    </div>
+  </div>
 
-        <article class="feature-detail">
-          <div class="feature-image">
-            <img src="images/navigation.png" alt="Cliick Navigation Menu" />
-          </div>
-          <div class="feature-content">
-            <h2>Everything in reach.</h2>
-            <ul>
-              <li>Intuitive navigation keeps things simple</li>
-              <li>Find photos, posts, and people fast</li>
-              <li>Designed for flow, not friction</li>
-            </ul>
-          </div>
-        </article>
+  <section class="feature-section" id="features">
 
-        <article class="feature-detail">
-          <div class="feature-image">
-            <img src="images/post.jpeg" alt="Cliick Individual Post" />
-          </div>
-          <div class="feature-content">
-            <h2>Conversations that count.</h2>
-            <ul>
-              <li>Cliicks make group interaction natural</li>
-              <li>Comment, react, and keep it real</li>
-              <li>Always know who sees what — no guesswork</li>
-            </ul>
-          </div>
-        </article>
+    <!-- Row 1 -->
+    <div class="feature-row">
+      <div class="feature-image">
+        <img src="images/feed.jpg" alt="Cliick screenshot 1">
       </div>
-    </section>
-  </main>
-
-  <footer class="footer">
-    <div class="footer-content">
-      <p>&copy; 2025 Cliick. All rights reserved.</p>
-      <div class="footer-links">
-        <a href="/privacy">Privacy Policy</a>
-        <a href="/terms">Terms of Service</a>
-        <a href="/support">Support</a>
+      <div class="feature-text">
+        <h3>Connect in Circles</h3>
+        <p>Cliick lets you create private groups where you and your circle can post, react, and share — even if you're not all directly connected.</p>
       </div>
     </div>
-  </footer>
+
+    <!-- Row 2 -->
+    <div class="feature-row reverse">
+      <div class="feature-image">
+        <img src="images/navigation.jpg" alt="Cliick screenshot 2">
+      </div>
+      <div class="feature-text">
+        <h3>No Clutter. Just Vibes.</h3>
+        <p>Cliick keeps things simple — no ads, no noise. Just you and your people, in a clean space that feels more like a room than a feed.</p>
+      </div>
+    </div>
+
+    <!-- Row 3 -->
+    <div class="feature-row">
+      <div class="feature-image">
+        <img src="images/post.jpeg" alt="Cliick screenshot 3">
+      </div>
+      <div class="feature-text">
+        <h3>Real Connection, Not Followers</h3>
+        <p>Cliick isn’t about racking up likes. It’s about building real, private networks — where every connection counts.</p>
+      </div>
+    </div>
+
+  </section>
+
 
   <script>
-    // Mobile menu toggle
-    const mobileToggle = document.querySelector('.mobile-menu-toggle');
-    const navLinks = document.querySelector('.nav-links');
-    
-    mobileToggle.addEventListener('click', () => {
-      navLinks.classList.toggle('active');
-      mobileToggle.classList.toggle('active');
+    // Smooth scroll to features section
+    function scrollToFeatures() {
+      document.getElementById('features').scrollIntoView({
+        behavior: 'smooth'
+      });
+    }
+
+    // Mobile menu toggle functionality
+    const navToggle = document.querySelector('.nav-toggle');
+    const navMenu = document.querySelector('.nav-menu');
+
+    navToggle.addEventListener('click', () => {
+      navMenu.classList.toggle('active');
+      navToggle.classList.toggle('active');
     });
 
-    // Smooth scrolling
-    document.documentElement.style.scrollBehavior = 'smooth';
+    // Close mobile menu when clicking on a link
+    const navLinks = document.querySelectorAll('.nav-link');
+    navLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        navMenu.classList.remove('active');
+        navToggle.classList.remove('active');
+      });
+    });
+
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!navToggle.contains(e.target) && !navMenu.contains(e.target)) {
+        navMenu.classList.remove('active');
+        navToggle.classList.remove('active');
+      }
+    });
   </script>
+
 </body>
 </html>
