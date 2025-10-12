@@ -7,71 +7,106 @@
   <link rel="stylesheet" href="styles.css">
   <link href="https://fonts.googleapis.com/css2?family=Bungee&display=swap" rel="stylesheet">
   <style>
-    body {
-      background-color: #f8fafc;
-      color: #000000;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-      margin: 0;
-      padding: 0;
-      line-height: 1.6;
-    }
-
-    .hero-container {
+    .hero {
       display: flex;
       justify-content: center;
       align-items: center;
-      min-height: 75vh;
-      padding: 2rem;
-    }
-
-    .hero {
-      max-width: 1200px;
-      width: 100%;
-      background-color: #000000;
-      color: #fff;
-      padding: 4rem 3rem;
-      border-radius: 24px;
-      box-shadow: 0 20px 60px rgba(15, 23, 42, 0.3);
-      position: relative;
-      overflow: hidden;
-      text-align: center;
-    }
-
-    .hero::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
-      z-index: -1;
+      padding: 60px 20px;
+      background-color: #000;
     }
 
     .hero-content {
-      position: relative;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 1200px;
+      width: 100%;
+      gap: 40px;
     }
 
-    .hero-image {
-      position: relative;
-      margin: 2rem 0;
-      transform: translateX(20%);
-      z-index: 1;
+    .hero-left {
+      flex: 1;
     }
 
-    .hero-image img {
-      max-width: 300px;
-      height: auto;
-      border-radius: 12px;
+    .hero-left h1 {
+      font-size: 5.5rem;
+      margin-bottom: 25px;
+      color: #ffffff
+    }
+
+    .hero-left p {
+      font-size: 1.2rem;
+      margin-bottom: 35px;
+      color: #ffffff;
+    }
+
+    .app-buttons {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .app-buttons img {
+      height: 50px;
+    }
+
+    .hero-right {
+      flex: 1;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .image-container {
+      position: relative;
+      text-align: center;
+      display: inline-block;
+      overflow: hidden;
+      border-radius: 20px;
+    }
+
+    .image-container img {
+      max-width: 400px;
+      width: 100%;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
+    }
+
+    /* Mobile Responsive */
+    @media (max-width: 768px) {
+      .hero-content {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .hero-left {
+        margin-bottom: 40px;
+      }
+
+      .app-buttons {
+        gap: 15px;
+      }
+
+      .app-buttons img {
+        height: 45px;
+      }
     }
 
     h1.glitch {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      right: 20px;
       font-size: 3.5rem;
       color: #fef08a;
-      position: relative;
       transform: rotate(-5deg);
       animation: float 3s ease-in-out infinite;
       font-family: 'Bungee', sans-serif;
+      text-align: center;
+      overflow: hidden;
     }
 
     h1.glitch::before,
@@ -80,7 +115,6 @@
       position: absolute;
       top: 0;
       left: 0;
-      width: 100%;
       z-index: -1;
     }
 
@@ -117,52 +151,15 @@
       50% { transform: rotate(-5deg) translateY(-10px); }
     }
 
-    .subtitle {
-      color: #ccc;
-      font-size: 1.2rem;
-      margin: 1.5rem 0;
-      max-width: 500px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .button-group {
-      margin-top: 2rem;
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 1rem;
-    }
-
-    .store-button {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 12px 20px;
-      border: none;
-      border-radius: 10px;
-      background-color: #f472b6;
-      color: black;
-      font-weight: bold;
-      font-size: 1rem;
-      cursor: pointer;
-      text-decoration: none;
-      transition: background-color 0.3s ease;
-    }
-
-    .store-button:hover {
-      background-color: #fb7185;
-    }
-
     .feature-section {
+      background-color: #ffffff;
       display: flex;
       flex-direction: column;
       gap: 4rem;
+      width: 100%;
+      align-self: center;
       max-width: 1200px;
-      margin: 0 auto;
       padding: 4rem 2rem;
-      background-color: #f8fafc;
-      color: #1e293b;
     }
 
     .feature-row {
@@ -204,90 +201,24 @@
 
     .feature-text p {
       line-height: 1.6;
-      color: #64748b;
+      color: #000000;
     }
 
     .feature-text h3 {
-      color: #1e293b;
+      color: #000000;
     }
 
-    @media (max-width: 768px) {
-      .hero-container {
-        padding: 3rem 1rem 1rem;
-      }
-
-      .hero {
-        padding: 2rem 1.5rem;
-      }
-
-      .hero-image {
-        transform: translateX(10%);
-      }
-
-      .hero-image img {
-        max-width: 250px;
-      }
-
-      h1.glitch {
-        font-size: 2.5rem;
-      }
-
-      .subtitle {
-        font-size: 1rem;
-      }
-
-      .feature-row,
-      .feature-row.reverse {
-        flex-direction: column;
-        text-align: center;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .hero-container {
-        padding: 2.5rem 0.5rem 0.5rem;
-      }
-
-      .hero {
-        padding: 1.5rem 1rem;
-      }
-
-      .hero-image {
-        transform: translateX(5%);
-      }
-
-      .hero-image img {
-        max-width: 200px;
-      }
-
-      h1.glitch {
-        font-size: 2rem;
-      }
-
-      .button-group {
-        flex-direction: column;
-        gap: 0.5rem;
-      }
-
-      .store-button {
-        font-size: 0.9rem;
-        padding: 10px 16px;
-      }
-    }
-
-    /* Explore Section */
     .explore-section {
       text-align: center;
       padding: 3rem 2rem 2rem;
-      background-color: #f8fafc;
     }
 
     .explore-text {
       font-size: 2rem;
       font-weight: bold;
-      color: #1e293b;
+      color: #000000;
       margin-bottom: 1rem;
-      font-family: 'Bungee', sans-serif;
+      font-family: 'Avenir', 'Avenir Next', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     }
 
     .explore-arrow {
@@ -304,7 +235,7 @@
     .explore-arrow svg {
       width: 40px;
       height: 40px;
-      fill: #1e293b;
+      fill: #000000;
     }
 
     @keyframes bounce {
@@ -318,7 +249,6 @@
         transform: translateY(-5px);
       }
     }
-
   </style>
 </head>
 <body>
@@ -329,9 +259,9 @@
         <img src="images/cliick-logo.png" alt="Cliick Logo" class="logo-img">
       </a>
       <div class="nav-menu">
-        <a href="terms/" class="nav-link">Terms of Service</a>
-        <a href="privacy/" class="nav-link">Privacy Policy</a>
-        <a href="support/" class="nav-link">Support</a>
+        <a href="./terms/index.html" class="nav-link">Terms of Service</a>
+        <a href="./privacy/index.html" class="nav-link">Privacy Policy</a>
+        <a href="./support/index.html" class="nav-link">Support</a>
       </div>
       <div class="nav-toggle">
         <span class="bar"></span>
@@ -341,25 +271,57 @@
     </div>
   </nav>
 
-  <div class="hero-container">
-    <div class="hero">
-      <div class="hero-content">
-        <h1 class="glitch">WELCOME TO CLIICK</h1>
-        <div class="hero-image">
-          <img src="images/WebsiteFluffy.png" alt="Cliick App Preview">
-        </div>
-        
-        <div class="button-group">
-          <a class="store-button" href="https://apps.apple.com" target="_blank">
-            Download on iOS
+   <script>
+      // Smooth scroll to features section
+      function scrollToFeatures() {
+        document.getElementById('features').scrollIntoView({
+          behavior: 'smooth'
+        });
+      }
+
+      // Mobile menu toggle functionality
+      const navToggle = document.querySelector('.nav-toggle');
+      const navMenu = document.querySelector('.nav-menu');
+
+      navToggle.addEventListener('click', () => {
+        navMenu.classList.toggle('active');
+        navToggle.classList.toggle('active');
+      });
+
+      // Close mobile menu when clicking on a link
+      const navLinks = document.querySelectorAll('.nav-link');
+      navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+          navMenu.classList.remove('active');
+          navToggle.classList.remove('active');
+        });
+      });
+  </script>
+
+
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-left">
+        <h1>Cliick</h1>
+        <p>We’re here to make communication feel effortless, private, and a little more human.</p>
+        <div class="app-buttons">
+          <a href="#" class="app-btn">
+            <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="Download on the App Store">
           </a>
-          <a class="store-button" href="https://play.google.com/store" target="_blank">
-            Get it on Android
+          <a href="#" class="app-btn">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Get it on Google Play">
           </a>
         </div>
       </div>
+
+      <div class="hero-right">
+        <div class="image-container">
+          <img src="./images/fluffy-post.png" alt="Cliick App Preview">
+            <h1 class="glitch">WELCOME TO CLIICK</h1>
+        </div>
+      </div>
     </div>
-  </div>
+  </section>
 
   <div class="explore-section">
     <div class="explore-text">Explore</div>
@@ -407,41 +369,18 @@
 
   </section>
 
-
-  <script>
-    // Smooth scroll to features section
-    function scrollToFeatures() {
-      document.getElementById('features').scrollIntoView({
-        behavior: 'smooth'
-      });
-    }
-
-    // Mobile menu toggle functionality
-    const navToggle = document.querySelector('.nav-toggle');
-    const navMenu = document.querySelector('.nav-menu');
-
-    navToggle.addEventListener('click', () => {
-      navMenu.classList.toggle('active');
-      navToggle.classList.toggle('active');
-    });
-
-    // Close mobile menu when clicking on a link
-    const navLinks = document.querySelectorAll('.nav-link');
-    navLinks.forEach(link => {
-      link.addEventListener('click', () => {
-        navMenu.classList.remove('active');
-        navToggle.classList.remove('active');
-      });
-    });
-
-    // Close mobile menu when clicking outside
-    document.addEventListener('click', (e) => {
-      if (!navToggle.contains(e.target) && !navMenu.contains(e.target)) {
-        navMenu.classList.remove('active');
-        navToggle.classList.remove('active');
-      }
-    });
-  </script>
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-menu">
+        <a href="./terms/index.html" class="footer-link">Terms of Service</a>
+        <a href="./privacy/index.html" class="footer-link">Privacy Policy</a>
+        <a href="./support/index.html" class="footer-link">Support</a>
+      </div>
+      <div class="footer-info">
+        <p>&copy; 2025 Cliick. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
 
 </body>
 </html>
