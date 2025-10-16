@@ -16,7 +16,7 @@
       <div class="nav-menu">
         <a href="../terms/index.html" class="nav-link">Terms of Service</a>
         <a href="../privacy/index.html" class="nav-link">Privacy Policy</a>
-        <a href="/" class="nav-link">Support</a>
+        <a href="../support/index.html" class="nav-link">Support</a>
       </div>
       <div class="nav-toggle">
         <span class="bar"></span>
@@ -27,75 +27,81 @@
   </nav>
 
   <main>
-    <section class="content">
-      <h1>Need Help?</h1>
-      <p>If you're having trouble with the app, have billing issues, or just have questions, we're here to help. Our support team typically responds within 24 hours.</p>
-      
+    <!-- Page hero -->
+    <header class="page-hero">
+      <div class="page-wrapper">
+        <h1 style="font-family: 'Urbanist', sans-serif;">Need Help?</h1>
+      </div>
+    </header>
+
+    <section class="page-wrapper page-section">
+      <p class="support-intro">If you're having trouble with the app, have billing issues, or just have questions, we're here to help. Our support team typically responds within 24 hours. Choose one of the options below or send us a direct message through the form.</p>
+
       <div class="support-options">
         <div class="support-option">
-          <h3>📧 Email Support</h3>
+          <h3><span aria-hidden="true">📧</span> Email Support</h3>
           <p>Send us an email directly and we'll get back to you as soon as possible.</p>
           <a href="mailto:support@cliick.app" class="contact-button">support@cliick.app</a>
         </div>
-        
         <div class="support-option">
-          <h3>💬 Contact Form</h3>
-          <p>Fill out the form below and we'll respond to your inquiry promptly.</p>
+          <h3><span aria-hidden="true">💬</span> Contact Form</h3>
+          <p>Fill out the form and we’ll respond to your inquiry promptly. Include as much detail as possible.</p>
+        </div>
+        <div class="support-option">
+          <h3><span aria-hidden="true">🛠️</span> Technical Issue</h3>
+          <p>Experiencing a bug or crash? Let us know your device, OS version, and steps to reproduce.</p>
+        </div>
+        <div class="support-option">
+          <h3><span aria-hidden="true">💡</span> Feature Request</h3>
+          <p>Have an idea that would make Cliick better? We’d love to hear it.</p>
         </div>
       </div>
 
-      <form class="contact-form" id="supportForm">
+      <form class="contact-form" id="supportForm" aria-labelledby="supportFormHeading">
+        <h2 id="supportFormHeading" style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;">Support Contact Form</h2>
         <div class="form-group">
           <label for="name">Your Name</label>
-          <input type="text" id="name" name="name" required />
+          <input type="text" id="name" name="name" autocomplete="name" required />
         </div>
-        
         <div class="form-group">
           <label for="email">Your Email</label>
-          <input type="email" id="email" name="email" required />
+          <input type="email" id="email" name="email" autocomplete="email" required />
         </div>
-        
         <div class="form-group">
           <label for="subject">Subject</label>
           <select id="subject" name="subject" required>
             <option value="">Select a topic</option>
-            <option value="technical">Technical Issue</option>
-            <option value="billing">Billing Question</option>
-            <option value="feature">Feature Request</option>
-            <option value="account">Account Help</option>
-            <option value="other">Other</option>
+            <option value="Technical Issue">Technical Issue</option>
+            <option value="Billing Question">Billing Question</option>
+            <option value="Feature Request">Feature Request</option>
+            <option value="Account Help">Account Help</option>
+            <option value="Other">Other</option>
           </select>
         </div>
-        
         <div class="form-group">
           <label for="message">How can we help?</label>
-          <textarea id="message" name="message" required placeholder="Please describe your issue or question in detail..."></textarea>
+          <textarea id="message" name="message" placeholder="Please describe your issue or question in detail..." required></textarea>
         </div>
-        
         <button type="submit" class="submit-btn">Send Message</button>
       </form>
 
-      <div class="faq-section">
+      <div class="faq-section" id="faq">
         <h2>Frequently Asked Questions</h2>
-        
         <div class="faq-item">
           <h3>How do I create a private circle?</h3>
           <p>To create a private circle, tap the "+" button on your main screen and select "Create Circle." You can then invite friends by sharing your unique circle code.</p>
         </div>
-        
         <div class="faq-item">
           <h3>Can I change my display name?</h3>
-          <p>Yes! Go to Settings > Profile and tap on your current name to change it. Your new name will be visible to all your circle members.</p>
+          <p>Yes! Go to Settings &gt; Profile and tap on your current name to change it. Your new name will be visible to all your circle members.</p>
         </div>
-        
         <div class="faq-item">
           <h3>Is my data private and secure?</h3>
-          <p>Absolutely. We use end-to-end encryption for all your messages and don't share your data with third parties. Read our <a href="/privacy">Privacy Policy</a> for more details.</p>
+          <p>Absolutely. We use end-to-end encryption for all your messages and don't share your data with third parties. Read our <a href="../privacy/index.html">Privacy Policy</a> for more details.</p>
         </div>
-        
         <div class="faq-item">
           <h3>How do I delete my account?</h3>
-          <p>You can delete your account by going to Settings > Account > Delete Account. Please note that this action is permanent and cannot be undone.</p>
+          <p>You can delete your account by going to Settings &gt; Account &gt; Delete Account. Please note that this action is permanent and cannot be undone.</p>
         </div>
       </div>
     </section>
@@ -106,7 +112,7 @@
       <div class="footer-menu">
         <a href="../terms/index.html" class="footer-link">Terms of Service</a>
         <a href="../privacy/index.html" class="footer-link">Privacy Policy</a>
-        <a href="/" class="footer-link">Support</a>
+        <a href="../support/index.html" class="footer-link">Support</a>
       </div>
       <div class="footer-info">
         <p>&copy; 2025 Cliick. All rights reserved.</p>

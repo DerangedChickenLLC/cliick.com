@@ -3,9 +3,50 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <meta name="description" content="Terms of Service – Cliick"/>
+  <meta name="description" content="Terms of Service | Cliick"/>
   <title>Cliick | Terms of Service</title>
   <link rel="stylesheet" href="../styles.css" />
+  <style>
+    /* Privacy Policy Imported Content */
+    .tos-content {
+      max-width: 900px;
+      margin: 4rem auto 2rem auto;
+      padding: 0 1.5rem 3rem;
+      line-height: 1.55;
+      color: #000000;
+      font-size: 0.95rem;
+    }
+
+    .tos-content .title, .tos-content h1 {
+      font-size: 2.2rem;
+      margin-bottom: 1rem;
+      font-weight: 600;
+      color: #000000;
+      text-align: center;
+    }
+
+    .tos-content h2 {
+      margin-top: 2.5rem;
+      margin-bottom: 0.75rem;
+      font-size: 1.4rem;
+      line-height: 1.2;
+      color: #000000;
+      position: relative;
+    }
+
+    .tos-content p { margin-bottom: 1rem; }
+    .tos-content ul { margin: 0 0 1.2rem 1.25rem; padding: 0; }
+    .tos-content li { margin-bottom: 0.5rem; }
+
+    .tos-content .loading { text-align: center; padding: 4rem 0; color: #9ca3af; }
+    .tos-content .error { color: #f87171; font-weight: 600; }
+
+    @media (max-width: 768px) {
+      .tos-content { margin-top: 5rem; font-size: 0.95rem; }
+      .tos-content h1 { font-size: 1.9rem; }
+      .tos-content h2 { font-size: 1.25rem; }
+    }
+  </style>
 </head>
 <body>
   <nav class="navbar">
@@ -14,7 +55,7 @@
         <img src="../images/cliick-logo.png" alt="Cliick Logo" class="logo-img">
       </a>
       <div class="nav-menu">
-        <a href="/" class="nav-link">Terms of Service</a>
+        <a href="../terms/index.html" class="nav-link">Terms of Service</a>
         <a href="../privacy/index.html" class="nav-link">Privacy Policy</a>
         <a href="../support/index.html" class="nav-link">Support</a>
       </div>
@@ -27,55 +68,16 @@
   </nav>
 
   <main>
-    <section class="content">
-      <h1>Terms of Service</h1>
-      <p><em>Last updated: September 26, 2025</em></p>
-      
-      <h2>1. Acceptance of Terms</h2>
-      <p>By downloading, installing, or using the Cliick mobile application ("App"), you agree to be bound by these Terms of Service ("Terms"). If you do not agree to these Terms, please do not use our App.</p>
-      
-      <h2>2. Description of Service</h2>
-      <p>Cliick is a private networking application that allows users to create intimate circles and connect with friends and family in a clean, ad-free environment. Our service is designed to facilitate meaningful connections without the distractions of traditional social media.</p>
-      
-      <h2>3. User Accounts</h2>
-      <p>You may be required to create an account to access certain features of the App. You are responsible for maintaining the confidentiality of your account credentials and for all activities that occur under your account.</p>
-      
-      <h2>4. Acceptable Use</h2>
-      <p>You agree to use Cliick only for lawful purposes and in accordance with these Terms. You may not use the App to:</p>
-      <ul>
-        <li>Violate any applicable laws or regulations</li>
-        <li>Harass, abuse, or harm other users</li>
-        <li>Share inappropriate, offensive, or illegal content</li>
-        <li>Attempt to gain unauthorized access to our systems</li>
-      </ul>
-      
-      <h2>5. Privacy</h2>
-      <p>Your privacy is important to us. Please review our <a href="/privacy">Privacy Policy</a> to understand how we collect, use, and protect your information.</p>
-      
-      <h2>6. Intellectual Property</h2>
-      <p>The App and its content, features, and functionality are owned by Cliick and are protected by international copyright, trademark, and other intellectual property laws.</p>
-      
-      <h2>7. Termination</h2>
-      <p>We may terminate or suspend your access to the App immediately, without prior notice, for any reason, including if you breach these Terms.</p>
-      
-      <h2>8. Disclaimers</h2>
-      <p>The App is provided on an "as is" and "as available" basis. We make no warranties, express or implied, regarding the App's functionality, reliability, or availability.</p>
-      
-      <h2>9. Limitation of Liability</h2>
-      <p>In no event shall Cliick be liable for any indirect, incidental, special, consequential, or punitive damages arising out of your use of the App.</p>
-      
-      <h2>10. Changes to Terms</h2>
-      <p>We reserve the right to modify these Terms at any time. We will notify users of any material changes by updating the "Last updated" date at the top of this page.</p>
-      
-      <h2>11. Contact Information</h2>
-      <p>If you have any questions about these Terms, please contact us at <a href="mailto:legal@cliick.app">legal@cliick.app</a>.</p>
+    <section id="terms-of-service" class="tos-content" data-src="tos.html">
+      <div class="loading">Loading terms of service...</div>
+      <noscript>Please enable JavaScript to view the full Terms of Service.</noscript>
     </section>
   </main>
 
   <footer class="footer">
     <div class="footer-container">
       <div class="footer-menu">
-        <a href="/" class="footer-link">Terms of Service</a>
+        <a href="../terms/index.html" class="footer-link">Terms of Service</a>
         <a href="../privacy/index.html" class="footer-link">Privacy Policy</a>
         <a href="../support/index.html" class="footer-link">Support</a>
       </div>
@@ -86,6 +88,28 @@
   </footer>
 
   <script>
+    // Dynamically load Terms of Service content
+    (function() {
+      const container = document.getElementById('terms-of-service');
+      if (!container) return;
+      const src = container.getAttribute('data-src') || 'tos.html';
+      fetch(src, { cache: 'no-store' })
+        .then(resp => {
+          if (!resp.ok) throw new Error('Failed to load terms of service');
+          return resp.text();
+        })
+        .then(html => {
+          const parser = new DOMParser();
+          const doc = parser.parseFromString(html, 'text/html');
+          let bodyContent = doc.body ? doc.body.innerHTML : html;
+          container.innerHTML = '<div class="tos-inner">' + bodyContent + '</div>';
+        })
+        .catch(err => {
+          console.error(err);
+          container.innerHTML = '<p class="error">Unable to load the Terms of Service at this time. Please try again later.</p>';
+        });
+    })();
+
       // Mobile menu toggle functionality
       const navToggle = document.querySelector('.nav-toggle');
       const navMenu = document.querySelector('.nav-menu');
