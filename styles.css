@@ -41,7 +41,7 @@
   color: #e2e8f0;
   text-decoration: none;
   font-size: 0.9rem;
-  font-weight: 500;
+  font-weight: 100;
   transition: all 0.3s ease;
   position: relative;
   padding: 0.5rem 1rem;
@@ -152,20 +152,25 @@
 }
 
 body {
-  font-family: 'Urbanist', 'Avenir', 'Avenir Next', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: 'Lato', sans-serif;
+  font-weight: 100;
   padding-top: 60px; /* Account for fixed navbar */
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
 /* Generic layout utilities */
+/* Page hero heading now uses Lato Thin by default; add class .display-bungee where Bungee is desired */
 .page-hero h1 {
   font-size: 3.2rem;
   line-height: 1.1;
   text-align: center;
-  color: #fef08a;
-  font-family: 'Urbanist', sans-serif;
+  color: #ffffff;
+  font-weight: 100;
+  font-family: 'Lato', sans-serif;
   letter-spacing: 1px;
   text-shadow: 0 4px 18px rgba(255,255,255,0.15);
   position: relative;
@@ -178,16 +183,7 @@ body {
   pointer-events: none;
 }
 
-.page-hero h1 {
-  font-size: 3.2rem;
-  line-height: 1.1;
-  text-align: center;
-  color: #ffffff;
-  font-family: 'Bungee', sans-serif;
-  letter-spacing: 1px;
-  text-shadow: 0 4px 18px rgba(255,255,255,0.15);
-  position: relative;
-}
+.display-bungee { font-family: 'Bungee', cursive; font-weight: 400; }
 
 @media (max-width: 640px) {
   .page-hero h1 { font-size: 2.4rem; }
@@ -256,7 +252,7 @@ body {
   font-size: .85rem;
   letter-spacing: .5px;
   border-radius: 8px;
-  font-weight: 600;
+  font-weight: 100;
   border: 1px solid #1f2937;
   transition: background .35s ease, transform .25s ease, box-shadow .35s ease;
   box-shadow: 0 4px 14px rgba(0,0,0,0.25);
@@ -301,7 +297,7 @@ body {
   text-transform: uppercase;
   letter-spacing: .08em;
   color: #374151;
-  font-weight: 600;
+  font-weight: 100;
   margin-bottom: .45rem;
 }
 
@@ -336,7 +332,7 @@ body {
   border: 0;
   background: linear-gradient(135deg,#111827,#000000);
   color: #fefce8;
-  font-weight: 600;
+  font-weight: 100;
   font-size: .9rem;
   letter-spacing: .5px;
   padding: .9rem 1.6rem 1rem;
@@ -426,7 +422,7 @@ body {
   color: #e2e8f0;
   text-decoration: none;
   font-size: 0.9rem;
-  font-weight: 500;
+  font-weight: 100;
   transition: all 0.3s ease;
   position: relative;
   padding: 0.5rem 1rem;
