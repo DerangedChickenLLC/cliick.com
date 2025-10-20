@@ -3,25 +3,159 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <meta name="description" content="Support – Cliick"/>
+  <meta name="description" content="Cliick | Support"/>
   <title>Cliick | Support</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="../images/favicon.png" />
+  <link rel="stylesheet" href="../styles.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="../styles.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@100&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,600;1,100;1,200;1,300&display=swap" rel="stylesheet">
+  <style>
+    /* Support Hero */
+    .support-hero {
+      background: #000000;
+      padding: 4.5rem 1.5rem 3.5rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .support-hero::before, .support-hero::after {
+      content: '';
+      position: absolute;
+      width: 420px;
+      height: 420px;
+      top: -120px;
+      left: -120px;
+      opacity: 0.25;
+      pointer-events: none;
+    }
+
+    .support-hero::after {
+      top: auto;
+      bottom: -160px;
+      left: auto;
+      right: -160px;
+      opacity: 0.18;
+    }
+
+    .support-hero-inner {
+      max-width: 860px;
+      margin: 0 auto;
+      color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.4rem;
+    }
+
+    .support-hero h1 {
+      font-size: clamp(2.4rem, 6vw, 3.8rem);
+      font-weight: 400;
+      letter-spacing: -1px;
+    }
+
+    .support-hero .tagline {
+      font-size: 1.05rem;
+      max-width: 600px;
+      line-height: 1.5;
+      opacity: 0.85;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    /* Main container spacing */
+    .support-main {
+      width: 100%;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 3rem 1.5rem 4rem;
+      display: flex;
+      flex-direction: column;
+      gap: 3.5rem;
+    }
+
+    .section-title {
+      font-size: 1.9rem;
+      font-weight: 400;
+      margin-bottom: 1.75rem;
+      text-align: left;
+      color: #000;
+      position: relative;
+    }
+
+    .section-title::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -8px;
+      width: 65px;
+      height: 3px;
+      background: #000;
+      border-radius: 3px;
+    }
+
+    /* FAQ Section (simplified) */
+    .faq-section { background:#fff; }
+    .faq-items { display:flex; flex-direction:column; border:1px solid #e5e5e5; border-radius:14px; overflow:hidden; }
+    .faq-item { border-bottom:1px solid #e5e5e5; background:#fff; transition:background .3s ease; }
+    .faq-item:last-child { border-bottom:none; }
+    .faq-item summary { cursor:pointer; list-style:none; padding:1.05rem 1.25rem; font-weight:400; display:flex; align-items:center; gap:.75rem; position:relative; }
+    .faq-item summary::-webkit-details-marker { display:none; }
+    .faq-item summary span { flex:1; line-height:1.3; }
+    .faq-item summary:after { content:""; width:11px; height:11px; border-right:2px solid #000; border-bottom:2px solid #000; transform: rotate(45deg); transition: transform .35s ease; }
+    .faq-item[open] summary:after { transform: rotate(225deg); }
+    .faq-item[open] { background:#fafafa; }
+    .faq-item p { margin:0 1.25rem 1.1rem 1.25rem; line-height:1.55; font-size:.95rem; color:#222; }
+    .faq-item a { color:#000; text-decoration:underline; }
+
+    /* Contact Section (FAQ-style) */
+    .contact-section { background:#fff; }
+    .support-form { max-width:780px; margin:0 auto; background:#fff; padding:2rem 2rem 2.2rem; border:1px solid #e5e5e5; border-radius:16px; display:flex; flex-direction:column; gap:1.4rem; }
+    .form-fields { display:flex; flex-direction:column; gap:1.15rem; }
+    .field-row { display:flex; flex-direction:column; gap:.6rem; }
+    .field-row.split { flex-direction:row; gap:1.25rem; }
+    .field-row.split .form-group { flex:1; }
+    .form-group { display:flex; flex-direction:column; gap:.45rem; }
+    .form-group label { font-size:.65rem; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:#111; }
+    .form-group input,.form-group textarea { padding:0.85rem 0.9rem; border:1px solid #d3d3d3; border-radius:10px; background:#fff; font-family:'Poppins',sans-serif; font-size:.95rem; line-height:1.4; transition:border-color .25s, box-shadow .25s; }
+    .form-group input:focus,.form-group textarea:focus { outline:none; border-color:#000; box-shadow:0 0 0 2px #000 inset; }
+    .form-group textarea { resize:vertical; min-height:160px; }
+    .form-actions { padding-top:.5rem; }
+    .support-form .submit-btn { font-weight:500; letter-spacing:.05em; background:#000; color:#fff; border:1px solid #000; border-radius:10px; padding:0.9rem 1.65rem; cursor:pointer; }
+    .support-form .submit-btn:hover { background:#111; }
+    .alt-contact { margin-top:1rem; font-size:.75rem; color:#444; text-align:center; }
+    .alt-contact a { color:#000; }
+    @media (max-width: 680px){ .field-row.split { flex-direction:column; } }
+
+    @media (max-width: 640px) {
+      .support-hero h1 { font-size: 2.3rem; }
+      .hero-actions { flex-direction: column; }
+      .section-title { text-align: center; }
+      .section-title::after { left: 50%; transform: translateX(-50%); }
+      .support-form .submit-btn { width: 100%; align-self: stretch; text-align: center; }
+    }
+  </style>
 </head>
 <body>
   <nav class="navbar">
     <div class="nav-container">
-      <a href="../index.html" class="nav-logo">
+      <a href="/" class="nav-logo">
         <img src="../images/cliick-logo.png" alt="Cliick Logo" class="logo-img">
       </a>
       <div class="nav-menu">
-        <a href="../terms/index.html" class="nav-link">Terms of Service</a>
         <a href="../privacy/index.html" class="nav-link">Privacy Policy</a>
+        <a href="../terms/index.html" class="nav-link">Terms of Service</a>
+        <a href="../guidelines/index.html" class="nav-link">Guidlines</a>
         <a href="../support/index.html" class="nav-link">Support</a>
       </div>
       <div class="nav-toggle">
+        <span class="bar"></span>
         <span class="bar"></span>
         <span class="bar"></span>
         <span class="bar"></span>
@@ -29,84 +163,73 @@
     </div>
   </nav>
 
-  <main>
-    <!-- Page hero -->
-    <header class="page-hero">
-      <div class="page-wrapper">
-        <h1 style="font-family: 'Urbanist', sans-serif;">Need Help?</h1>
+  <!-- Hero Section -->
+  <section class="support-hero">
+    <div class="support-hero-inner">
+      <h1>How can we help you?</h1>
+      <p class="tagline">Find answers to common questions or reach out directly.</p>
+    </div>
+  </section>
+
+  <!-- Placeholder sections that will be filled next -->
+  <main class="support-main">
+    <section id="faq" class="faq-section">
+      <h2 class="section-title">Frequently Asked Questions</h2>
+      <div class="faq-items" role="list">
+        <details class="faq-item" open>
+          <summary><span>What is Cliick?</span></summary>
+          <p>Cliick is a private, ad-free social network focused on authentic connections with people you actually know.</p>
+        </details>
+        <details class="faq-item">
+          <summary><span>How do I reset my password?</span></summary>
+          <p>From the login screen, tap “Forgot Password” and follow the instructions sent to your email.</p>
+        </details>
+        <details class="faq-item">
+          <summary><span>Who can see my posts?</span></summary>
+          <p>Your posts are only visible to people inside the Cliicks (groups) you’ve shared them with. There are no public feeds.</p>
+        </details>
+        <details class="faq-item">
+          <summary><span>Is my data sold or used for ads?</span></summary>
+          <p>No. Cliick is built to be private and ad-free. We don’t sell your data or track you across the web.</p>
+        </details>
+        <details class="faq-item">
+          <summary><span>How do I report an issue?</span></summary>
+          <p>You can use the contact form below or email us directly at <a href="mailto:support@cliick.app">support@cliick.app</a>.</p>
+        </details>
       </div>
-    </header>
-
-    <section class="page-wrapper page-section">
-      <p class="support-intro">If you're having trouble with the app, have billing issues, or just have questions, we're here to help. Our support team typically responds within 24 hours. Choose one of the options below or send us a direct message through the form.</p>
-
-      <div class="support-options">
-        <div class="support-option">
-          <h3><span aria-hidden="true">📧</span> Email Support</h3>
-          <p>Send us an email directly and we'll get back to you as soon as possible.</p>
-          <a href="mailto:support@cliick.app" class="contact-button">support@cliick.app</a>
+    </section>
+    <section id="contact" class="contact-section">
+      <h2 class="section-title">Contact Support</h2>
+      <form id="supportForm" class="support-form" novalidate>
+        <div class="form-fields">
+          <div class="field-row split">
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input type="text" id="name" name="name" placeholder="Your name" required />
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" placeholder="you@example.com" required />
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="form-group">
+              <label for="subject">Subject</label>
+              <input type="text" id="subject" name="subject" placeholder="How can we help?" required />
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="form-group">
+              <label for="message">Message</label>
+              <textarea id="message" name="message" placeholder="Describe your issue or question" required></textarea>
+            </div>
+          </div>
         </div>
-        <div class="support-option">
-          <h3><span aria-hidden="true">💬</span> Contact Form</h3>
-          <p>Fill out the form and we’ll respond to your inquiry promptly. Include as much detail as possible.</p>
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary submit-btn">Send Message</button>
         </div>
-        <div class="support-option">
-          <h3><span aria-hidden="true">🛠️</span> Technical Issue</h3>
-          <p>Experiencing a bug or crash? Let us know your device, OS version, and steps to reproduce.</p>
-        </div>
-        <div class="support-option">
-          <h3><span aria-hidden="true">💡</span> Feature Request</h3>
-          <p>Have an idea that would make Cliick better? We’d love to hear it.</p>
-        </div>
-      </div>
-
-      <form class="contact-form" id="supportForm" aria-labelledby="supportFormHeading">
-        <h2 id="supportFormHeading" style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;">Support Contact Form</h2>
-        <div class="form-group">
-          <label for="name">Your Name</label>
-          <input type="text" id="name" name="name" autocomplete="name" required />
-        </div>
-        <div class="form-group">
-          <label for="email">Your Email</label>
-          <input type="email" id="email" name="email" autocomplete="email" required />
-        </div>
-        <div class="form-group">
-          <label for="subject">Subject</label>
-          <select id="subject" name="subject" required>
-            <option value="">Select a topic</option>
-            <option value="Technical Issue">Technical Issue</option>
-            <option value="Billing Question">Billing Question</option>
-            <option value="Feature Request">Feature Request</option>
-            <option value="Account Help">Account Help</option>
-            <option value="Other">Other</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="message">How can we help?</label>
-          <textarea id="message" name="message" placeholder="Please describe your issue or question in detail..." required></textarea>
-        </div>
-        <button type="submit" class="submit-btn">Send Message</button>
       </form>
-
-      <div class="faq-section" id="faq">
-        <h2>Frequently Asked Questions</h2>
-        <div class="faq-item">
-          <h3>How do I create a private circle?</h3>
-          <p>To create a private circle, tap the "+" button on your main screen and select "Create Circle." You can then invite friends by sharing your unique circle code.</p>
-        </div>
-        <div class="faq-item">
-          <h3>Can I change my display name?</h3>
-          <p>Yes! Go to Settings &gt; Profile and tap on your current name to change it. Your new name will be visible to all your circle members.</p>
-        </div>
-        <div class="faq-item">
-          <h3>Is my data private and secure?</h3>
-          <p>Absolutely. We use end-to-end encryption for all your messages and don't share your data with third parties. Read our <a href="../privacy/index.html">Privacy Policy</a> for more details.</p>
-        </div>
-        <div class="faq-item">
-          <h3>How do I delete my account?</h3>
-          <p>You can delete your account by going to Settings &gt; Account &gt; Delete Account. Please note that this action is permanent and cannot be undone.</p>
-        </div>
-      </div>
+      <p class="alt-contact">Prefer email? <a href="mailto:support@cliick.app">support@cliick.app</a></p>
     </section>
   </main>
 
@@ -115,6 +238,7 @@
       <div class="footer-menu">
         <a href="../terms/index.html" class="footer-link">Terms of Service</a>
         <a href="../privacy/index.html" class="footer-link">Privacy Policy</a>
+        <a href="../guidelines/index.html" class="footer-link">Guidelines</a>
         <a href="../support/index.html" class="footer-link">Support</a>
       </div>
       <div class="footer-info">
@@ -143,34 +267,30 @@
       });
 
     // Form submission
-    document.getElementById('supportForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      
-      // Get form data
-      const formData = new FormData(this);
-      const name = formData.get('name');
-      const email = formData.get('email');
-      const subject = formData.get('subject');
-      const message = formData.get('message');
-      
-      // Create mailto link
-      const mailtoLink = `mailto:support@cliick.app?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`)}`;
-      
-      // Open email client
-      window.location.href = mailtoLink;
-      
-      // Show success message
-      const submitBtn = this.querySelector('.submit-btn');
-      const originalText = submitBtn.textContent;
-      submitBtn.textContent = 'Message Prepared!';
-      submitBtn.style.background = 'linear-gradient(135deg, #22c55e, #16a34a)';
-      
-      setTimeout(() => {
-        submitBtn.textContent = originalText;
-        submitBtn.style.background = '';
-        this.reset();
-      }, 3000);
-    });
+    const supportForm = document.getElementById('supportForm');
+    if (supportForm) {
+      supportForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const formData = new FormData(this);
+        const name = formData.get('name');
+        const email = formData.get('email');
+        const subject = formData.get('subject');
+        const message = formData.get('message');
+        const mailtoLink = `mailto:support@cliick.app?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`)}`;
+        window.location.href = mailtoLink;
+        const submitBtn = this.querySelector('.submit-btn');
+        if (submitBtn) {
+          const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Message Prepared!';
+            submitBtn.style.background = 'linear-gradient(135deg, #22c55e, #16a34a)';
+            setTimeout(() => {
+              submitBtn.textContent = originalText;
+              submitBtn.style.background = '';
+              this.reset();
+            }, 3000);
+        }
+      });
+    }
   </script>
 </body>
 </html>
