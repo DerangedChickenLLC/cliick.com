@@ -166,6 +166,8 @@
       align-self: center;
       max-width: 1200px;
       padding: 4rem 2rem;
+      position: relative; /* allow absolute-positioned tracks */
+      overflow: hidden;
     }
 
     .feature-row {
@@ -182,6 +184,21 @@
     .feature-row.reverse {
       flex-direction: row-reverse;
     }
+    /* Chicken tracks overlay */
+    .tracks-svg {
+      position: absolute;
+      left: 0; top: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      overflow: visible;
+      z-index: 0;
+    }
+    .feature-section .feature-row,
+    .feature-section .feature-intro { position: relative; z-index: 2; }
+  .footprint line { stroke: #000; stroke-width: 1; stroke-linecap: round; filter: drop-shadow(0 1px 1px rgba(0,0,0,0.25)); }
+  @media (prefers-color-scheme: dark) { .footprint line { stroke: #fef08a; filter: drop-shadow(0 1px 1px rgba(0,0,0,0.6)); } }
+  .footprint { opacity: 0.55; transition: opacity .25s ease; }
+  .footprint:hover { opacity: 0.85; }
 
     .feature-image {
       flex: 1 1 420px; /* allow it to scale wider */
@@ -220,7 +237,7 @@
     /* Feature intro styling */
     .feature-intro {
       text-align: left;
-      margin: 0 auto 2rem;
+      margin: 0 auto 5rem;
     }
 
     .feature-intro p {
@@ -363,6 +380,11 @@
   
   <section class="feature-section" id="features">
 
+    <!-- Chicken Tracks SVG Layer -->
+    <svg class="tracks-svg" viewBox="0 0 100 100" aria-hidden="true">
+      <path id="trackPath" d="M0 0" fill="none" stroke="none" />
+    </svg>
+
     <div class="feature-intro">
       <h2 class="section-title">Why Cliick?</h2>
       <p>Discover how Cliick keeps your moments private, meaningful, and effortless to share. We built a space without ads, noise, or follower counts—just authentic connections with the people you actually know.</p>
@@ -402,6 +424,114 @@
     </div>
 
   </section>
+
+  <script>
+    // Dynamically weave chicken tracks between feature images.
+    (function initDynamicTracks(){
+      const featureSection = document.querySelector('.feature-section');
+      const path = document.getElementById('trackPath');
+      const svg = path?.closest('svg');
+      if(!featureSection || !path || !svg) return;
+
+      function buildPath() {
+        // Clear old footprints
+        svg.querySelectorAll('.footprint').forEach(fp => fp.remove());
+
+        const rows = [...featureSection.querySelectorAll('.feature-row')];
+        if(rows.length === 0) return;
+
+        // Measure section for updated viewBox height based on content
+        const secRect = featureSection.getBoundingClientRect();
+        const height = secRect.height;
+        const width = secRect.width;
+        svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
+
+        // Collect image centers in document space then convert to section-relative
+        const points = rows.map(r => {
+          const img = r.querySelector('.feature-image img');
+          const rect = img ? img.getBoundingClientRect() : r.getBoundingClientRect();
+          return {
+            x: rect.left + rect.width/2 - secRect.left,
+            y: rect.top + rect.height/2 - secRect.top
+          };
+        });
+
+        // Start near top center below intro
+        const intro = featureSection.querySelector('.feature-intro');
+        const introRect = intro?.getBoundingClientRect();
+        const startY = introRect ? (introRect.bottom - secRect.top) + 40 : 40;
+        const startX = width/2;
+
+        // Build smooth cubic path weaving horizontally between points
+        let d = `M ${startX} ${startY}`;
+        points.forEach((pt, i) => {
+          const prev = i === 0 ? {x:startX, y:startY} : points[i-1];
+          const verticalDelta = pt.y - prev.y;
+          const midX = (prev.x + pt.x) / 2;
+          const direction = (i % 2 === 0 ? -1 : 1);
+          const swingBase = width * 0.38;
+          // So only first segment is gentler
+          const swing = (i === 0 ? direction * swingBase * -0.8 : direction * swingBase);
+          const bendFactor = (i === 0 ? 0.38 : 0.55);
+          const c1x = midX + swing * bendFactor;
+          const c2x = midX - swing * bendFactor;
+          // Keep first segment higher to avoid dipping beneath first image
+          const c1y = prev.y + verticalDelta * (i === 0 ? 0.15 : 0.25);
+          const c2y = prev.y + verticalDelta * (i === 0 ? 0.55 : 0.75);
+          d += ` C ${c1x} ${c1y}, ${c2x} ${c2y}, ${pt.x} ${pt.y}`;
+        });
+
+        path.setAttribute('d', d);
+
+        generateFootprints();
+      }
+
+      function generateFootprints(){
+        const pathLength = path.getTotalLength();
+        const stepDistance = 60; // pixels between footprints
+        let leftStep = true;
+        for(let dist=0; dist <= pathLength; dist += stepDistance){
+          const pt = path.getPointAtLength(dist);
+          const ahead = path.getPointAtLength(Math.min(dist + 1, pathLength));
+          const angle = Math.atan2(ahead.y - pt.y, ahead.x - pt.x) * 180 / Math.PI;
+          const lateralOffset = leftStep ? -14 : 14; // shift left/right in pixels
+          leftStep = !leftStep;
+          const g = document.createElementNS('http://www.w3.org/2000/svg','g');
+          g.setAttribute('class','footprint');
+          g.setAttribute('transform', `translate(${pt.x + lateralOffset}, ${pt.y}) rotate(${angle + 90}) scale(1.1)`);
+          const strokeW = 3.4; // bolder stroke
+          const toes = [
+            {x1:0,y1:0,x2:0,y2:-18},
+            {x1:0,y1:0,x2:-11,y2:-14},
+            {x1:0,y1:0,x2:11,y2:-14},
+            {x1:0,y1:0,x2:0,y2:10}
+          ];
+          toes.forEach(t => {
+            const line = document.createElementNS('http://www.w3.org/2000/svg','line');
+            line.setAttribute('x1', t.x1); line.setAttribute('y1', t.y1);
+            line.setAttribute('x2', t.x2); line.setAttribute('y2', t.y2);
+            line.setAttribute('stroke', 'currentColor');
+            line.setAttribute('stroke-width', strokeW);
+            line.setAttribute('stroke-linecap', 'round');
+            line.setAttribute('vector-effect','non-scaling-stroke');
+            g.appendChild(line);
+          });
+          svg.appendChild(g);
+        }
+      }
+
+      // Debounced resize to rebuild
+      let resizeTimer;
+      window.addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(buildPath, 200);
+      });
+
+      // Initial build after images likely loaded
+      if(document.readyState === 'complete') buildPath();
+      else window.addEventListener('load', buildPath);
+    })();
+  </script>
 
   <footer class="footer">
     <div class="footer-container">

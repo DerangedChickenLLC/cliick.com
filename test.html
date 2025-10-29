@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Chicken Tracks Timeline</title>
+<style>
+  body {
+    font-family: Helvetica, Arial, sans-serif;
+    background: #faf7f2;
+    padding: 60px 0;
+  }
+
+  .timeline {
+    width: 90%;
+    max-width: 900px;
+    min-height: 100vh;
+    margin: auto;
+    position: relative;
+  }
+
+  .item {
+    width: 38%;
+    padding: 18px 24px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.12);
+    position: absolute;
+    transform: translateY(-50%);
+    z-index: 5;
+  }
+
+  .item.left { left: 0; text-align: right; }
+  .item.right { right: 0; text-align: left; }
+</style>
+</head>
+<body>
+
+<div class="timeline">
+
+  <!-- SVG for path + footprints -->
+  <svg id="tracksSVG" viewBox="0 0 100 100" preserveAspectRatio="none"
+       style="position:absolute; left:0; top:0; width:100%; height:100%; overflow:visible;">
+
+    <!-- The path the chicken walks -->
+    <path id="trackPath" d="
+      M 50 0
+
+      C 50 10, 22 10, 22 20
+      L 22 20
+
+      C 22 30, 78 30, 78 40
+      L 78 40
+
+      C 78 50, 22 50, 22 60
+      L 22 60
+
+      C 22 70, 78 70, 78 80
+      L 78 80
+
+      C 78 90, 22 90, 22 100
+    "
+      fill="none"
+      stroke="none"
+    />
+  </svg>
+
+  <!-- Timeline Items -->
+  <div class="item left"  style="top:20%;">First Egg Hatched 🥚</div>
+  <div class="item right" style="top:40%;">Met New Chicken Friends 🐣</div>
+  <div class="item left"  style="top:60%;">Found the Best Worm Spot 🪱</div>
+  <div class="item right" style="top:80%;">Built the Coop 🏡</div>
+  <div class="item left"  style="top:100%;">Launched the Chicken Club 🎉</div>
+
+</div>
+
+<script>
+  const svg = document.getElementById("tracksSVG");
+  const path = document.getElementById("trackPath");
+  const pathLength = path.getTotalLength();
+
+  const stepDistance = 6; // spacing between footprints
+  let leftStep = true;
+
+  for (let d = 0; d <= pathLength; d += stepDistance) {
+    const pt = path.getPointAtLength(d);
+    const ptAhead = path.getPointAtLength(d + 0.2);
+    const angle = Math.atan2(ptAhead.y - pt.y, ptAhead.x - pt.x) * 180 / Math.PI;
+
+    const offset = leftStep ? -1.2 : 1.2; // alternate left/right
+    leftStep = !leftStep;
+
+    // Create footprint group
+    const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
+    g.setAttribute(
+      "transform",
+      `translate(${pt.x + offset}, ${pt.y}) rotate(${angle + 90}) scale(0.3)`
+    );
+
+    // Draw chicken footprint (rounded ends)
+    const stroke = "#000";
+    const sw = 0.5; // stroke width
+
+    // Middle toe
+    const toe1 = document.createElementNS("http://www.w3.org/2000/svg", "line");
+    toe1.setAttribute("x1", 0);
+    toe1.setAttribute("y1", 0);
+    toe1.setAttribute("x2", 0);
+    toe1.setAttribute("y2", -5);
+    toe1.setAttribute("stroke", stroke);
+    toe1.setAttribute("stroke-width", sw);
+    toe1.setAttribute("stroke-linecap", "round");
+
+    // Left toe
+    const toe2 = document.createElementNS("http://www.w3.org/2000/svg", "line");
+    toe2.setAttribute("x1", 0);
+    toe2.setAttribute("y1", 0);
+    toe2.setAttribute("x2", -3);
+    toe2.setAttribute("y2", -4);
+    toe2.setAttribute("stroke", stroke);
+    toe2.setAttribute("stroke-width", sw);
+    toe2.setAttribute("stroke-linecap", "round");
+
+    // Right toe
+    const toe3 = document.createElementNS("http://www.w3.org/2000/svg", "line");
+    toe3.setAttribute("x1", 0);
+    toe3.setAttribute("y1", 0);
+    toe3.setAttribute("x2", 3);
+    toe3.setAttribute("y2", -4);
+    toe3.setAttribute("stroke", stroke);
+    toe3.setAttribute("stroke-width", sw);
+    toe3.setAttribute("stroke-linecap", "round");
+
+    // Back toe
+    const toe4 = document.createElementNS("http://www.w3.org/2000/svg", "line");
+    toe4.setAttribute("x1", 0);
+    toe4.setAttribute("y1", 0);
+    toe4.setAttribute("x2", 0);
+    toe4.setAttribute("y2", 2.8);
+    toe4.setAttribute("stroke", stroke);
+    toe4.setAttribute("stroke-width", sw);
+    toe4.setAttribute("stroke-linecap", "round");
+
+    g.appendChild(toe1);
+    g.appendChild(toe2);
+    g.appendChild(toe3);
+    g.appendChild(toe4);
+
+    svg.appendChild(g);
+  }
+</script>
+
+</body>
+</html>
