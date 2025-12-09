@@ -106,7 +106,7 @@
       bottom: 20px;
       left: 20px;
       right: 20px;
-      font-size: 3.5rem;
+      font-size: clamp(1.5rem, 5vw, 3.5rem);
       color: #fef08a;
       transform: rotate(-5deg);
       animation: float 3s ease-in-out infinite;
@@ -196,7 +196,6 @@
     .feature-section .feature-row,
     .feature-section .feature-intro { position: relative; z-index: 2; }
   .footprint line { stroke: #000; stroke-width: 1; stroke-linecap: round; filter: drop-shadow(0 1px 1px rgba(0,0,0,0.25)); }
-  @media (prefers-color-scheme: dark) { .footprint line { stroke: #fef08a; filter: drop-shadow(0 1px 1px rgba(0,0,0,0.6)); } }
   .footprint { opacity: 0.55; transition: opacity .25s ease; }
   .footprint:hover { opacity: 0.85; }
 
@@ -218,6 +217,10 @@
       flex: 1 1 500px; /* wider text column */
       max-width: 640px;
       min-width: 320px;
+      background-color: #ffffff;
+      padding: 2rem;
+      border-radius: 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
 
     .feature-text h3 {
@@ -303,10 +306,9 @@
         <img src="images/cliick-logo.png" alt="Cliick Logo" class="logo-img">
       </a>
       <div class="nav-menu">
-        <a href="./privacy/index.html" class="nav-link">Privacy Policy</a>
-        <a href="./terms/index.html" class="nav-link">Terms of Service</a>
-        <a href="./guidelines/index.html" class="nav-link">Guidlines</a>
-        <a href="./support/index.html" class="nav-link">Support</a>
+        <a href="./privacy/" class="nav-link">Privacy Policy</a>
+        <a href="./terms/" class="nav-link">Terms of Service</a>
+        <a href="./support/" class="nav-link">Support</a>
       </div>
       <div class="nav-toggle">
         <span class="bar"></span>
@@ -510,7 +512,6 @@
             const line = document.createElementNS('http://www.w3.org/2000/svg','line');
             line.setAttribute('x1', t.x1); line.setAttribute('y1', t.y1);
             line.setAttribute('x2', t.x2); line.setAttribute('y2', t.y2);
-            line.setAttribute('stroke', 'currentColor');
             line.setAttribute('stroke-width', strokeW);
             line.setAttribute('stroke-linecap', 'round');
             line.setAttribute('vector-effect','non-scaling-stroke');
@@ -536,13 +537,12 @@
   <footer class="footer">
     <div class="footer-container">
       <div class="footer-menu">
-        <a href="./privacy/index.html" class="footer-link">Privacy Policy</a>
-        <a href="./terms/index.html" class="footer-link">Terms of Service</a>
-        <a href="./guidelines/index.html" class="footer-link">Guidlines</a>
-        <a href="./support/index.html" class="footer-link">Support</a>
+        <a href="./privacy/" class="footer-link">Privacy Policy</a>
+        <a href="./terms/" class="footer-link">Terms of Service</a>
+        <a href="./support/" class="footer-link">Support</a>
       </div>
       <div class="footer-info">
-        <p>&copy; 2025 Cliick. All rights reserved.</p>
+        <p>&copy; Deranged Chicken LLC. All rights reserved.</p>
       </div>
     </div>
   </footer>
