@@ -25,10 +25,11 @@
 
     .privacy-content .title, .privacy-content h1 {
       font-size: 2.2rem;
+      font-family: 'Poppins', sans-serif;
       margin-bottom: 1rem;
       font-weight: 300;
       color: #000000;
-      text-align: center;
+      text-align: left;
     }
 
     .privacy-content h2 {
@@ -39,19 +40,53 @@
       color: #000000;
       position: relative;
       font-weight: 300;
+      text-align: left;
     }
 
-    .privacy-content p { margin-bottom: 1.4rem; font-weight: 200; font-size: 1.1rem; }
-    .privacy-content ul { margin: 0 0 1.2rem 1.25rem; padding: 0; }
-    .privacy-content li { margin-bottom: 0.5rem; }
+    .privacy-content h3 {
+      margin-top: 1.5rem;
+      margin-bottom: 0.5rem;
+      font-size: 1.2rem;
+      color: #000000;
+      font-weight: 400;
+    }
 
-    .privacy-content .loading { text-align: center; padding: 4rem 0; color: #9ca3af; }
-    .privacy-content .error { color: #f87171; font-weight: 100; }
+    .privacy-content p { 
+      margin-bottom: 1rem;
+      font-weight: 300;
+      font-size: 1rem;
+    }
+
+    .privacy-content ul { 
+      margin: 0 0 1.2rem 1.25rem;
+      padding: 0;
+    }
+
+    .privacy-content li { 
+      margin-bottom: 0.5rem;
+      font-weight: 300;
+    }
+
+    .privacy-content strong {
+      font-weight: 400;
+    }
+
+    .privacy-content .loading { 
+      text-align: center;
+      padding: 4rem 0;
+      color: #9ca3af;
+    }
+
+    .privacy-content .error { 
+      color: #f87171;
+      font-weight: 600;
+    }
 
     @media (max-width: 768px) {
       .privacy-content { margin-top: 5rem; font-size: 0.95rem; }
       .privacy-content h1 { font-size: 1.9rem; }
       .privacy-content h2 { font-size: 1.25rem; }
+      .privacy-content h3 { font-size: 1.1rem; }
     }
   </style>
 </head>
@@ -59,7 +94,7 @@
   <nav class="navbar">
     <div class="nav-container">
       <a href="/" class="nav-logo">
-        <img src="../images/cliick-logo.png" alt="Cliick Logo" class="logo-img">
+        <img src="../images/cliick-icon.png" alt="Cliick Logo" class="logo-img">
       </a>
       <div class="nav-menu">
         <a href="../privacy/" class="nav-link">Privacy Policy</a>

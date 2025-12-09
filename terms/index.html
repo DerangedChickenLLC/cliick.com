@@ -12,7 +12,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Lato:wght@100&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,600;1,100;1,200;1,300&display=swap" rel="stylesheet">
   <style>
-    /* Privacy Policy Imported Content */
+    /* Terms of Service Imported Content */
     .tos-content {
       max-width: 900px;
       margin: 4rem auto 2rem auto;
@@ -20,6 +20,7 @@
       line-height: 1.55;
       color: #000000;
       font-size: 0.95rem;
+      font-family: 'Poppins', sans-serif;
     }
 
     .tos-content .title, .tos-content h1 {
@@ -28,7 +29,7 @@
       margin-bottom: 1rem;
       font-weight: 300;
       color: #000000;
-      text-align: center;
+      text-align: left;
     }
 
     .tos-content h2 {
@@ -38,19 +39,54 @@
       line-height: 1.2;
       color: #000000;
       position: relative;
+      font-weight: 300;
+      text-align: left;
     }
 
-    .tos-content p { margin-bottom: 1rem; }
-    .tos-content ul { margin: 0 0 1.2rem 1.25rem; padding: 0; }
-    .tos-content li { margin-bottom: 0.5rem; }
+    .tos-content h3 {
+      margin-top: 1.5rem;
+      margin-bottom: 0.5rem;
+      font-size: 1.2rem;
+      color: #000000;
+      font-weight: 400;
+    }
 
-    .tos-content .loading { text-align: center; padding: 4rem 0; color: #9ca3af; }
-    .tos-content .error { color: #f87171; font-weight: 600; }
+    .tos-content p { 
+      margin-bottom: 1rem;
+      font-weight: 300;
+      font-size: 1rem;
+    }
+
+    .tos-content ul { 
+      margin: 0 0 1.2rem 1.25rem;
+      padding: 0;
+    }
+
+    .tos-content li { 
+      margin-bottom: 0.5rem;
+      font-weight: 300;
+    }
+
+    .tos-content strong {
+      font-weight: 400;
+    }
+
+    .tos-content .loading { 
+      text-align: center;
+      padding: 4rem 0;
+      color: #9ca3af;
+    }
+
+    .tos-content .error { 
+      color: #f87171;
+      font-weight: 600;
+    }
 
     @media (max-width: 768px) {
       .tos-content { margin-top: 5rem; font-size: 0.95rem; }
       .tos-content h1 { font-size: 1.9rem; }
       .tos-content h2 { font-size: 1.25rem; }
+      .tos-content h3 { font-size: 1.1rem; }
     }
   </style>
 </head>
@@ -58,7 +94,7 @@
   <nav class="navbar">
     <div class="nav-container">
       <a href="/" class="nav-logo">
-        <img src="../images/cliick-logo.png" alt="Cliick Logo" class="logo-img">
+        <img src="../images/cliick-icon.png" alt="Cliick Logo" class="logo-img">
       </a>
       <div class="nav-menu">
         <a href="../privacy/" class="nav-link">Privacy Policy</a>
