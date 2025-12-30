@@ -12,11 +12,43 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,600;1,100;1,200;1,300&display=swap" rel="stylesheet">
 
   <style>
+    /* Policy Hero (Support-style) */
+    .policy-hero {
+      background: #000000;
+      padding: 4.5rem 1.5rem 3.5rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .policy-hero-inner {
+      max-width: 860px;
+      margin: 0 auto;
+      color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.1rem;
+    }
+
+    .policy-hero h1 {
+      font-size: clamp(2.4rem, 6vw, 3.8rem);
+      font-weight: 400;
+      letter-spacing: -1px;
+    }
+
+    .policy-hero .tagline {
+      font-size: 1.05rem;
+      max-width: 650px;
+      line-height: 1.5;
+      opacity: 0.85;
+    }
+
     /* Privacy Policy Imported Content */
     .privacy-content {
       max-width: 900px;
-      margin: 4rem auto 2rem auto;
-      padding: 0 1.5rem 3rem;
+      margin: 0 auto 2rem auto;
+      padding: 3rem 1.5rem 3rem;
       line-height: 1.55;
       color: #000000;
       font-size: 0.95rem;
@@ -83,7 +115,7 @@
     }
 
     @media (max-width: 768px) {
-      .privacy-content { margin-top: 5rem; font-size: 0.95rem; }
+      .privacy-content { font-size: 0.95rem; }
       .privacy-content h1 { font-size: 1.9rem; }
       .privacy-content h2 { font-size: 1.25rem; }
       .privacy-content h3 { font-size: 1.1rem; }
@@ -110,6 +142,13 @@
     </div>
   </nav>
 
+  <header class="policy-hero" aria-label="Privacy Policy">
+    <div class="policy-hero-inner">
+      <h1>Privacy Policy</h1>
+      <p class="tagline">How Cliick handles your data.</p>
+    </div>
+  </header>
+
   <main>
     <section id="privacy-policy" class="privacy-content" data-src="privacy.html">
       <div class="loading">Loading privacy policy...</div>
@@ -132,6 +171,7 @@
   </div>
 </footer>
 <!-- FOOTER_END -->
+
 
 
   <script>
