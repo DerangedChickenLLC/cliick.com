@@ -4,6 +4,21 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Cliick | Welcome</title>
+  <meta name="description" content="Cliick is your private, ad-free network for sharing real moments with the people who matter."/>
+
+  <meta property="og:type" content="website"/>
+  <meta property="og:site_name" content="Cliick"/>
+  <meta property="og:title" content="Cliick | Welcome"/>
+  <meta property="og:description" content="Cliick is your private, ad-free network for sharing real moments with the people who matter."/>
+  <meta property="og:url" content="https://cliick.com/"/>
+  <meta property="og:image" content="https://cliick.com/images/cliick-icon.png"/>
+
+  <meta name="twitter:card" content="summary"/>
+  <meta name="twitter:title" content="Cliick | Welcome"/>
+  <meta name="twitter:description" content="Cliick is your private, ad-free network for sharing real moments with the people who matter."/>
+  <meta name="twitter:image" content="https://cliick.com/images/cliick-icon.png"/>
+
+  <link rel="apple-touch-icon" href="https://cliick.com/images/cliick-icon.png" />
   <!-- Preconnects for Google Fonts -->
   <link rel="icon" type="image/png" sizes="32x32" href="images/favicon.png" />
   <link rel="stylesheet" href="styles.css" />
@@ -35,14 +50,14 @@
     }
 
     .hero-left h1 {
-      font-size: 5.5rem;
+      font-size: var(--fs-home-hero-title);
       margin-bottom: 25px;
-      font-weight: 400;
+      font-weight: var(--fw-regular);
       color: #ffffff
     }
 
     .hero-left p {
-      font-size: 1.5rem; /* increased from 1.2rem */
+      font-size: var(--fs-home-hero-subtitle);
       margin-bottom: 35px;
       color: #ffffff;
     }
@@ -106,7 +121,7 @@
       bottom: 20px;
       left: 20px;
       right: 20px;
-      font-size: clamp(1.5rem, 5vw, 3.5rem);
+      font-size: var(--fs-home-glitch);
       color: #fef08a;
       transform: rotate(-5deg);
       animation: float 3s ease-in-out infinite;
@@ -224,7 +239,7 @@
     }
 
     .feature-text h3 {
-      font-size: 1.5rem;
+      font-size: var(--fs-home-hero-subtitle);
       margin-bottom: 1rem;
     }
 
@@ -246,13 +261,13 @@
     .feature-intro p {
       line-height: 1.6;
       color: #000000;
-      font-family: 'Poppins', sans-serif;
+      font-family: var(--font-sans);
       margin: 0 auto;
     }
 
     @media (max-width: 768px) {
-      .section-title { font-size: 2.4rem; }
-      .feature-intro p { font-size: 1.1rem; }
+      .section-title { font-size: var(--fs-home-section-title-mobile); }
+      .feature-intro p { font-size: var(--fs-body-lg); }
     }
 
     .explore-section {
@@ -261,11 +276,11 @@
     }
 
     .explore-text {
-      font-size: 2rem;
-      font-weight: 600;
+      font-size: var(--fs-home-explore);
+      font-weight: var(--fw-semibold);
       color: #000000;
       margin-bottom: 1rem;
-      font-family: 'Poppins', sans-serif;
+      font-family: var(--font-sans);
     }
 
     .explore-arrow {

@@ -4,7 +4,20 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <meta name="description" content="How to delete your Cliick account and associated data, directly from inside the app."/>
-  <title>Delete your Cliick account and data | Cliick</title>
+  <title>Cliick | Account Deletion</title>
+  <meta property="og:type" content="website"/>
+  <meta property="og:site_name" content="Cliick"/>
+  <meta property="og:title" content="Cliick | Account Deletion"/>
+  <meta property="og:description" content="How to delete your Cliick account and associated data, directly from inside the app."/>
+  <meta property="og:url" content="https://cliick.com/deleteme/"/>
+  <meta property="og:image" content="https://cliick.com/images/cliick-icon.png"/>
+
+  <meta name="twitter:card" content="summary"/>
+  <meta name="twitter:title" content="Cliick | Account Deletion"/>
+  <meta name="twitter:description" content="How to delete your Cliick account and associated data, directly from inside the app."/>
+  <meta name="twitter:image" content="https://cliick.com/images/cliick-icon.png"/>
+
+  <link rel="apple-touch-icon" href="https://cliick.com/images/cliick-icon.png" />
   <link rel="icon" type="image/png" sizes="32x32" href="../images/favicon.png" />
   <link rel="stylesheet" href="../styles.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -32,13 +45,13 @@
     }
 
     .delete-hero h1 {
-      font-size: clamp(2.2rem, 6vw, 3.4rem);
-      font-weight: 400;
+      font-size: var(--fs-hero-title-md);
+      font-weight: var(--fw-hero-title);
       letter-spacing: -1px;
     }
 
     .delete-hero .tagline {
-      font-size: 1.05rem;
+      font-size: var(--fs-hero-tagline);
       max-width: 720px;
       line-height: 1.55;
       opacity: 0.88;
@@ -64,8 +77,8 @@
 
     .delete-body p {
       margin-bottom: 1rem;
-      font-weight: 300;
-      font-size: 1rem;
+      font-weight: var(--fw-light);
+      font-size: var(--fs-body);
       line-height: 1.6;
       color: #111111;
     }
@@ -78,7 +91,7 @@
 
     .delete-body li {
       margin-bottom: 0.55rem;
-      font-weight: 300;
+      font-weight: var(--fw-light);
       color: #111111;
       line-height: 1.55;
     }
@@ -100,11 +113,11 @@
     }
 
     .toc-title {
-      font-size: 0.75rem;
+      font-size: var(--fs-label);
       letter-spacing: 0.12em;
       text-transform: uppercase;
       color: #111;
-      font-weight: 600;
+      font-weight: var(--fw-semibold);
       margin-bottom: 0.75rem;
     }
 
@@ -124,8 +137,8 @@
       background: #000;
       color: #fff;
       text-decoration: none;
-      font-weight: 400;
-      font-size: 0.85rem;
+      font-weight: var(--fw-regular);
+      font-size: var(--fs-pill);
       line-height: 1;
       transition: background 0.25s ease, transform 0.25s ease;
     }
@@ -137,7 +150,7 @@
     .callout p:last-child { margin-bottom: 0; }
 
     @media (max-width: 640px) {
-      .delete-hero h1 { font-size: 2.3rem; }
+      .delete-hero h1 { font-size: var(--fs-hero-title-mobile); }
       .section-title { text-align: left; }
     }
   </style>
@@ -164,7 +177,7 @@
 
   <section class="delete-hero">
     <div class="delete-hero-inner">
-      <h1>Delete your Cliick account &amp; data</h1>
+      <h1>Account &amp; Data Deletion</h1>
       <p class="tagline">This page explains exactly how to delete your Cliick account and the data associated with it.</p>
     </div>
   </section>

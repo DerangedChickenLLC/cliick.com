@@ -1,3 +1,67 @@
+/* Type scale (shared) */
+:root {
+  /* Global typography knob.
+     - 1 = match original sizing
+     - e.g. 0.98 slightly smaller, 1.02 slightly larger */
+  --type-scale: 1;
+
+  --font-sans: 'Poppins', sans-serif;
+
+  --fw-light: 300;
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+
+  /* Component weights */
+  --fw-hero-title: var(--fw-light);
+
+  /* Core sizes */
+  --fs-body: calc(1rem * var(--type-scale));
+  --fs-body-sm: calc(0.95rem * var(--type-scale));
+  --fs-body-lg: calc(1.1rem * var(--type-scale));
+  --fs-nav-link: calc(1rem * var(--type-scale));
+  --fs-nav-link-mobile: calc(1.1rem * var(--type-scale));
+  --fs-footer: calc(0.9rem * var(--type-scale));
+  --fs-label: calc(0.75rem * var(--type-scale));
+  --fs-label-xs: calc(0.65rem * var(--type-scale));
+  --fs-pill: calc(0.85rem * var(--type-scale));
+
+  --fs-section-title: calc(1.9rem * var(--type-scale));
+
+  /* Hero sizes */
+  --fs-hero-title-lg: clamp(
+    calc(2.4rem * var(--type-scale)),
+    calc(6vw * var(--type-scale)),
+    calc(3.8rem * var(--type-scale))
+  );
+  --fs-hero-title-md: clamp(
+    calc(2.2rem * var(--type-scale)),
+    calc(6vw * var(--type-scale)),
+    calc(3.4rem * var(--type-scale))
+  );
+  --fs-hero-title-mobile: calc(2.3rem * var(--type-scale));
+  --fs-hero-tagline: calc(1.05rem * var(--type-scale));
+
+  /* Policy heading sizes (wrapper styling) */
+  --fs-policy-h1: calc(2.2rem * var(--type-scale));
+  --fs-policy-h2: calc(1.4rem * var(--type-scale));
+  --fs-policy-h3: calc(1.2rem * var(--type-scale));
+  --fs-policy-h1-mobile: calc(1.9rem * var(--type-scale));
+  --fs-policy-h2-mobile: calc(1.25rem * var(--type-scale));
+  --fs-policy-h3-mobile: calc(1.1rem * var(--type-scale));
+
+  /* Home page display sizes */
+  --fs-home-hero-title: calc(5.5rem * var(--type-scale));
+  --fs-home-hero-subtitle: calc(1.5rem * var(--type-scale));
+  --fs-home-glitch: clamp(
+    calc(1.5rem * var(--type-scale)),
+    calc(5vw * var(--type-scale)),
+    calc(3.5rem * var(--type-scale))
+  );
+  --fs-home-section-title-mobile: calc(2.4rem * var(--type-scale));
+  --fs-home-explore: calc(2rem * var(--type-scale));
+}
+
 /* Navigation Styles */
 .navbar {
   position: fixed;
@@ -40,8 +104,8 @@
 .nav-link {
   color: #e2e8f0;
   text-decoration: none;
-  font-size: 1rem;
-  font-weight: 300;
+  font-size: var(--fs-nav-link);
+  font-weight: var(--fw-light);
   transition: all 0.3s ease;
   position: relative;
   padding: 0.5rem 1rem;
@@ -114,7 +178,7 @@
   }
 
   .nav-link {
-    font-size: 1.1rem;
+    font-size: var(--fs-nav-link-mobile);
     padding: 1rem 2rem;
     margin: 0 1rem;
     border-radius: 8px;
@@ -152,8 +216,9 @@
 }
 
 body {
-  font-family: 'Poppins', sans-serif;
-  font-weight: 300;
+  font-family: var(--font-sans);
+  font-weight: var(--fw-light);
+  font-size: var(--fs-body);
   padding-top: 60px; /* Account for fixed navbar */
   min-height: 100vh;
   display: flex;
@@ -167,10 +232,10 @@ body {
   display: inline-block;
   text-decoration: none;
   cursor: pointer;
-  font-family: 'Poppins', sans-serif;
-  font-weight: 400;
+  font-family: var(--font-sans);
+  font-weight: var(--fw-regular);
   padding: 0.85rem 1.5rem;
-  font-size: 0.95rem;
+  font-size: var(--fs-body-sm);
   border-radius: 10px;
   border: 1px solid #fff;
   color: #ffffff;
@@ -202,8 +267,8 @@ body {
 }
 
 .section-title {
-  font-size: 1.9rem;
-  font-weight: 400;
+  font-size: var(--fs-section-title);
+  font-weight: var(--fw-regular);
   margin-bottom: 1.75rem;
   text-align: left;
   color: #000;
@@ -251,8 +316,8 @@ body {
 .footer-link {
   color: #e2e8f0;
   text-decoration: none;
-  font-size: 0.9rem;
-  font-weight: 300;
+  font-size: var(--fs-footer);
+  font-weight: var(--fw-light);
   transition: all 0.3s ease;
   position: relative;
   padding: 0.5rem 1rem;
@@ -283,7 +348,7 @@ body {
 
 .footer-info {
   color: #e2e8f0;
-  font-size: 0.9rem;
+  font-size: var(--fs-footer);
 }
 
 .footer-info p {

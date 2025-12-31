@@ -3,8 +3,21 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <meta name="description" content="Privacy Policy | Cliick"/>
+  <meta name="description" content="Read Cliick’s Privacy Policy."/>
   <title>Cliick | Privacy Policy</title>
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content="Cliick"/>
+    <meta property="og:title" content="Cliick | Privacy Policy"/>
+    <meta property="og:description" content="Read Cliick’s Privacy Policy."/>
+    <meta property="og:url" content="https://cliick.com/privacy/"/>
+    <meta property="og:image" content="https://cliick.com/images/cliick-icon.png"/>
+
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="Cliick | Privacy Policy"/>
+    <meta name="twitter:description" content="Read Cliick’s Privacy Policy."/>
+    <meta name="twitter:image" content="https://cliick.com/images/cliick-icon.png"/>
+
+    <link rel="apple-touch-icon" href="https://cliick.com/images/cliick-icon.png" />
   <link rel="icon" type="image/png" sizes="32x32" href="../images/favicon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -32,13 +45,13 @@
     }
 
     .policy-hero h1 {
-      font-size: clamp(2.4rem, 6vw, 3.8rem);
-      font-weight: 400;
+      font-size: var(--fs-hero-title-lg);
+      font-weight: var(--fw-hero-title);
       letter-spacing: -1px;
     }
 
     .policy-hero .tagline {
-      font-size: 1.05rem;
+      font-size: var(--fs-hero-tagline);
       max-width: 650px;
       line-height: 1.5;
       opacity: 0.85;
@@ -51,15 +64,15 @@
       padding: 3rem 1.5rem 3rem;
       line-height: 1.55;
       color: #000000;
-      font-size: 0.95rem;
-      font-family: 'Poppins', sans-serif;
+      font-size: var(--fs-body-sm);
+      font-family: var(--font-sans);
     }
 
     .privacy-content .title, .privacy-content h1 {
-      font-size: 2.2rem;
-      font-family: 'Poppins', sans-serif;
+      font-size: var(--fs-policy-h1);
+      font-family: var(--font-sans);
       margin-bottom: 1rem;
-      font-weight: 300;
+      font-weight: var(--fw-light);
       color: #000000;
       text-align: left;
     }
@@ -67,26 +80,26 @@
     .privacy-content h2 {
       margin-top: 2.5rem;
       margin-bottom: 0.75rem;
-      font-size: 1.4rem;
+      font-size: var(--fs-policy-h2);
       line-height: 1.2;
       color: #000000;
       position: relative;
-      font-weight: 300;
+      font-weight: var(--fw-light);
       text-align: left;
     }
 
     .privacy-content h3 {
       margin-top: 1.5rem;
       margin-bottom: 0.5rem;
-      font-size: 1.2rem;
+      font-size: var(--fs-policy-h3);
       color: #000000;
-      font-weight: 400;
+      font-weight: var(--fw-regular);
     }
 
     .privacy-content p { 
       margin-bottom: 1rem;
-      font-weight: 300;
-      font-size: 1rem;
+      font-weight: var(--fw-light);
+      font-size: var(--fs-body);
     }
 
     .privacy-content ul { 
@@ -96,11 +109,11 @@
 
     .privacy-content li { 
       margin-bottom: 0.5rem;
-      font-weight: 300;
+      font-weight: var(--fw-light);
     }
 
     .privacy-content strong {
-      font-weight: 400;
+      font-weight: var(--fw-regular);
     }
 
     .privacy-content .loading { 
@@ -111,14 +124,14 @@
 
     .privacy-content .error { 
       color: #f87171;
-      font-weight: 600;
+      font-weight: var(--fw-semibold);
     }
 
     @media (max-width: 768px) {
-      .privacy-content { font-size: 0.95rem; }
-      .privacy-content h1 { font-size: 1.9rem; }
-      .privacy-content h2 { font-size: 1.25rem; }
-      .privacy-content h3 { font-size: 1.1rem; }
+      .privacy-content { font-size: var(--fs-body-sm); }
+      .privacy-content h1 { font-size: var(--fs-policy-h1-mobile); }
+      .privacy-content h2 { font-size: var(--fs-policy-h2-mobile); }
+      .privacy-content h3 { font-size: var(--fs-policy-h3-mobile); }
     }
   </style>
 </head>

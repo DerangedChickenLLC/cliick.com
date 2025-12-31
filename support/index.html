@@ -3,8 +3,21 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <meta name="description" content="Cliick | Support"/>
+  <meta name="description" content="Get help with Cliick — FAQs and support contact."/>
   <title>Cliick | Support</title>
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content="Cliick"/>
+    <meta property="og:title" content="Cliick | Support"/>
+    <meta property="og:description" content="Get help with Cliick — FAQs and support contact."/>
+    <meta property="og:url" content="https://cliick.com/support/"/>
+    <meta property="og:image" content="https://cliick.com/images/cliick-icon.png"/>
+
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="Cliick | Support"/>
+    <meta name="twitter:description" content="Get help with Cliick — FAQs and support contact."/>
+    <meta name="twitter:image" content="https://cliick.com/images/cliick-icon.png"/>
+
+    <link rel="apple-touch-icon" href="https://cliick.com/images/cliick-icon.png" />
   <link rel="icon" type="image/png" sizes="32x32" href="../images/favicon.png" />
   <link rel="stylesheet" href="../styles.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -50,13 +63,13 @@
     }
 
     .support-hero h1 {
-      font-size: clamp(2.4rem, 6vw, 3.8rem);
-      font-weight: 400;
+      font-size: var(--fs-hero-title-lg);
+      font-weight: var(--fw-hero-title);
       letter-spacing: -1px;
     }
 
     .support-hero .tagline {
-      font-size: 1.05rem;
+      font-size: var(--fs-hero-tagline);
       max-width: 600px;
       line-height: 1.5;
       opacity: 0.85;
@@ -81,8 +94,8 @@
     }
 
     .section-title {
-      font-size: 1.9rem;
-      font-weight: 400;
+      font-size: var(--fs-section-title);
+      font-weight: var(--fw-regular);
       margin-bottom: 1.75rem;
       text-align: left;
       color: #000;
@@ -105,13 +118,13 @@
     .faq-items { display:flex; flex-direction:column; border:1px solid #e5e5e5; border-radius:14px; overflow:hidden; }
     .faq-item { border-bottom:1px solid #e5e5e5; background:#fff; transition:background .3s ease; }
     .faq-item:last-child { border-bottom:none; }
-    .faq-item summary { cursor:pointer; list-style:none; padding:1.05rem 1.25rem; font-weight:400; display:flex; align-items:center; gap:.75rem; position:relative; }
+    .faq-item summary { cursor:pointer; list-style:none; padding:1.05rem 1.25rem; font-weight: var(--fw-regular); display:flex; align-items:center; gap:.75rem; position:relative; }
     .faq-item summary::-webkit-details-marker { display:none; }
     .faq-item summary span { flex:1; line-height:1.3; }
     .faq-item summary:after { content:""; width:11px; height:11px; border-right:2px solid #000; border-bottom:2px solid #000; transform: rotate(45deg); transition: transform .35s ease; }
     .faq-item[open] summary:after { transform: rotate(225deg); }
     .faq-item[open] { background:#fafafa; }
-    .faq-item p { margin:0 1.25rem 1.1rem 1.25rem; line-height:1.55; font-size:.95rem; color:#222; }
+    .faq-item p { margin:0 1.25rem 1.1rem 1.25rem; line-height:1.55; font-size: var(--fs-body-sm); color:#222; }
     .faq-item a { color:#000; text-decoration:underline; }
 
     /* Contact Section (FAQ-style) */
@@ -122,19 +135,19 @@
     .field-row.split { flex-direction:row; gap:1.25rem; }
     .field-row.split .form-group { flex:1; }
     .form-group { display:flex; flex-direction:column; gap:.45rem; }
-    .form-group label { font-size:.65rem; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:#111; }
-    .form-group input,.form-group textarea { padding:0.85rem 0.9rem; border:1px solid #d3d3d3; border-radius:10px; background:#fff; font-family:'Poppins',sans-serif; font-size:.95rem; line-height:1.4; transition:border-color .25s, box-shadow .25s; }
+    .form-group label { font-size: var(--fs-label-xs); font-weight: var(--fw-semibold); letter-spacing:.14em; text-transform:uppercase; color:#111; }
+    .form-group input,.form-group textarea { padding:0.85rem 0.9rem; border:1px solid #d3d3d3; border-radius:10px; background:#fff; font-family: var(--font-sans); font-size: var(--fs-body-sm); line-height:1.4; transition:border-color .25s, box-shadow .25s; }
     .form-group input:focus,.form-group textarea:focus { outline:none; border-color:#000; box-shadow:0 0 0 2px #000 inset; }
     .form-group textarea { resize:vertical; min-height:160px; }
     .form-actions { padding-top:.5rem; }
-    .support-form .submit-btn { font-weight:500; letter-spacing:.05em; background:#000; color:#fff; border:1px solid #000; border-radius:10px; padding:0.9rem 1.65rem; cursor:pointer; }
+    .support-form .submit-btn { font-weight: var(--fw-medium); letter-spacing:.05em; background:#000; color:#fff; border:1px solid #000; border-radius:10px; padding:0.9rem 1.65rem; cursor:pointer; }
     .support-form .submit-btn:hover { background:#111; }
-    .alt-contact { margin-top:1rem; font-size:.75rem; color:#444; text-align:center; }
+    .alt-contact { margin-top:1rem; font-size: var(--fs-label); color:#444; text-align:center; }
     .alt-contact a { color:#000; }
     @media (max-width: 680px){ .field-row.split { flex-direction:column; } }
 
     @media (max-width: 640px) {
-      .support-hero h1 { font-size: 2.3rem; }
+      .support-hero h1 { font-size: var(--fs-hero-title-mobile); }
       .hero-actions { flex-direction: column; }
       .section-title { text-align: center; }
       .section-title::after { left: 50%; transform: translateX(-50%); }
@@ -189,7 +202,7 @@
         </details>
         <details class="faq-item">
           <summary><span>How do I report an issue?</span></summary>
-          <p>You can use the contact form below or email us directly at <a href="mailto:support@cliick.app">support@cliick.app</a>.</p>
+          <p>You can use the contact form below or email us directly at <a href="mailto:support@cliick.com">support@cliick.com</a>.</p>
         </details>
       </div>
     </section>
@@ -224,7 +237,7 @@
           <button type="submit" class="btn btn-primary submit-btn">Send Message</button>
         </div>
       </form>
-      <p class="alt-contact">Prefer email? <a href="mailto:support@cliick.app">support@cliick.app</a></p>
+      <p class="alt-contact">Prefer email? <a href="mailto:support@cliick.com">support@cliick.com</a></p>
     </section>
   </main>
 
@@ -275,7 +288,7 @@
         const email = formData.get('email');
         const subject = formData.get('subject');
         const message = formData.get('message');
-        const mailtoLink = `mailto:support@cliick.app?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`)}`;
+        const mailtoLink = `mailto:support@cliick.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`)}`;
         window.location.href = mailtoLink;
         const submitBtn = this.querySelector('.submit-btn');
         if (submitBtn) {
