@@ -84,13 +84,13 @@
     .image-container {
       position: relative;
       text-align: center;
-      display: inline-block;
+      display: block;
       overflow: hidden;
       border-radius: 20px;
+      width: min(400px, 100%);
     }
 
     .image-container img {
-      max-width: 400px;
       width: 100%;
       border-radius: 20px;
       box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
@@ -118,25 +118,28 @@
 
     h1.glitch {
       position: absolute;
-      bottom: 20px;
-      left: 20px;
-      right: 20px;
-      font-size: var(--fs-home-glitch);
+      bottom: 6%;
+      left: 6%;
+      right: 6%;
+      font-size: clamp(1rem, 8vw, 2.6rem);
       color: #fef08a;
       transform: rotate(-5deg);
       animation: float 3s ease-in-out infinite;
       font-family: 'Bungee', sans-serif;
       text-align: center;
       overflow: hidden;
+      white-space: pre-line;
+      line-height: 1;
     }
 
     h1.glitch::before,
     h1.glitch::after {
-      content: "WELCOME TO CLIICK";
+      content: "WELCOME TO\A CLIICK";
       position: absolute;
       top: 0;
       left: 0;
       z-index: -1;
+      white-space: pre-line;
     }
 
     h1.glitch::before {
@@ -187,7 +190,7 @@
 
     .feature-row {
       display: flex;
-      flex-wrap: wrap;
+      flex-wrap: nowrap;
       align-items: center;
       justify-content: center; /* center content for better balance */
       gap: 5rem; /* slightly wider spacing */
@@ -240,7 +243,8 @@
 
     .feature-text h3 {
       font-size: var(--fs-home-hero-subtitle);
-      margin-bottom: 1rem;
+      font-weight: var(--fw-regular);
+      
     }
 
     .feature-text p {
@@ -268,6 +272,28 @@
     @media (max-width: 768px) {
       .section-title { font-size: var(--fs-home-section-title-mobile); }
       .feature-intro p { font-size: var(--fs-body-lg); }
+
+      /* On small screens stack (text first, then image) */
+      .feature-row,
+      .feature-row.reverse {
+        flex-direction: column;
+        flex-wrap: nowrap;
+        gap: 2rem;
+      }
+
+      .feature-text {
+        order: 1;
+        flex: 0 1 auto;
+        min-width: 0;
+        width: 100%;
+      }
+
+      .feature-image {
+        order: 2;
+        flex: 0 1 auto;
+        min-width: 0;
+        width: 100%;
+      }
     }
 
     .explore-section {
@@ -380,7 +406,7 @@
       <div class="hero-right">
         <div class="image-container">
           <img src="./images/fluffy-post.png" alt="Cliick App Preview">
-            <h1 class="glitch">WELCOME TO CLIICK</h1>
+            <h1 class="glitch">WELCOME TO<br>CLiiCK</h1>
         </div>
       </div>
     </div>
@@ -410,33 +436,55 @@
     <!-- Row 1 -->
     <div class="feature-row">
       <div class="feature-image">
-        <img src="images/feed.png" alt="Cliick screenshot 1">
+        <img src="images/drawer.png" alt="Cliick screenshot: YOUR PEOPLE">
       </div>
       <div class="feature-text">
-        <h3>Your Feed. Your People.</h3>
-        <p>Posts from all your Cliicks appear in one simple, clean feed. No digging through group chats.</p>
+        <h3>YOUR PEOPLE</h3>
+        <p>Cliicks for every part of your life</p>
       </div>
     </div>
 
     <!-- Row 2 -->
     <div class="feature-row reverse">
       <div class="feature-image">
-        <img src="images/drawer.png" alt="Cliick screenshot 2">
+        <img src="images/feed.png" alt="Cliick screenshot: YOUR FEED">
       </div>
       <div class="feature-text">
-        <h3>Connect in Cliicks</h3>
-        <p>Cliicks are group spaces where you can interact with friends, family, and people you know.</p>
+        <h3>YOUR FEED</h3>
+        <p>Just the people you care about</p>
       </div>
     </div>
 
     <!-- Row 3 -->
     <div class="feature-row">
       <div class="feature-image">
-        <img src="images/comments.png" alt="Cliick screenshot 3">
+        <img src="images/gallery.png" alt="Cliick screenshot: YOUR VIEW">
       </div>
       <div class="feature-text">
-        <h3>Real Connection, Not Followers</h3>
-        <p>Cliick isn’t about racking up likes. It’s about building real, private networks — where every connection counts.</p>
+        <h3>YOUR VIEW</h3>
+        <p>Organized and entirely yours</p>
+      </div>
+    </div>
+
+    <!-- Row 4 -->
+    <div class="feature-row reverse">
+      <div class="feature-image">
+        <img src="images/comments.png" alt="Cliick screenshot: YOUR RULES">
+      </div>
+      <div class="feature-text">
+        <h3>YOUR RULES</h3>
+        <p>Real conversations in the right place</p>
+      </div>
+    </div>
+
+    <!-- Row 5 -->
+    <div class="feature-row">
+      <div class="feature-image">
+        <img src="images/zoom.png" alt="Cliick screenshot: YOUR WORLD">
+      </div>
+      <div class="feature-text">
+        <h3>YOUR WORLD</h3>
+        <p>See every detail</p>
       </div>
     </div>
 
