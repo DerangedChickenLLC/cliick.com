@@ -1,621 +1,727 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Cliick | Welcome</title>
-  <meta name="description" content="Cliick is your private, ad-free network for sharing real moments with the people who matter."/>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cliick | Welcome</title>
+    <meta
+      name="description"
+      content="Cliick is your private, ad-free network for sharing real moments with the people who matter."
+    />
 
-  <meta property="og:type" content="website"/>
-  <meta property="og:site_name" content="Cliick"/>
-  <meta property="og:title" content="Cliick | Welcome"/>
-  <meta property="og:description" content="Cliick is your private, ad-free network for sharing real moments with the people who matter."/>
-  <meta property="og:url" content="https://cliick.com/"/>
-  <meta property="og:image" content="https://cliick.com/images/cliick-icon.png"/>
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Cliick" />
+    <meta property="og:title" content="Cliick | Welcome" />
+    <meta
+      property="og:description"
+      content="Cliick is your private, ad-free network for sharing real moments with the people who matter."
+    />
+    <meta property="og:url" content="https://cliick.com/" />
+    <meta
+      property="og:image"
+      content="https://cliick.com/images/cliick-icon.png"
+    />
 
-  <meta name="twitter:card" content="summary"/>
-  <meta name="twitter:title" content="Cliick | Welcome"/>
-  <meta name="twitter:description" content="Cliick is your private, ad-free network for sharing real moments with the people who matter."/>
-  <meta name="twitter:image" content="https://cliick.com/images/cliick-icon.png"/>
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Cliick | Welcome" />
+    <meta
+      name="twitter:description"
+      content="Cliick is your private, ad-free network for sharing real moments with the people who matter."
+    />
+    <meta
+      name="twitter:image"
+      content="https://cliick.com/images/cliick-icon.png"
+    />
 
-  <link rel="apple-touch-icon" href="https://cliick.com/images/cliick-icon.png" />
-  <!-- Preconnects for Google Fonts -->
-  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon.png" />
-  <link rel="stylesheet" href="styles.css" />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bungee&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,600;1,100;1,200;1,300&display=swap" rel="stylesheet">
-  <style>
-    .hero {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 60px 20px;
-      background-color: #000;
-    }
+    <link
+      rel="apple-touch-icon"
+      href="https://cliick.com/images/cliick-icon.png"
+    />
+    <!-- Preconnects for Google Fonts -->
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon.png" />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bungee&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,600;1,100;1,200;1,300&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      .hero {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 60px 20px;
+        background-color: #000;
+      }
 
-    .hero-content {
-      display: flex;
-      flex-direction: row-reverse;
-      align-items: center;
-      justify-content: space-between;
-      max-width: 1200px;
-      width: 100%;
-      gap: 40px;
-    }
-
-    .hero-left {
-      flex: 1;
-    }
-
-    .hero-left h1 {
-      font-size: var(--fs-home-hero-title);
-      margin-bottom: 25px;
-      font-weight: var(--fw-regular);
-      color: #ffffff
-    }
-
-    .hero-left p {
-      font-size: var(--fs-home-hero-subtitle);
-      margin-bottom: 35px;
-      color: #ffffff;
-    }
-
-    .app-buttons {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 20px;
-    }
-
-    .app-buttons img {
-      height: 50px;
-    }
-
-    .hero-right {
-      flex: 1;
-      position: relative;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .image-container {
-      position: relative;
-      text-align: center;
-      display: block;
-      overflow: hidden;
-      border-radius: 20px;
-      width: min(400px, 100%);
-    }
-
-    .image-container img {
-      width: 100%;
-      border-radius: 20px;
-      box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
-    }
-
-    /* Mobile Responsive */
-    @media (max-width: 768px) {
       .hero-content {
-        flex-direction: column;
-        text-align: center;
+        display: flex;
+        flex-direction: row-reverse;
+        align-items: center;
+        justify-content: space-between;
+        max-width: 1200px;
+        width: 100%;
+        gap: 40px;
       }
 
       .hero-left {
-        margin-bottom: 40px;
+        flex: 1;
+      }
+
+      .hero-left h1 {
+        font-size: var(--fs-home-hero-title);
+        margin-bottom: 25px;
+        font-weight: var(--fw-regular);
+        color: #ffffff;
+      }
+
+      .hero-left p {
+        font-size: var(--fs-home-hero-subtitle);
+        margin-bottom: 35px;
+        color: #ffffff;
       }
 
       .app-buttons {
-        gap: 15px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
       }
 
       .app-buttons img {
-        height: 45px;
-      }
-    }
-
-    h1.glitch {
-      position: absolute;
-      bottom: 6%;
-      left: 6%;
-      right: 6%;
-      font-size: clamp(1rem, 8vw, 2.6rem);
-      color: #fef08a;
-      transform: rotate(-5deg);
-      animation: float 3s ease-in-out infinite;
-      font-family: 'Bungee', sans-serif;
-      text-align: center;
-      overflow: hidden;
-      white-space: pre-line;
-      line-height: 1;
-    }
-
-    h1.glitch::before,
-    h1.glitch::after {
-      content: "WELCOME TO\A CLiiCK";
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      text-align: center;
-      z-index: -1;
-      white-space: pre-line;
-    }
-
-    h1.glitch::before {
-      color: #0ff;
-      transform: translate(2px, 0);
-      animation: glitch-anim-1 2s infinite linear alternate-reverse;
-    }
-
-    h1.glitch::after {
-      color: #f0f;
-      transform: translate(-2px, 0);
-      animation: glitch-anim-2 1.5s infinite linear alternate-reverse;
-    }
-
-    @keyframes glitch-anim-1 {
-      0% { transform: translate(2px, -2px); }
-      25% { transform: translate(-2px, 2px); }
-      50% { transform: translate(2px, 2px); }
-      75% { transform: translate(-2px, -2px); }
-      100% { transform: translate(2px, -2px); }
-    }
-
-    @keyframes glitch-anim-2 {
-      0% { transform: translate(-2px, 2px); }
-      25% { transform: translate(2px, -2px); }
-      50% { transform: translate(-2px, -2px); }
-      75% { transform: translate(2px, 2px); }
-      100% { transform: translate(-2px, 2px); }
-    }
-
-    @keyframes float {
-      0%, 100% { transform: rotate(-5deg) translateY(0); }
-      50% { transform: rotate(-5deg) translateY(-10px); }
-    }
-
-    .feature-section {
-      background-color: #ffffff;
-      display: flex;
-      flex-direction: column;
-      gap: 4rem;
-      width: 100%;
-      align-self: center;
-      max-width: 1200px;
-      padding: 4rem 2rem;
-      position: relative; /* allow absolute-positioned tracks */
-      overflow: hidden;
-    }
-
-    .feature-row {
-      display: flex;
-      flex-wrap: nowrap;
-      align-items: center;
-      justify-content: center; /* center content for better balance */
-      gap: 5rem; /* slightly wider spacing */
-      max-width: 1400px; /* allow a wider row */
-      margin: 0 auto;
-      padding: 0 1rem; /* subtle side padding */
-    }
-
-    .feature-row.reverse {
-      flex-direction: row-reverse;
-    }
-    /* Chicken tracks overlay */
-    .tracks-svg {
-      position: absolute;
-      left: 0; top: 0;
-      width: 100%; height: 100%;
-      pointer-events: none;
-      overflow: visible;
-      z-index: 0;
-    }
-    .feature-section .feature-row,
-    .feature-section .feature-intro { position: relative; z-index: 2; }
-  .footprint line { stroke: #000; stroke-width: 1; stroke-linecap: round; filter: drop-shadow(0 1px 1px rgba(0,0,0,0.25)); }
-  .footprint { opacity: 0.55; transition: opacity .25s ease; }
-  .footprint:hover { opacity: 0.85; }
-
-    .feature-image {
-      flex: 1 1 420px; /* allow it to scale wider */
-      text-align: center;
-      min-width: 300px;
-    }
-
-    .feature-image img {
-      width: 100%;
-      max-width: 320px; /* allow bigger preview */
-      height: auto;
-      border-radius: 20px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.25);
-    }
-
-    .feature-text {
-      flex: 1 1 500px; /* wider text column */
-      max-width: 640px;
-      min-width: 320px;
-      background-color: #ffffff;
-      padding: 2rem;
-      border-radius: 20px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
-
-    .feature-text h3 {
-      font-size: var(--fs-home-hero-subtitle);
-      font-weight: var(--fw-regular);
-      
-    }
-
-    .feature-text p {
-      line-height: 1.6;
-      color: #000000;
-    }
-
-    .feature-text h3 {
-      color: #000000;
-    }
-
-    /* Feature intro styling */
-    .feature-intro {
-      text-align: left;
-      margin: 0 auto 5rem;
-    }
-
-    .feature-intro p {
-      line-height: 1.6;
-      color: #000000;
-      font-family: var(--font-sans);
-      margin: 0 auto;
-    }
-
-    @media (max-width: 768px) {
-      .section-title { font-size: var(--fs-home-section-title-mobile); }
-      .feature-intro p { font-size: var(--fs-body-lg); }
-
-      /* On small screens stack (text first, then image) */
-      .feature-row,
-      .feature-row.reverse {
-        flex-direction: column;
-        flex-wrap: nowrap;
-        gap: 2rem;
+        height: 50px;
       }
 
-      .feature-text {
-        order: 1;
-        flex: 0 1 auto;
-        min-width: 0;
+      .hero-right {
+        flex: 1;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .image-container {
+        position: relative;
+        text-align: center;
+        display: block;
+        overflow: hidden;
+        border-radius: 20px;
+        width: min(400px, 100%);
+      }
+
+      .image-container img {
         width: 100%;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
+      }
+
+      /* Mobile Responsive */
+      @media (max-width: 768px) {
+        .hero-content {
+          flex-direction: column;
+          text-align: center;
+        }
+
+        .hero-left {
+          margin-bottom: 40px;
+        }
+
+        .app-buttons {
+          gap: 15px;
+        }
+
+        .app-buttons img {
+          height: 45px;
+        }
+      }
+
+      h1.glitch {
+        position: absolute;
+        bottom: 6%;
+        left: 6%;
+        right: 6%;
+        font-size: clamp(1rem, 8vw, 2.6rem);
+        color: #fef08a;
+        transform: rotate(-5deg);
+        animation: float 3s ease-in-out infinite;
+        font-family: "Bungee", sans-serif;
+        text-align: center;
+        overflow: hidden;
+        white-space: pre-line;
+        line-height: 1;
+      }
+
+      h1.glitch::before,
+      h1.glitch::after {
+        content: "WELCOME TO\A CLiiCK";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        text-align: center;
+        z-index: -1;
+        white-space: pre-line;
+      }
+
+      h1.glitch::before {
+        color: #0ff;
+        transform: translate(2px, 0);
+        animation: glitch-anim-1 2s infinite linear alternate-reverse;
+      }
+
+      h1.glitch::after {
+        color: #f0f;
+        transform: translate(-2px, 0);
+        animation: glitch-anim-2 1.5s infinite linear alternate-reverse;
+      }
+
+      @keyframes glitch-anim-1 {
+        0% {
+          transform: translate(2px, -2px);
+        }
+        25% {
+          transform: translate(-2px, 2px);
+        }
+        50% {
+          transform: translate(2px, 2px);
+        }
+        75% {
+          transform: translate(-2px, -2px);
+        }
+        100% {
+          transform: translate(2px, -2px);
+        }
+      }
+
+      @keyframes glitch-anim-2 {
+        0% {
+          transform: translate(-2px, 2px);
+        }
+        25% {
+          transform: translate(2px, -2px);
+        }
+        50% {
+          transform: translate(-2px, -2px);
+        }
+        75% {
+          transform: translate(2px, 2px);
+        }
+        100% {
+          transform: translate(-2px, 2px);
+        }
+      }
+
+      @keyframes float {
+        0%,
+        100% {
+          transform: rotate(-5deg) translateY(0);
+        }
+        50% {
+          transform: rotate(-5deg) translateY(-10px);
+        }
+      }
+
+      .feature-section {
+        background-color: #ffffff;
+        display: flex;
+        flex-direction: column;
+        gap: 4rem;
+        width: 100%;
+        align-self: center;
+        max-width: 1200px;
+        padding: 4rem 2rem;
+        position: relative; /* allow absolute-positioned tracks */
+        overflow: hidden;
+      }
+
+      .feature-row {
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: center;
+        justify-content: center; /* center content for better balance */
+        gap: 5rem; /* slightly wider spacing */
+        max-width: 1400px; /* allow a wider row */
+        margin: 0 auto;
+        padding: 0 1rem; /* subtle side padding */
+      }
+
+      .feature-row.reverse {
+        flex-direction: row-reverse;
+      }
+      /* Chicken tracks overlay */
+      .tracks-svg {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        overflow: visible;
+        z-index: 0;
+      }
+      .feature-section .feature-row,
+      .feature-section .feature-intro {
+        position: relative;
+        z-index: 2;
+      }
+      .footprint line {
+        stroke: #000;
+        stroke-width: 1;
+        stroke-linecap: round;
+        filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.25));
+      }
+      .footprint {
+        opacity: 0.55;
+        transition: opacity 0.25s ease;
+      }
+      .footprint:hover {
+        opacity: 0.85;
       }
 
       .feature-image {
-        order: 2;
-        flex: 0 1 auto;
-        min-width: 0;
+        flex: 1 1 420px; /* allow it to scale wider */
+        text-align: center;
+        min-width: 300px;
+      }
+
+      .feature-image img {
         width: 100%;
+        max-width: 320px; /* allow bigger preview */
+        height: auto;
+        border-radius: 20px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
       }
-    }
 
-    .explore-section {
-      text-align: center;
-      padding: 3rem 2rem 2rem;
-    }
-
-    .explore-text {
-      font-size: var(--fs-home-explore);
-      font-weight: var(--fw-semibold);
-      color: #000000;
-      margin-bottom: 1rem;
-      font-family: var(--font-sans);
-    }
-
-    .explore-arrow {
-      display: inline-block;
-      cursor: pointer;
-      transition: transform 0.3s ease;
-      animation: bounce 2s infinite;
-    }
-
-    .explore-arrow:hover {
-      transform: translateY(2px);
-    }
-
-    .explore-arrow svg {
-      width: 40px;
-      height: 40px;
-      fill: #000000;
-    }
-
-    @keyframes bounce {
-      0%, 20%, 50%, 80%, 100% {
-        transform: translateY(0);
+      .feature-text {
+        flex: 1 1 500px; /* wider text column */
+        max-width: 640px;
+        min-width: 320px;
+        background-color: #ffffff;
+        padding: 2rem;
+        border-radius: 20px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
       }
-      40% {
-        transform: translateY(-10px);
-      }
-      60% {
-        transform: translateY(-5px);
-      }
-    }
-  </style>
-</head>
-<body>
 
-  <nav class="navbar">
-    <div class="nav-container">
-      <a href="/" class="nav-logo">
-        <img src="images/cliick-icon.png" alt="Cliick Logo" class="logo-img">
-      </a>
-      <div class="nav-menu">
-        <a href="./privacy/" class="nav-link">Privacy Policy</a>
-        <a href="./terms/" class="nav-link">Terms of Service</a>
-        <a href="./support/" class="nav-link">Support</a>
+      .feature-text h3 {
+        font-size: var(--fs-home-hero-subtitle);
+        font-weight: var(--fw-regular);
+      }
+
+      .feature-text p {
+        line-height: 1.6;
+        color: #000000;
+      }
+
+      .feature-text h3 {
+        color: #000000;
+      }
+
+      /* Feature intro styling */
+      .feature-intro {
+        text-align: left;
+        margin: 0 auto 5rem;
+      }
+
+      .feature-intro p {
+        line-height: 1.6;
+        color: #000000;
+        font-family: var(--font-sans);
+        margin: 0 auto;
+      }
+
+      @media (max-width: 768px) {
+        .section-title {
+          font-size: var(--fs-home-section-title-mobile);
+        }
+        .feature-intro p {
+          font-size: var(--fs-body-lg);
+        }
+
+        /* On small screens stack (text first, then image) */
+        .feature-row,
+        .feature-row.reverse {
+          flex-direction: column;
+          flex-wrap: nowrap;
+          gap: 2rem;
+        }
+
+        .feature-text {
+          order: 1;
+          flex: 0 1 auto;
+          min-width: 0;
+          width: 100%;
+        }
+
+        .feature-image {
+          order: 2;
+          flex: 0 1 auto;
+          min-width: 0;
+          width: 100%;
+        }
+      }
+
+      .explore-section {
+        text-align: center;
+        padding: 3rem 2rem 2rem;
+      }
+
+      .explore-text {
+        font-size: var(--fs-home-explore);
+        font-weight: var(--fw-semibold);
+        color: #000000;
+        margin-bottom: 1rem;
+        font-family: var(--font-sans);
+      }
+
+      .explore-arrow {
+        display: inline-block;
+        cursor: pointer;
+        transition: transform 0.3s ease;
+        animation: bounce 2s infinite;
+      }
+
+      .explore-arrow:hover {
+        transform: translateY(2px);
+      }
+
+      .explore-arrow svg {
+        width: 40px;
+        height: 40px;
+        fill: #000000;
+      }
+
+      @keyframes bounce {
+        0%,
+        20%,
+        50%,
+        80%,
+        100% {
+          transform: translateY(0);
+        }
+        40% {
+          transform: translateY(-10px);
+        }
+        60% {
+          transform: translateY(-5px);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="nav-container">
+        <a href="/" class="nav-logo">
+          <img
+            src="images/cliick-icon.png"
+            alt="Cliick Logo"
+            class="logo-img"
+          />
+        </a>
+        <div class="nav-menu">
+          <a href="./privacy/" class="nav-link">Privacy Policy</a>
+          <a href="./terms/" class="nav-link">Terms of Service</a>
+          <a href="./support/" class="nav-link">Support</a>
+        </div>
+        <div class="nav-toggle">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </div>
       </div>
-      <div class="nav-toggle">
-        <span class="bar"></span>
-        <span class="bar"></span>
-        <span class="bar"></span>
-        <span class="bar"></span>
-      </div>
-    </div>
-  </nav>
+    </nav>
 
-   <script>
+    <script>
       // Smooth scroll to features section
       function scrollToFeatures() {
-        document.getElementById('features').scrollIntoView({
-          behavior: 'smooth'
+        document.getElementById("features").scrollIntoView({
+          behavior: "smooth",
         });
       }
 
       // Mobile menu toggle functionality
-      const navToggle = document.querySelector('.nav-toggle');
-      const navMenu = document.querySelector('.nav-menu');
+      const navToggle = document.querySelector(".nav-toggle");
+      const navMenu = document.querySelector(".nav-menu");
 
-      navToggle.addEventListener('click', () => {
-        navMenu.classList.toggle('active');
-        navToggle.classList.toggle('active');
+      navToggle.addEventListener("click", () => {
+        navMenu.classList.toggle("active");
+        navToggle.classList.toggle("active");
       });
 
       // Close mobile menu when clicking on a link
-      const navLinks = document.querySelectorAll('.nav-link');
-      navLinks.forEach(link => {
-        link.addEventListener('click', () => {
-          navMenu.classList.remove('active');
-          navToggle.classList.remove('active');
+      const navLinks = document.querySelectorAll(".nav-link");
+      navLinks.forEach((link) => {
+        link.addEventListener("click", () => {
+          navMenu.classList.remove("active");
+          navToggle.classList.remove("active");
         });
       });
-  </script>
+    </script>
 
+    <section class="hero">
+      <div class="hero-content">
+        <div class="hero-left">
+          <h1>CLiiCK</h1>
+          <p>
+            Your private, ad-free network for sharing real moments with the
+            people who matter.
+          </p>
+          <div class="app-buttons">
+            <a
+              href="https://apps.apple.com/us/app/cliick-your-private-network/id6608980465"
+              class="app-btn"
+            >
+              <img
+                src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg"
+                alt="Download on the App Store"
+              />
+            </a>
+            <a
+              href="https://play.google.com/store/apps/details?id=com.derangedchicken.clique"
+              class="app-btn"
+            >
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg"
+                alt="Get it on Google Play"
+              />
+            </a>
+          </div>
+        </div>
 
-  <section class="hero">
-    <div class="hero-content">
-      <div class="hero-left">
-        <h1>CLiiCK</h1>
-        <p>Your private, ad-free network for sharing real moments with the people who matter.</p>
-        <div class="app-buttons">
-          <a href="https://apps.apple.com/app/cliick/id{6608980465}" class="app-btn">
-            <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="Download on the App Store">
-          </a>
-          <a href="https://play.google.com/store/apps/details?id=com.derangedchicken.clique" class="app-btn">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Get it on Google Play">
-          </a>
+        <div class="hero-right">
+          <div class="image-container">
+            <img src="./images/fluffy-post.png" alt="Cliick App Preview" />
+            <h1 class="glitch">WELCOME TO<br />CLiiCK</h1>
+          </div>
         </div>
       </div>
+    </section>
 
-      <div class="hero-right">
-        <div class="image-container">
-          <img src="./images/fluffy-post.png" alt="Cliick App Preview">
-            <h1 class="glitch">WELCOME TO<br>CLiiCK</h1>
-        </div>
+    <div class="explore-section">
+      <div class="explore-text">Explore</div>
+      <div class="explore-arrow" onclick="scrollToFeatures()">
+        <svg viewBox="0 0 24 24">
+          <path
+            d="M7.41 8.84L12 13.42l4.59-4.58L18 10.25l-6 6-6-6 1.41-1.41z"
+          />
+        </svg>
       </div>
     </div>
-  </section>
 
-  <div class="explore-section">
-    <div class="explore-text">Explore</div>
-    <div class="explore-arrow" onclick="scrollToFeatures()">
-      <svg viewBox="0 0 24 24">
-        <path d="M7.41 8.84L12 13.42l4.59-4.58L18 10.25l-6 6-6-6 1.41-1.41z"/>
+    <section class="feature-section" id="features">
+      <!-- Chicken Tracks SVG Layer -->
+      <svg class="tracks-svg" viewBox="0 0 100 100" aria-hidden="true">
+        <path id="trackPath" d="M0 0" fill="none" stroke="none" />
       </svg>
-    </div>
-  </div>
-  
-  <section class="feature-section" id="features">
 
-    <!-- Chicken Tracks SVG Layer -->
-    <svg class="tracks-svg" viewBox="0 0 100 100" aria-hidden="true">
-      <path id="trackPath" d="M0 0" fill="none" stroke="none" />
-    </svg>
-
-    <div class="feature-intro">
-      <h2 class="section-title">Why Cliick?</h2>
-      <p>Discover how Cliick keeps your moments private, meaningful, and effortless to share. We built a space without ads, noise, or follower counts—just authentic connections with the people you actually know.</p>
-    </div>
-
-    <!-- Row 1 -->
-    <div class="feature-row">
-      <div class="feature-image">
-        <img src="images/drawer.png" alt="Cliick screenshot: YOUR PEOPLE">
+      <div class="feature-intro">
+        <h2 class="section-title">Why Cliick?</h2>
+        <p>
+          Discover how Cliick keeps your moments private, meaningful, and
+          effortless to share. We built a space without ads, noise, or follower
+          counts—just authentic connections with the people you actually know.
+        </p>
       </div>
-      <div class="feature-text">
-        <h3>YOUR PEOPLE</h3>
-        <p>Cliicks for every part of your life</p>
+
+      <!-- Row 1 -->
+      <div class="feature-row">
+        <div class="feature-image">
+          <img src="images/drawer.png" alt="Cliick screenshot: YOUR PEOPLE" />
+        </div>
+        <div class="feature-text">
+          <h3>YOUR PEOPLE</h3>
+          <p>Cliicks for every part of your life</p>
+        </div>
       </div>
-    </div>
 
-    <!-- Row 2 -->
-    <div class="feature-row reverse">
-      <div class="feature-image">
-        <img src="images/feed.png" alt="Cliick screenshot: YOUR FEED">
+      <!-- Row 2 -->
+      <div class="feature-row reverse">
+        <div class="feature-image">
+          <img src="images/feed.png" alt="Cliick screenshot: YOUR FEED" />
+        </div>
+        <div class="feature-text">
+          <h3>YOUR FEED</h3>
+          <p>Just the people you care about</p>
+        </div>
       </div>
-      <div class="feature-text">
-        <h3>YOUR FEED</h3>
-        <p>Just the people you care about</p>
+
+      <!-- Row 3 -->
+      <div class="feature-row">
+        <div class="feature-image">
+          <img src="images/gallery.png" alt="Cliick screenshot: YOUR VIEW" />
+        </div>
+        <div class="feature-text">
+          <h3>YOUR VIEW</h3>
+          <p>Organized and entirely yours</p>
+        </div>
       </div>
-    </div>
 
-    <!-- Row 3 -->
-    <div class="feature-row">
-      <div class="feature-image">
-        <img src="images/gallery.png" alt="Cliick screenshot: YOUR VIEW">
+      <!-- Row 4 -->
+      <div class="feature-row reverse">
+        <div class="feature-image">
+          <img src="images/comments.png" alt="Cliick screenshot: YOUR RULES" />
+        </div>
+        <div class="feature-text">
+          <h3>YOUR RULES</h3>
+          <p>Real conversations in the right place</p>
+        </div>
       </div>
-      <div class="feature-text">
-        <h3>YOUR VIEW</h3>
-        <p>Organized and entirely yours</p>
+
+      <!-- Row 5 -->
+      <div class="feature-row">
+        <div class="feature-image">
+          <img src="images/zoom.png" alt="Cliick screenshot: YOUR WORLD" />
+        </div>
+        <div class="feature-text">
+          <h3>YOUR WORLD</h3>
+          <p>See every detail</p>
+        </div>
       </div>
-    </div>
+    </section>
 
-    <!-- Row 4 -->
-    <div class="feature-row reverse">
-      <div class="feature-image">
-        <img src="images/comments.png" alt="Cliick screenshot: YOUR RULES">
-      </div>
-      <div class="feature-text">
-        <h3>YOUR RULES</h3>
-        <p>Real conversations in the right place</p>
-      </div>
-    </div>
+    <script>
+      // Dynamically weave chicken tracks between feature images.
+      (function initDynamicTracks() {
+        const featureSection = document.querySelector(".feature-section");
+        const path = document.getElementById("trackPath");
+        const svg = path?.closest("svg");
+        if (!featureSection || !path || !svg) return;
 
-    <!-- Row 5 -->
-    <div class="feature-row">
-      <div class="feature-image">
-        <img src="images/zoom.png" alt="Cliick screenshot: YOUR WORLD">
-      </div>
-      <div class="feature-text">
-        <h3>YOUR WORLD</h3>
-        <p>See every detail</p>
-      </div>
-    </div>
+        function buildPath() {
+          // Clear old footprints
+          svg.querySelectorAll(".footprint").forEach((fp) => fp.remove());
 
-  </section>
+          const rows = [...featureSection.querySelectorAll(".feature-row")];
+          if (rows.length === 0) return;
 
-  <script>
-    // Dynamically weave chicken tracks between feature images.
-    (function initDynamicTracks(){
-      const featureSection = document.querySelector('.feature-section');
-      const path = document.getElementById('trackPath');
-      const svg = path?.closest('svg');
-      if(!featureSection || !path || !svg) return;
+          // Measure section for updated viewBox height based on content
+          const secRect = featureSection.getBoundingClientRect();
+          const height = secRect.height;
+          const width = secRect.width;
+          svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
 
-      function buildPath() {
-        // Clear old footprints
-        svg.querySelectorAll('.footprint').forEach(fp => fp.remove());
-
-        const rows = [...featureSection.querySelectorAll('.feature-row')];
-        if(rows.length === 0) return;
-
-        // Measure section for updated viewBox height based on content
-        const secRect = featureSection.getBoundingClientRect();
-        const height = secRect.height;
-        const width = secRect.width;
-        svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
-
-        // Collect image centers in document space then convert to section-relative
-        const points = rows.map(r => {
-          const img = r.querySelector('.feature-image img');
-          const rect = img ? img.getBoundingClientRect() : r.getBoundingClientRect();
-          return {
-            x: rect.left + rect.width/2 - secRect.left,
-            y: rect.top + rect.height/2 - secRect.top
-          };
-        });
-
-        // Start near top center below intro
-        const intro = featureSection.querySelector('.feature-intro');
-        const introRect = intro?.getBoundingClientRect();
-        const startY = introRect ? (introRect.bottom - secRect.top) + 40 : 40;
-        const startX = width/2;
-
-        // Build smooth cubic path weaving horizontally between points
-        let d = `M ${startX} ${startY}`;
-        points.forEach((pt, i) => {
-          const prev = i === 0 ? {x:startX, y:startY} : points[i-1];
-          const verticalDelta = pt.y - prev.y;
-          const midX = (prev.x + pt.x) / 2;
-          const direction = (i % 2 === 0 ? -1 : 1);
-          const swingBase = width * 0.38;
-          // So only first segment is gentler
-          const swing = (i === 0 ? direction * swingBase * -0.8 : direction * swingBase);
-          const bendFactor = (i === 0 ? 0.38 : 0.55);
-          const c1x = midX + swing * bendFactor;
-          const c2x = midX - swing * bendFactor;
-          // Keep first segment higher to avoid dipping beneath first image
-          const c1y = prev.y + verticalDelta * (i === 0 ? 0.15 : 0.25);
-          const c2y = prev.y + verticalDelta * (i === 0 ? 0.55 : 0.75);
-          d += ` C ${c1x} ${c1y}, ${c2x} ${c2y}, ${pt.x} ${pt.y}`;
-        });
-
-        path.setAttribute('d', d);
-
-        generateFootprints();
-      }
-
-      function generateFootprints(){
-        const pathLength = path.getTotalLength();
-        const stepDistance = 60; // pixels between footprints
-        let leftStep = true;
-        for(let dist=0; dist <= pathLength; dist += stepDistance){
-          const pt = path.getPointAtLength(dist);
-          const ahead = path.getPointAtLength(Math.min(dist + 1, pathLength));
-          const angle = Math.atan2(ahead.y - pt.y, ahead.x - pt.x) * 180 / Math.PI;
-          const lateralOffset = leftStep ? -14 : 14; // shift left/right in pixels
-          leftStep = !leftStep;
-          const g = document.createElementNS('http://www.w3.org/2000/svg','g');
-          g.setAttribute('class','footprint');
-          g.setAttribute('transform', `translate(${pt.x + lateralOffset}, ${pt.y}) rotate(${angle + 90}) scale(0.9)`);
-          const strokeW = 3.4; // bolder stroke
-          const toes = [
-            {x1:0,y1:0,x2:0,y2:-18},
-            {x1:0,y1:0,x2:-11,y2:-14},
-            {x1:0,y1:0,x2:11,y2:-14},
-            {x1:0,y1:0,x2:0,y2:10}
-          ];
-          toes.forEach(t => {
-            const line = document.createElementNS('http://www.w3.org/2000/svg','line');
-            line.setAttribute('x1', t.x1); line.setAttribute('y1', t.y1);
-            line.setAttribute('x2', t.x2); line.setAttribute('y2', t.y2);
-            line.setAttribute('stroke-width', strokeW);
-            line.setAttribute('stroke-linecap', 'round');
-            line.setAttribute('vector-effect','non-scaling-stroke');
-            g.appendChild(line);
+          // Collect image centers in document space then convert to section-relative
+          const points = rows.map((r) => {
+            const img = r.querySelector(".feature-image img");
+            const rect = img
+              ? img.getBoundingClientRect()
+              : r.getBoundingClientRect();
+            return {
+              x: rect.left + rect.width / 2 - secRect.left,
+              y: rect.top + rect.height / 2 - secRect.top,
+            };
           });
-          svg.appendChild(g);
+
+          // Start near top center below intro
+          const intro = featureSection.querySelector(".feature-intro");
+          const introRect = intro?.getBoundingClientRect();
+          const startY = introRect ? introRect.bottom - secRect.top + 40 : 40;
+          const startX = width / 2;
+
+          // Build smooth cubic path weaving horizontally between points
+          let d = `M ${startX} ${startY}`;
+          points.forEach((pt, i) => {
+            const prev = i === 0 ? { x: startX, y: startY } : points[i - 1];
+            const verticalDelta = pt.y - prev.y;
+            const midX = (prev.x + pt.x) / 2;
+            const direction = i % 2 === 0 ? -1 : 1;
+            const swingBase = width * 0.38;
+            // So only first segment is gentler
+            const swing =
+              i === 0 ? direction * swingBase * -0.8 : direction * swingBase;
+            const bendFactor = i === 0 ? 0.38 : 0.55;
+            const c1x = midX + swing * bendFactor;
+            const c2x = midX - swing * bendFactor;
+            // Keep first segment higher to avoid dipping beneath first image
+            const c1y = prev.y + verticalDelta * (i === 0 ? 0.15 : 0.25);
+            const c2y = prev.y + verticalDelta * (i === 0 ? 0.55 : 0.75);
+            d += ` C ${c1x} ${c1y}, ${c2x} ${c2y}, ${pt.x} ${pt.y}`;
+          });
+
+          path.setAttribute("d", d);
+
+          generateFootprints();
         }
-      }
 
-      // Debounced resize to rebuild
-      let resizeTimer;
-      window.addEventListener('resize', () => {
-        clearTimeout(resizeTimer);
-        resizeTimer = setTimeout(buildPath, 200);
-      });
+        function generateFootprints() {
+          const pathLength = path.getTotalLength();
+          const stepDistance = 60; // pixels between footprints
+          let leftStep = true;
+          for (let dist = 0; dist <= pathLength; dist += stepDistance) {
+            const pt = path.getPointAtLength(dist);
+            const ahead = path.getPointAtLength(Math.min(dist + 1, pathLength));
+            const angle =
+              (Math.atan2(ahead.y - pt.y, ahead.x - pt.x) * 180) / Math.PI;
+            const lateralOffset = leftStep ? -14 : 14; // shift left/right in pixels
+            leftStep = !leftStep;
+            const g = document.createElementNS(
+              "http://www.w3.org/2000/svg",
+              "g"
+            );
+            g.setAttribute("class", "footprint");
+            g.setAttribute(
+              "transform",
+              `translate(${pt.x + lateralOffset}, ${pt.y}) rotate(${
+                angle + 90
+              }) scale(0.9)`
+            );
+            const strokeW = 3.4; // bolder stroke
+            const toes = [
+              { x1: 0, y1: 0, x2: 0, y2: -18 },
+              { x1: 0, y1: 0, x2: -11, y2: -14 },
+              { x1: 0, y1: 0, x2: 11, y2: -14 },
+              { x1: 0, y1: 0, x2: 0, y2: 10 },
+            ];
+            toes.forEach((t) => {
+              const line = document.createElementNS(
+                "http://www.w3.org/2000/svg",
+                "line"
+              );
+              line.setAttribute("x1", t.x1);
+              line.setAttribute("y1", t.y1);
+              line.setAttribute("x2", t.x2);
+              line.setAttribute("y2", t.y2);
+              line.setAttribute("stroke-width", strokeW);
+              line.setAttribute("stroke-linecap", "round");
+              line.setAttribute("vector-effect", "non-scaling-stroke");
+              g.appendChild(line);
+            });
+            svg.appendChild(g);
+          }
+        }
 
-      // Initial build after images likely loaded
-      if(document.readyState === 'complete') buildPath();
-      else window.addEventListener('load', buildPath);
-    })();
-  </script>
+        // Debounced resize to rebuild
+        let resizeTimer;
+        window.addEventListener("resize", () => {
+          clearTimeout(resizeTimer);
+          resizeTimer = setTimeout(buildPath, 200);
+        });
 
-  <!-- FOOTER_START -->
-<footer class="footer">
-  <div class="footer-container">
-    <div class="footer-menu">
-      <a href="./privacy/" class="footer-link">Privacy Policy</a>
-      <a href="./terms/" class="footer-link">Terms of Service</a>
-      <a href="./deleteme/" class="footer-link">Account Deletion</a>
-      <a href="./support/" class="footer-link">Support</a>
-    </div>
-    <div class="footer-info">
-      <p>&copy; Deranged Chicken LLC. All rights reserved.</p>
-    </div>
-  </div>
-</footer>
-<!-- FOOTER_END -->
+        // Initial build after images likely loaded
+        if (document.readyState === "complete") buildPath();
+        else window.addEventListener("load", buildPath);
+      })();
+    </script>
 
-
-
-</body>
+    <!-- FOOTER_START -->
+    <footer class="footer">
+      <div class="footer-container">
+        <div class="footer-menu">
+          <a href="./privacy/" class="footer-link">Privacy Policy</a>
+          <a href="./terms/" class="footer-link">Terms of Service</a>
+          <a href="./deleteme/" class="footer-link">Account Deletion</a>
+          <a href="./support/" class="footer-link">Support</a>
+        </div>
+        <div class="footer-info">
+          <p>&copy; Deranged Chicken LLC. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+    <!-- FOOTER_END -->
+  </body>
 </html>
