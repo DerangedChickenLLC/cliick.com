@@ -18,12 +18,18 @@ Static marketing website for Cliick, hosted on GitHub Pages at cliick.com. Conta
 
 ### Redesign notes (issue #3)
 
-- The home "showcase" uses a stationary-phone effect: each gray window has
-  `clip-path` and contains its own `position: fixed` phone copy, so scrolling
-  windows sweep over a phone that never moves. Small screens and
-  `prefers-reduced-motion` fall back to static phones.
-- Phone screens are placeholder stills; swap `<img>` → `<video>` in both the
-  fixed and static copies of each window when app screen recordings exist.
+- The home page has ONE stage phone (`.stage-phone` in `#stage`): a
+  `position: fixed` phone visible from the hero onward. IntersectionObservers
+  in `js/redesign.js` crossfade its screen per section, fade in the gray mock
+  window once the showcase starts, reveal each section's copy, and fade the
+  phone out when the stage scrolls past. Gated by `body.stage-motion`
+  (JS + ≥1200px + motion allowed); otherwise static per-section phones in
+  `.win` boxes render instead.
+- Phone screens are placeholder stills; swap the stacked `<img data-screen>`
+  elements for `<video>` (or one looped video seeked per section) when app
+  screen recordings exist.
+- An earlier "porthole" variant (fixed phones clipped per scrolling window,
+  no JS) is preserved at tag `savepoint-porthole-design`.
 
 ## Build & Sync
 

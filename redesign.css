@@ -245,6 +245,7 @@ a { color: inherit; }
   width: 100%;
   height: 100%;
   object-fit: cover;
+  background: #000; /* some app screenshots carry alpha; keep crossfades opaque */
 }
 .phone-blank {
   background: #fff;
@@ -252,23 +253,66 @@ a { color: inherit; }
 }
 .phone-blank .phone-screen { background: #fff; }
 
-/* Static copy: shown on small screens / reduced motion */
+/* Static copy: shown on small screens / reduced motion / no JS */
 .phone--static {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
   top: 61px;
 }
-/* Fixed copy: the stationary phone the windows travel over */
-.phone--fixed {
+
+/* --------------------------------------------------------------------------
+   Stage phone — THE phone. Fixed from the hero onward; the page scrolls
+   past it. Its screen crossfades to match the section in view, and the
+   gray mock window fades in behind it once the showcase begins.
+   Enabled by body.stage-motion (JS + wide viewport + motion allowed).
+   -------------------------------------------------------------------------- */
+.stage-phone {
   display: none;
   position: fixed;
-  top: max(calc(50vh - 434px), calc(var(--nav-h) * -1));
-  right: calc(var(--wrap-pad) + min(758px, 52vw) / 2 - var(--phone-w) / 2);
+  z-index: 5;
+  top: calc(50vh - var(--window-h) / 2);
+  right: max(var(--wrap-pad), calc((100vw - 1440px) / 2 + 62px));
+  width: min(758px, 52vw);
+  height: var(--window-h);
+  border-radius: var(--radius-window);
+  overflow: hidden;
+  background: transparent;
+  transition: background-color 0.5s ease, opacity 0.4s ease;
+  pointer-events: none;
 }
-@media (min-width: 1200px) and (prefers-reduced-motion: no-preference) {
-  .phone--fixed { display: block; }
-  .showcase .phone--static { display: none; }
+.stage-phone.in-showcase { background: var(--window-gray); }
+.stage-phone.is-hidden { opacity: 0; }
+.stage-phone .phone {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 61px;
+}
+.stage-phone .phone-screen { position: relative; }
+.stage-phone .phone-screen img {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+.stage-phone .phone-screen img.active { opacity: 1; }
+
+body.stage-motion .stage-phone { display: block; }
+body.stage-motion .hero-phone { visibility: hidden; } /* keeps the hero grid slot */
+body.stage-motion .showcase .win { visibility: hidden; } /* keeps the copy column */
+
+/* Copy reveal — sections animate in as they enter the viewport */
+body.stage-motion .showcase-copy > * {
+  opacity: 0;
+  transform: translateY(38px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+body.stage-motion .showcase-copy > *:nth-child(2) { transition-delay: 0.12s; }
+body.stage-motion .showcase-copy > *:nth-child(3) { transition-delay: 0.24s; }
+body.stage-motion .showcase-copy.in-view > * {
+  opacity: 1;
+  transform: none;
 }
 
 /* --------------------------------------------------------------------------
@@ -649,7 +693,9 @@ a { color: inherit; }
 }
 @media (max-width: 720px) {
   .nav-wordmark { display: none; }
-  .nav-links a { font-size: 1rem; }
+  .nav-logo { width: 40px; height: 40px; }
+  .nav-links { gap: 14px; }
+  .nav-links a { font-size: 0.95rem; }
   .win { height: 480px; }
   .phone--static { top: 40px; transform: translateX(-50%) scale(0.82); transform-origin: top center; }
   .hero-phone { display: none; }

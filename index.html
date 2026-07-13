@@ -58,6 +58,25 @@
       </div>
     </header>
 
+    <div id="stage">
+    <!--
+      THE phone. Fixed in the viewport from the hero onward; the page scrolls
+      past it. JS (redesign.js) crossfades its screen to match the section in
+      view and fades in the gray window once the showcase begins. Screens are
+      placeholder stills — swap each <img> for a <video> (or one looped video
+      seeked per section) when app recordings exist.
+    -->
+    <div class="stage-phone" aria-hidden="true">
+      <div class="phone">
+        <div class="phone-screen">
+          <img data-screen="0" class="active" src="/images/feed.png" alt="" />
+          <img data-screen="1" src="/images/gallery.png" alt="" />
+          <img data-screen="2" src="/images/drawer.png" alt="" />
+          <img data-screen="3" src="/images/fluffy-post.png" alt="" />
+        </div>
+      </div>
+    </div>
+
     <section class="hero">
       <img class="hero-bg" src="/images/redesign/hero-bg.png" alt="" />
       <div class="wrap">
@@ -88,10 +107,9 @@
     <h2 class="welcome-head">Welcome to Cliick</h2>
 
     <!--
-      Stationary-phone showcase. Each window carries its own fixed phone copy
-      (clipped by the window), so the phone appears to hold still while copy
-      scrolls past. Screens are placeholder stills — swap the <img> for a
-      <video> in both the fixed and static copies when recordings exist.
+      Showcase copy scrolls past the fixed stage phone above. The .win boxes
+      only render on small screens / reduced motion / no JS, where each holds
+      a static phone instead.
     -->
     <div class="showcase">
       <div class="wrap row">
@@ -105,8 +123,7 @@
           <a class="learn-more" href="/about/">Learn more</a>
         </div>
         <div class="win" aria-hidden="true">
-          <div class="phone phone--static"><div class="phone-screen"><img src="/images/feed.png" alt="" /></div></div>
-          <div class="phone phone--fixed"><div class="phone-screen"><img src="/images/feed.png" alt="" /></div></div>
+          <div class="phone phone--static"><div class="phone-screen"><img src="/images/gallery.png" alt="" /></div></div>
         </div>
       </div>
 
@@ -122,7 +139,6 @@
         </div>
         <div class="win" aria-hidden="true">
           <div class="phone phone--static"><div class="phone-screen"><img src="/images/drawer.png" alt="" /></div></div>
-          <div class="phone phone--fixed"><div class="phone-screen"><img src="/images/drawer.png" alt="" /></div></div>
         </div>
       </div>
 
@@ -134,10 +150,10 @@
         </div>
         <div class="win" aria-hidden="true">
           <div class="phone phone--static"><div class="phone-screen"><img src="/images/fluffy-post.png" alt="" /></div></div>
-          <div class="phone phone--fixed"><div class="phone-screen"><img src="/images/fluffy-post.png" alt="" /></div></div>
         </div>
       </div>
     </div>
+    </div><!-- /#stage -->
 
     <section class="band latte">
       <div class="wrap">
