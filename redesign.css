@@ -1,0 +1,659 @@
+/* ==========================================================================
+   Cliick.com redesign prototype — issue #3
+   Derived from Figma: Cliick-UX (nodes 878-3893, 908-4101, 909-4340, 1176-5196)
+   Type: Poppins only. Colors sampled from the mock frames.
+   ========================================================================== */
+
+:root {
+  --font: "Poppins", sans-serif;
+
+  --ink: #000000;
+  --paper: #ffffff;
+  --page-gray: #c9c8c8;   /* subpage body background */
+  --band-gray: #dbdbdb;   /* alternating band background */
+  --window-gray: #d9d9d9; /* phone viewport windows, pill tracks */
+  --pill-border: #a3a3a3;
+
+  --radius-card: 22px;
+  --radius-window: 30px;
+  --radius-pill: 21px;
+  --shadow-card: 0 4px 15px rgba(0, 0, 0, 0.18);
+
+  --fs-display: clamp(2.75rem, 6.6vw, 6rem);      /* 96px hero/page titles */
+  --fs-h2: clamp(2rem, 3.75vw, 3.375rem);         /* 54px section heads */
+  --fs-h2-sm: clamp(1.75rem, 3.3vw, 3rem);        /* 48px centered heads */
+  --fs-h3: clamp(1.5rem, 2.5vw, 2.25rem);         /* 36px showcase heads */
+  --fs-body: clamp(1.0625rem, 1.4vw, 1.25rem);    /* 20px body */
+  --fs-small: 1rem;                                /* 16px */
+
+  --nav-h: 96px;
+  --wrap-pad: clamp(20px, 4.3vw, 62px);
+  --phone-w: 403px;
+  --phone-h: 869px;
+  --window-h: 604px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+
+body {
+  font-family: var(--font);
+  font-weight: 400;
+  color: var(--ink);
+  background: var(--paper);
+  -webkit-font-smoothing: antialiased;
+}
+
+body.page-gray { background: var(--page-gray); }
+
+img { max-width: 100%; display: block; }
+a { color: inherit; }
+
+.wrap {
+  max-width: 1440px;
+  margin-inline: auto;
+  padding-inline: var(--wrap-pad);
+}
+
+/* --------------------------------------------------------------------------
+   Nav (Figma Component 15) — sits over the dark hero photo on every page
+   -------------------------------------------------------------------------- */
+.nav {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  height: var(--nav-h);
+  display: flex;
+  align-items: center;
+}
+.nav .wrap {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.nav-logo {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.nav-wordmark {
+  font-size: 2rem;
+  font-weight: 500;
+  color: #fff;
+  text-decoration: none;
+  line-height: 1;
+}
+.nav-links {
+  margin-left: auto;
+  display: flex;
+  gap: clamp(18px, 2.6vw, 38px);
+}
+.nav-links a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 1.25rem;
+}
+.nav-links a:hover,
+.nav-links a[aria-current="page"] { text-decoration: underline; text-underline-offset: 6px; }
+
+/* --------------------------------------------------------------------------
+   Home hero
+   -------------------------------------------------------------------------- */
+.hero {
+  position: relative;
+  min-height: min(866px, 100vh);
+  background: #130e04;
+  overflow: hidden;
+  color: #fff;
+}
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.15) 60%);
+  z-index: 1;
+}
+.hero .wrap {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  align-items: center;
+  gap: 40px;
+  min-height: inherit;
+  padding-top: var(--nav-h);
+}
+.hero-title {
+  font-size: var(--fs-display);
+  font-weight: 500;
+  line-height: 1.05;
+  max-width: 12ch;
+}
+.hero-tagline {
+  margin-top: 28px;
+  font-size: var(--fs-body);
+  line-height: 1.5;
+  max-width: 44ch;
+}
+.store-badges {
+  margin-top: 36px;
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+.store-badges img { height: 52px; width: auto; }
+
+.hero-phone {
+  justify-self: center;
+  align-self: end;
+  width: min(406px, 100%);
+  margin-bottom: -120px; /* phone crops at the hero's bottom edge, per mock */
+  border-radius: 62px; /* clip the white corner nubs left by the export's mask */
+}
+
+/* --------------------------------------------------------------------------
+   Home showcase — stationary phone, copy scrolls past.
+   Each gray window clips its own viewport-fixed phone copy (clip-path makes
+   the fixed element paint only inside the window), so scrolling windows
+   sweep across a phone that never moves. Screens differ per window.
+   -------------------------------------------------------------------------- */
+.welcome-head {
+  text-align: center;
+  font-size: var(--fs-h2-sm);
+  font-weight: 500;
+  padding: 72px 20px 8px;
+}
+
+.showcase .row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) min(758px, 52vw);
+  align-items: center;
+  column-gap: clamp(24px, 3vw, 70px);
+  padding-block: 74px;
+}
+.showcase-copy h3 {
+  font-size: var(--fs-h3);
+  font-weight: 500;
+  line-height: 1.4;
+  max-width: 14ch;
+}
+.showcase-copy ul {
+  margin-top: 20px;
+  list-style: none;
+}
+.showcase-copy li {
+  font-size: var(--fs-body);
+  line-height: 2.2;
+}
+.showcase-copy li::before { content: "•  "; }
+.showcase-copy p {
+  margin-top: 20px;
+  font-size: var(--fs-body);
+  line-height: 1.6;
+  max-width: 30ch;
+}
+.learn-more {
+  display: inline-block;
+  margin-top: 40px;
+  font-size: clamp(1.25rem, 1.8vw, 1.75rem);
+  text-decoration: none;
+}
+.learn-more::after { content: "  ⟶"; }
+.learn-more:hover { text-decoration: underline; text-underline-offset: 8px; }
+
+.win {
+  position: relative;
+  height: var(--window-h);
+  background: var(--window-gray);
+  clip-path: inset(0 round var(--radius-window));
+}
+
+/* Phone frame (placeholder for app screen recordings — swap img for video) */
+.phone {
+  width: var(--phone-w);
+  height: var(--phone-h);
+  background: #0b0b0b;
+  border-radius: 62px;
+  padding: 13px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+}
+.phone-screen {
+  width: 100%;
+  height: 100%;
+  border-radius: 50px;
+  overflow: hidden;
+  background: #000;
+}
+.phone-screen img,
+.phone-screen video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.phone-blank {
+  background: #fff;
+  box-shadow: none;
+}
+.phone-blank .phone-screen { background: #fff; }
+
+/* Static copy: shown on small screens / reduced motion */
+.phone--static {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 61px;
+}
+/* Fixed copy: the stationary phone the windows travel over */
+.phone--fixed {
+  display: none;
+  position: fixed;
+  top: max(calc(50vh - 434px), calc(var(--nav-h) * -1));
+  right: calc(var(--wrap-pad) + min(758px, 52vw) / 2 - var(--phone-w) / 2);
+}
+@media (min-width: 1200px) and (prefers-reduced-motion: no-preference) {
+  .phone--fixed { display: block; }
+  .showcase .phone--static { display: none; }
+}
+
+/* --------------------------------------------------------------------------
+   Latte band (home) + pricing cards (home & membership)
+   -------------------------------------------------------------------------- */
+.band { background: var(--band-gray); }
+.latte {
+  padding: 90px 0 110px;
+  text-align: center;
+}
+.latte-fluffy {
+  width: min(340px, 70vw);
+  margin-inline: auto;
+  mix-blend-mode: multiply; /* the source art has a white background; blend it into the band */
+}
+.latte h2 {
+  font-size: var(--fs-h2-sm);
+  font-weight: 500;
+  line-height: 1.25;
+  margin-top: 8px;
+}
+.latte .sub,
+.section-sub {
+  margin: 18px auto 0;
+  font-size: var(--fs-body);
+  line-height: 1.5;
+  max-width: 62ch;
+}
+
+.plans {
+  margin-top: 56px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 440px));
+  gap: 28px;
+  justify-content: center;
+  text-align: left;
+}
+.plan {
+  background: var(--paper);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  padding: 40px 42px 48px;
+}
+.plan h3 {
+  font-size: 2.25rem;
+  font-weight: 500;
+}
+.plan-price {
+  margin-top: 28px;
+  font-weight: 500;
+  letter-spacing: -0.03em;
+}
+.plan-price .amount { font-size: 3rem; }
+.plan-price .term {
+  font-size: var(--fs-small);
+  font-weight: 400;
+  letter-spacing: -0.03em;
+}
+.plan-note,
+.plan-toggle {
+  margin-top: 20px;
+  border: 1px solid var(--pill-border);
+  background: var(--window-gray);
+  border-radius: var(--radius-pill);
+  font-size: var(--fs-small);
+  line-height: 2.5;
+  text-align: center;
+}
+.plan-toggle {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  cursor: pointer;
+  user-select: none;
+}
+.plan-toggle .knob {
+  position: absolute;
+  top: 2px;
+  bottom: 2px;
+  left: 2px;
+  width: calc(50% - 4px);
+  background: var(--paper);
+  border-radius: calc(var(--radius-pill) - 3px);
+  transition: transform 0.25s ease;
+}
+.plan-toggle[data-cycle="monthly"] .knob { transform: translateX(calc(100% + 4px)); }
+.plan-toggle span { position: relative; z-index: 1; }
+.plan-toggle-note {
+  margin-top: 10px;
+  font-size: 0.85rem;
+  text-align: center;
+  opacity: 0.7;
+  min-height: 1.2em;
+}
+.plan ul {
+  margin-top: 26px;
+  padding-left: 22px;
+  font-size: var(--fs-small);
+}
+.plan li { line-height: 2.5; }
+
+/* --------------------------------------------------------------------------
+   Subpage hero band
+   -------------------------------------------------------------------------- */
+.page-hero {
+  position: relative;
+  height: 366px;
+  background: #130e04;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  color: #fff;
+}
+.page-hero .hero-bg { object-position: center 75%; }
+.page-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+}
+.page-hero .wrap {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  padding-bottom: 28px;
+}
+.page-hero h1 {
+  font-size: var(--fs-display);
+  font-weight: 500;
+  line-height: 1.05;
+}
+
+/* --------------------------------------------------------------------------
+   Generic sections (About & Membership)
+   -------------------------------------------------------------------------- */
+.section { padding: 90px 0; }
+.section--center { text-align: center; }
+.eyebrow {
+  font-size: 1.125rem;
+  font-weight: 500;
+  text-align: center;
+}
+.section h2 {
+  font-size: var(--fs-h2);
+  font-weight: 500;
+  line-height: 1.3;
+  margin-top: 10px;
+}
+.section--center h2 { margin-inline: auto; max-width: 24ch; }
+.section--center .section-sub { max-width: 48ch; }
+.section-sub strong { font-weight: 500; }
+.section-sub + .section-sub { margin-top: 24px; }
+
+.two-col {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(32px, 5vw, 90px);
+}
+.two-col h2 { margin-top: 0; }
+.two-col .copy p {
+  margin-top: 22px;
+  font-size: var(--fs-body);
+  line-height: 1.5;
+  max-width: 46ch;
+}
+
+/* Avatar cluster (About) — ring colors approximated from the mock */
+.cluster {
+  position: relative;
+  width: 492px;
+  height: 306px;
+  max-width: 100%;
+  justify-self: center;
+}
+.cluster .av {
+  position: absolute;
+  width: 107px;
+  height: 107px;
+  border-radius: 50%;
+  border: 4px solid var(--ring, #999);
+  display: grid;
+  place-items: center;
+  background: var(--paper);
+}
+.cluster .av img {
+  width: 94px;
+  height: 94px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* Phone-in-window, static (About) */
+.win--inline { max-width: 758px; width: 100%; justify-self: center; }
+
+/* Steps (About) */
+.steps { list-style: none; max-width: 350px; }
+.steps li + li { margin-top: 26px; }
+.steps .step-title {
+  font-weight: 500;
+  font-size: var(--fs-small);
+}
+.steps p { font-size: var(--fs-small); line-height: 1.5; }
+
+.jump-in-cols {
+  margin-top: 64px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(32px, 5vw, 90px);
+  text-align: left;
+}
+.jump-in-cols .phone { justify-self: center; height: auto; aspect-ratio: 403 / 800; max-width: min(340px, 80vw); width: 100%; }
+
+.team-art { width: min(500px, 100%); border-radius: 8px; justify-self: center; }
+.art-caption {
+  text-align: center;
+  font-size: 0.85rem;
+  opacity: 0.6;
+  margin-top: 10px;
+}
+
+/* Promise pills (Membership) */
+.pills {
+  margin: 48px auto 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px 18px;
+  max-width: 760px;
+}
+.pills span {
+  background: var(--paper);
+  border-radius: var(--radius-pill);
+  padding: 6px 26px;
+  font-size: var(--fs-small);
+  line-height: 2;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+}
+
+/* --------------------------------------------------------------------------
+   FAQ
+   -------------------------------------------------------------------------- */
+.faq-search-wrap {
+  padding: 60px 0 10px;
+  display: flex;
+  justify-content: center;
+}
+.faq-search {
+  width: min(778px, 100%);
+  height: 69px;
+  border: none;
+  border-radius: 40px;
+  background: var(--paper);
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.18);
+  font: inherit;
+  font-size: var(--fs-body);
+  padding: 0 34px;
+}
+.faq-search:focus { outline: 3px solid rgba(0, 0, 0, 0.35); }
+
+.faq-list {
+  max-width: 900px;
+  margin-inline: auto;
+  padding: 30px var(--wrap-pad) 110px;
+}
+.faq-section-title {
+  font-size: 1.75rem;
+  font-weight: 500;
+  margin: 54px 0 10px;
+}
+.faq-list details {
+  background: var(--paper);
+  border-radius: 14px;
+  margin-top: 14px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+.faq-list summary {
+  cursor: pointer;
+  list-style: none;
+  padding: 18px 56px 18px 24px;
+  font-size: var(--fs-body);
+  font-weight: 500;
+  position: relative;
+}
+.faq-list summary::-webkit-details-marker { display: none; }
+.faq-list summary::after {
+  content: "+";
+  position: absolute;
+  right: 24px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.5rem;
+  font-weight: 400;
+}
+.faq-list details[open] summary::after { content: "–"; }
+.faq-list .answer {
+  padding: 0 24px 22px;
+  font-size: var(--fs-small);
+  line-height: 1.6;
+}
+.faq-list .answer ul { margin: 10px 0 0 22px; }
+.faq-list .answer li { margin-top: 8px; }
+.faq-empty {
+  display: none;
+  text-align: center;
+  font-size: var(--fs-body);
+  padding: 60px 0;
+}
+
+/* --------------------------------------------------------------------------
+   Footer (Figma Group 155)
+   -------------------------------------------------------------------------- */
+.footer-v2 {
+  background: #000;
+  color: #fff;
+  text-align: center;
+  padding: 96px 0 20px;
+}
+.footer-v2 h2 {
+  font-size: clamp(2.25rem, 4.4vw, 4rem);
+  font-weight: 500;
+  line-height: 1.15;
+}
+.footer-dl {
+  margin-top: 26px;
+  font-size: var(--fs-body);
+  display: flex;
+  justify-content: center;
+  gap: 2.5em;
+  flex-wrap: wrap;
+}
+.footer-v2 .store-badges {
+  justify-content: center;
+  margin-top: 30px;
+}
+.footer-qr {
+  width: 148px;
+  margin: 56px auto 0;
+  border-radius: 6px;
+}
+.footer-qr-caption { margin-top: 14px; font-size: var(--fs-body); }
+.footer-legal {
+  margin-top: 48px;
+  font-size: var(--fs-body);
+}
+.footer-legal a { text-decoration: none; }
+.footer-legal a:hover { text-decoration: underline; }
+.footer-bottom {
+  margin-top: 56px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  font-size: var(--fs-body);
+  text-align: left;
+}
+.footer-bottom nav { display: flex; gap: 28px; flex-wrap: wrap; }
+.footer-bottom a { text-decoration: none; }
+.footer-bottom a:hover { text-decoration: underline; }
+
+/* --------------------------------------------------------------------------
+   Responsive
+   -------------------------------------------------------------------------- */
+@media (max-width: 1199px) {
+  .showcase .row {
+    grid-template-columns: 1fr;
+    row-gap: 40px;
+    padding-block: 48px;
+  }
+  .showcase .win { order: 2; }
+  .two-col,
+  .jump-in-cols { grid-template-columns: 1fr; }
+  .hero .wrap { grid-template-columns: 1fr; }
+  .hero-phone { margin-bottom: -180px; }
+}
+@media (max-width: 720px) {
+  .nav-wordmark { display: none; }
+  .nav-links a { font-size: 1rem; }
+  .win { height: 480px; }
+  .phone--static { top: 40px; transform: translateX(-50%) scale(0.82); transform-origin: top center; }
+  .hero-phone { display: none; }
+  .cluster { transform: scale(0.72); transform-origin: top center; height: 240px; }
+  .plan { padding: 30px 26px 36px; }
+  .footer-bottom { justify-content: center; text-align: center; }
+}
