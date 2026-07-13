@@ -1,63 +1,62 @@
 // Cliick.com redesign prototype — issue #3
 
-// --- Stage phone: fixed phone whose screen tracks the section in view ------
-// The phone sits fixed from the hero onward; scrolling changes which screen
-// shows (crossfade) and reveals each section's copy. Small screens, reduced
-// motion, and no-JS all fall back to static per-section phones in .win boxes.
-const stage = document.getElementById("stage");
+// --- Pinned scene stage -----------------------------------------------------
+// The stage frame pins while the track scrolls through it. Scroll progress
+// picks the active scene; CSS keyed off data-scene / is-past / is-active /
+// is-future does all the motion, so copy, screen, window, and backdrop all
+// move on the same clock. Small screens, reduced motion, and no-JS render
+// the .fallback-flow instead.
+const stageTrack = document.getElementById("stage");
 const stageMotion = window.matchMedia(
   "(min-width: 1200px) and (prefers-reduced-motion: no-preference)"
 );
 
-if (stage && stageMotion.matches) {
+if (stageTrack && stageMotion.matches) {
   document.body.classList.add("stage-motion");
 
-  const phoneUnit = stage.querySelector(".stage-phone");
-  const screens = Array.from(phoneUnit.querySelectorAll("[data-screen]"));
-  const hero = stage.querySelector(".hero");
-  const rows = Array.from(stage.querySelectorAll(".showcase .row"));
-  const showcase = stage.querySelector(".showcase");
+  const frame = stageTrack.querySelector(".stage-frame");
+  const scenes = Array.from(frame.querySelectorAll(".scene"));
+  const screens = Array.from(frame.querySelectorAll("[data-screen]"));
 
-  const showScreen = (index) => {
-    screens.forEach((img, i) => img.classList.toggle("active", i === index));
+  // Scene boundaries as fractions of track progress. Scene 0 (hero) holds a
+  // little longer; tune these to taste.
+  const BOUNDS = [0.22, 0.48, 0.74];
+
+  let current = -1;
+  const update = () => {
+    const rect = stageTrack.getBoundingClientRect();
+    const runway = rect.height - window.innerHeight;
+    const p = Math.min(1, Math.max(0, -rect.top / runway));
+    let scene = 0;
+    BOUNDS.forEach((b, i) => {
+      if (p >= b) scene = i + 1;
+    });
+    if (scene === current) return;
+    current = scene;
+    frame.dataset.scene = String(scene);
+    scenes.forEach((el, i) => {
+      el.classList.toggle("is-past", i < scene);
+      el.classList.toggle("is-active", i === scene);
+      el.classList.toggle("is-future", i > scene);
+    });
+    screens.forEach((img, i) => img.classList.toggle("active", i === scene));
   };
 
-  // Whichever section crosses the vertical center of the viewport wins.
-  const centerBand = { rootMargin: "-45% 0px -45% 0px", threshold: 0 };
-  new IntersectionObserver((entries) => {
-    entries.forEach((e) => {
-      if (e.isIntersecting) showScreen(0);
-    });
-  }, centerBand).observe(hero);
-  rows.forEach((row, i) => {
-    new IntersectionObserver((entries) => {
-      entries.forEach((e) => {
-        if (e.isIntersecting) showScreen(i + 1);
+  let ticking = false;
+  window.addEventListener(
+    "scroll",
+    () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        ticking = false;
+        update();
       });
-    }, centerBand).observe(row);
-  });
-
-  // The gray mock window appears once the showcase starts…
-  new IntersectionObserver((entries) => {
-    entries.forEach((e) => {
-      phoneUnit.classList.toggle("in-showcase", e.isIntersecting);
-    });
-  }, { rootMargin: "-25% 0px -25% 0px", threshold: 0 }).observe(showcase);
-
-  // …and the whole phone bows out when the stage has scrolled past.
-  new IntersectionObserver((entries) => {
-    entries.forEach((e) => {
-      phoneUnit.classList.toggle("is-hidden", !e.isIntersecting);
-    });
-  }, { rootMargin: "0px 0px -20% 0px", threshold: 0 }).observe(stage);
-
-  // Copy reveal per section.
-  const revealObserver = new IntersectionObserver((entries) => {
-    entries.forEach((e) => {
-      e.target.classList.toggle("in-view", e.isIntersecting);
-    });
-  }, { rootMargin: "0px 0px -18% 0px", threshold: 0.15 });
-  stage.querySelectorAll(".showcase-copy").forEach((el) => revealObserver.observe(el));
+    },
+    { passive: true }
+  );
+  window.addEventListener("resize", update, { passive: true });
+  update();
 }
 
 // --- Premium plan billing-cycle toggle -------------------------------------

@@ -18,18 +18,22 @@ Static marketing website for Cliick, hosted on GitHub Pages at cliick.com. Conta
 
 ### Redesign notes (issue #3)
 
-- The home page has ONE stage phone (`.stage-phone` in `#stage`): a
-  `position: fixed` phone visible from the hero onward. IntersectionObservers
-  in `js/redesign.js` crossfade its screen per section, fade in the gray mock
-  window once the showcase starts, reveal each section's copy, and fade the
-  phone out when the stage scrolls past. Gated by `body.stage-motion`
-  (JS + ≥1200px + motion allowed); otherwise static per-section phones in
-  `.win` boxes render instead.
+- The home page opens with a **pinned scene stage**: `.stage-frame` (inside
+  `.stage-track#stage`) is `position: sticky` for ~4.5 viewport-heights of
+  scroll. `js/redesign.js` maps scroll progress to a scene index (hero → 3
+  copy scenes); CSS keyed off `data-scene` + `is-past/is-active/is-future`
+  drives all motion — copy enter/exit, screen crossfade, hero-photo and
+  gray-window fades — so everything shares one clock and the phone never
+  collides with copy (their regions are disjoint by construction).
+- Gated by `body.stage-motion` (JS + ≥1200px + motion allowed); otherwise
+  the `.fallback-flow` (normal hero + showcase rows with static phones)
+  renders instead. **Hero + section copy exists in BOTH the stage scenes and
+  the fallback flow — edit both** until the design settles.
 - Phone screens are placeholder stills; swap the stacked `<img data-screen>`
-  elements for `<video>` (or one looped video seeked per section) when app
-  screen recordings exist.
-- An earlier "porthole" variant (fixed phones clipped per scrolling window,
-  no JS) is preserved at tag `savepoint-porthole-design`.
+  elements for `<video>` (or one looped video seeked per scene) when app
+  screen recordings exist. Scene boundaries live in `BOUNDS` in redesign.js.
+- Two earlier variants are preserved in git: tag `savepoint-porthole-design`
+  (clip-path porthole windows) and commit fd52d8f (free-fixed phone + IO).
 
 ## Build & Sync
 

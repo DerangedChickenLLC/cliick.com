@@ -58,25 +58,82 @@
       </div>
     </header>
 
-    <div id="stage">
     <!--
-      THE phone. Fixed in the viewport from the hero onward; the page scrolls
-      past it. JS (redesign.js) crossfades its screen to match the section in
-      view and fades in the gray window once the showcase begins. Screens are
-      placeholder stills — swap each <img> for a <video> (or one looped video
-      seeked per section) when app recordings exist.
+      Pinned scene stage (desktop + motion). One viewport-sized frame pins
+      while ~4.5 screens of scroll play through it. Scroll progress drives
+      the active scene: hero copy exits, section copy enters, and the phone's
+      screen crossfades — all keyed to the same scroll fraction, so nothing
+      can drift or collide. The phone/window/heading are always composed
+      together, and the frame releases naturally at the end of the story.
+      Screens are placeholder stills — swap each <img data-screen> for a
+      <video> (or one looped video seeked per scene) when recordings exist.
+      NOTE: hero + section copy exists twice (stage scenes here, fallback
+      flow below) — edit both until the design settles.
     -->
-    <div class="stage-phone" aria-hidden="true">
-      <div class="phone">
-        <div class="phone-screen">
-          <img data-screen="0" class="active" src="/images/feed.png" alt="" />
-          <img data-screen="1" src="/images/gallery.png" alt="" />
-          <img data-screen="2" src="/images/drawer.png" alt="" />
-          <img data-screen="3" src="/images/fluffy-post.png" alt="" />
+    <div class="stage-track" id="stage">
+      <div class="stage-frame" data-scene="0">
+        <img class="stage-bg" src="/images/redesign/hero-bg.png" alt="" />
+        <div class="stage-shade" aria-hidden="true"></div>
+        <div class="stage-window" aria-hidden="true"></div>
+        <div class="stage-phone" aria-hidden="true">
+          <div class="phone">
+            <div class="phone-screen">
+              <img data-screen="0" class="active" src="/images/feed.png" alt="" />
+              <img data-screen="1" src="/images/gallery.png" alt="" />
+              <img data-screen="2" src="/images/drawer.png" alt="" />
+              <img data-screen="3" src="/images/fluffy-post.png" alt="" />
+            </div>
+          </div>
+        </div>
+        <p class="stage-eyebrow" aria-hidden="true">Welcome to Cliick</p>
+
+        <div class="scene scene--hero is-active">
+          <h1 class="hero-title">Post Like Nobody's Watching.</h1>
+          <p class="hero-tagline">
+            Cliick is your private network — a clean start, free from ads,
+            algorithms, and strangers. Cliick is where you connect with the
+            people who matter most.
+          </p>
+          <div class="store-badges">
+            <a href="https://apps.apple.com/us/app/cliick-your-private-network/id6608980465"
+              ><img src="/images/redesign/badge-appstore.svg" alt="Download on the App Store"
+            /></a>
+            <a href="https://play.google.com/store/apps/details?id=com.derangedchicken.clique"
+              ><img src="/images/redesign/badge-googleplay.svg" alt="Get it on Google Play"
+            /></a>
+          </div>
+        </div>
+
+        <div class="scene is-future">
+          <h3>Your private network for real life.</h3>
+          <ul>
+            <li>No ads</li>
+            <li>No strangers</li>
+            <li>No algorithms</li>
+          </ul>
+          <a class="learn-more" href="/about/">Learn more</a>
+        </div>
+
+        <div class="scene is-future">
+          <h3>Start fresh and reclaim your feed</h3>
+          <ul>
+            <li>Your People</li>
+            <li>Your Groups</li>
+            <li>Your rules</li>
+          </ul>
+          <a class="learn-more" href="/about/">Learn more</a>
+        </div>
+
+        <div class="scene is-future">
+          <h3>Funded by members. Not ads.</h3>
+          <p>Cliick will never sell your data or your personal info, ever.</p>
+          <a class="learn-more" href="/membership/">Learn more</a>
         </div>
       </div>
     </div>
 
+    <!-- Fallback flow: small screens, reduced motion, or no JS -->
+    <div class="fallback-flow">
     <section class="hero">
       <img class="hero-bg" src="/images/redesign/hero-bg.png" alt="" />
       <div class="wrap">
@@ -153,7 +210,7 @@
         </div>
       </div>
     </div>
-    </div><!-- /#stage -->
+    </div><!-- /.fallback-flow -->
 
     <section class="band latte">
       <div class="wrap">
