@@ -79,7 +79,7 @@ if (stageTrack) {
 // pages via localStorage; also settable with ?palette=white|soft|warm|figma.
 // REMOVE (this block + the matching redesign.css block) before launch.
 {
-  const PALETTES = ["figma", "white", "soft", "warm"];
+  const PALETTES = ["figma", "white", "soft", "warm", "photo"];
   const fromQuery = new URLSearchParams(location.search).get("palette");
   const saved = PALETTES.includes(fromQuery)
     ? fromQuery

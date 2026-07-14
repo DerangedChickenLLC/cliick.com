@@ -787,6 +787,26 @@ body.stage-motion .fallback-flow { display: none; }
 body[data-palette="white"] { --page-gray: #ffffff; --band-gray: #ececea; --window-gray: #e9e9e7; }
 body[data-palette="soft"]  { --page-gray: #f5f5f4; --band-gray: #e8e8e6; --window-gray: #e2e2e0; }
 body[data-palette="warm"]  { --page-gray: #f7f5f1; --band-gray: #ece8e1; --window-gray: #e7e2d9; }
+
+/* photo: warm tokens + the hero scene's photo washed through every page.
+   The wash is a fixed pre-blurred layer behind everything; bands become
+   translucent tints so the atmosphere reads through them. */
+body[data-palette="photo"] {
+  --page-gray: transparent;
+  --band-gray: rgba(60, 42, 12, 0.06);
+  --window-gray: #e7e2d9;
+  background: transparent;
+}
+body[data-palette="photo"]::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(rgba(247, 245, 241, 0.88), rgba(247, 245, 241, 0.88)),
+    url("/images/redesign/hero-bg-wash.jpg") center / cover no-repeat;
+}
+body[data-palette="photo"] .stage-frame { background: transparent; }
 .palette-switch {
   position: fixed;
   bottom: 16px;
