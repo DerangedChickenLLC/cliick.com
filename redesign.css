@@ -104,6 +104,24 @@ a { color: inherit; }
 .nav-links a:hover,
 .nav-links a[aria-current="page"] { text-decoration: underline; text-underline-offset: 6px; }
 
+/* In the motion experience the nav rides fixed through the whole page and
+   switches skins by scene: transparent white-text over the hero photo,
+   frosted light bar with dark text everywhere else (body.nav-solid). */
+body.stage-motion .nav {
+  position: fixed;
+  transition: background-color 0.4s ease, box-shadow 0.4s ease;
+}
+body.stage-motion .nav-wordmark,
+body.stage-motion .nav-links a { transition: color 0.4s ease; }
+body.nav-solid .nav {
+  background: rgba(255, 255, 255, 0.82);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.08);
+}
+body.nav-solid .nav-wordmark,
+body.nav-solid .nav-links a { color: #000; }
+
 /* --------------------------------------------------------------------------
    Home hero
    -------------------------------------------------------------------------- */
@@ -126,7 +144,9 @@ a { color: inherit; }
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(90deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.15) 60%);
+  background:
+    linear-gradient(180deg, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0) 18%),
+    linear-gradient(90deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.15) 60%);
   z-index: 1;
 }
 .hero .wrap {
@@ -298,7 +318,9 @@ body.stage-motion .fallback-flow { display: none; }
 .stage-shade {
   position: absolute;
   inset: 0;
-  background: linear-gradient(90deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.15) 60%);
+  background:
+    linear-gradient(180deg, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0) 18%),
+    linear-gradient(90deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.15) 60%);
   opacity: 1;
   transition: opacity 0.6s ease;
 }
@@ -335,20 +357,24 @@ body.stage-motion .fallback-flow { display: none; }
 }
 .stage-phone .phone-screen img.active { opacity: 1; }
 
-/* Persistent header once the story starts */
+/* Persistent header once the story starts. It lives in the copy column
+   (left of the window at every width) and below the fixed nav at every
+   height, so it can never collide with either; its fade-in trails the
+   photo fade-out so it never reads dark-on-dark. */
 .stage-eyebrow {
   position: absolute;
-  top: 6vh;
-  left: 50%;
-  transform: translate(-50%, -14px);
+  top: max(calc(var(--nav-h) + 8px), calc(50vh - var(--window-h) / 2 - 82px));
+  left: max(calc(var(--wrap-pad) + 62px), calc((100vw - 1440px) / 2 + 124px));
+  transform: translateY(-14px);
   font-size: clamp(1.5rem, 2.2vw, 2rem);
   font-weight: 500;
   opacity: 0;
-  transition: opacity 0.5s ease, transform 0.5s ease;
+  transition: opacity 0.4s ease, transform 0.4s ease;
 }
 .stage-frame:not([data-scene="0"]) .stage-eyebrow {
   opacity: 1;
-  transform: translate(-50%, 0);
+  transform: translateY(0);
+  transition-delay: 0.3s;
 }
 
 /* Scenes — copy panels in a reserved left region; enter from below,
@@ -507,7 +533,9 @@ body.stage-motion .fallback-flow { display: none; }
   content: "";
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.45);
+  background:
+    linear-gradient(180deg, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0) 40%),
+    linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45));
 }
 .page-hero .wrap {
   position: relative;

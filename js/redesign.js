@@ -11,9 +11,7 @@ const stageMotion = window.matchMedia(
   "(min-width: 1200px) and (prefers-reduced-motion: no-preference)"
 );
 
-if (stageTrack && stageMotion.matches) {
-  document.body.classList.add("stage-motion");
-
+if (stageTrack) {
   const frame = stageTrack.querySelector(".stage-frame");
   const scenes = Array.from(frame.querySelectorAll(".scene"));
   const screens = Array.from(frame.querySelectorAll("[data-screen]"));
@@ -24,6 +22,7 @@ if (stageTrack && stageMotion.matches) {
 
   let current = -1;
   const update = () => {
+    if (!stageMotion.matches) return;
     const rect = stageTrack.getBoundingClientRect();
     const runway = rect.height - window.innerHeight;
     const p = Math.min(1, Math.max(0, -rect.top / runway));
@@ -34,6 +33,7 @@ if (stageTrack && stageMotion.matches) {
     if (scene === current) return;
     current = scene;
     frame.dataset.scene = String(scene);
+    document.body.classList.toggle("nav-solid", scene !== 0);
     scenes.forEach((el, i) => {
       el.classList.toggle("is-past", i < scene);
       el.classList.toggle("is-active", i === scene);
@@ -56,7 +56,22 @@ if (stageTrack && stageMotion.matches) {
     { passive: true }
   );
   window.addEventListener("resize", update, { passive: true });
-  update();
+
+  // Live gate: engage/disengage the motion experience whenever the media
+  // query flips (window resized across 1200px, reduced-motion toggled),
+  // not just at load.
+  const applyMode = () => {
+    const on = stageMotion.matches;
+    document.body.classList.toggle("stage-motion", on);
+    if (on) {
+      current = -1; // force a re-sync of scene state
+      update();
+    } else {
+      document.body.classList.remove("nav-solid");
+    }
+  };
+  stageMotion.addEventListener("change", applyMode);
+  applyMode();
 }
 
 // --- Premium plan billing-cycle toggle -------------------------------------

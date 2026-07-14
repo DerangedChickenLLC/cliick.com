@@ -25,10 +25,16 @@ Static marketing website for Cliick, hosted on GitHub Pages at cliick.com. Conta
   drives all motion — copy enter/exit, screen crossfade, hero-photo and
   gray-window fades — so everything shares one clock and the phone never
   collides with copy (their regions are disjoint by construction).
-- Gated by `body.stage-motion` (JS + ≥1200px + motion allowed); otherwise
-  the `.fallback-flow` (normal hero + showcase rows with static phones)
-  renders instead. **Hero + section copy exists in BOTH the stage scenes and
-  the fallback flow — edit both** until the design settles.
+- Gated by `body.stage-motion` (JS + ≥1200px + motion allowed, re-evaluated
+  live on media-query change); otherwise the `.fallback-flow` (normal hero +
+  showcase rows with static phones) renders instead. **Hero + section copy
+  exists in BOTH the stage scenes and the fallback flow — edit both** until
+  the design settles.
+- In motion mode the nav rides `position: fixed` with scene-aware skins:
+  transparent white-text over the hero (helped by a top scrim on the photo),
+  frosted light bar with dark text (`body.nav-solid`) everywhere else. The
+  "Welcome to Cliick" header lives in the copy column, below the nav and
+  left of the window, so it cannot collide with either at any viewport size.
 - Phone screens are placeholder stills; swap the stacked `<img data-screen>`
   elements for `<video>` (or one looped video seeked per scene) when app
   screen recordings exist. Scene boundaries live in `BOUNDS` in redesign.js.
