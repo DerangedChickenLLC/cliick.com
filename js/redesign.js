@@ -103,6 +103,35 @@ if (stageTrack) {
   document.body.appendChild(sw);
 }
 
+// --- Prototype hero-tone switcher -------------------------------------------
+// Candidates for the hero photo's darkness/contrast (the mock reads darker
+// than our scrims alone). Persists via localStorage; ?hero=light|dark|deep.
+// REMOVE (this block + the matching redesign.css block) before launch.
+{
+  const TONES = ["light", "dark", "deep"];
+  const fromQuery = new URLSearchParams(location.search).get("hero");
+  const saved = TONES.includes(fromQuery)
+    ? fromQuery
+    : localStorage.getItem("proto-herotone");
+  if (TONES.includes(saved) && saved !== "light") {
+    document.body.dataset.herotone = saved;
+  }
+  const sw = document.createElement("button");
+  sw.className = "tone-switch";
+  sw.type = "button";
+  const label = () => `Hero: ${document.body.dataset.herotone || "light"}`;
+  sw.textContent = label();
+  sw.addEventListener("click", () => {
+    const cur = document.body.dataset.herotone || "light";
+    const next = TONES[(TONES.indexOf(cur) + 1) % TONES.length];
+    if (next === "light") delete document.body.dataset.herotone;
+    else document.body.dataset.herotone = next;
+    localStorage.setItem("proto-herotone", next);
+    sw.textContent = label();
+  });
+  document.body.appendChild(sw);
+}
+
 // --- Premium plan billing-cycle toggle -------------------------------------
 // Monthly pricing isn't finalized; the toggle moves but flags the price as TBD.
 document.querySelectorAll(".plan-toggle").forEach((toggle) => {
