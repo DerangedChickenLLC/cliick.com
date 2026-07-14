@@ -74,6 +74,35 @@ if (stageTrack) {
   applyMode();
 }
 
+// --- Prototype palette switcher ---------------------------------------------
+// Cycles candidate palettes for the mock's unresolved grays. Persists across
+// pages via localStorage; also settable with ?palette=white|soft|warm|figma.
+// REMOVE (this block + the matching redesign.css block) before launch.
+{
+  const PALETTES = ["figma", "white", "soft", "warm"];
+  const fromQuery = new URLSearchParams(location.search).get("palette");
+  const saved = PALETTES.includes(fromQuery)
+    ? fromQuery
+    : localStorage.getItem("proto-palette");
+  if (PALETTES.includes(saved) && saved !== "figma") {
+    document.body.dataset.palette = saved;
+  }
+  const sw = document.createElement("button");
+  sw.className = "palette-switch";
+  sw.type = "button";
+  const label = () => `Palette: ${document.body.dataset.palette || "figma"}`;
+  sw.textContent = label();
+  sw.addEventListener("click", () => {
+    const cur = document.body.dataset.palette || "figma";
+    const next = PALETTES[(PALETTES.indexOf(cur) + 1) % PALETTES.length];
+    if (next === "figma") delete document.body.dataset.palette;
+    else document.body.dataset.palette = next;
+    localStorage.setItem("proto-palette", next);
+    sw.textContent = label();
+  });
+  document.body.appendChild(sw);
+}
+
 // --- Premium plan billing-cycle toggle -------------------------------------
 // Monthly pricing isn't finalized; the toggle moves but flags the price as TBD.
 document.querySelectorAll(".plan-toggle").forEach((toggle) => {
