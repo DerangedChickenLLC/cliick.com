@@ -70,7 +70,7 @@
   --fs-display: clamp(2.75rem, 6.6vw, 6rem);      /* 96px hero/page titles */
   --fs-h2: clamp(2rem, 3.75vw, 3.375rem);         /* 54px section heads */
   --fs-h2-sm: clamp(1.75rem, 3.3vw, 3rem);        /* 48px centered heads */
-  --fs-h3: clamp(1.75rem, 3.4vw, 3.25rem);        /* 52px scene + showcase heads */
+  --fs-h3: clamp(1.75rem, 4.1vw, 3.25rem);        /* 52px scene + showcase heads */
   --fs-body: clamp(1.0625rem, 1.4vw, 1.25rem);    /* 20px body */
   --fs-small: 1rem;                                /* 16px */
 
