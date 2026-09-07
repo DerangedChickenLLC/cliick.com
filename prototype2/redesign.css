@@ -553,6 +553,45 @@ body.nav-solid .nav-links a { color: #F2ECDE; }
    background, which only works over a light band. Its copy has to invert. */
 .band.latte { background: var(--band-light); color: var(--ink-on-light); }
 
+/* --------------------------------------------------------------------------
+   Objects on the light band
+   The object and control tokens above assume a dark room: a panel occludes
+   the backdrop by being darker, a selected control is lit. The homepage runs
+   the same .plan component inside the light band, where every one of those
+   relationships inverts — dark cards on cream read as inactive and dreary.
+   Re-point the tokens for this context rather than restyling the component,
+   so .plan stays a single component. The light gallery exploration, if we
+   take it, is this block applied site-wide.
+   -------------------------------------------------------------------------- */
+.band.latte {
+  --panel: #FFFCF6;               /* on light, an object is raised, not sunken */
+  --panel-hover: #FFFFFF;
+  --panel-edge: rgba(64, 48, 22, 0.16);
+  --panel-lip: rgba(255, 255, 255, 0.95);
+  --panel-shadow: 0 20px 44px rgba(72, 52, 22, 0.16), 0 3px 9px rgba(72, 52, 22, 0.10);
+  --panel-shadow-sm: 0 8px 20px rgba(72, 52, 22, 0.14);
+
+  --ink-strong: var(--ink-on-light);
+  --ink-muted: #5B5245;
+  --accent: #7A5210;              /* the warm accent has to darken to hold */
+  --recess: rgba(64, 48, 22, 0.10);
+  --line: rgba(64, 48, 22, 0.18);
+  --glow: 122, 86, 30;            /* the tint darkens with everything else */
+
+  --control-on: #211D16;          /* and ON inverts: dark segment, light copy */
+  --control-on-ink: #F6EFE0;
+}
+/* the top-face sheen is light falling on the card, so on a light band it has
+   to be white — the dark-room version tints the top edge downward instead */
+.band.latte .plan::before {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.85) 0%,
+    rgba(255, 255, 255, 0.30) 30%,
+    rgba(255, 255, 255, 0) 60%
+  );
+}
+
 /* Persistent header once the story starts. It lives in the copy column
    (left of the window at every width) and below the fixed nav at every
    height, so it can never collide with either; its fade-in trails the

@@ -45,6 +45,19 @@ review before finalising. Delete this file when prototype2 is promoted.
 - [ ] **Decide how the scheme is selected** — `data-scheme` on `<html>` plus a
   toggle, persisted. Not built.
 
+## Explorations
+
+- [ ] **Light gallery.** Real galleries hang work on white walls because a
+  bright neutral surround makes photographs read as objects, and the product
+  is user photography — so a light scheme may serve the content better than
+  the dark one. Not a token swap: every relationship inverts (objects become
+  raised and lighter, the night backdrop needs heavy correction or replacing,
+  the phone's black bezel goes from melting into the wall to being the darkest
+  thing on screen). The `.band.latte` context block is a working miniature of
+  exactly this — the light gallery is that block applied site-wide.
+- [ ] **Second scheme, visitor-selectable** (the other founder's, deliberately
+  unlike this one). See the scheme notes above.
+
 ## Dark gallery — unfinished edges
 
 - [ ] **`.win` on About keeps its `clip-path`,** which crops the phone. It is
