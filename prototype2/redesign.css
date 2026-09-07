@@ -385,32 +385,40 @@ body.stage-motion .fallback-flow { display: none; }
 .stage-phone .phone-screen { border-radius: calc(var(--phone-w) * 0.12407); }
 
 /* --------------------------------------------------------------------------
-   Lit scenes (trial — revert this block for the flat white + grey box)
-   Scenes 1-3 previously switched the backdrop fully off and put a flat
-   #d9d9d9 rectangle on #ffffff. With no light source anywhere in the frame
-   the result read as drab, and a 15%-contrast rectangle with no edge, shadow
-   or tonal jump could neither blend nor stand on its own.
+   Dark gallery
+   Scenes 1-3 previously switched the backdrop off and put a flat #d9d9d9
+   rectangle on #ffffff. With no light source in the frame it read as drab,
+   and a rectangle at ~15% contrast with no edge, shadow or tonal jump could
+   neither blend nor stand on its own.
 
-   A. The backdrop stays, dimmed and pushed further out of focus, so the
-      scenes inherit the hero's warm key from upper right. It is lifted and
-      desaturated into a pale wash rather than carried through dark, because
-      the scene copy is dark text — a dark backdrop here would fail contrast.
-   B. The grey box is replaced by light: an ambient pool centred on the phone
-      and a cast shadow grounding it. A glow has no edge, so it cannot have
-      the "neither blends nor stands alone" problem.
+   The scenes become a gallery wall: warm charcoal, the hero's backdrop
+   carried straight through, and the phone lit by an ambient pool rather than
+   backed by a box. Photography is the product, and photographs read on dark
+   the way art does on a gallery wall.
+
+   Note this needs no colour correction on the backdrop. An earlier pass kept
+   the scenes light and had to lift and sepia() the backdrop hard, because it
+   is a night image being forced to behave as a pale wash. On a dark wall it
+   simply belongs, which is the main argument for this direction.
    -------------------------------------------------------------------------- */
 
-/* A — the world recedes rather than switching off */
+/* The wall. Warm charcoal, not pure black — pure black reads as "screen off". */
+.stage-frame { background: #17140F; }
+
 .stage-frame:not([data-scene="0"]) .stage-bg {
-  opacity: 0.34;
-  /* Lifted hard and warmed: the backdrop is a night image, and at plain
-     reduced opacity its navy read as grey-blue haze low-left. sepia() pulls
-     the whole wash to the hero's warm key instead. */
-  filter: blur(30px) brightness(1.95) saturate(0.62) sepia(0.28);
+  opacity: 0.55;
+  filter: blur(26px) saturate(0.95);
   transform: scale(1.12); /* covers the blur bleeding in at the edges */
 }
 
-/* B — the box becomes light */
+/* Copy flips to light. Warm off-white rather than #fff, since the wall is warm. */
+.stage-frame:not([data-scene="0"]) { color: #F2ECDE; }
+.stage-frame:not([data-scene="0"]) .scene li { color: #CFC6B2; }
+.stage-frame:not([data-scene="0"]) .learn-more { color: #E9C88A; }
+.stage-frame:not([data-scene="0"]) .stage-eyebrow { color: #C6BCA6; }
+
+/* The grey box is replaced by light. A glow has no edge, so it cannot have
+   the "neither blends nor stands alone" problem the rectangle had. */
 .stage-window { display: none; }
 
 .stage-phone { z-index: 1; }
@@ -418,34 +426,46 @@ body.stage-motion .fallback-flow { display: none; }
   content: "";
   position: absolute;
   z-index: -1;
-  opacity: 0;
-  transition: opacity 0.6s ease;
-  pointer-events: none;
-}
-/* ambient pool — the gallery spotlight */
-.stage-phone::before {
   left: 50%;
   top: 50%;
   width: 300%;
   height: 132%;
   transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity 0.6s ease;
+  pointer-events: none;
   background: radial-gradient(
     ellipse at 50% 48%,
-    rgba(255, 241, 222, 0.95) 0%,
-    rgba(252, 236, 216, 0.62) 30%,
-    rgba(250, 238, 224, 0.28) 52%,
-    rgba(255, 255, 255, 0) 74%
+    rgba(255, 227, 180, 0.30) 0%,
+    rgba(255, 217, 166, 0.155) 32%,
+    rgba(255, 221, 176, 0.06) 55%,
+    rgba(255, 221, 176, 0) 76%
   );
 }
 .stage-frame:not([data-scene="0"]) .stage-phone::before { opacity: 1; }
 
-/* Grounds the device in the pool. A cast-shadow ellipse below the phone was
-   the obvious move but it falls outside the viewport — the phone's bottom sits
-   only 30px from the edge — so the device's own shadow does the work, warmed
-   to the pool's colour and thrown further so it reads as light, not a border. */
+/* The device casts into darkness, and takes a faint warm rim so its silhouette
+   holds — its bezel is near-black and would otherwise melt into the wall. */
 .stage-frame:not([data-scene="0"]) .stage-phone .phone {
-  box-shadow: 0 38px 90px rgba(58, 38, 20, 0.34), 0 8px 26px rgba(58, 38, 20, 0.18);
+  box-shadow:
+    0 46px 104px rgba(0, 0, 0, 0.62),
+    0 10px 30px rgba(0, 0, 0, 0.44),
+    0 0 0 1px rgba(255, 226, 178, 0.16);
 }
+
+/* The nav has to follow the wall, or it floats as a white plank. */
+body.nav-solid .nav {
+  background: rgba(23, 20, 15, 0.72);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+body.nav-solid .nav-wordmark,
+body.nav-solid .nav-links a { color: #F2ECDE; }
+
+/* The closing band, which follows the stage, moves off dead #dbdbdb to a warm
+   light. Deliberately NOT dark: it is the "back out into the light" beat
+   before the black footer, and .latte-fluffy relies on mix-blend-mode:multiply
+   to drop its baked-in white background, which only works over a light band. */
+.band.latte { background: #F2EBDF; }
 
 /* Persistent header once the story starts. It lives in the copy column
    (left of the window at every width) and below the fixed nav at every

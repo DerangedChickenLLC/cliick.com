@@ -34,6 +34,20 @@ review before finalising. Delete this file when prototype2 is promoted.
   invisible over photography but shows as visible stripes across the app's
   dark nav bar. Consider masking it to the photo area or dropping its opacity.
 
+## Dark gallery — unfinished edges
+
+- [ ] **Subpages are still light.** about / faq / membership run on
+  `--page-gray: #c9c8c8` with dark text, while the homepage stage is now a
+  dark gallery. Until they follow, the site reads as two designs. This is the
+  main open question the dark direction raises.
+- [ ] **`.band.latte` is deliberately light** (`#F2EBDF`), not an oversight:
+  it is the "back out into the light" beat before the black footer, and
+  `.latte-fluffy` depends on `mix-blend-mode: multiply` to drop its baked-in
+  white background, which only works over a light band. Making the band dark
+  requires a transparent mascot asset — keying the white out leaves artifacts
+  where its drop shadow was, since that shadow is grey-on-white and no
+  luminance threshold separates it from the white cup.
+
 ## Scaffolding to remove before launch
 
 - [ ] **Placeholder film slates.** Delete the marked block in `redesign.css`
