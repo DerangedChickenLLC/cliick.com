@@ -5,13 +5,17 @@ review before finalising. Delete this file when prototype2 is promoted.
 
 ## Copy
 
-- [ ] **Hero slogan duplicates the closing CTA.** Every page closes with
-  `Join the Reset.` / `Reclaim your feed.` The homepage hero is now
-  "Reclaim your Feed", so the page opens and closes on the same phrase.
-  The closing CTA uses *both* slogans we've trialled, so it constrains any
-  hero drawn from that line. Decide what the closer should say.
-- [ ] **Capitalisation mismatch.** Hero reads "Reclaim your **F**eed";
-  the closing CTA reads "Reclaim your **f**eed." Pick one.
+- [x] ~~Hero slogan duplicates the closing CTA.~~ Resolved: the footer CTA
+  is now `Join the Reset.` alone, so the title and footer are distinct.
+- [x] ~~Capitalisation mismatch between hero and footer.~~ Gone with the
+  footer's second line.
+- [ ] **The hero phrase still recurs in scene 2.** The hero is "Reclaim your
+  Feed" and scene 2's heading is "Start fresh and reclaim your feed" — so
+  the homepage still says it twice, roughly one screen apart, and scene 2 is
+  the more prominent of the two now that scene headings run 52px. Removing it
+  from the footer disambiguated title from footer but not title from scene.
+  Note the scene copy exists twice in `index.html` (stage + fallback), so any
+  reword needs both.
 - [ ] **Hero copy exists twice.** The stage scenes and the fallback flow each
   carry their own hero + section copy (author's note, `index.html`). Every
   copy edit must be made in both until the design settles.
