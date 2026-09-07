@@ -71,6 +71,7 @@
   --fs-h2: clamp(2rem, 3.75vw, 3.375rem);         /* 54px section heads */
   --fs-h2-sm: clamp(1.75rem, 3.3vw, 3rem);        /* 48px centered heads */
   --fs-h3: clamp(1.75rem, 4.1vw, 3.25rem);        /* 52px scene + showcase heads */
+  --fs-page-title: clamp(2.25rem, 4.9vw, 4rem);   /* 64px page headlines */
   --fs-body: clamp(1.0625rem, 1.4vw, 1.25rem);    /* 20px body */
   --fs-small: 1rem;                                /* 16px */
 
@@ -82,6 +83,20 @@
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* Available to the accessibility tree, not to the eye. Used where a region
+   needs a heading for the document outline but not a visible one. */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
 
 html { scroll-behavior: smooth; }
 @media (prefers-reduced-motion: reduce) {
@@ -833,9 +848,26 @@ body.nav-solid .nav-links a { color: #F2ECDE; }
 }
 .page-head { max-width: min(640px, 62%); }
 .page-hero h1 {
-  font-size: var(--fs-display);
-  font-weight: 500;
-  line-height: 1.05;
+  font-size: var(--fs-page-title);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+/* The page name survives as the eyebrow rather than a billboard: the nav
+   already marks the current page, and Home does not announce itself either. */
+.page-eyebrow {
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.72);
+  margin-bottom: 18px;
+}
+.page-kicker {
+  margin-top: 16px;
+  font-size: var(--fs-body);
+  font-weight: 600;
+  color: #fff;
 }
 .page-lede {
   margin-top: 22px;
@@ -864,7 +896,7 @@ body.page-gray .page-hero::after {
   -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 56%, transparent 100%);
   mask-image: linear-gradient(180deg, #000 0%, #000 56%, transparent 100%);
 }
-body.page-gray .page-hero h1 { text-shadow: 0 2px 20px rgba(0, 0, 0, 0.6); }
+body.page-gray .page-hero h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
 
 /* Optional supporting art. Sized so it can never crowd the title, and dropped
    entirely on narrow viewports rather than shrinking to a stamp. */

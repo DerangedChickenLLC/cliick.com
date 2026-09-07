@@ -51,12 +51,12 @@ review before finalising. Delete this file when prototype2 is promoted.
 
 ## Subpage structure
 
-- [ ] **About and Membership carry two headers.** The page header states the
-  page, then a centred `eyebrow` + `h2` immediately restates it ("Membership"
-  then "Powered by Subscription / Because you are not the product."). FAQ has
-  no such section and jumps straight to search. Now that the page header has
-  real content, the section header beneath it may be redundant on those two —
-  an editorial call, not a styling one.
+- [x] ~~About and Membership carry two headers.~~ Resolved: the page name is
+  now a small eyebrow and each page's real headline was promoted into the
+  header, so there is one header per page.
+- [ ] **FAQ's headline is invented copy.** "Questions, answered." and "Search
+  below, or browse by topic." were written to fill the merged pattern — About
+  and Membership reuse their own existing copy, FAQ had none. Copy round.
 - [ ] **The supporting-art slot is empty on all three pages.** `.page-hero-art`
   is wired and documented; it just needs images. Sized to `min(360px, 32vw)`
   and dropped below 900px.
