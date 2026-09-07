@@ -24,6 +24,20 @@
   --surface-2: rgba(252, 246, 234, 0.105);  /* hover, raised knobs */
   --line: rgba(252, 240, 220, 0.14);        /* borders on dark */
 
+  /* Interactive objects — cards, rows, controls. These are NOT the room.
+     Surfaces above are environment: translucent, made of the same light.
+     A control has to read as a thing placed in the room, so it is near
+     opaque (it occludes the backdrop), catches the light on its top lip,
+     and casts a real shadow. Keep that distinction in any second scheme:
+     if controls are made of the same stuff as the wall, the page reads as
+     shelves with no bartender. */
+  --panel: rgba(24, 21, 17, 0.82);
+  --panel-hover: rgba(36, 32, 26, 0.90);
+  --panel-edge: rgba(255, 244, 224, 0.13);
+  --panel-lip: rgba(255, 246, 228, 0.22);   /* top edge, lit from above */
+  --panel-shadow: 0 24px 52px rgba(0, 0, 0, 0.55), 0 3px 10px rgba(0, 0, 0, 0.38);
+  --panel-shadow-sm: 0 10px 24px rgba(0, 0, 0, 0.42), 0 2px 6px rgba(0, 0, 0, 0.30);
+
   --ink-strong: #F2ECDE;  /* primary copy */
   --ink-muted: #CFC6B2;   /* secondary copy */
   --ink-faint: #A79E8B;   /* tertiary, eyebrows */
@@ -629,11 +643,28 @@ body.nav-solid .nav-links a { color: #F2ECDE; }
   text-align: left;
 }
 .plan {
-  background: var(--paper);
+  position: relative;
+  background: var(--panel);
+  border: 1px solid var(--panel-edge);
   border-radius: var(--radius-card);
-  box-shadow: var(--shadow-card);
+  box-shadow: var(--panel-shadow), inset 0 1px 0 var(--panel-lip);
   padding: 40px 42px 48px;
 }
+/* the room's light falling across the top face of the card */
+.plan::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    rgba(var(--glow), 0.10) 0%,
+    rgba(var(--glow), 0.03) 26%,
+    rgba(var(--glow), 0) 55%
+  );
+}
+.plan > * { position: relative; }
 .plan h3 {
   font-size: 2.25rem;
   font-weight: 500;
@@ -886,11 +917,18 @@ body.page-gray .page-hero h1 { text-shadow: 0 2px 20px rgba(0, 0, 0, 0.6); }
   margin: 54px 0 10px;
 }
 .faq-list details {
-  background: var(--paper);
+  background: var(--panel);
+  border: 1px solid var(--panel-edge);
   border-radius: 14px;
   margin-top: 14px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--panel-shadow-sm), inset 0 1px 0 var(--panel-lip);
   overflow: hidden;
+  transition: background 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
+}
+.faq-list details:hover { background: var(--panel-hover); }
+.faq-list details[open] {
+  background: var(--panel-hover);
+  border-color: rgba(var(--glow), 0.22);
 }
 .faq-list summary {
   cursor: pointer;
@@ -907,8 +945,17 @@ body.page-gray .page-hero h1 { text-shadow: 0 2px 20px rgba(0, 0, 0, 0.6); }
   right: 24px;
   top: 50%;
   transform: translateY(-50%);
-  font-size: 1.5rem;
+  font-size: 1.35rem;
   font-weight: 400;
+  line-height: 1;
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--accent);
+  background: rgba(var(--glow), 0.10);
+  border: 1px solid rgba(var(--glow), 0.18);
 }
 .faq-list details[open] summary::after { content: "–"; }
 .faq-list .answer {
