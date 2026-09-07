@@ -34,12 +34,22 @@ review before finalising. Delete this file when prototype2 is promoted.
   invisible over photography but shows as visible stripes across the app's
   dark nav bar. Consider masking it to the photo area or dropping its opacity.
 
+## Colour schemes
+
+- [ ] **A second scheme is planned** (visitor-selectable, a completely
+  different look). Everything now resolves through the SCHEME block at the top
+  of `redesign.css`; a second scheme should be defined by overriding that block
+  alone. Do not introduce colour literals below it — the one leak we already
+  hit was an inline `style="background: var(--band-gray)"` on About, which
+  silently produced 1.01:1 text when the token was repointed.
+- [ ] **Decide how the scheme is selected** — `data-scheme` on `<html>` plus a
+  toggle, persisted. Not built.
+
 ## Dark gallery — unfinished edges
 
-- [ ] **Subpages are still light.** about / faq / membership run on
-  `--page-gray: #c9c8c8` with dark text, while the homepage stage is now a
-  dark gallery. Until they follow, the site reads as two designs. This is the
-  main open question the dark direction raises.
+- [ ] **`.win` on About keeps its `clip-path`,** which crops the phone. It is
+  now a lit alcove rather than a flat slab, but if we want the homepage's
+  no-box treatment here too, the crop has to go and About's layout shifts.
 - [ ] **`.band.latte` is deliberately light** (`#F2EBDF`), not an oversight:
   it is the "back out into the light" beat before the black footer, and
   `.latte-fluffy` depends on `mix-blend-mode: multiply` to drop its baked-in

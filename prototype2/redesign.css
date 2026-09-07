@@ -7,17 +7,41 @@
 :root {
   --font: "Poppins", sans-serif;
 
-  --ink: #000000;
-  --paper: #ffffff;
-  --page-gray: #c9c8c8;   /* subpage body background */
-  --band-gray: #dbdbdb;   /* alternating band background */
-  --window-gray: #d9d9d9; /* phone viewport windows, pill tracks */
-  --pill-border: #a3a3a3;
+  /* ------------------------------------------------------------------
+     SCHEME — "gallery" (dark)
+     Every colour in the site resolves through this block. A second scheme
+     is defined by overriding these values alone; nothing below should
+     introduce a new colour literal. Two schemes are planned, visitor
+     selectable, so keep it that way.
+     ------------------------------------------------------------------ */
+  --wall: #221E17;        /* the page itself */
+  --recess: #1A1710;      /* below the wall: toggle tracks, backing panels */
+  --surface: #2E2820;     /* above the wall: cards, chips, inputs, rows */
+  --surface-2: #3A332A;   /* above that: hover, raised knobs */
+  --line: #423A2F;        /* borders on dark */
+
+  --ink-strong: #F2ECDE;  /* primary copy */
+  --ink-muted: #CFC6B2;   /* secondary copy */
+  --ink-faint: #A79E8B;   /* tertiary, eyebrows */
+  --ink-on-light: #211D16;/* copy on the one light band */
+  --accent: #E9C88A;      /* links, "learn more" */
+
+  --glow: 255, 232, 192;  /* the gallery pool, as RGB parts for rgba() */
+  --band-alt: #2A241C;    /* alternating band, a step off the wall */
+  --band-light: #F2EBDF;  /* the ONE light surface: the beat before the footer */
+
+  /* Legacy names, aliased to the scheme so existing rules follow it. */
+  --ink: var(--ink-strong);
+  --paper: var(--surface);   /* NOTE: surfaces, not the page — body uses --wall */
+  --page-gray: var(--wall);  /* subpage body background */
+  --band-gray: var(--band-alt);
+  --window-gray: var(--recess); /* phone viewport windows, pill tracks */
+  --pill-border: var(--line);
 
   --radius-card: 22px;
   --radius-window: 30px;
   --radius-pill: 21px;
-  --shadow-card: 0 4px 15px rgba(0, 0, 0, 0.18);
+  --shadow-card: 0 14px 34px rgba(0, 0, 0, 0.42);
 
   --fs-display: clamp(2.75rem, 6.6vw, 6rem);      /* 96px hero/page titles */
   --fs-h2: clamp(2rem, 3.75vw, 3.375rem);         /* 54px section heads */
@@ -44,7 +68,7 @@ body {
   font-family: var(--font);
   font-weight: 400;
   color: var(--ink);
-  background: var(--paper);
+  background: var(--wall);
   -webkit-font-smoothing: antialiased;
 }
 
@@ -240,7 +264,14 @@ body.nav-solid .nav-links a { color: #000; }
 .win {
   position: relative;
   height: var(--window-h);
-  background: var(--window-gray);
+  background:
+    radial-gradient(
+      ellipse at 50% 44%,
+      rgba(var(--glow), 0.20) 0%,
+      rgba(var(--glow), 0.08) 38%,
+      rgba(var(--glow), 0) 72%
+    ),
+    var(--recess);
   clip-path: inset(0 round var(--radius-window));
 }
 
@@ -268,10 +299,10 @@ body.nav-solid .nav-links a { color: #000; }
   background: #000; /* some app screenshots carry alpha; keep crossfades opaque */
 }
 .phone-blank {
-  background: #fff;
+  background: var(--surface-2);
   box-shadow: none;
 }
-.phone-blank .phone-screen { background: #fff; }
+.phone-blank .phone-screen { background: var(--surface-2); }
 
 /* Static copy: shown on small screens / reduced motion / no JS */
 .phone--static {
@@ -302,7 +333,7 @@ body.stage-motion .fallback-flow { display: none; }
   top: 0;
   height: 100vh;
   overflow: hidden;
-  background: var(--paper);
+  background: var(--wall);
 }
 
 /* Hero photo backdrop — only for scene 0 */
@@ -403,7 +434,7 @@ body.stage-motion .fallback-flow { display: none; }
    -------------------------------------------------------------------------- */
 
 /* The wall. Warm charcoal, not pure black — pure black reads as "screen off". */
-.stage-frame { background: #221E17; }
+.stage-frame { background: var(--wall); }
 
 .stage-frame:not([data-scene="0"]) .stage-bg {
   opacity: 0.58;
@@ -412,10 +443,10 @@ body.stage-motion .fallback-flow { display: none; }
 }
 
 /* Copy flips to light. Warm off-white rather than #fff, since the wall is warm. */
-.stage-frame:not([data-scene="0"]) { color: #F2ECDE; }
-.stage-frame:not([data-scene="0"]) .scene li { color: #CFC6B2; }
-.stage-frame:not([data-scene="0"]) .learn-more { color: #E9C88A; }
-.stage-frame:not([data-scene="0"]) .stage-eyebrow { color: #C6BCA6; }
+.stage-frame:not([data-scene="0"]) { color: var(--ink-strong); }
+.stage-frame:not([data-scene="0"]) .scene li { color: var(--ink-muted); }
+.stage-frame:not([data-scene="0"]) .learn-more { color: var(--accent); }
+.stage-frame:not([data-scene="0"]) .stage-eyebrow { color: var(--ink-faint); }
 
 /* The grey box is replaced by light. A glow has no edge, so it cannot have
    the "neither blends nor stands alone" problem the rectangle had. */
@@ -462,11 +493,11 @@ body.nav-solid .nav {
 body.nav-solid .nav-wordmark,
 body.nav-solid .nav-links a { color: #F2ECDE; }
 
-/* The closing band, which follows the stage, moves off dead #dbdbdb to a warm
-   light. Deliberately NOT dark: it is the "back out into the light" beat
-   before the black footer, and .latte-fluffy relies on mix-blend-mode:multiply
-   to drop its baked-in white background, which only works over a light band. */
-.band.latte { background: #F2EBDF; }
+/* The closing band is the one light surface in the scheme — the "back out into
+   the light" beat before the black footer. It is deliberately not dark:
+   .latte-fluffy relies on mix-blend-mode:multiply to drop its baked-in white
+   background, which only works over a light band. Its copy has to invert. */
+.band.latte { background: var(--band-light); color: var(--ink-on-light); }
 
 /* Persistent header once the story starts. It lives in the copy column
    (left of the window at every width) and below the fixed nav at every
@@ -787,7 +818,8 @@ body.nav-solid .nav-links a { color: #F2ECDE; }
   font-size: var(--fs-body);
   padding: 0 34px;
 }
-.faq-search:focus { outline: 3px solid rgba(0, 0, 0, 0.35); }
+.faq-search::placeholder { color: var(--ink-faint); opacity: 1; }
+.faq-search:focus { outline: 3px solid var(--accent); outline-offset: 2px; }
 
 .faq-list {
   max-width: 900px;
