@@ -357,6 +357,33 @@ body.stage-motion .fallback-flow { display: none; }
 }
 .stage-phone .phone-screen img.active { opacity: 1; }
 
+/* --------------------------------------------------------------------------
+   Full-phone hero (trial — revert this block to restore the cropped device)
+   The stage phone is 869px tall but sits 61px below the window's top edge, so
+   it normally runs off the bottom of the viewport and the device is cut. This
+   caps its height to the space actually available below its anchor, so the
+   whole phone reads. The top anchor is untouched, so its composition with the
+   stage window and the copy column is unchanged.
+   Corner radius and bezel are re-derived from the width to keep the device's
+   proportions honest at the smaller size.
+   -------------------------------------------------------------------------- */
+.stage-phone {
+  --phone-h: min(869px, calc(100vh - var(--nav-h) - 60px));
+  --phone-w: calc(var(--phone-h) * 0.46375);
+  /* Centred in the space below the nav, overriding the original anchor. That
+     anchor put the phone 61px below the stage window's top edge, which framed
+     a device meant to overhang the viewport; once the phone fits, it left the
+     device bottom-heavy (209px above, 30px below at 900px tall) and sitting
+     ~90px lower than the copy column's optical centre. Centring gives equal
+     margins and lets the device be larger for the same fit. */
+  top: calc(var(--nav-h) + (100vh - var(--nav-h) - var(--phone-h)) / 2);
+}
+.stage-phone .phone {
+  border-radius: calc(var(--phone-w) * 0.15385);
+  padding: calc(var(--phone-w) * 0.03226);
+}
+.stage-phone .phone-screen { border-radius: calc(var(--phone-w) * 0.12407); }
+
 /* Persistent header once the story starts. It lives in the copy column
    (left of the window at every width) and below the fixed nav at every
    height, so it can never collide with either; its fade-in trails the
