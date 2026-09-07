@@ -781,6 +781,71 @@ body.stage-motion .fallback-flow { display: none; }
 .footer-bottom a:hover { text-decoration: underline; }
 
 /* --------------------------------------------------------------------------
+   Placeholder film slates
+   The phone screens are stand-in stills for films that have not been shot
+   yet. The still stays in full colour (desaturating it shifted the page's
+   overall colour temperature); the play glyph, hatch and caption carry the
+   placeholder signal instead. Each caption names the film that will replace
+   it, so a reviewer can see which section each film belongs to.
+   REMOVE (this block + every .phone--placeholder class and .film-slate span
+   in the HTML) once real <video> screens land — .phone-screen video is
+   already styled above and ready for the swap.
+   -------------------------------------------------------------------------- */
+.phone--placeholder .phone-screen { position: relative; }
+.phone--placeholder .phone-screen::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  border-radius: 50px;
+  background: repeating-linear-gradient(45deg, transparent 0 12px, rgba(255, 255, 255, 0.07) 12px 24px);
+  pointer-events: none;
+}
+.film-slate {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  padding: 0 18px;
+  /* Centred stack, not bottom-pinned: the stage phone is deliberately cropped
+     by the viewport, so a bottom-anchored caption falls below the fold on the
+     hero — the frame reviewers look at most. */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+}
+.film-slate::before {
+  content: "";
+  flex: none;
+  width: 66px;
+  height: 66px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.9);
+  background: rgba(0, 0, 0, 0.48)
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M8 5v14l11-7z' fill='%23ffffff' fill-opacity='0.95'/%3E%3C/svg%3E")
+    52% 50% / 26px no-repeat;
+}
+.film-slate::after {
+  content: attr(data-film) " · film to come";
+  text-align: center;
+  font: 600 10.5px/1.35 var(--font);
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.95);
+  background: rgba(0, 0, 0, 0.72);
+  padding: 7px 12px;
+  border-radius: 20px;
+}
+/* The stage phone crossfades four stills inside one screen, so its label is
+   driven by the active scene rather than a static data-film attribute. */
+.stage-frame[data-scene="0"] .film-slate::after { content: "Your feed · film to come"; }
+.stage-frame[data-scene="1"] .film-slate::after { content: "Private network · film to come"; }
+.stage-frame[data-scene="2"] .film-slate::after { content: "Start fresh · film to come"; }
+.stage-frame[data-scene="3"] .film-slate::after { content: "Member funded · film to come"; }
+
+/* --------------------------------------------------------------------------
    Responsive
    -------------------------------------------------------------------------- */
 @media (max-width: 1199px) {
