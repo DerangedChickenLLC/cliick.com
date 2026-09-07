@@ -70,7 +70,7 @@
   --fs-display: clamp(2.75rem, 6.6vw, 6rem);      /* 96px hero/page titles */
   --fs-h2: clamp(2rem, 3.75vw, 3.375rem);         /* 54px section heads */
   --fs-h2-sm: clamp(1.75rem, 3.3vw, 3rem);        /* 48px centered heads */
-  --fs-h3: clamp(1.5rem, 2.5vw, 2.25rem);         /* 36px showcase heads */
+  --fs-h3: clamp(1.75rem, 3.4vw, 3.25rem);        /* 52px scene + showcase heads */
   --fs-body: clamp(1.0625rem, 1.4vw, 1.25rem);    /* 20px body */
   --fs-small: 1rem;                                /* 16px */
 
@@ -308,8 +308,11 @@ body.nav-solid .nav-links a { color: #000; }
 }
 .learn-more {
   display: inline-block;
-  margin-top: 40px;
-  font-size: clamp(1.25rem, 1.8vw, 1.75rem);
+  margin-top: 34px;
+  font-size: 1.125rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--accent);
   text-decoration: none;
 }
 .learn-more::after { content: "  ⟶"; }
@@ -601,8 +604,11 @@ body.nav-solid .nav-links a { color: #F2ECDE; }
   top: max(calc(var(--nav-h) + 8px), calc(50vh - var(--window-h) / 2 - 82px));
   left: max(calc(var(--wrap-pad) + 62px), calc((100vw - 1440px) / 2 + 124px));
   transform: translateY(-14px);
-  font-size: clamp(1.5rem, 2.2vw, 2rem);
-  font-weight: 500;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
   opacity: 0;
   transition: opacity 0.4s ease, transform 0.4s ease;
 }
@@ -635,12 +641,12 @@ body.nav-solid .nav-links a { color: #F2ECDE; }
 }
 .scene h3 {
   font-size: var(--fs-h3);
-  font-weight: 500;
-  line-height: 1.4;
+  font-weight: 600;
+  line-height: 1.22;
   max-width: 14ch;
 }
 .scene ul { margin-top: 20px; list-style: none; }
-.scene li { font-size: var(--fs-body); line-height: 2.2; }
+.scene li { font-size: var(--fs-body); line-height: 1.9; }
 .scene li::before { content: "•  "; }
 .scene p:not(.hero-tagline) {
   margin-top: 20px;
@@ -711,6 +717,7 @@ body.nav-solid .nav-links a { color: #F2ECDE; }
 }
 .plan > * { position: relative; }
 .plan h3 {
+  font-weight: 600;
   font-size: 2.25rem;
   font-weight: 500;
 }
@@ -843,13 +850,16 @@ body.page-gray .page-hero h1 { text-shadow: 0 2px 20px rgba(0, 0, 0, 0.6); }
 .section { padding: 90px 0; }
 .section--center { text-align: center; }
 .eyebrow {
-  font-size: 1.125rem;
-  font-weight: 500;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
   text-align: center;
 }
 .section h2 {
   font-size: var(--fs-h2);
-  font-weight: 500;
+  font-weight: 600;
   line-height: 1.3;
   margin-top: 10px;
 }
