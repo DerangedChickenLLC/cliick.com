@@ -38,6 +38,12 @@
   --panel-shadow: 0 24px 52px rgba(0, 0, 0, 0.55), 0 3px 10px rgba(0, 0, 0, 0.38);
   --panel-shadow-sm: 0 10px 24px rgba(0, 0, 0, 0.42), 0 2px 6px rgba(0, 0, 0, 0.30);
 
+  /* A selected control has to read as ON. On a dark scheme the lazy move is
+     to make the active segment a slightly lighter dark, which reads as "off
+     and more off" rather than as a choice. Selection is lit. */
+  --control-on: #EBD9B6;
+  --control-on-ink: #1F1A12;
+
   --ink-strong: #F2ECDE;  /* primary copy */
   --ink-muted: #CFC6B2;   /* secondary copy */
   --ink-faint: #A79E8B;   /* tertiary, eyebrows */
@@ -684,11 +690,16 @@ body.nav-solid .nav-links a { color: #F2ECDE; }
 .plan-toggle {
   margin-top: 20px;
   border: 1px solid var(--pill-border);
-  background: var(--window-gray);
+  background: var(--recess);
   border-radius: var(--radius-pill);
   font-size: var(--fs-small);
   line-height: 2.5;
   text-align: center;
+}
+.plan-note {
+  background: rgba(var(--glow), 0.10);
+  border-color: rgba(var(--glow), 0.24);
+  color: var(--accent);
 }
 .plan-toggle {
   position: relative;
@@ -703,12 +714,23 @@ body.nav-solid .nav-links a { color: #F2ECDE; }
   bottom: 2px;
   left: 2px;
   width: calc(50% - 4px);
-  background: var(--paper);
+  background: var(--control-on);
   border-radius: calc(var(--radius-pill) - 3px);
+  box-shadow: 0 2px 7px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.55);
   transition: transform 0.25s ease;
 }
 .plan-toggle[data-cycle="monthly"] .knob { transform: translateX(calc(100% + 4px)); }
-.plan-toggle span { position: relative; z-index: 1; }
+.plan-toggle span {
+  position: relative;
+  z-index: 1;
+  color: var(--ink-muted);
+  transition: color 0.25s ease;
+}
+.plan-toggle[data-cycle="annual"] span:nth-of-type(1),
+.plan-toggle[data-cycle="monthly"] span:nth-of-type(2) {
+  color: var(--control-on-ink);
+  font-weight: 600;
+}
 .plan-toggle-note {
   margin-top: 10px;
   font-size: 0.85rem;
