@@ -49,6 +49,20 @@ review before finalising. Delete this file when prototype2 is promoted.
 - [ ] **Decide how the scheme is selected** — `data-scheme` on `<html>` plus a
   toggle, persisted. Not built.
 
+## Subpage structure
+
+- [ ] **About and Membership carry two headers.** The page header states the
+  page, then a centred `eyebrow` + `h2` immediately restates it ("Membership"
+  then "Powered by Subscription / Because you are not the product."). FAQ has
+  no such section and jumps straight to search. Now that the page header has
+  real content, the section header beneath it may be redundant on those two —
+  an editorial call, not a styling one.
+- [ ] **The supporting-art slot is empty on all three pages.** `.page-hero-art`
+  is wired and documented; it just needs images. Sized to `min(360px, 32vw)`
+  and dropped below 900px.
+- [ ] **Page ledes are placeholders** written to make the pattern visible, not
+  approved copy. They belong in the copy round.
+
 ## Explorations
 
 - [ ] **Light gallery.** Real galleries hang work on white walls because a

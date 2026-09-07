@@ -794,33 +794,67 @@ body.nav-solid .nav-links a { color: #F2ECDE; }
 /* --------------------------------------------------------------------------
    Subpage hero band
    -------------------------------------------------------------------------- */
+/* --------------------------------------------------------------------------
+   Page header
+   One pattern for every page below Home. Previously a bare <h1> bottom-aligned
+   in a fixed 366px band: the space above the title was leftover rather than
+   composed, and the title had nothing to hand off to, so the eye fell straight
+   into the content below.
+
+   The header is now a composed block — title, lede, and a slot for supporting
+   art — with its rhythm set by padding rather than a fixed height, so it grows
+   with its content instead of trapping it. Any page added later gets a
+   coherent header by using this markup:
+
+     <section class="page-hero">
+       <div class="wrap">
+         <div class="page-head">
+           <h1>Title</h1>
+           <p class="page-lede">One line on what the page is for.</p>
+         </div>
+         <img class="page-hero-art" src="..." alt="..." />   <- optional
+       </div>
+     </section>
+   -------------------------------------------------------------------------- */
 .page-hero {
   position: relative;
-  height: 366px;
-  background: #130e04;
+  padding-top: calc(var(--nav-h) + 86px);
+  padding-bottom: 78px;
   overflow: hidden;
-  display: flex;
-  align-items: flex-end;
   color: #fff;
 }
-.page-hero .hero-bg { object-position: center 75%; }
-.page-hero::after {
+.page-hero .wrap {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 48px;
+}
+.page-head { max-width: min(640px, 62%); }
+.page-hero h1 {
+  font-size: var(--fs-display);
+  font-weight: 500;
+  line-height: 1.05;
+}
+.page-lede {
+  margin-top: 22px;
+  max-width: 48ch;
+  font-size: var(--fs-body);
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.82);
+}
+/* The header is a darkened region of the page's own lit space, not a band with
+   its own backdrop — it previously painted #130e04 plus its own copy of the
+   backdrop at a different crop, which left a hard seam. The scrim is masked so
+   it fades out at the bottom rather than ending on an edge, and sits under
+   .wrap (z-index 2) so it never dims the copy. */
+body.page-gray .page-hero::after {
   content: "";
   position: absolute;
   inset: 0;
-  background:
-    linear-gradient(180deg, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0) 40%),
-    linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45));
-}
-/* On subpages the header shares the page's lit space rather than carrying its
-   own copy of the backdrop. It previously painted #130e04 with its own
-   hero-bg cropped at "center 75%", which butted against the fixed layer's
-   "center/cover" and left a hard horizontal seam. Now it is just a darkened
-   region of the same room, and its scrim is masked so it fades out at the
-   bottom instead of ending on an edge. */
-body.page-gray .page-hero { background: transparent; }
-body.page-gray .page-hero .hero-bg { display: none; }
-body.page-gray .page-hero::after {
+  z-index: 1;
+  pointer-events: none;
   background: linear-gradient(
     90deg,
     rgba(0, 0, 0, 0.66) 0%,
@@ -832,16 +866,18 @@ body.page-gray .page-hero::after {
 }
 body.page-gray .page-hero h1 { text-shadow: 0 2px 20px rgba(0, 0, 0, 0.6); }
 
-.page-hero .wrap {
-  position: relative;
-  z-index: 2;
-  width: 100%;
-  padding-bottom: 28px;
+/* Optional supporting art. Sized so it can never crowd the title, and dropped
+   entirely on narrow viewports rather than shrinking to a stamp. */
+.page-hero-art {
+  width: min(360px, 32vw);
+  height: auto;
+  border-radius: var(--radius-card);
+  align-self: end;
 }
-.page-hero h1 {
-  font-size: var(--fs-display);
-  font-weight: 500;
-  line-height: 1.05;
+@media (max-width: 900px) {
+  .page-hero .wrap { grid-template-columns: minmax(0, 1fr); }
+  .page-hero-art { display: none; }
+  .page-hero { padding-top: calc(var(--nav-h) + 54px); padding-bottom: 54px; }
 }
 
 /* --------------------------------------------------------------------------
