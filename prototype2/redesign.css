@@ -742,6 +742,12 @@ body.nav-solid .nav-links a { color: #F2ECDE; }
   letter-spacing: -0.03em;
 }
 .plan-price .amount { font-size: 3rem; }
+.plan-price .term-note {
+  display: block;
+  margin-top: 4px;
+  font-size: var(--fs-small);
+  color: var(--ink-muted);
+}
 .plan-price .term {
   font-size: var(--fs-small);
   font-weight: 400;
@@ -810,7 +816,7 @@ body.nav-solid .nav-links a { color: #F2ECDE; }
    Cliick against 250 — and it was a bullet among four. The fill is each plan's
    share of the larger cap, so the comparison is to scale rather than decorative. */
 .plan-scale {
-  margin-top: 26px;
+  margin-top: 14px;
 }
 .plan-scale-track {
   display: block;
@@ -930,6 +936,39 @@ body.page-gray .page-hero::after {
   mask-image: linear-gradient(180deg, #000 0%, #000 56%, transparent 100%);
 }
 body.page-gray .page-hero h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
+
+/* Aside column — the site's spatial grammar.
+   The homepage stage puts the argument on the left and the thing itself on the
+   right, and holds them there while you scroll. Subpages had abandoned that and
+   stacked everything centre, so each page read as a different site. .page-hero
+   --aside lets a page keep the grammar: headline and lede left, the subject
+   right, composed together rather than sequentially. */
+.page-hero--aside .wrap {
+  grid-template-columns: minmax(300px, 36%) minmax(0, 1fr);
+  align-items: center;
+  gap: 56px;
+}
+.page-hero--aside .page-head { max-width: none; }
+.page-hero--aside .page-lede { max-width: 38ch; }
+.page-hero-aside { min-width: 0; }
+/* the cards size to the column they are in rather than a fixed 440 */
+.page-hero-aside .plans {
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-rows: repeat(7, auto);
+  gap: 22px;
+}
+.page-hero-aside .plan {
+  display: grid;
+  grid-template-rows: subgrid;
+  grid-row: span 7;
+  align-content: start;
+}
+.page-hero-aside .plan { padding: 32px 30px 36px; }
+
+@media (max-width: 1100px) {
+  .page-hero--aside .wrap { grid-template-columns: minmax(0, 1fr); gap: 44px; }
+  .page-hero--aside .page-lede { max-width: 48ch; }
+}
 
 /* Optional supporting art. Sized so it can never crowd the title, and dropped
    entirely on narrow viewports rather than shrinking to a stamp. */
