@@ -14,9 +14,15 @@ review before finalising. Delete this file when prototype2 is promoted.
   conviction and ideally attributed. Its sharpest idea, "advertising platforms"
   as the frame for what those products structurally are, is already carried
   into scene 2.
-- [ ] **"No X. No Y." is becoming a refrain.** Scene 1 ends "Invite only. No
-  searching. No pushed content."; scene 2 ends "No followers. No reach."
-  Deliberate motif or unnoticed tic — worth deciding, not drifting into.
+- [x] ~~"No X. No Y." is becoming a refrain.~~ Made deliberate: all three
+  scenes now close on it — "Invite only. No searching. No pushed content." /
+  "No followers. No reach." / "No tracking. No data brokers. No AI training."
+  Counts vary 3-2-3 so it reads as a refrain rather than a template.
+- [ ] **"No AI training" is now load-bearing.** It closes the homepage's final
+  scene as well as appearing in the promise chips and the FAQ, so it is one of
+  the site's most prominent promises. It is also the policy claim in the
+  ledger most likely to age badly. Needs an owner to confirm it holds
+  indefinitely before launch, not just today.
 
 - [x] ~~Hero slogan duplicates the closing CTA.~~ Resolved: the footer CTA
   is now `Join the Reset.` alone, so the title and footer are distinct.
