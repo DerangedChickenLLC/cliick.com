@@ -84,6 +84,37 @@
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
+/* --------------------------------------------------------------------------
+   Touch targets
+   Links here are set at their text height — nav items came out 23px tall,
+   footer links 24px, the scene CTAs 28px. On a touch screen the guidance is
+   44px, and the gap is the difference between tapping and aiming. These pad
+   the hit area without moving the text: the extra height is centred on the
+   label, so layout is unchanged on pointer devices too.
+   -------------------------------------------------------------------------- */
+@media (hover: none), (pointer: coarse) {
+  .nav-links a,
+  .footer-bottom a,
+  .footer-dl span,
+  .learn-more {
+    position: relative;
+  }
+  .nav-links a::after,
+  .footer-bottom a::after,
+  .footer-dl span::after,
+  .learn-more::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    height: 44px;
+    transform: translateY(-50%);
+    /* sits behind the label, so it never covers the arrow glyph */
+    z-index: -1;
+  }
+}
+
 /* Available to the accessibility tree, not to the eye. Used where a region
    needs a heading for the document outline but not a visible one. */
 .sr-only {
@@ -1385,7 +1416,17 @@ body.page-gray .page-hero h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
   .win { height: 480px; }
   .phone--static { top: 40px; transform: translateX(-50%) scale(0.82); transform-origin: top center; }
   .hero-phone { display: none; }
-  .cluster { transform: scale(0.72); transform-origin: top center; height: 240px; }
+  /* transform: scale() shrinks the painting but not the layout box, so the
+     cluster kept claiming its full 492px and pushed the document to 512px
+     wide on a 390px screen. Scale from the left and reclaim the width the
+     element no longer paints, so the footprint matches what is drawn. */
+  .cluster {
+    transform: scale(0.72);
+    transform-origin: top left;
+    height: 240px;
+    margin-right: calc(492px * -0.28);
+    justify-self: start;
+  }
   .plan { padding: 30px 26px 36px; }
   .footer-bottom { justify-content: center; text-align: center; }
 }
