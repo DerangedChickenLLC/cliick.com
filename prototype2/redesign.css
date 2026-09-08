@@ -570,7 +570,7 @@ body.nav-solid .nav-links a { color: #F2ECDE; }
    .latte-fluffy relies on mix-blend-mode:multiply to drop its baked-in white
    background, which only works over a light band. Its copy has to invert. */
 .band.latte { background: var(--band-light); color: var(--ink-on-light); }
-.band.latte .plans { margin-top: 48px; }
+.band.latte .plans { margin-top: 72px; }
 
 /* --------------------------------------------------------------------------
    Objects on the light band
@@ -1130,7 +1130,7 @@ body.page-gray .page-hero h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
 
 /* Promise pills (Membership) */
 .pills {
-  margin: 36px auto 0;
+  margin: 44px auto 40px;
   display: grid;
   grid-template-columns: repeat(3, max-content);
   justify-content: center;
