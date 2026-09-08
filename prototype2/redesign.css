@@ -798,13 +798,6 @@ body.nav-solid .nav-links a { color: #F2ECDE; }
   color: var(--control-on-ink);
   font-weight: 600;
 }
-.plan-toggle-note {
-  margin-top: 10px;
-  font-size: 0.85rem;
-  text-align: center;
-  opacity: 0.7;
-  min-height: 1.2em;
-}
 .plan ul {
   margin-top: 26px;
   padding-left: 22px;
@@ -957,13 +950,18 @@ body.page-gray .page-hero h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
 /* the cards size to the column they are in rather than a fixed 440 */
 .page-hero-aside .plans {
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  grid-template-rows: repeat(7, auto);
+  /* Five rows: name, price, control, scale, label. Was seven — the feature
+     lists went when the capacity scale proved to carry the only real
+     difference, and the live-region paragraph went when the price itself
+     became the announced element. Keep this in step with the card's child
+     count or the subgrid stops aligning. */
+  grid-template-rows: repeat(5, auto);
   gap: 22px;
 }
 .page-hero-aside .plan {
   display: grid;
   grid-template-rows: subgrid;
-  grid-row: span 7;
+  grid-row: span 5;
   align-content: start;
 }
 .page-hero-aside .plan { padding: 32px 30px 36px; }
