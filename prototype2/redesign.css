@@ -828,14 +828,13 @@ body.nav-solid .nav-links a { color: #F2ECDE; }
            <p class="page-lede">One line on what the page is for.</p>
          </div>
          <img class="page-hero-art" src="..." alt="..." />   <- optional
-         (currently a .art-placeholder plate; see the block below)
        </div>
      </section>
    -------------------------------------------------------------------------- */
 .page-hero {
   position: relative;
-  padding-top: calc(var(--nav-h) + 86px);
-  padding-bottom: 78px;
+  padding-top: calc(var(--nav-h) + 62px);
+  padding-bottom: 64px;
   overflow: hidden;
   color: #fff;
 }
@@ -908,46 +907,6 @@ body.page-gray .page-hero h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
   align-self: end;
 }
 
-/* --------------------------------------------------------------------------
-   Placeholder art plate
-   Same language as the film slates on the phone screens: enough presence to
-   judge the layout, unmistakably not the final image, and it names the subject
-   the slot is holding so the gap is a brief rather than a hole.
-   REMOVE this block and swap each .art-placeholder for a real
-   <img class="page-hero-art"> when the photography lands.
-   -------------------------------------------------------------------------- */
-.art-placeholder {
-  aspect-ratio: 4 / 3;
-  display: grid;
-  grid-auto-flow: row;
-  place-content: center;
-  justify-items: center;
-  gap: 14px;
-  padding: 0 22px;
-  background:
-    radial-gradient(ellipse at 50% 34%, rgba(var(--glow), 0.16) 0%, rgba(var(--glow), 0) 68%),
-    var(--panel);
-  border: 1px solid var(--panel-edge);
-  box-shadow: var(--panel-shadow), inset 0 1px 0 var(--panel-lip);
-}
-.art-placeholder::before {
-  content: "";
-  width: 46px;
-  height: 46px;
-  opacity: 0.75;
-  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23E9C88A' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='4' width='18' height='16' rx='2.5'/%3E%3Ccircle cx='8.5' cy='9.5' r='1.6'/%3E%3Cpath d='M21 16l-5-5-6 6-2-2-5 5'/%3E%3C/svg%3E")
-    center / contain no-repeat;
-}
-.art-placeholder::after {
-  content: attr(data-art) " · image to come";
-  text-align: center;
-  font-size: 0.8125rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  line-height: 1.45;
-  color: var(--accent);
-}
 @media (max-width: 900px) {
   .page-hero .wrap { grid-template-columns: minmax(0, 1fr); }
   .page-hero-art { display: none; }
@@ -1069,12 +1028,14 @@ body.page-gray .page-hero h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
    FAQ
    -------------------------------------------------------------------------- */
 .faq-search-wrap {
-  padding: 60px 0 10px;
+  max-width: 900px;
+  margin-inline: auto;
+  padding: 0 var(--wrap-pad) 44px;
   display: flex;
   justify-content: center;
 }
 .faq-search {
-  width: min(778px, 100%);
+  width: 100%;
   height: 69px;
   border: 1px solid var(--line);
   border-radius: 40px;
@@ -1090,13 +1051,15 @@ body.page-gray .page-hero h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
 .faq-list {
   max-width: 900px;
   margin-inline: auto;
-  padding: 30px var(--wrap-pad) 110px;
+  padding: 0 var(--wrap-pad) 96px;
 }
+.faq-section + .faq-section { margin-top: 64px; }
 .faq-section-title {
   font-size: 1.75rem;
-  font-weight: 500;
-  margin: 54px 0 10px;
+  font-weight: 600;
+  margin: 0 0 18px;
 }
+.faq-list details:first-of-type { margin-top: 0; }
 .faq-list details {
   background: var(--panel);
   border: 1px solid var(--panel-edge);
