@@ -222,7 +222,7 @@ a { color: inherit; }
 .nav-wordmark {
   font-size: 2rem;
   font-weight: 500;
-  color: #fff;
+  color: var(--ink-strong);
   text-decoration: none;
   line-height: 1;
 }
@@ -232,7 +232,7 @@ a { color: inherit; }
   gap: clamp(18px, 2.6vw, 38px);
 }
 .nav-links a {
-  color: #fff;
+  color: var(--ink-strong);
   text-decoration: none;
   font-size: 1.25rem;
 }
@@ -265,7 +265,7 @@ body.nav-solid .nav-links a { color: #000; }
   min-height: min(866px, 100vh);
   background: #130e04;
   overflow: hidden;
-  color: #fff;
+  color: var(--ink-strong);
 }
 .hero-bg {
   position: absolute;
@@ -723,8 +723,10 @@ body.nav-solid .nav-links a { color: #F2ECDE; }
   max-width: 30ch;
 }
 
-/* Scene 0 = the hero copy, white on the photo */
-.scene--hero { color: #fff; width: min(640px, 44vw); }
+/* Scene 0 = the hero copy. It uses the same ink as scenes 1-3: as a literal
+   white it was the one headline in the site not lit by the room's lamp, and
+   it changed colour at 1200 as the stage handed over to the fallback flow. */
+.scene--hero { width: min(640px, 44vw); }
 
 /* --------------------------------------------------------------------------
    Latte band (home) + pricing cards (home & membership)
@@ -975,7 +977,7 @@ body.nav-solid .nav-links a { color: #F2ECDE; }
   padding-top: calc(var(--nav-h) + 62px);
   padding-bottom: 64px;
   overflow: hidden;
-  color: #fff;
+  color: var(--ink-strong);
 }
 .page-hero .wrap {
   position: relative;
@@ -1002,21 +1004,24 @@ body.nav-solid .nav-links a { color: #F2ECDE; }
   font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.72);
+  /* --ink-muted, matching .eyebrow and the stage eyebrow's resting ink. The
+     white it replaces composited to about the same lightness over the header
+     scrim, so this is the token swap, not a dimming. */
+  color: var(--ink-muted);
   margin-bottom: 18px;
 }
 .page-kicker {
   margin-top: 16px;
   font-size: var(--fs-body);
   font-weight: 600;
-  color: #fff;
+  color: var(--ink-strong);
 }
 .page-lede {
   margin-top: 22px;
   max-width: 48ch;
   font-size: var(--fs-body);
   line-height: 1.55;
-  color: rgba(255, 255, 255, 0.82);
+  color: var(--ink-muted);
 }
 /* The header is a darkened region of the page's own lit space, not a band with
    its own backdrop — it previously painted #130e04 plus its own copy of the
@@ -1331,7 +1336,7 @@ body.page-gray .page-hero h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
    -------------------------------------------------------------------------- */
 .footer-v2 {
   background: #000;
-  color: #fff;
+  color: var(--ink-strong);
   text-align: center;
   padding: 96px 0 20px;
 }
