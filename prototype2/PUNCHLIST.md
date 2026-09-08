@@ -5,6 +5,19 @@ review before finalising. Delete this file when prototype2 is promoted.
 
 ## Copy
 
+- [ ] **Manifesto line, verbatim, for the new page.** From a contributor, in the
+  room: *"Everyone please STOP posting your personal lives on advertising
+  platforms!"* Too scolding for body copy — it makes the visitor the wrongdoer
+  on a site whose whole posture is invitational — but it is the founding
+  grievance stated plainly, and a quote is allowed an intensity a paragraph is
+  not. Belongs on the manifesto page planned alongside About, set as a stated
+  conviction and ideally attributed. Its sharpest idea, "advertising platforms"
+  as the frame for what those products structurally are, is already carried
+  into scene 2.
+- [ ] **"No X. No Y." is becoming a refrain.** Scene 1 ends "Invite only. No
+  searching. No pushed content."; scene 2 ends "No followers. No reach."
+  Deliberate motif or unnoticed tic — worth deciding, not drifting into.
+
 - [x] ~~Hero slogan duplicates the closing CTA.~~ Resolved: the footer CTA
   is now `Join the Reset.` alone, so the title and footer are distinct.
 - [x] ~~Capitalisation mismatch between hero and footer.~~ Gone with the
