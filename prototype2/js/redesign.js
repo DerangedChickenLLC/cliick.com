@@ -75,15 +75,25 @@ if (stageTrack) {
 }
 
 // --- Premium plan billing-cycle toggle -------------------------------------
-// Monthly pricing isn't finalized; the toggle moves but flags the price as TBD.
+// Both cycles are live and priced: $72/year or $8/month. The toggle used to
+// move while claiming monthly was "coming soon", which was never true.
+// Prices live on the toggle's data attributes so the copy stays in the markup;
+// .plan-price carries aria-live so the change is announced, not just seen.
 document.querySelectorAll(".plan-toggle").forEach((toggle) => {
-  const note = toggle.parentElement.querySelector(".plan-toggle-note");
+  const plan = toggle.closest(".plan");
+  if (!plan) return;
+  const amount = plan.querySelector(".plan-price .amount");
+  const termNote = plan.querySelector(".plan-price .term-note");
+
+  const apply = (cycle) => {
+    toggle.dataset.cycle = cycle;
+    const suffix = cycle === "monthly" ? "Monthly" : "Annual";
+    if (amount) amount.textContent = toggle.dataset["amount" + suffix];
+    if (termNote) termNote.textContent = toggle.dataset["note" + suffix];
+  };
+
   toggle.addEventListener("click", () => {
-    const monthly = toggle.dataset.cycle === "annual";
-    toggle.dataset.cycle = monthly ? "monthly" : "annual";
-    if (note) {
-      note.textContent = monthly ? "Monthly pricing coming soon" : "";
-    }
+    apply(toggle.dataset.cycle === "annual" ? "monthly" : "annual");
   });
 });
 
