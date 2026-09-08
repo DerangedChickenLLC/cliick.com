@@ -5,6 +5,33 @@ review before finalising. Delete this file when prototype2 is promoted.
 
 ## Copy
 
+- [ ] **Scene 3 copy is not settled** (committee rejected). Currently "Funded by
+  members. Not ads." / "Members pay for Cliick, and guests are on the house. No
+  tracking. No data brokers. No AI training."
+
+  Tried and rejected, so as not to retread:
+  - "With no advertisers to answer to, there's no one to sell you to" — two
+    `to`-endings in one sentence, stumbles read aloud.
+  - "Nobody is bidding for your attention here" as the headline — good frame
+    ("bidding" names the mechanism the way "advertising platform" does in scene
+    2), but the committee wanted "Funded by members. Not ads." kept.
+  - "You're not our product. Not now, not ever." — strong line, but it
+    duplicated Membership's h1, so it was moved there instead. Do not bring it
+    back to scene 3.
+  - "The only people Cliick answers to are the ones using it" / "The only thing
+    Cliick sells is Cliick" — offered, not taken.
+
+  Constraints learned along the way:
+  - Any claim here must survive the free tier. "The people using Cliick are the
+    ones paying for it" is false for every Guest, and this scene sits one
+    scroll above a $0 tier, so it invites the "if you're not paying, you're the
+    product" reflex. "Guests are on the house" was the fix and is worth keeping
+    in whatever replaces this.
+  - The scene's headline is clipped while scenes 1 and 2 are long and flowing,
+    so the closing refrain has little to change gear from. Either accept that
+    or the headline has to lengthen.
+  - No em dashes.
+
 - [ ] **Manifesto line, verbatim, for the new page.** From a contributor, in the
   room: *"Everyone please STOP posting your personal lives on advertising
   platforms!"* Too scolding for body copy — it makes the visitor the wrongdoer
