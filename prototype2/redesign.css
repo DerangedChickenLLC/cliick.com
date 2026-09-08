@@ -314,6 +314,8 @@ body.nav-solid .nav-links a { color: #000; }
 }
 .store-badges img { height: 52px; width: auto; }
 
+.hero-phone-frame { display: contents; }
+
 .hero-phone {
   justify-self: center;
   align-self: end;
@@ -1433,30 +1435,6 @@ body.page-gray .page-hero h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
      about 310px of copy in an 844px screen — half the first view is backdrop,
      and everything that would invite a scroll is pushed under the fold. Size
      it to its content instead, so the section below peeks into view. */
-  /* --- Matting -----------------------------------------------------------
-     Both devices are cut at the bottom: the scene phones by the alcove's
-     clip-path (81px), the hero's by the section edge (72px). The alcove at
-     least frames its cut; the hero's was a bare slice. Give both a floor so
-     the device descends into shadow instead of being sliced, which is the
-     same masked-fade idea the hero's scrim already uses. Narrow only — the
-     wide layout is deliberate and untouched. */
-  .showcase .win::after,
-  .fallback-flow .hero::before {
-    content: "";
-    position: absolute;
-    inset: auto 0 0 0;
-    pointer-events: none;
-  }
-  .showcase .win::after {
-    height: 38%;
-    background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, var(--wall) 86%);
-  }
-  .fallback-flow .hero::before {
-    height: 150px;
-    z-index: 1;
-    background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, var(--wall) 92%);
-  }
-
   /* --- One lit space, as on the subpages ---------------------------------
      Collapsed, the hero was a dark band carrying its own copy of the backdrop
      while the scenes below sat on flat wall colour, so the hero read as a
@@ -1499,12 +1477,34 @@ body.page-gray .page-hero h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
     padding-bottom: 0;
   }
   .hero .wrap { padding-block: 0; }
+  /* The hero gets the same window the scenes have, rather than a device
+     floating against the backdrop. Same fill, same radius, same clip — so the
+     crop at its foot reads as a frame, which is what makes the scenes' crop
+     work. display:contents keeps the wrapper out of the wide layout entirely. */
+  .hero-phone-frame {
+    display: block;
+    position: relative;
+    height: 420px;
+    margin-top: 36px;
+    margin-bottom: -40px;
+    background:
+      radial-gradient(
+        ellipse at 50% 44%,
+        rgba(var(--glow), 0.20) 0%,
+        rgba(var(--glow), 0.08) 38%,
+        rgba(var(--glow), 0) 72%
+      ),
+      var(--recess);
+    clip-path: inset(0 round var(--radius-window));
+  }
   .hero-phone {
     display: block;
-    width: min(232px, 62%);
-    margin-top: 40px;
-    margin-bottom: -72px;
-    justify-self: center;
+    position: absolute;
+    left: 50%;
+    top: 40px;
+    transform: translateX(-50%);
+    width: 232px;
+    margin: 0;
   }
 
   .nav-wordmark { display: none; }
