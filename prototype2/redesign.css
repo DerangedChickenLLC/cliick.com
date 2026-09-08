@@ -793,6 +793,17 @@ body.nav-solid .nav-links a { color: #F2ECDE; }
   color: var(--ink-muted);
   transition: color 0.25s ease;
 }
+/* The saving sits on the control rather than in the selected plan's copy, so
+   it is legible from either side of the toggle. Inherits its colour so it
+   works both on the lit knob and on the dark track. */
+.plan-toggle .save {
+  font-size: 0.72em;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  opacity: 0.72;
+  margin-left: 4px;
+  white-space: nowrap;
+}
 .plan-toggle[data-cycle="annual"] span:nth-of-type(1),
 .plan-toggle[data-cycle="monthly"] span:nth-of-type(2) {
   color: var(--control-on-ink);
