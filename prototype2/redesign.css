@@ -891,6 +891,9 @@ body.nav-solid .nav-links a { color: #F2ECDE; }
   font-weight: 600;
   line-height: 1.1;
   letter-spacing: -0.01em;
+  /* Page headlines are sentences now, and the aside layout gives them a narrow
+     column — without balancing, a short final word strands on its own line. */
+  text-wrap: balance;
 }
 /* The page name survives as the eyebrow rather than a billboard: the nav
    already marks the current page, and Home does not announce itself either. */
