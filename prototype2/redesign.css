@@ -701,7 +701,7 @@ body.nav-solid .nav-links a { color: #F2ECDE; }
 }
 
 .plans {
-  margin-top: 56px;
+  margin-top: 0;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 440px));
   gap: 28px;
@@ -805,6 +805,39 @@ body.nav-solid .nav-links a { color: #F2ECDE; }
   font-size: var(--fs-small);
 }
 .plan li { line-height: 2.5; }
+
+/* Capacity scale. The plans differ by one number that matters — 6 members per
+   Cliick against 250 — and it was a bullet among four. The fill is each plan's
+   share of the larger cap, so the comparison is to scale rather than decorative. */
+.plan-scale {
+  margin-top: 26px;
+}
+.plan-scale-track {
+  display: block;
+  height: 8px;
+  border-radius: 99px;
+  background: var(--recess);
+  border: 1px solid var(--panel-edge);
+  overflow: hidden;
+}
+.plan-scale-fill {
+  display: block;
+  width: var(--fill);
+  height: 100%;
+  border-radius: 99px;
+  background: linear-gradient(90deg, rgba(var(--glow), 0.55), var(--accent));
+}
+.plan-scale--guest { --fill: 2.4%; }
+.plan-scale--premium { --fill: 100%; }
+.plan-scale-label {
+  margin-top: 10px;
+  font-size: var(--fs-small);
+  color: var(--ink-muted);
+}
+.plan-scale-label b {
+  color: var(--ink-strong);
+  font-weight: 600;
+}
 
 /* --------------------------------------------------------------------------
    Subpage hero band
@@ -917,6 +950,9 @@ body.page-gray .page-hero h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
    Generic sections (About & Membership)
    -------------------------------------------------------------------------- */
 .section { padding: 90px 0; }
+/* The first section carries the header's own bottom padding already;
+   without this the two stack into a gap nothing lives in. */
+.page-hero + .section { padding-top: 30px; }
 .section--center { text-align: center; }
 .eyebrow {
   font-size: 1rem;
@@ -1008,14 +1044,17 @@ body.page-gray .page-hero h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
 
 /* Promise pills (Membership) */
 .pills {
-  margin: 48px auto 0;
-  display: flex;
-  flex-wrap: wrap;
+  margin: 36px auto 0;
+  display: grid;
+  grid-template-columns: repeat(3, max-content);
   justify-content: center;
-  gap: 16px 18px;
-  max-width: 760px;
+  gap: 14px 16px;
+}
+@media (max-width: 720px) {
+  .pills { grid-template-columns: repeat(2, max-content); }
 }
 .pills span {
+  text-align: center;
   background: var(--paper);
   border-radius: var(--radius-pill);
   padding: 6px 26px;
