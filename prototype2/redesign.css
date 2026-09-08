@@ -328,11 +328,20 @@ body.nav-solid .nav-links a { color: #000; }
    the fixed element paint only inside the window), so scrolling windows
    sweep across a phone that never moves. Screens differ per window.
    -------------------------------------------------------------------------- */
+/* The fallback flow's counterpart to .stage-eyebrow. When the eyebrow became a
+   small spaced label in the type pass this was left as a 48px centred heading,
+   so the same words read as a section title on a phone and a quiet label on
+   the desktop stage. Matched to the eyebrow, and left-aligned like everything
+   beneath it. */
 .welcome-head {
-  text-align: center;
-  font-size: var(--fs-h2-sm);
-  font-weight: 500;
-  padding: 72px 20px 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  padding: 72px var(--wrap-pad) 0;
+  max-width: 1440px;
+  margin-inline: auto;
 }
 
 .showcase .row {
@@ -1420,6 +1429,17 @@ body.page-gray .page-hero h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
   .hero-phone { margin-bottom: -180px; }
 }
 @media (max-width: 720px) {
+  /* The hero loses its phone at this width, so a 100vh opener is left holding
+     about 310px of copy in an 844px screen — half the first view is backdrop,
+     and everything that would invite a scroll is pushed under the fold. Size
+     it to its content instead, so the section below peeks into view. */
+  .hero {
+    min-height: 0;
+    padding-top: calc(var(--nav-h) + 52px);
+    padding-bottom: 76px;
+  }
+  .hero .wrap { padding-block: 0; }
+
   .nav-wordmark { display: none; }
   .nav-logo { width: 40px; height: 40px; }
   .nav-links { gap: 14px; }
