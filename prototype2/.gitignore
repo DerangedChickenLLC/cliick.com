@@ -3,4 +3,4 @@
 _scene*.html
 
 # Wordmark review sheets, same deal: generated, and not for publication.
-_wordmark*.html
+_wordmark*
