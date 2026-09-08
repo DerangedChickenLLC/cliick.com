@@ -570,6 +570,7 @@ body.nav-solid .nav-links a { color: #F2ECDE; }
    .latte-fluffy relies on mix-blend-mode:multiply to drop its baked-in white
    background, which only works over a light band. Its copy has to invert. */
 .band.latte { background: var(--band-light); color: var(--ink-on-light); }
+.band.latte .plans { margin-top: 48px; }
 
 /* --------------------------------------------------------------------------
    Objects on the light band
@@ -698,6 +699,10 @@ body.nav-solid .nav-links a { color: #F2ECDE; }
   font-size: var(--fs-body);
   line-height: 1.5;
   max-width: 62ch;
+  /* These run two or three lines, which is too short for text-wrap: pretty to
+     help — pretty only tunes the last few lines of a longer block. balance
+     evens every line instead, so no single word is left trailing. */
+  text-wrap: balance;
 }
 
 .plans {
