@@ -1,3 +1,6 @@
 # Static scene snapshots used to render the scroll stage for review.
 # Generated, and would be publicly reachable on GitHub Pages if committed.
 _scene*.html
+
+# Wordmark review sheets, same deal: generated, and not for publication.
+_wordmark*.html
