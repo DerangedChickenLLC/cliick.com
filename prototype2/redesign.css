@@ -868,13 +868,6 @@ body.nav-solid .nav-links a { color: #F2ECDE; }
   color: var(--control-on-ink);
   font-weight: 600;
 }
-.plan ul {
-  margin-top: 26px;
-  padding-left: 22px;
-  font-size: var(--fs-small);
-}
-.plan li { line-height: 2.5; }
-
 /* Capacity scale. The plans differ by one number that matters — 6 members per
    Cliick against 250 — and it was a bullet among four. The fill is each plan's
    share of the larger cap, so the comparison is to scale rather than decorative. */
