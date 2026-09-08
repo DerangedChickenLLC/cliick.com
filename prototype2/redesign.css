@@ -1428,43 +1428,50 @@ body.page-gray .page-hero h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
   .jump-in-cols { grid-template-columns: 1fr; }
   .hero .wrap { grid-template-columns: 1fr; }
 }
+/* The fallback flow renders from 1199px down, so its lit space has to start
+   there too. Scoped to 720 this left a band from 721 to 1199 still running
+   the old treatment — a dark #130e04 hero carrying its own backdrop, with
+   the sections on flat wall — which is why the window appeared to change
+   colour between widths. */
+@media (max-width: 1199px) {
+/* --- One lit space, as on the subpages ---------------------------------
+   Collapsed, the hero was a dark band carrying its own copy of the backdrop
+   while the scenes below sat on flat wall colour, so the hero read as a
+   different design from the sections it introduces. The backdrop becomes one
+   fixed layer for the whole flow and the hero becomes a darkened region of
+   it, with its scrim masked so it fades out instead of ending on an edge —
+   the same treatment that removed the seam on About and Membership. */
+.fallback-flow::before {
+  content: "";
+  position: fixed;
+  inset: -6%;
+  z-index: -2;
+  background: url("/prototype2/images/redesign/hero-bg-sim.svg") 76% 26% / cover no-repeat;
+  filter: blur(26px) saturate(0.86) brightness(1.22);
+  opacity: 0.58;
+  pointer-events: none;
+}
+.fallback-flow .hero { background: transparent; }
+.fallback-flow .hero > .hero-bg { display: none; }
+.fallback-flow .hero::after {
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.42) 0%,
+    rgba(0, 0, 0, 0.20) 46%,
+    rgba(0, 0, 0, 0.06) 100%
+  );
+  -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 62%, transparent 100%);
+  mask-image: linear-gradient(180deg, #000 0%, #000 62%, transparent 100%);
+}
+/* and its copy takes the same ink as the scenes, not pure white */
+.fallback-flow .hero { color: var(--ink-strong); }
+}
+
 @media (max-width: 720px) {
   /* The hero loses its phone at this width, so a 100vh opener is left holding
      about 310px of copy in an 844px screen — half the first view is backdrop,
      and everything that would invite a scroll is pushed under the fold. Size
      it to its content instead, so the section below peeks into view. */
-  /* --- One lit space, as on the subpages ---------------------------------
-     Collapsed, the hero was a dark band carrying its own copy of the backdrop
-     while the scenes below sat on flat wall colour, so the hero read as a
-     different design from the sections it introduces. The backdrop becomes one
-     fixed layer for the whole flow and the hero becomes a darkened region of
-     it, with its scrim masked so it fades out instead of ending on an edge —
-     the same treatment that removed the seam on About and Membership. */
-  .fallback-flow::before {
-    content: "";
-    position: fixed;
-    inset: -6%;
-    z-index: -2;
-    background: url("/prototype2/images/redesign/hero-bg-sim.svg") 76% 26% / cover no-repeat;
-    filter: blur(26px) saturate(0.86) brightness(1.22);
-    opacity: 0.58;
-    pointer-events: none;
-  }
-  .fallback-flow .hero { background: transparent; }
-  .fallback-flow .hero > .hero-bg { display: none; }
-  .fallback-flow .hero::after {
-    background: linear-gradient(
-      180deg,
-      rgba(0, 0, 0, 0.42) 0%,
-      rgba(0, 0, 0, 0.20) 46%,
-      rgba(0, 0, 0, 0.06) 100%
-    );
-    -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 62%, transparent 100%);
-    mask-image: linear-gradient(180deg, #000 0%, #000 62%, transparent 100%);
-  }
-  /* and its copy takes the same ink as the scenes, not pure white */
-  .fallback-flow .hero { color: var(--ink-strong); }
-
   /* The hero keeps its subject. Deleting the phone was what emptied it: a
      product site's hero with no product is just a paragraph on a photo. It is
      scaled to about half, which leaves a composition rather than filling the
