@@ -84,6 +84,17 @@
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
+/* Keyboard focus. Nothing suppressed outlines, so the browser default was
+   applying — but a default ring is tuned for a generic page, not a dark one
+   with its own palette. :where() keeps specificity at zero so any component
+   can still override it. --accent resolves per context, so this stays legible
+   on the light band as well as the dark. */
+:where(a, button, summary, input, [tabindex]):focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
 /* --------------------------------------------------------------------------
    Touch targets
    Links here are set at their text height — nav items came out 23px tall,
