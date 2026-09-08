@@ -67,11 +67,11 @@
   --radius-pill: 21px;
   --shadow-card: 0 14px 34px rgba(0, 0, 0, 0.42);
 
-  --fs-display: clamp(2.75rem, 6.6vw, 6rem);      /* 96px hero/page titles */
-  --fs-h2: clamp(2rem, 3.75vw, 3.375rem);         /* 54px section heads */
+  --fs-display: clamp(3.25rem, 6.6vw, 6rem);      /* 96px hero/page titles */
+  --fs-h2: clamp(2.25rem, 3.75vw, 3.375rem);      /* 54px section heads */
   --fs-h2-sm: clamp(1.75rem, 3.3vw, 3rem);        /* 48px centered heads */
-  --fs-h3: clamp(1.75rem, 4.1vw, 3.25rem);        /* 52px scene + showcase heads */
-  --fs-page-title: clamp(2.25rem, 4.9vw, 4rem);   /* 64px page headlines */
+  --fs-h3: clamp(2.125rem, 4.1vw, 3.25rem);       /* 52px scene + showcase heads */
+  --fs-page-title: clamp(2.5rem, 4.9vw, 4rem);    /* 64px page headlines */
   --fs-body: clamp(1.0625rem, 1.4vw, 1.25rem);    /* 20px body */
   --fs-small: 1rem;                                /* 16px */
 
@@ -1433,12 +1433,23 @@ body.page-gray .page-hero h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
      about 310px of copy in an 844px screen — half the first view is backdrop,
      and everything that would invite a scroll is pushed under the fold. Size
      it to its content instead, so the section below peeks into view. */
+  /* The hero keeps its subject. Deleting the phone was what emptied it: a
+     product site's hero with no product is just a paragraph on a photo. It is
+     scaled to about half, which leaves a composition rather than filling the
+     screen, and it keeps its crop at the hero's bottom edge. */
   .hero {
     min-height: 0;
-    padding-top: calc(var(--nav-h) + 52px);
-    padding-bottom: 76px;
+    padding-top: calc(var(--nav-h) + 44px);
+    padding-bottom: 0;
   }
   .hero .wrap { padding-block: 0; }
+  .hero-phone {
+    display: block;
+    width: min(216px, 58%);
+    margin-top: 40px;
+    margin-bottom: -72px;
+    justify-self: start;
+  }
 
   .nav-wordmark { display: none; }
   .nav-logo { width: 40px; height: 40px; }
@@ -1446,7 +1457,6 @@ body.page-gray .page-hero h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
   .nav-links a { font-size: 0.95rem; }
   .win { height: 480px; }
   .phone--static { top: 40px; transform: translateX(-50%) scale(0.82); transform-origin: top center; }
-  .hero-phone { display: none; }
   /* transform: scale() shrinks the painting but not the layout box, so the
      cluster kept claiming its full 492px and pushed the document to 512px
      wide on a 390px screen. Scale from the left and reclaim the width the
