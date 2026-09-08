@@ -1433,6 +1433,30 @@ body.page-gray .page-hero h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
      about 310px of copy in an 844px screen — half the first view is backdrop,
      and everything that would invite a scroll is pushed under the fold. Size
      it to its content instead, so the section below peeks into view. */
+  /* --- Matting -----------------------------------------------------------
+     Both devices are cut at the bottom: the scene phones by the alcove's
+     clip-path (81px), the hero's by the section edge (72px). The alcove at
+     least frames its cut; the hero's was a bare slice. Give both a floor so
+     the device descends into shadow instead of being sliced, which is the
+     same masked-fade idea the hero's scrim already uses. Narrow only — the
+     wide layout is deliberate and untouched. */
+  .showcase .win::after,
+  .fallback-flow .hero::before {
+    content: "";
+    position: absolute;
+    inset: auto 0 0 0;
+    pointer-events: none;
+  }
+  .showcase .win::after {
+    height: 38%;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, var(--wall) 86%);
+  }
+  .fallback-flow .hero::before {
+    height: 150px;
+    z-index: 1;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, var(--wall) 92%);
+  }
+
   /* --- One lit space, as on the subpages ---------------------------------
      Collapsed, the hero was a dark band carrying its own copy of the backdrop
      while the scenes below sat on flat wall colour, so the hero read as a
