@@ -908,22 +908,37 @@ body.nav-solid .nav-links a { color: #F2ECDE; }
 }
 /* BEST VALUE, as the app marks the annual row. Only meaningful while annual is
    the selected cycle, so it hides when the toggle moves to monthly. */
-.best-chip {
-  display: inline-block;
-  vertical-align: 0.34em;
-  margin-left: 10px;
+/* The chip sits on its own line under the title rather than trailing it.
+   Inline, it wrapped or not depending on the card's width, so the title's
+   height changed as you resized -- and on the Membership subgrid that pulled
+   the neighbouring card with it.
+
+   Every title reserves the line via the ::after placeholder, whether or not it
+   carries a chip, and the chip is laid into that reserved space. So all four
+   cards keep one title height: prices share a baseline on the homepage band,
+   which is not a subgrid, and toggling the cycle cannot resize anything. */
+.best-chip,
+.plan h3::after {
+  display: block;
+  width: fit-content;
+  margin-top: 14px;
   font-size: 0.4em;
   font-weight: 600;
   letter-spacing: 0.07em;
   text-transform: uppercase;
-  white-space: nowrap;   /* wrapping it inflates the title row, and subgrid
-                            then pads the other card to match */
-  color: var(--control-on-ink);
-  background: var(--control-on);
+  white-space: nowrap;
   border-radius: 4px;
   padding: 4px 8px;
 }
-.plan[data-cycle="monthly"] .best-chip { display: none; }
+.plan h3 { position: relative; }
+.plan h3::after { content: "Best value"; visibility: hidden; }
+.best-chip {
+  position: absolute;
+  inset: auto auto 0 0;
+  color: var(--control-on-ink);
+  background: var(--control-on);
+}
+.plan[data-cycle="monthly"] .best-chip { visibility: hidden; }
 
 .plan-scale-label b {
   color: var(--ink-strong);
@@ -1074,11 +1089,11 @@ body.page-gray .page-hero h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
   .page-hero--aside .page-hero-aside { width: min(100%, 908px); margin-inline: 0; }
   /* Stacked, the cards are no longer sizing to the split's narrow column, so
      the 1fr override has nothing left to do but let them balloon (548px in a
-     600px viewport). Hand them back to the site-wide card measure the homepage
-     band uses, anchored to the same left edge as the copy above. */
+     600px viewport). Hand them back to the site-wide card measure and the
+     centring the homepage band uses. */
   .page-hero-aside .plans {
     grid-template-columns: repeat(auto-fit, minmax(300px, 440px));
-    justify-content: start;
+    justify-content: center;
     gap: 28px;
   }
 }
