@@ -314,13 +314,12 @@ body.nav-solid .nav-links a { color: #000; }
 }
 .store-badges img { height: 52px; width: auto; }
 
-.hero-phone-frame { display: contents; }
-
-.hero-phone {
-  justify-self: center;
-  align-self: end;
-  width: min(406px, 100%);
-  margin-bottom: -120px; /* phone crops at the hero's bottom edge, per mock */
+.hero-win .hero-phone {
+  position: absolute;
+  left: 50%;
+  top: 61px;
+  transform: translateX(-50%);
+  width: var(--phone-w);
   border-radius: 62px; /* clip the white corner nubs left by the export's mask */
 }
 
@@ -1428,7 +1427,6 @@ body.page-gray .page-hero h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
   .two-col,
   .jump-in-cols { grid-template-columns: 1fr; }
   .hero .wrap { grid-template-columns: 1fr; }
-  .hero-phone { margin-bottom: -180px; }
 }
 @media (max-width: 720px) {
   /* The hero loses its phone at this width, so a 100vh opener is left holding
@@ -1477,42 +1475,22 @@ body.page-gray .page-hero h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
     padding-bottom: 0;
   }
   .hero .wrap { padding-block: 0; }
-  /* The hero gets the same window the scenes have, rather than a device
-     floating against the backdrop. Same fill, same radius, same clip — so the
-     crop at its foot reads as a frame, which is what makes the scenes' crop
-     work. display:contents keeps the wrapper out of the wide layout entirely. */
-  .hero-phone-frame {
-    display: block;
-    position: relative;
-    height: 420px;
-    margin-top: 36px;
-    margin-bottom: -40px;
-    background:
-      radial-gradient(
-        ellipse at 50% 44%,
-        rgba(var(--glow), 0.20) 0%,
-        rgba(var(--glow), 0.08) 38%,
-        rgba(var(--glow), 0) 72%
-      ),
-      var(--recess);
-    clip-path: inset(0 round var(--radius-window));
-  }
-  .hero-phone {
-    display: block;
-    position: absolute;
-    left: 50%;
-    top: 40px;
-    transform: translateX(-50%);
-    width: 232px;
-    margin: 0;
-  }
 
   .nav-wordmark { display: none; }
   .nav-logo { width: 40px; height: 40px; }
   .nav-links { gap: 14px; }
   .nav-links a { font-size: 0.95rem; }
   .win { height: 480px; }
-  .showcase .phone--static { transform: translateX(-50%) scale(0.6); }
+  /* The hero's device scales with the scenes', since it now shares their
+     window. transform-origin matters as much as the scale: without top center
+     the phone shrinks about its middle and drops 236px into the window instead
+     of 40, so it is cut by 282px rather than 81. */
+  .showcase .phone--static,
+  .hero-win .hero-phone {
+    top: 40px;
+    transform: translateX(-50%) scale(0.6);
+    transform-origin: top center;
+  }
   .phone--static { top: 40px; transform: translateX(-50%) scale(0.82); transform-origin: top center; }
   /* transform: scale() shrinks the painting but not the layout box, so the
      cluster kept claiming its full 492px and pushed the document to 512px
