@@ -944,7 +944,7 @@ body.page-gray .page-hero h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
    --aside lets a page keep the grammar: headline and lede left, the subject
    right, composed together rather than sequentially. */
 .page-hero--aside .wrap {
-  grid-template-columns: minmax(300px, 36%) minmax(0, 1fr);
+  grid-template-columns: minmax(300px, 32%) minmax(0, 1fr);
   align-items: center;
   gap: 56px;
 }
@@ -965,9 +965,16 @@ body.page-gray .page-hero h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
 }
 .page-hero-aside .plan { padding: 32px 30px 36px; }
 
-@media (max-width: 1100px) {
+@media (max-width: 1240px) {
   .page-hero--aside .wrap { grid-template-columns: minmax(0, 1fr); gap: 44px; }
   .page-hero--aside .page-lede { max-width: 48ch; }
+  /* Capped so the cards do not balloon to 555px each just below the split,
+     which made crossing the breakpoint a jump rather than a step. */
+  /* Stacked: copy and cards share one measure and one left edge, so the
+     column the split establishes survives the breakpoint instead of the copy
+     running full width while the cards sit centred inside it. */
+  .page-hero--aside .page-head,
+  .page-hero--aside .page-hero-aside { width: min(100%, 900px); margin-inline: 0; }
 }
 
 /* Optional supporting art. Sized so it can never crowd the title, and dropped
@@ -1091,6 +1098,10 @@ body.page-gray .page-hero h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
 }
 @media (max-width: 720px) {
   .pills { grid-template-columns: repeat(2, max-content); }
+}
+@media (max-width: 520px) {
+  .pills { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .pills span { padding: 6px 14px; }
 }
 .pills span {
   text-align: center;

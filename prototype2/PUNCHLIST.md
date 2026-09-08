@@ -63,6 +63,15 @@ review before finalising. Delete this file when prototype2 is promoted.
 - [ ] **Page ledes are placeholders** written to make the pattern visible, not
   approved copy. They belong in the copy round.
 
+## Responsive
+
+- [ ] **The nav overflows below ~340px.** Four links plus the wordmark do not
+  fit; `.nav-links` is the only element still pushing past the viewport at
+  320px, on every page. Needs a real small-screen treatment, not a tweak — the
+  one genuinely broken responsive case left.
+- [ ] **Optimisation pass generally** — breakpoints are chosen per component
+  rather than from a shared set.
+
 ## Explorations
 
 - [ ] **Light gallery.** Real galleries hang work on white walls because a
