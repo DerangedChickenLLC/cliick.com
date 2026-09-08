@@ -84,12 +84,16 @@ document.querySelectorAll(".plan-toggle").forEach((toggle) => {
   if (!plan) return;
   const amount = plan.querySelector(".plan-price .amount");
   const termNote = plan.querySelector(".plan-price .term-note");
+  const cap = plan.querySelector(".plan-cap");
 
   const apply = (cycle) => {
     toggle.dataset.cycle = cycle;
+    // mirrored onto the card so the BEST VALUE chip can hide on monthly
+    plan.dataset.cycle = cycle;
     const suffix = cycle === "monthly" ? "Monthly" : "Annual";
     if (amount) amount.textContent = toggle.dataset["amount" + suffix];
     if (termNote) termNote.textContent = toggle.dataset["note" + suffix];
+    if (cap) cap.innerHTML = toggle.dataset["cap" + suffix];
   };
 
   toggle.addEventListener("click", () => {

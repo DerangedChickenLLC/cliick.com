@@ -833,6 +833,30 @@ body.nav-solid .nav-links a { color: #F2ECDE; }
   font-size: var(--fs-small);
   color: var(--ink-muted);
 }
+.plan-cap {
+  margin-top: 14px;
+  font-size: var(--fs-small);
+  color: var(--ink-muted);
+}
+/* BEST VALUE, as the app marks the annual row. Only meaningful while annual is
+   the selected cycle, so it hides when the toggle moves to monthly. */
+.best-chip {
+  display: inline-block;
+  vertical-align: 0.34em;
+  margin-left: 10px;
+  font-size: 0.4em;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  white-space: nowrap;   /* wrapping it inflates the title row, and subgrid
+                            then pads the other card to match */
+  color: var(--control-on-ink);
+  background: var(--control-on);
+  border-radius: 4px;
+  padding: 4px 8px;
+}
+.plan[data-cycle="monthly"] .best-chip { display: none; }
+
 .plan-scale-label b {
   color: var(--ink-strong);
   font-weight: 600;
@@ -950,18 +974,17 @@ body.page-gray .page-hero h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
 /* the cards size to the column they are in rather than a fixed 440 */
 .page-hero-aside .plans {
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  /* Five rows: name, price, control, scale, label. Was seven — the feature
-     lists went when the capacity scale proved to carry the only real
-     difference, and the live-region paragraph went when the price itself
-     became the announced element. Keep this in step with the card's child
-     count or the subgrid stops aligning. */
-  grid-template-rows: repeat(5, auto);
+  /* Six rows: name, price, control, scale, label, caption. Keep this in step
+     with the card's child count or the subgrid stops aligning — it has moved
+     with the content three times now (7 with feature lists, 6 without, 5 once
+     the live-region paragraph went, 6 again with the app's plan captions). */
+  grid-template-rows: repeat(6, auto);
   gap: 22px;
 }
 .page-hero-aside .plan {
   display: grid;
   grid-template-rows: subgrid;
-  grid-row: span 5;
+  grid-row: span 6;
   align-content: start;
 }
 .page-hero-aside .plan { padding: 32px 30px 36px; }
