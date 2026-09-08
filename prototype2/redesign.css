@@ -1318,7 +1318,7 @@ body.page-gray .page-hero h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
 /* The stage phone crossfades four stills inside one screen, so its label is
    driven by the active scene rather than a static data-film attribute. */
 .stage-frame[data-scene="0"] .film-slate::after { content: "Your feed · film to come"; }
-.stage-frame[data-scene="1"] .film-slate::after { content: "Private network · film to come"; }
+.stage-frame[data-scene="1"] .film-slate::after { content: "People you know · film to come"; }
 .stage-frame[data-scene="2"] .film-slate::after { content: "Start fresh · film to come"; }
 .stage-frame[data-scene="3"] .film-slate::after { content: "Member funded · film to come"; }
 

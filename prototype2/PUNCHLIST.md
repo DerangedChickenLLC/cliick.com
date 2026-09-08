@@ -65,10 +65,12 @@ review before finalising. Delete this file when prototype2 is promoted.
 
 ## Responsive
 
-- [ ] **The nav overflows below ~340px.** Four links plus the wordmark do not
-  fit; `.nav-links` is the only element still pushing past the viewport at
-  320px, on every page. Needs a real small-screen treatment, not a tweak — the
-  one genuinely broken responsive case left.
+- [ ] **Small-screen nav.** Four links plus the wordmark do not fit below
+  ~340px; `.nav-links` is the only element still pushing past the viewport at
+  320px, on every page, and it is the one genuinely broken responsive case
+  left. Needs a real pattern — drawer, disclosure, or a condensed row — not a
+  tweak. Decide the pattern before building; it also has to work over the lit
+  backdrop and against the frosted nav bar.
 - [ ] **Optimisation pass generally** — breakpoints are chosen per component
   rather than from a shared set.
 
