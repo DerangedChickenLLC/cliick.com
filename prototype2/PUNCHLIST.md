@@ -5,6 +5,20 @@ review before finalising. Delete this file when prototype2 is promoted.
 
 ## Copy
 
+- [ ] **"Collects nothing" deserves more than three chips.** Verified in code:
+  `UserEntity` holds a display name, avatar, colour, mascot and consent flags;
+  `OauthAccountEntity` holds a provider and an opaque subject id. There is no
+  email, phone, address or card column anywhere in the model, and the OAuth
+  path does not even handle an email scope. Subscriptions run through the app
+  stores, so card details never reach Cliick at all — you necessarily already
+  have a relationship with Apple or Google to have installed it. (Not on
+  Amazon; would support it if we were.)
+
+  This is a rare thing: a privacy claim that is literally checkable rather than
+  promised. It is currently three chips among nine. It is plausibly a scene, a
+  headline, or the spine of the manifesto page — worth deciding where it
+  belongs rather than leaving it as a footnote to a pricing section.
+
 - [ ] **Scene 3 copy is not settled** (committee rejected). Currently "Funded by
   members. Not ads." / "Members pay for Cliick, and guests are on the house. No
   tracking. No data brokers. No AI training."
