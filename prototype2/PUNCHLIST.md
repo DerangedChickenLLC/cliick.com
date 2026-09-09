@@ -273,6 +273,44 @@ it is parked, not lost.
   looking for a market". The phrase itself is good and is now unused — it may
   belong on Home, or as a scene headline.
 
+## Brand — "Cliick" vs "cliick", system-wide
+
+- [ ] **Settle the noun's casing everywhere, not just the website.** The site
+  used to distinguish "Cliick" (the product) from "cliick" (a group). The
+  convention was deliberate but it was not holding: before the sweep, the site
+  ran 16 lowercase against 12 capitalised, and one FAQ answer used both
+  spellings inside a single paragraph.
+
+  Decision, for now: **capitalised everywhere.** English already separates the
+  two senses with determiners, and that survives what case cannot —
+  sentence-initial position (where the distinction silently dies), screen
+  readers, and other people writing about you.
+
+  | form | reads as |
+  |---|---|
+  | Cliick is your private network | the product — no article |
+  | a Cliick, every Cliick, your Cliicks | a group — determiner or plural |
+
+  The wordmark's CLIICK is typography, not a third sense; ignore it in prose.
+
+  **Scope beyond the website, not yet touched.** Raw counts are dominated by
+  code identifiers, which are not in scope — only strings a person reads are:
+
+  - **Clique (app)** — ~180 quoted strings contain the lowercase word. Most are
+    identifiers or URLs, but real display copy is in there: "active cliicks",
+    "create cliick", "in {cliick}", "Paused lives on your phone, not in the
+    cliick".
+  - **Circles (backend)** — user-visible surfaces only: error messages,
+    notification and email copy, anything rendered into the OpenAPI description
+    fields. Class and column names stay as they are.
+  - **Documents** — store listings, privacy policy and ToS. These are the
+    highest-stakes copies because Apple and Google review them and they are
+    quoted back at you.
+
+  Sequencing note: do the app and Documents together, since store listings
+  describe app screens and the two drifting apart is worse than either being
+  wrong alone.
+
 ## Brand — wordmark rollout
 
 - [ ] **Pull the CLIICK wordmark through the rest of the system.** Deliberately
