@@ -378,6 +378,13 @@ a { color: inherit; }
 /* A follow-along is read with a phone in the other hand, so its instructions
    want a little more room than body copy usually gets. */
 .follow .page-lede { max-width: 46ch; }
+
+/* The bridge sits between the doorway and the first rung: quieter than both,
+   because it describes a minute that passes rather than something achieved. */
+.bridge { padding-block: 46px; }
+.bridge h2 { font-size: var(--fs-h3); }
+.bridge .section-sub { max-width: 48ch; color: var(--ink-muted); }
+.bridge .section-sub + .section-sub { margin-top: 18px; }
 .step .copy b { font-weight: 600; color: var(--ink-strong); }
 
 
