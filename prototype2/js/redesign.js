@@ -131,3 +131,15 @@ if (faqSearch) {
     if (empty) empty.style.display = anyVisible ? "none" : "block";
   });
 }
+
+// --- Platform affordance ----------------------------------------------------
+// A phone can install from a store link; a laptop cannot, so on desktop the
+// App Store badge is a dead end and the QR code is the only thing that works.
+// Mark the root element and let CSS put the useful one first. With no JS
+// neither class is set and both affordances show, badges first — which is
+// wrong for nobody and ideal for nobody, the correct no-JS compromise.
+(function () {
+  var coarse = window.matchMedia("(hover: none) and (pointer: coarse)").matches;
+  var handheld = coarse || /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+  document.documentElement.classList.add(handheld ? "is-handheld" : "is-desktop");
+})();

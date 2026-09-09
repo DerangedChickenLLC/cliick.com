@@ -311,7 +311,37 @@ a { color: inherit; }
   font-size: var(--fs-body);
   line-height: 1.2;
 }
-.start-close .store-badges { justify-content: center; margin-top: 34px; }
+/* The handoff. Both affordances ship; which one leads depends on whether the
+   visitor is holding the thing they are being asked to install. */
+.handoff-actions {
+  margin-top: 38px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 34px;
+}
+.handoff-actions .store-badges { justify-content: center; margin: 0; }
+.handoff-qr { margin: 0; display: grid; justify-items: center; gap: 12px; }
+.handoff-qr img {
+  width: 148px;
+  height: auto;
+  border-radius: 12px;
+  background: #fff;
+  padding: 10px;
+}
+.handoff-qr figcaption { font-size: var(--fs-small); color: var(--ink-muted); }
+/* On a laptop the QR is the only affordance that can finish the job. */
+.is-desktop .handoff-qr { order: -1; }
+/* On a phone it is noise: the store link works, and pointing a phone at its
+   own screen does not. */
+.is-handheld .handoff-qr { display: none; }
+
+/* Post-install advice, below the handoff and deliberately quieter than the
+   sections that come before the CTA. */
+.section--after { padding-top: 30px; opacity: 0.94; }
+/* Compound selector, not .eyebrow--left alone: .eyebrow is defined further
+   down the file and would win the tie at equal specificity. */
+.eyebrow.eyebrow--left { text-align: left; margin-bottom: 4px; }
 
 /* In the motion experience the nav rides fixed through the whole page and
    switches skins by scene: transparent white-text over the hero photo,

@@ -97,12 +97,49 @@
       </div>
     </section>
 
-    <!-- The one piece of real advice on this page, and the reason it exists:
-         a Cliick that is set up before anyone arrives succeeds, and an empty
-         one asks the invitee to do the work. -->
-    <section class="section">
+    <!-- The handoff. Everything above is why you would want a Cliick; this is
+         the first point where the visitor is told they need the app, which is
+         late enough not to deflate them and early enough not to teach them to
+         use software they do not have.
+
+         A phone can install from a store link. A laptop cannot -- the badges
+         are a dead end there, and the QR is the only affordance that works.
+         So both ship, and js/redesign.js marks the root element so CSS can put
+         the useful one first. With no JS both are shown, badges first. -->
+    <section class="section section--center handoff">
+      <div class="wrap">
+        <h2>Get the app, then start yours.</h2>
+        <p class="section-sub">
+          Cliick is a free app for iPhone and Android. Your first Cliick takes
+          about a minute once you are in.
+        </p>
+        <div class="handoff-actions">
+          <div class="store-badges">
+            <a href="https://apps.apple.com/us/app/cliick-your-private-network/id6608980465"
+              ><img src="/prototype2/images/redesign/badge-appstore.svg" alt="Download on the App Store"
+            /></a>
+            <a href="https://play.google.com/store/apps/details?id=com.derangedchicken.clique"
+              ><img src="/prototype2/images/redesign/badge-googleplay.svg" alt="Get it on Google Play"
+            /></a>
+          </div>
+          <figure class="handoff-qr">
+            <img src="/prototype2/images/redesign/footer-qr.png" alt="" />
+            <figcaption>Scan to install on your phone</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- Moved below the handoff. This is post-install advice, and while it
+         sat on the conversion path it was teaching someone to operate software
+         they had not installed -- support material on a sales page, which is
+         the exact failure we set out to avoid. It still earns its place: a
+         Cliick set up before anyone arrives succeeds, and an empty one asks
+         the invitee to do the work. -->
+    <section class="section section--after">
       <div class="wrap two-col two-col--wide">
         <div class="copy">
+          <p class="eyebrow eyebrow--left">Once you are in</p>
           <h2>Set it up before you invite anyone.</h2>
           <p>
             Give it a name, then put a few things in it. A Cliick with photos
@@ -128,24 +165,6 @@
             <p>Say what it is for. &ldquo;Let us put the trip photos here from now on.&rdquo;</p>
           </li>
         </ol>
-      </div>
-    </section>
-
-    <section class="section section--center start-close">
-      <div class="wrap">
-        <h2>Then start another.</h2>
-        <p class="section-sub">
-          Your life is not one group, and Cliick is not one Cliick. When a
-          different part of it needs its own place, make one.
-        </p>
-        <div class="store-badges">
-          <a href="https://apps.apple.com/us/app/cliick-your-private-network/id6608980465"
-            ><img src="/prototype2/images/redesign/badge-appstore.svg" alt="Download on the App Store"
-          /></a>
-          <a href="https://play.google.com/store/apps/details?id=com.derangedchicken.clique"
-            ><img src="/prototype2/images/redesign/badge-googleplay.svg" alt="Get it on Google Play"
-          /></a>
-        </div>
       </div>
     </section>
 
