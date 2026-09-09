@@ -160,6 +160,44 @@ review before finalising. Delete this file when prototype2 is promoted.
   where its drop shadow was, since that shadow is grey-on-white and no
   luminance threshold separates it from the white cup.
 
+## About rebuild — content moved out, still homeless
+
+About was six sections and four of them belonged elsewhere; it read as a
+holding pen. Rebuilt as the trust page. The evicted content is recorded here so
+it is parked, not lost.
+
+- [ ] **The noun is still never defined, anywhere on the site.** About used to
+  carry it, in "Everything in its right place": *"Cliicks are private groups you
+  create and invite people to — family, friends, coworkers, neighbors, artists.
+  Each group only sees what you intend."* The homepage says "Start a cliick"
+  three times without ever saying what one is, and this is the single most
+  repeated recommendation in the September notes. It belongs on Home, early.
+
+- [ ] **The five-step onboarding needs the "Start a Cliick" page.** About's
+  "Ready to jump in?" section (Download → Sign in → Make it yours → Invite your
+  Peeps → Share with confidence) is that page's spine. Removed from About
+  because a trust page should not be a manual.
+
+- [ ] **About's founder section is a placeholder and the page does not finish
+  its own sentence without it.** The whole argument is "not anonymous founders";
+  it currently says so over four cartoon chickens. Needs real names, roles and
+  faces.
+
+- [ ] **The bylaw belongs on About, once it is written down.** "I'd rather shut
+  down operations than violate it" is a stronger claim than anything currently
+  on the site. Deliberately not published while it cannot be quoted.
+
+- [ ] **Deleted as duplicates, no action needed unless someone misses them:**
+  About's "Share with the people who matter" (Home scene 2 says it) and
+  "Funded by members. Not advertisers." (Home scene 3 *and* Membership both say
+  it).
+
+- [ ] **One claim, three different words.** Home scene 3 says "No attention
+  farming", the Home light band says "data mining", Membership's chip says "No
+  data mining", and the FAQ says "data brokers" twice. Pick one and use it
+  everywhere; the variation reads as imprecision on the one claim that most
+  needs to sound exact.
+
 ## Brand — wordmark rollout
 
 - [ ] **Pull the CLIICK wordmark through the rest of the system.** Deliberately
