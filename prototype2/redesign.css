@@ -1180,7 +1180,13 @@ body.page-gray .page-hero h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
   align-items: center;
   gap: clamp(32px, 5vw, 90px);
 }
-.two-col h2 { margin-top: 0; }
+/* The ledger row wants a wider prose column than an even split: the copy
+   carries a heading and two paragraphs, the object is one 440 stack. */
+.two-col--wide { grid-template-columns: minmax(0, 1fr) minmax(0, 0.82fr); align-items: start; }
+/* Narrower column than a full-width section, so the heading needs balancing
+   for the same reason the page titles do: without it a short last word
+   strands on its own line. */
+.two-col h2 { margin-top: 0; text-wrap: balance; }
 .two-col .copy p {
   margin-top: 22px;
   font-size: var(--fs-body);
@@ -1199,14 +1205,13 @@ body.page-gray .page-hero h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
    that is safe. */
 .section:not(.section--center) > .wrap > .section-sub { margin-inline: 0; }
 
+/* The ledger is the object in a prose-left / object-right row, so the panels
+   stack down the right column rather than sitting side by side. Held to 440,
+   the same measure the plan cards use. */
 .ledger {
-  margin-top: 46px;
   display: grid;
-  /* The same 440 measure the plan cards use. At 1fr the panels stretched to
-     610px each for a four-item list, and auto-fit quietly opened four tracks
-     with two collapsed to zero. */
-  grid-template-columns: repeat(auto-fit, minmax(280px, 440px));
-  gap: 22px;
+  grid-template-columns: minmax(0, 440px);
+  gap: 18px;
   justify-content: start;
 }
 .ledger-col {
@@ -1252,7 +1257,7 @@ body.page-gray .page-hero h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
   );
 }
 .ledger-col--none li { color: var(--ink-strong); }
-.ledger-note { margin-top: 30px; max-width: 62ch; }
+.ledger-note { margin-top: 26px; font-size: var(--fs-small); color: var(--ink-muted); }
 .ledger-note code {
   font: 0.92em/1 ui-monospace, SFMono-Regular, Menlo, monospace;
   padding: 2px 6px;
@@ -1295,12 +1300,10 @@ body.page-gray .page-hero h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
 /* The closing quote. It is a "so that is why we are doing this" line, which
    only lands once the argument above it has been made -- so it ends the page
    rather than starting it. */
-/* The close is centred throughout, not left-then-centre. Mixing the two put
-   two centre lines in one block -- a left column of heading and prose, then a
-   centred stack floating in the middle of it, which read as lopsided and
-   cramped at once. Centring the whole section also closes the empty right half
-   that left-aligning it would leave, and marks the page's ending as an ending.
-   .section--center carries the alignment; these rules only handle measure. */
+/* The close sits on the latte band, which already centres and repoints every
+   token for the light ground. These rules only handle measure and rhythm. */
+.about-close .sub,
+.about-close .founders-note { max-width: 54ch; margin-inline: auto; }
 .founders-quote {
   /* Smaller than the gap between sections, so the shift from position to
      reason reads as a beat inside one thought rather than a new one. */
@@ -1322,15 +1325,6 @@ body.page-gray .page-hero h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
   color: var(--ink-muted);
 }
 .founders-by::before { content: "\2014\00a0\00a0"; }
-/* One measure for both prose blocks in the close. Stacked centred, they were
-   540 and 608 against a 667 quote -- three different column widths on one
-   centre line, which is what reads as ragged even when everything is aligned.
-   Only the quote steps out now, and it is display type, so it should. */
-.founders-close .section-sub,
-.founders-close .founders-note {
-  max-width: 54ch;
-  margin-inline: auto;
-}
 .founders-note {
   margin-top: 30px;
   font-size: var(--fs-body);

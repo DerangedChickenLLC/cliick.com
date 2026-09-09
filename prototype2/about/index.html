@@ -72,15 +72,27 @@
     <!-- The page's strongest section, and the reason About exists: a privacy
          claim that can be checked rather than believed. Every line here is
          verified against the schema and the OAuth handlers, not aspirational.
-         If the model gains a column, this section is wrong and must change. -->
+         If the model gains a column, this section is wrong and must change.
+
+         Laid out prose-left / object-right, the same rhythm the hero sets and
+         the homepage repeats. The ledger is the object. -->
     <section class="section">
-      <div class="wrap">
-        <h2>Don't take our word for it.</h2>
-        <p class="section-sub">
-          Most privacy promises are policy, and policy changes with a funding
-          round. We would rather it be structural. So here is everything Cliick
-          holds about you &mdash; and everything it has nowhere to put.
-        </p>
+      <div class="wrap two-col two-col--wide">
+        <div class="copy">
+          <h2>Don&rsquo;t take our word for it.</h2>
+          <p>
+            Most privacy promises are policy, and policy changes with a funding
+            round. We would rather it be structural. So here is everything
+            Cliick holds about you &mdash; and everything it has nowhere to put.
+          </p>
+          <p class="ledger-note">
+            When you sign in, we ask Apple for no scopes at all and Google for
+            exactly one: <code>openid</code>. Your email address never reaches
+            us, so we could not email you if we wanted to. Membership runs
+            through the App&nbsp;Store and Google&nbsp;Play, so your card never
+            touches us either.
+          </p>
+        </div>
         <div class="ledger">
           <div class="ledger-col">
             <h3>What we hold</h3>
@@ -102,25 +114,18 @@
             </ul>
           </div>
         </div>
-        <p class="section-sub ledger-note">
-          When you sign in, we ask Apple for no scopes at all and Google for
-          exactly one: <code>openid</code>. Your email address never reaches us,
-          so we could not email you if we wanted to. Membership runs through the
-          App&nbsp;Store and Google&nbsp;Play, so your card never touches us
-          either.
-        </p>
       </div>
     </section>
 
-    <!-- Position, then the reason. These were two sections with 219px of void
-         between them and an avatar cluster on the first; the cluster was the
-         weakest thing on the page and it put seven decorative faces directly
-         under a photograph of two real ones, which is the argument working
-         against itself. -->
-    <section class="section section--center founders-close">
+    <!-- The close gets its own ground, the way the homepage's latte band does:
+         the repeating prose-left / object-right rhythm above needs something
+         to break against, or a centred ending reads as the layout drifting
+         rather than arriving. Same device, same beat -- the one light surface
+         before the footer. -->
+    <section class="band latte about-close">
       <div class="wrap">
         <h2>Not a platform. A place.</h2>
-        <p class="section-sub">
+        <p class="sub">
           We are not trying to build the next big social network. There is no
           audience to grow here, no reach to chase, and nothing to optimize for
           except whether the people you invited are glad they came.
