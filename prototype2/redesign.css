@@ -336,12 +336,34 @@ a { color: inherit; }
    own screen does not. */
 .is-handheld .handoff-qr { display: none; }
 
-/* Post-install advice, below the handoff and deliberately quieter than the
-   sections that come before the CTA. */
-.section--after { padding-top: 30px; opacity: 0.94; }
-/* Compound selector, not .eyebrow--left alone: .eyebrow is defined further
-   down the file and would win the tie at equal specificity. */
-.eyebrow.eyebrow--left { text-align: left; margin-bottom: 4px; }
+/* Three doors. Same panel treatment as the About ledger, because they do the
+   same job: a set of parallel choices you scan rather than prose you read. */
+.doors {
+  margin-top: 42px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 22px;
+  text-align: left;
+}
+.door {
+  background: var(--panel);
+  border: 1px solid var(--panel-edge);
+  border-radius: var(--radius-card);
+  box-shadow: var(--panel-shadow), inset 0 1px 0 var(--panel-lip);
+  padding: 30px 30px 34px;
+}
+.door h3 {
+  font-size: var(--fs-body);
+  font-weight: 600;
+  color: var(--ink-strong);
+}
+.door p {
+  margin-top: 12px;
+  font-size: var(--fs-small);
+  line-height: 1.55;
+  color: var(--ink-muted);
+}
+
 
 /* In the motion experience the nav rides fixed through the whole page and
    switches skins by scene: transparent white-text over the hero photo,

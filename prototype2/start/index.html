@@ -47,18 +47,23 @@
       </div>
     </header>
 
+    <!-- The page's real job is closing an expectation gap, not handling an
+         objection. People arrive believing they know what this is -- a feed
+         with things in it -- and get an empty room. Told beforehand, that
+         lands as the promise being kept. Discovered afterwards, it reads as a
+         broken app. -->
     <section class="page-hero page-hero--split">
       <div class="wrap">
         <div class="page-head">
           <p class="page-eyebrow">Start a Cliick</p>
-          <h1>Start with one.</h1>
+          <h1>It starts empty. That&rsquo;s the point.</h1>
           <p class="page-lede">
-            A Cliick is a private group for one part of your life &mdash; your
-            family, your closest friends, the people you travel with. Pick the
-            part you would start with, and bring the people who already belong
-            in it.
+            Every other app opens on a feed somebody else assembled for you.
+            Cliick opens on a room with nobody in it but you. You can post on
+            day one &mdash; it goes to your Peeps, and you are the only member,
+            so you are the only one who sees it.
           </p>
-          <p class="page-kicker">One group is enough.</p>
+          <p class="page-kicker">What happens next is entirely yours.</p>
         </div>
         <div class="win win--inline">
           <div class="phone phone--static phone--placeholder">
@@ -74,44 +79,87 @@
       </div>
     </section>
 
+    <!-- The mechanic, which is the thing nobody can guess from outside: posts
+         are addressed, never broadcast. It is also the answer to "why would I
+         make a Cliick" -- a Cliick is the address. -->
     <section class="section">
       <div class="wrap two-col two-col--wide">
         <div class="copy">
-          <h2>Pick your first Cliick.</h2>
+          <h2>Every post is addressed.</h2>
           <p>
-            Think of a group you already share this part of life with. Not a
-            network &mdash; a handful of people who would be glad to hear from
-            you.
+            Nothing on Cliick is broadcast. When you post, you choose which
+            Cliick it goes to, and only the people in that Cliick see it. That
+            is what a Cliick is for &mdash; it decides who is in the room.
           </p>
-          <p>Most people know theirs straight away.</p>
+          <p>
+            Add someone next month and they see what came before. Cliick keeps
+            your history, so nothing you put in early is wasted.
+          </p>
         </div>
-        <ul class="examples" aria-label="Examples of a first Cliick">
+        <ul class="examples" aria-label="Examples of a Cliick">
+          <li>My Peeps</li>
           <li>Family</li>
           <li>Favorite Pets</li>
           <li>Book Club</li>
           <li>Recipe Swap</li>
           <li>The cousins</li>
           <li>Sunday dinners</li>
-          <li>The people you travel with</li>
         </ul>
       </div>
     </section>
 
-    <!-- The handoff. Everything above is why you would want a Cliick; this is
-         the first point where the visitor is told they need the app, which is
-         late enough not to deflate them and early enough not to teach them to
-         use software they do not have.
+    <!-- Three doors rather than one path. People differ, and telling someone
+         with two close friends to go and organise their life is how you lose
+         them. Peeps first, because it is the door that needs no setup at all. -->
+    <section class="section section--center">
+      <div class="wrap">
+        <h2>Organize it however suits you.</h2>
+        <p class="section-sub">
+          You connect with people in person &mdash; they scan your code, or you
+          send them a link. There is no search box and no directory. Then you
+          decide where everyone belongs.
+        </p>
+        <div class="doors">
+          <div class="door">
+            <h3>A few close friends</h3>
+            <p>
+              Use Peeps and stop there. Everyone you add sees what you post
+              there. No setting up, no naming anything.
+            </p>
+          </div>
+          <div class="door">
+            <h3>One group in mind</h3>
+            <p>
+              Make a Cliick for it. The book club, the cousins, the people you
+              travel with &mdash; one place, one purpose.
+            </p>
+          </div>
+          <div class="door">
+            <h3>Lots of separate circles</h3>
+            <p>
+              Make several, and send each post to the one it belongs in. Your
+              grandmother and your climbing friends never have to meet.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- The handoff. Everything above is why you would want this; this is the
+         first point where the visitor is told they need the app -- late enough
+         not to deflate them, early enough not to teach them to drive software
+         they do not have.
 
          A phone can install from a store link. A laptop cannot -- the badges
          are a dead end there, and the QR is the only affordance that works.
          So both ship, and js/redesign.js marks the root element so CSS can put
-         the useful one first. With no JS both are shown, badges first. -->
+         the useful one first. With no JS both show, badges first. -->
     <section class="section section--center handoff">
       <div class="wrap">
-        <h2>Get the app, then start yours.</h2>
+        <h2>Get the app, then make it yours.</h2>
         <p class="section-sub">
-          Cliick is a free app for iPhone and Android. Your first Cliick takes
-          about a minute once you are in.
+          Cliick is a free app for iPhone and Android. Your first post can
+          happen before anyone else is there.
         </p>
         <div class="handoff-actions">
           <div class="store-badges">
@@ -127,44 +175,6 @@
             <figcaption>Scan to install on your phone</figcaption>
           </figure>
         </div>
-      </div>
-    </section>
-
-    <!-- Moved below the handoff. This is post-install advice, and while it
-         sat on the conversion path it was teaching someone to operate software
-         they had not installed -- support material on a sales page, which is
-         the exact failure we set out to avoid. It still earns its place: a
-         Cliick set up before anyone arrives succeeds, and an empty one asks
-         the invitee to do the work. -->
-    <section class="section section--after">
-      <div class="wrap two-col two-col--wide">
-        <div class="copy">
-          <p class="eyebrow eyebrow--left">Once you are in</p>
-          <h2>Set it up before you invite anyone.</h2>
-          <p>
-            Give it a name, then put a few things in it. A Cliick with photos
-            already in it feels like somewhere to be. An empty one feels like a
-            favor you are asking.
-          </p>
-        </div>
-        <ol class="steps">
-          <li>
-            <p class="step-title">Name it</p>
-            <p>Something the group would recognize. &ldquo;Sunday Dinners&rdquo; beats &ldquo;Family Group 2&rdquo;.</p>
-          </li>
-          <li>
-            <p class="step-title">Put a few things in</p>
-            <p>Three or four photos is plenty. Enough that it looks lived in.</p>
-          </li>
-          <li>
-            <p class="step-title">Invite your people</p>
-            <p>Three of them. Or five, or twenty. Start with whoever is easiest.</p>
-          </li>
-          <li>
-            <p class="step-title">Give it a job</p>
-            <p>Say what it is for. &ldquo;Let us put the trip photos here from now on.&rdquo;</p>
-          </li>
-        </ol>
       </div>
     </section>
 
