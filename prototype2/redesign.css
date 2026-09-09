@@ -248,10 +248,18 @@ a { color: inherit; }
   height: calc(var(--wm-cap) * 1.7);
   width: auto;
 }
-/* Sit the CAP BAND on the nav's midline rather than the SVG box. The box
-   centres at 0.5; the caps centre at 0.6 of it (data-capmid on the asset), so
-   box-centring drops the letters visibly low against the mark. */
-.nav-wordmark svg { transform: translateY(calc(var(--wm-cap) * 1.7 * -0.1)); }
+/* Sit the wordmark on the mark's OPTICAL centre.
+
+   Box-centring drops the letters low, because the box is taller than the caps.
+   But cap-band centring -- (0.5 - capmid) = -0.100 -- overcorrects: the
+   tittles put ink above the caps, which lifts the wordmark's centre of mass,
+   so the name reads a hair high. That is exactly what reviewers reported.
+
+   -0.074 aligns the two alpha-weighted ink centroids instead. Measured, not
+   nudged: rasterised at 600px wide, the mark's centroid sits at 0.515 of its
+   box and the wordmark's at 0.592 of its own, which left the wordmark 0.99px
+   high at a 22px cap. It is a ratio, so it holds at any --wm-cap. */
+.nav-wordmark svg { transform: translateY(calc(var(--wm-cap) * 1.7 * -0.074)); }
 .nav-links {
   margin-left: auto;
   display: flex;
