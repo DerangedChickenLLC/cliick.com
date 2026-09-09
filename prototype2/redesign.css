@@ -352,13 +352,30 @@ a { color: inherit; }
 /* The start flow's numbered steps. Numbering here is not decoration: these
    are a real sequence, and each rung is a completion the reader can actually
    finish before the next one asks anything of them. */
-.step-num {
+/* The rung marker. A numeral rather than a word: these steps are a real
+   sequence -- each one depends on the one before it -- so the figure is
+   carrying information, not decoration. Set large and light so it reads as a
+   marker in the margin rather than a badge stuck on the heading. */
+/* .two-col .copy p is (0,2,1) and was winning this outright, forcing the
+   numeral back to body size -- hence the extra class in the selector. */
+.step .copy .step-num {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-top: 0;
+  margin-bottom: 12px;
+  max-width: none;
+  color: var(--accent);
+  font-size: clamp(1.8rem, 2.4vw, 2.3rem);
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+.step-num span {
   font-size: var(--fs-small);
   font-weight: 600;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--accent);
-  margin-bottom: 10px;
 }
 .step .copy h2 { margin-top: 0; }
 
@@ -379,12 +396,9 @@ a { color: inherit; }
    want a little more room than body copy usually gets. */
 .follow .page-lede { max-width: 46ch; }
 
-/* The bridge sits between the doorway and the first rung: quieter than both,
-   because it describes a minute that passes rather than something achieved. */
-.bridge { padding-block: 46px; }
-.bridge h2 { font-size: var(--fs-h3); }
-.bridge .section-sub { max-width: 48ch; color: var(--ink-muted); }
-.bridge .section-sub + .section-sub { margin-top: 18px; }
+/* The hero narrates the whole arrival now -- install, sign-in, look around --
+   so its paragraphs need to read as a sequence rather than one block. */
+.follow .page-lede + .page-lede { margin-top: 16px; }
 .step .copy b { font-weight: 600; color: var(--ink-strong); }
 
 
