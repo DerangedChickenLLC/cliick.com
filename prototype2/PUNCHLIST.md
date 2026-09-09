@@ -181,9 +181,14 @@ it is parked, not lost.
 - [x] ~~About's founder section is a placeholder.~~ Done: Nina and John, real
   photograph, real quote. The photo was supplied as a baked social card (image
   on top, quote burned into a black band below); only the photograph was used
-  and the quote reset in the site's own type. No roles given, deliberately: the
-  two of them own the company, and the wider team is part-time volunteers who
-  are not being named.
+  and the quote reset in the site's own type. No roles given, deliberately, and
+  no ownership claim beyond "privately held": John is the sole owner on paper,
+  Nina is his fiancee and it is jointly their project, and the wider team is
+  part-time volunteers who are not being named. An earlier draft said "we own
+  it outright", which reads as two owners and is false — a page whose whole
+  argument is that its claims can be checked cannot carry one that cannot.
+  Keep any future wording here to what survives scrutiny: privately held, no
+  investors, no funding round.
 
 - [ ] **Ownership belongs on Membership too, not only About.** "Nina and John
   own Cliick outright — no investors, no funding round waiting to change the
