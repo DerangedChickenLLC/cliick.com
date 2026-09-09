@@ -213,6 +213,31 @@ it is parked, not lost.
   everywhere; the variation reads as imprecision on the one claim that most
   needs to sound exact.
 
+## About — follow-ups
+
+- [ ] **Try the founders' quote at the top of About.** Reverted for now
+  (`d4ffe44`, reverted in `1a0791b`), not rejected: the reasoning behind it
+  stands, which is that most visitors never reach the bottom of a page and the
+  quote is the only line on About in their own voice.
+
+  Two arrangements were built and both are recoverable from that commit:
+
+  - *As a caption under the photograph.* Visible but not powerful — at caption
+    size it reads as a photo credit, and it leaves the page ending on
+    positioning plus housekeeping.
+  - *As the page title,* 62px at weight 500, names beneath, photo beside. This
+    was the strong one. Its cost is that About then opens on a general aphorism
+    rather than a claim about Cliick; the eyebrow, names and photograph resolve
+    that quickly, and About is not a landing page, but it is a real trade.
+
+  Whatever is tried next has to keep the dark close intact: the quote at 52px
+  with 168px of air above it, on the lit backdrop, is the most dramatic moment
+  on the site and both attempts spent it.
+
+  A third option nobody has built: leave the quote where it is and give the
+  hero a different reason to hold someone — the hero currently earns attention
+  with the photograph alone.
+
 ## Copy parked, not discarded
 
 - [ ] **About's close is centred on the page's own ground, not a light band.**
