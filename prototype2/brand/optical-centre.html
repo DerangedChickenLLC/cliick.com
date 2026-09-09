@@ -1,0 +1,99 @@
+<!doctype html><html><head><meta charset="utf-8">
+<title>Optical centre — wordmark / mark alignment</title>
+<style>
+ body { font:14px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+        margin:0; padding:28px 32px; background:#221E17; color:#F2ECDE; }
+ h1 { font-size:15px; font-weight:600; margin:0 0 6px; }
+ p  { color:#CFC6B2; max-width:76ch; margin:0 0 18px; }
+ label { display:block; font-size:12px; color:#A79E8B; margin:12px 0 4px; }
+ input { width:min(560px,100%); padding:7px 9px; border-radius:6px;
+         border:1px solid rgba(252,240,220,.20); background:rgba(0,0,0,.28);
+         color:#F2ECDE; font:12px ui-monospace,SFMono-Regular,Menlo,monospace; }
+ button { margin-top:16px; padding:8px 16px; border-radius:8px; border:0;
+          background:#EBD9B6; color:#1F1A12; font-weight:600; cursor:pointer; }
+ pre { margin-top:20px; padding:16px 18px; border-radius:10px;
+       background:rgba(0,0,0,.30); color:#F2ECDE; overflow-x:auto;
+       font:12.5px/1.6 ui-monospace,SFMono-Regular,Menlo,monospace; }
+ .err { color:#E9C88A; }
+</style></head><body>
+<h1>Optical centre</h1>
+<p>Rasterises both marks and takes the alpha-weighted vertical centroid of each,
+   then reports the <code>translateY</code> multiplier that puts the wordmark's
+   centre of ink on the mark's. Re-run this whenever the tittle geometry, the
+   mark, or the ratio between them changes &mdash; cap-band alignment is
+   geometric and reads high, because the tittles put ink above the caps.</p>
+
+<label>Mark (the bird)</label>
+<input id="mark" value="/prototype2/images/brand/cliick-mark.svg">
+<label>Wordmark</label>
+<input id="word" value="/prototype2/images/brand/cliick-wordmark.svg">
+<label>Mark height &divide; wordmark cap height (the lockup ratio, currently 2.04)</label>
+<input id="ratio" value="2.04">
+<button id="go">Measure</button>
+<pre id="out">—</pre>
+
+<script>
+// Alpha-weighted vertical centroid, as a fraction of the SVG's own box.
+async function centroid(text) {
+  const doc = new DOMParser().parseFromString(text, 'image/svg+xml');
+  const svg = doc.documentElement;
+  const vb = svg.getAttribute('viewBox').split(/[\s,]+/).map(Number);
+  const W = 600, H = Math.round(600 * vb[3] / vb[2]);
+  svg.setAttribute('width', W); svg.setAttribute('height', H);
+  svg.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+  // currentColor resolves to nothing in a detached document; alpha is all we
+  // read, so force an opaque fill rather than risk a transparent one.
+  svg.style.color = '#000';
+  const url = URL.createObjectURL(new Blob([svg.outerHTML], {type:'image/svg+xml'}));
+  const img = new Image();
+  await new Promise((res, rej) => { img.onload = res; img.onerror = rej; img.src = url; });
+  const c = document.createElement('canvas'); c.width = W; c.height = H;
+  const ctx = c.getContext('2d'); ctx.drawImage(img, 0, 0, W, H);
+  const d = ctx.getImageData(0, 0, W, H).data;
+  let m = 0, my = 0;
+  for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
+    const a = d[(y * W + x) * 4 + 3];
+    if (a) { m += a; my += a * y; }
+  }
+  URL.revokeObjectURL(url);
+  if (!m) throw new Error('no ink found — check the path');
+  return { frac: (my / m) / H, boxRatio: vb[3] / 100 };  // boxRatio: box height per 100 cap units
+}
+
+document.getElementById('go').onclick = async () => {
+  const out = document.getElementById('out');
+  out.textContent = 'measuring…';
+  try {
+    const [mt, wt] = await Promise.all(
+      ['mark','word'].map(id => fetch(document.getElementById(id).value).then(r => {
+        if (!r.ok) throw new Error(r.status + ' on ' + r.url);
+        return r.text();
+      })));
+    const [cm, cw] = await Promise.all([centroid(mt), centroid(wt)]);
+    const ratio = parseFloat(document.getElementById('ratio').value);
+
+    // Work in units of the wordmark's cap height. Both boxes are flex-centred
+    // on the same midline, so each centroid's offset from that midline is
+    // (centroidFrac - 0.5) * boxHeight.
+    const markH = ratio;                    // mark box height, in cap units
+    const wordH = cw.boxRatio;              // wordmark box height, in cap units
+    const markOff = (cm.frac - 0.5) * markH;
+    const wordOff = (cw.frac - 0.5) * wordH;
+    const shift = markOff - wordOff;        // cap units; negative = move up
+    const mult = shift / wordH;             // as a fraction of the wordmark box
+
+    out.innerHTML =
+`mark centroid       ${cm.frac.toFixed(4)} of its box   (box = ${markH.toFixed(3)} cap units)
+wordmark centroid   ${cw.frac.toFixed(4)} of its box   (box = ${wordH.toFixed(3)} cap units)
+
+untransformed, the wordmark's centroid sits
+${(-shift).toFixed(4)} cap units ${shift < 0 ? 'below' : 'above'} the mark's = ${Math.abs(shift * 22).toFixed(2)}px at a 22px cap.
+The multiplier below cancels exactly that.
+
+CSS:
+.nav-wordmark svg { transform: translateY(calc(var(--wm-cap) * ${wordH.toFixed(1)} * ${mult.toFixed(3)})); }`;
+  } catch (e) {
+    out.innerHTML = '<span class="err">' + e.message + '</span>';
+  }
+};
+</script></body></html>
