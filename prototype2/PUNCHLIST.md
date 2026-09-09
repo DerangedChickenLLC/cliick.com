@@ -182,7 +182,9 @@ it is parked, not lost.
   photograph, real quote. The photo was supplied as a baked social card (image
   on top, quote burned into a black band below); only the photograph was used
   and the quote reset in the site's own type. No roles given, deliberately, and
-  no ownership claim beyond "privately held": John is the sole owner on paper,
+  no ownership claim beyond "self-funded", which is the language John uses with
+  people and names the thing that matters rather than the paperwork. For the
+  record and not for the page: John is the sole owner on paper,
   Nina is his fiancee and it is jointly their project, and the wider team is
   part-time volunteers who are not being named. An earlier draft said "we own
   it outright", which reads as two owners and is false — a page whose whole
