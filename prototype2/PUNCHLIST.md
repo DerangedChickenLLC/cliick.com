@@ -185,10 +185,16 @@ it is parked, not lost.
   someone who does not. Already on the list separately; this page is now the
   strongest argument for it.
 
-- [ ] **Home still needs the noun.** The definition now exists on Start a Cliick
-  ("A Cliick is a private group for one part of your life"), but Home still says
-  "Start a cliick" three times without defining it, and Home is where a cold
-  visitor lands.
+- [x] ~~Home still needs the noun.~~ Done, in the hero tagline: "You make a
+  Cliick for each part of your life: your family, your book club, the people you
+  travel with." Defining by use rather than by category, because "a private
+  group" is what it is and "your book club" is what it is *for*.
+
+  The casing was normalised at the same time and was arguably the bigger
+  problem: the site spelled the noun both ways (16 "Start a cliick" against 12
+  "Start a Cliick", and one FAQ answer used both inside a single paragraph), so
+  a reader had to work out that the lowercase generic and the capitalised brand
+  were the same word. It is a proper noun now, everywhere.
 
 - [x] ~~About's founder section is a placeholder.~~ Done: Nina and John, real
   photograph, real quote. The photo was supplied as a baked social card (image
