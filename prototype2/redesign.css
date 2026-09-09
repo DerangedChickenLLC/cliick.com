@@ -336,32 +336,31 @@ a { color: inherit; }
    own screen does not. */
 .is-handheld .handoff-qr { display: none; }
 
-/* Three doors. Same panel treatment as the About ledger, because they do the
-   same job: a set of parallel choices you scan rather than prose you read. */
-.doors {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 22px;
-  text-align: left;
-}
-.door {
-  background: var(--panel);
-  border: 1px solid var(--panel-edge);
-  border-radius: var(--radius-card);
-  box-shadow: var(--panel-shadow), inset 0 1px 0 var(--panel-lip);
-  padding: 30px 30px 34px;
-}
-.door h3 {
-  font-size: var(--fs-body);
-  font-weight: 600;
-  color: var(--ink-strong);
-}
-.door p {
-  margin-top: 12px;
+/* The start flow's numbered steps. Numbering here is not decoration: these
+   are a real sequence, and each rung is a completion the reader can actually
+   finish before the next one asks anything of them. */
+.step-num {
   font-size: var(--fs-small);
-  line-height: 1.55;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 10px;
+}
+.step .copy h2 { margin-top: 0; }
+
+/* Declining the caddy. Someone who already knows they want the app should not
+   have to scroll past three things they do not need to reach it. */
+.page-decline {
+  margin-top: 26px;
+  font-size: var(--fs-small);
   color: var(--ink-muted);
 }
+.page-decline a { color: var(--accent); text-underline-offset: 4px; }
+
+/* Help offered before it is asked for -- the difference between a showroom
+   and a lot. */
+.help .learn-more { margin-top: 26px; display: inline-block; }
 
 
 /* In the motion experience the nav rides fixed through the whole page and
@@ -1282,7 +1281,6 @@ body.page-gray .page-hero h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
      something you have not been told about yet. */
   .two-col--flip .win { order: 2; }
 }
-.doors { margin-top: 64px; }
 /* Narrower column than a full-width section, so the heading needs balancing
    for the same reason the page titles do: without it a short last word
    strands on its own line. */

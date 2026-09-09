@@ -139,7 +139,18 @@ if (faqSearch) {
 // neither class is set and both affordances show, badges first — which is
 // wrong for nobody and ideal for nobody, the correct no-JS compromise.
 (function () {
-  var coarse = window.matchMedia("(hover: none) and (pointer: coarse)").matches;
-  var handheld = coarse || /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-  document.documentElement.classList.add(handheld ? "is-handheld" : "is-desktop");
+  var mq = window.matchMedia("(hover: none) and (pointer: coarse)");
+  var ua = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+  function apply() {
+    var handheld = mq.matches || ua;
+    var root = document.documentElement.classList;
+    root.toggle("is-handheld", handheld);
+    root.toggle("is-desktop", !handheld);
+  }
+  apply();
+  // Re-evaluated rather than set once: a tablet rotating, or an environment
+  // that settles after load, would otherwise be stuck with whichever answer
+  // was true for the first frame.
+  if (mq.addEventListener) mq.addEventListener("change", apply);
+  else if (mq.addListener) mq.addListener(apply);
 })();
