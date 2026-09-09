@@ -213,6 +213,15 @@ it is parked, not lost.
   everywhere; the variation reads as imprecision on the one claim that most
   needs to sound exact.
 
+## Copy parked, not discarded
+
+- [ ] **"Not a platform. A place."** was About's positioning heading. It sat
+  directly above the founders' quote in the closing band and the two competed
+  for the same beat; the quote won, so the heading came out and its paragraph
+  moved up into the hero, where it is the same thought as "not a business plan
+  looking for a market". The phrase itself is good and is now unused — it may
+  belong on Home, or as a scene headline.
+
 ## Brand — wordmark rollout
 
 - [ ] **Pull the CLIICK wordmark through the rest of the system.** Deliberately

@@ -1182,7 +1182,7 @@ body.page-gray .page-hero h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
 }
 /* The ledger row wants a wider prose column than an even split: the copy
    carries a heading and two paragraphs, the object is one 440 stack. */
-.two-col--wide { grid-template-columns: minmax(0, 1fr) minmax(0, 0.82fr); align-items: start; }
+.two-col--wide { grid-template-columns: minmax(0, 1fr) minmax(0, 0.82fr); }
 /* Narrower column than a full-width section, so the heading needs balancing
    for the same reason the page titles do: without it a short last word
    strands on its own line. */
@@ -1302,12 +1302,11 @@ body.page-gray .page-hero h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
    rather than starting it. */
 /* The close sits on the latte band, which already centres and repoints every
    token for the light ground. These rules only handle measure and rhythm. */
-.about-close .sub,
 .about-close .founders-note { max-width: 54ch; margin-inline: auto; }
 .founders-quote {
-  /* Smaller than the gap between sections, so the shift from position to
-     reason reads as a beat inside one thought rather than a new one. */
-  margin-top: 76px;
+  /* The band opens on the quote now, so this only has to clear the band's own
+     padding rather than separate two competing statements. */
+  margin-top: 0;
   font-size: var(--fs-h3);
   font-weight: 500;
   line-height: 1.2;
