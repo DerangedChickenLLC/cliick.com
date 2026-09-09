@@ -178,10 +178,12 @@ it is parked, not lost.
   Peeps → Share with confidence) is that page's spine. Removed from About
   because a trust page should not be a manual.
 
-- [ ] **About's founder section is a placeholder and the page does not finish
-  its own sentence without it.** The whole argument is "not anonymous founders";
-  it currently says so over four cartoon chickens. Needs real names, roles and
-  faces.
+- [x] ~~About's founder section is a placeholder.~~ Done: Nina and John, real
+  photograph, real quote. The photo was supplied as a baked social card (image
+  on top, quote burned into a black band below); only the photograph was used
+  and the quote reset in the site's own type. Still open, smaller: whether to
+  name roles, and whether the rest of the team appears here too — the hero
+  still says "a small team" while this section shows two people.
 
 - [ ] **The bylaw belongs on About, once it is written down.** "I'd rather shut
   down operations than violate it" is a stronger claim than anything currently
