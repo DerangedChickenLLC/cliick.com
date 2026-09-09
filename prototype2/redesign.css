@@ -321,20 +321,56 @@ a { color: inherit; }
   gap: 34px;
 }
 .handoff-actions .store-badges { justify-content: center; margin: 0; }
-.handoff-qr { margin: 0; display: grid; justify-items: center; gap: 12px; }
-.handoff-qr img {
-  width: 148px;
-  height: auto;
-  border-radius: 12px;
-  background: #fff;
-  padding: 10px;
+/* The QR, asked for rather than displayed. A code is a large white object and
+   leaving one open on the page is clutter for everybody who does not want it
+   right now -- so it is one control until pressed. */
+.qr-reveal { order: -1; }
+.qr-reveal summary {
+  list-style: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 26px;
+  border-radius: var(--radius-pill);
+  background: var(--control-on);
+  color: var(--control-on-ink);
+  font-size: var(--fs-body);
+  font-weight: 600;
+  box-shadow: var(--panel-shadow-sm);
+  transition: filter 0.18s ease, transform 0.18s ease;
 }
-.handoff-qr figcaption { font-size: var(--fs-small); color: var(--ink-muted); }
-/* On a laptop the QR is the only affordance that can finish the job. */
-.is-desktop .handoff-qr { order: -1; }
-/* On a phone it is noise: the store link works, and pointing a phone at its
-   own screen does not. */
-.is-handheld .handoff-qr { display: none; }
+.qr-reveal summary::-webkit-details-marker { display: none; }
+.qr-reveal summary::after {
+  content: "";
+  width: 7px; height: 7px;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: translateY(-2px) rotate(45deg);
+  transition: transform 0.18s ease;
+}
+.qr-reveal[open] summary::after { transform: translateY(1px) rotate(-135deg); }
+.qr-reveal summary:hover { filter: brightness(1.06); transform: translateY(-1px); }
+.qr-panel {
+  margin-top: 24px;
+  display: grid;
+  justify-items: center;
+  gap: 12px;
+}
+.qr-panel img {
+  width: 208px;
+  height: auto;
+  border-radius: 14px;
+  background: #fff;
+  padding: 14px;
+}
+.qr-panel p { font-size: var(--fs-small); color: var(--ink-muted); }
+/* On a phone the code is useless -- you cannot point a camera at its own
+   screen -- and the store link works, so the control does not appear at all. */
+.is-handheld .qr-reveal { display: none; }
+/* Badges are the quiet option on a laptop, where they lead to a listing rather
+   than an install. */
+.is-desktop .handoff-actions .store-badges img { height: 44px; opacity: 0.85; }
 
 /* The start flow's numbered steps. Numbering here is not decoration: these
    are a real sequence, and each rung is a completion the reader can actually

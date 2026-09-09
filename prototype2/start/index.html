@@ -90,10 +90,23 @@
       <div class="wrap">
         <h2>First, the app.</h2>
         <p class="section-sub">
-          Cliick is free on iPhone and Android. Everything below happens inside
-          it, and you can come back to this page whenever you like.
+          Cliick is free on iPhone and Android. Setting up takes a minute
+          &mdash; you sign in with Apple or Google, and we never ask for your
+          email address. Everything below happens inside the app, and you can
+          come back to this page whenever you like.
         </p>
         <div class="handoff-actions">
+          <!-- Collapsed by default: a QR is a heavy object to leave sitting on
+               a page, and on a phone it is useless. <details> gives the
+               disclosure for free -- keyboard accessible, and it still works
+               with no JS. -->
+          <details class="qr-reveal">
+            <summary>Scan to install on your phone</summary>
+            <div class="qr-panel">
+              <img src="/prototype2/images/redesign/footer-qr.png" alt="QR code linking to the Cliick app" />
+              <p>Point your phone&rsquo;s camera at the code.</p>
+            </div>
+          </details>
           <div class="store-badges">
             <a href="https://apps.apple.com/us/app/cliick-your-private-network/id6608980465"
               ><img src="/prototype2/images/redesign/badge-appstore.svg" alt="Download on the App Store"
@@ -102,10 +115,6 @@
               ><img src="/prototype2/images/redesign/badge-googleplay.svg" alt="Get it on Google Play"
             /></a>
           </div>
-          <figure class="handoff-qr">
-            <img src="/prototype2/images/redesign/footer-qr.png" alt="" />
-            <figcaption>Scan to install on your phone</figcaption>
-          </figure>
         </div>
       </div>
     </section>
@@ -150,15 +159,17 @@
         </div>
         <div class="copy">
           <p class="step-num">Step two</p>
-          <h2>Add one person.</h2>
+          <h2>Bring someone in.</h2>
           <p>
             Nobody can look you up on Cliick, and there is nothing to search.
             You connect face to face &mdash; they scan your code, or you send
-            them a link, and that is the whole of it.
+            them a link.
           </p>
           <p>
-            When they arrive they can see what you already posted. Cliick keeps
-            your history, so nothing from step one goes to waste.
+            Being connected is not the same as being let in, which is the point.
+            Invite them into your Peeps, and once they accept they will see what
+            you already posted. Cliick keeps your history, so nothing from step
+            one goes to waste.
           </p>
         </div>
       </div>
