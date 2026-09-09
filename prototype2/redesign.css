@@ -273,6 +273,46 @@ a { color: inherit; }
 .nav-links a:hover,
 .nav-links a[aria-current="page"] { text-decoration: underline; text-underline-offset: 6px; }
 
+/* The nav's CTA. Deliberately not a fifth nav link: "Start a Cliick" is a
+   verb, and putting it in the list would make it read as another section of
+   the site. It is a lit control, the same ON treatment the billing toggle
+   uses, so it reads as the one thing on the bar you are meant to press. */
+.nav-cta {
+  flex: none;
+  margin-left: clamp(18px, 2.6vw, 38px);
+  padding: 11px 22px;
+  border-radius: var(--radius-pill);
+  background: var(--control-on);
+  color: var(--control-on-ink);
+  font-size: 1.05rem;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+  box-shadow: var(--panel-shadow-sm);
+  transition: transform 0.18s ease, filter 0.18s ease;
+}
+.nav-cta:hover { filter: brightness(1.06); transform: translateY(-1px); }
+
+/* Example first Cliicks. Named groups rather than an abstraction: the whole
+   job of this page is to make someone think of a specific set of people, and
+   "Book Club" does that where "a private group" does not. */
+.examples {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-content: center;
+}
+.examples li {
+  padding: 12px 20px;
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  font-size: var(--fs-body);
+  line-height: 1.2;
+}
+.start-close .store-badges { justify-content: center; margin-top: 34px; }
+
 /* In the motion experience the nav rides fixed through the whole page and
    switches skins by scene: transparent white-text over the hero photo,
    frosted light bar with dark text everywhere else (body.nav-solid). */
@@ -1266,21 +1306,20 @@ body.page-gray .page-hero h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
   border: 1px solid var(--line);
 }
 
-/* About's hero carries the founders' photograph. Every other page opens on
-   something to look at -- Home has the phone, Membership the plan cards -- and
-   About was text alone, which read as an article rather than a page. A trust
-   page in particular should lead with faces: the claim is "here are the people
-   asking", so the people go first.
+/* A hero with a real object beside the title, rather than the 360px plate
+   .page-hero-art provides. About puts the founders' photograph here; Start a
+   Cliick puts a phone.
 
-   Not .page-hero-art: that is a 360px plate sized to sit beside a title
-   without competing with it, and here the photograph is the point. */
-.page-hero--people .wrap {
+   This variant has to exist because .page-hero .wrap sets its second track to
+   `auto`, which collapses to zero for any child whose contents are absolutely
+   positioned -- which is every .win on the site. */
+.page-hero--split .wrap {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr);
   align-items: center;
   gap: clamp(30px, 4.6vw, 68px);
 }
-.page-hero--people .page-head { max-width: none; }
+.page-hero--split .page-head { max-width: none; }
 .hero-people { margin: 0; }
 .hero-people img {
   display: block;
@@ -1291,10 +1330,12 @@ body.page-gray .page-hero h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
   box-shadow: var(--panel-shadow);
 }
 @media (max-width: 980px) {
-  .page-hero--people .wrap { grid-template-columns: minmax(0, 1fr); }
-  /* Stacked, the photo leads: a face above the headline still opens the page
-     with people, where a face below it opens with a wall of text. */
-  .page-hero--people .hero-people { order: -1; }
+  .page-hero--split .wrap { grid-template-columns: minmax(0, 1fr); }
+  /* Stacked, the photograph leads: a face above the headline still opens the
+     page with people, where a face below it opens with a wall of text. Scoped
+     to .hero-people, not the layout -- a phone mockup above the title would
+     just push the copy down. */
+  .page-hero--split .hero-people { order: -1; }
 }
 
 /* The closing quote. It is a "so that is why we are doing this" line, which
@@ -1345,7 +1386,38 @@ body.page-gray .page-hero h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
 .win--inline { max-width: 758px; width: 100%; justify-self: center; }
 
 /* Steps (About) */
-.steps { list-style: none; max-width: 350px; }
+.steps { list-style: none; max-width: 420px; }
+/* In a two-column row the steps have their own track, so the 350 measure that
+   kept them from sprawling under full-width copy only makes them cramped --
+   and there they are the row's object, not a footnote, so they get numerals
+   and a heavier title. The list was already an <ol> with its markers
+   suppressed, which threw away the one thing a sequence needs to read as a
+   sequence. */
+.two-col .steps { max-width: none; counter-reset: step; }
+.two-col .steps li {
+  counter-increment: step;
+  position: relative;
+  padding-left: 52px;
+  min-height: 34px;
+}
+.two-col .steps li::before {
+  content: counter(step);
+  position: absolute;
+  left: 0;
+  top: -3px;
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  font-size: var(--fs-small);
+  font-weight: 600;
+  color: var(--ink-muted);
+}
+.two-col .steps li + li { margin-top: 30px; }
+.two-col .steps .step-title { font-size: var(--fs-body); font-weight: 600; }
 .steps li + li { margin-top: 26px; }
 .steps .step-title {
   font-weight: 500;
@@ -1667,6 +1739,9 @@ body.page-gray .page-hero h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
   .hero .wrap { padding-block: 0; }
 
   .nav-wordmark { display: none; }
+  /* Four links plus a button overflow well before this width. The footer nav
+     carries "Start a Cliick" on narrow viewports instead. */
+  .nav-cta { display: none; }
   .nav-logo { height: 40px; }
   .nav-links { gap: 14px; }
   .nav-links a { font-size: 0.95rem; }

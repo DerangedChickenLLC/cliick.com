@@ -173,10 +173,22 @@ it is parked, not lost.
   three times without ever saying what one is, and this is the single most
   repeated recommendation in the September notes. It belongs on Home, early.
 
-- [ ] **The five-step onboarding needs the "Start a Cliick" page.** About's
-  "Ready to jump in?" section (Download → Sign in → Make it yours → Invite your
-  Peeps → Share with confidence) is that page's spine. Removed from About
-  because a trust page should not be a manual.
+- [x] ~~The five-step onboarding needs the "Start a Cliick" page.~~ Built. The
+  sequence changed on the way: About's five steps opened with Download and Sign
+  in, which are the app's job, not the site's. The page teaches the part that
+  decides whether a Cliick survives — name it, fill it, then invite — because
+  the failure mode is inviting people into an empty room.
+
+- [ ] **"Start a Cliick" is a page with no way to start a Cliick.** The CTA
+  goes to the app stores, which is honest but is a seam. Universal links would
+  let the button open the app for someone who already has it, and the store for
+  someone who does not. Already on the list separately; this page is now the
+  strongest argument for it.
+
+- [ ] **Home still needs the noun.** The definition now exists on Start a Cliick
+  ("A Cliick is a private group for one part of your life"), but Home still says
+  "Start a cliick" three times without defining it, and Home is where a cold
+  visitor lands.
 
 - [x] ~~About's founder section is a placeholder.~~ Done: Nina and John, real
   photograph, real quote. The photo was supplied as a baked social card (image
