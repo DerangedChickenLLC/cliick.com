@@ -49,71 +49,47 @@
 
     <!-- The start flow.
 
-         This page is not a close and not a manual. The savvy visitor never
-         reaches it -- they go straight to the store from Home. Whoever lands
-         here arrived in a "now what?" frame of mind, and the job is to turn
-         that into happiness through action: a ladder of small completions,
-         each one risk-free, each producing a result.
+         Scene 0 is the scan. Not a download button tidied away at the end of
+         the page, but the doorway: you point your phone at the code, the app
+         installs, and the page paces you through the rest while you do it.
+         A follow-along, with someone walking beside you.
 
-         Hospitality, in other words, and it continues past the install rather
-         than stopping at the button. It is also declinable throughout: the app
-         is offered near the top, not held back as a reward for reading. -->
-    <section class="page-hero page-hero--split">
+         It serves two people at once and says so out loud. One has their phone
+         in hand and is doing this now. The other is reading to find out what
+         they would be in for, and will install later. Neither should feel like
+         the page was written for the other. -->
+    <section class="page-hero page-hero--split follow">
       <div class="wrap">
         <div class="page-head">
           <p class="page-eyebrow">Start a Cliick</p>
           <h1>Here&rsquo;s what happens next.</h1>
           <p class="page-lede">
-            Cliick opens on a room nobody has been in yet. That is deliberate
-            &mdash; it is yours, and there is nothing waiting to be scrolled.
-            Three small things get you settled, and none of them take long.
+            Get the app on your phone: scan the code, or tap through to the
+            store. You sign in with Apple or Google, and we never ask for your
+            email address. Then work down this page with me. Three small things,
+            about five minutes.
           </p>
           <p class="page-decline">
-            Know already? <a href="#get-the-app">Get the app</a> and skip the rest.
+            Rather look around first and do it later? Nothing below needs the
+            app open.
           </p>
         </div>
-        <div class="win win--inline">
-          <div class="phone phone--static phone--placeholder">
-            <div class="phone-screen">
-              <img src="/prototype2/images/fluffy-post.png" alt="A brand new Cliick feed holding a single welcome post" />
-              <span class="film-slate" data-film="Day one" aria-hidden="true"></span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
 
-    <!-- The app comes before the steps rather than after them: everything
-         below happens inside it, and someone who is ready should be able to
-         leave here without scrolling past three things they do not need. -->
-    <section class="section section--center handoff" id="get-the-app">
-      <div class="wrap">
-        <h2>First, the app.</h2>
-        <p class="section-sub">
-          Cliick is free on iPhone and Android. Setting up takes a minute
-          &mdash; you sign in with Apple or Google, and we never ask for your
-          email address. Everything below happens inside the app, and you can
-          come back to this page whenever you like.
-        </p>
-        <div class="handoff-actions">
-          <!-- Collapsed by default: a QR is a heavy object to leave sitting on
-               a page, and on a phone it is useless. <details> gives the
-               disclosure for free -- keyboard accessible, and it still works
-               with no JS. -->
-          <details class="qr-reveal">
-            <summary>Scan to install on your phone</summary>
-            <div class="qr-panel">
-              <img src="/prototype2/images/redesign/footer-qr.png" alt="QR code linking to the Cliick app" />
-              <p>Point your phone&rsquo;s camera at the code.</p>
+        <div class="doorway">
+          <figure class="doorway-qr">
+            <img src="/prototype2/images/redesign/footer-qr.png" alt="QR code linking to the Cliick app" />
+            <figcaption>Point your phone&rsquo;s camera at the code</figcaption>
+          </figure>
+          <div class="doorway-store">
+            <p class="doorway-note">Already on your phone?</p>
+            <div class="store-badges">
+              <a href="https://apps.apple.com/us/app/cliick-your-private-network/id6608980465"
+                ><img src="/prototype2/images/redesign/badge-appstore.svg" alt="Download on the App Store"
+              /></a>
+              <a href="https://play.google.com/store/apps/details?id=com.derangedchicken.clique"
+                ><img src="/prototype2/images/redesign/badge-googleplay.svg" alt="Get it on Google Play"
+              /></a>
             </div>
-          </details>
-          <div class="store-badges">
-            <a href="https://apps.apple.com/us/app/cliick-your-private-network/id6608980465"
-              ><img src="/prototype2/images/redesign/badge-appstore.svg" alt="Download on the App Store"
-            /></a>
-            <a href="https://play.google.com/store/apps/details?id=com.derangedchicken.clique"
-              ><img src="/prototype2/images/redesign/badge-googleplay.svg" alt="Get it on Google Play"
-            /></a>
           </div>
         </div>
       </div>
@@ -127,13 +103,14 @@
           <p class="step-num">Step one</p>
           <h2>Post something.</h2>
           <p>
-            You do not need anyone else for this. Your first Cliick already
-            exists &mdash; it is called Peeps, and right now you are its only
-            member, so you are the only person who can see what you put there.
+            Tap the <b>+</b> at the top and put up a photo from last weekend. It
+            goes to your Peeps, which is the Cliick you already have &mdash; and
+            right now you are its only member.
           </p>
           <p>
-            Put up a photo from last weekend. Nobody is watching, and there is
-            no way to get it wrong.
+            So you will see it in your feed, and nobody else will. That is the
+            whole of step one. Nobody is watching, and there is no way to get it
+            wrong.
           </p>
         </div>
         <div class="win win--inline">
@@ -161,15 +138,15 @@
           <p class="step-num">Step two</p>
           <h2>Bring someone in.</h2>
           <p>
-            Nobody can look you up on Cliick, and there is nothing to search.
-            You connect face to face &mdash; they scan your code, or you send
-            them a link.
+            Nobody can look you up on Cliick and there is nothing to search, so
+            this happens face to face: they scan your code, or you send them a
+            link. Pick someone easy &mdash; whoever is in the room.
           </p>
           <p>
-            Being connected is not the same as being let in, which is the point.
-            Invite them into your Peeps, and once they accept they will see what
-            you already posted. Cliick keeps your history, so nothing from step
-            one goes to waste.
+            Then invite them into your Peeps, and wait for them to accept. Being
+            connected is not the same as being let in, which is the point. Once
+            they are in, they can see the photo from step one &mdash; Cliick
+            keeps your history, so nothing you did first goes to waste.
           </p>
         </div>
       </div>
