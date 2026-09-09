@@ -225,8 +225,13 @@ a { color: inherit; }
 .nav-logo {
   display: block;
   /* The mark reads best at twice the wordmark's cap height. Below ~1.6x it
-     goes subordinate; above ~2.4x it towers over the caps. */
-  height: calc(var(--wm-cap) * 2);
+     goes subordinate; above ~2.4x it towers over the caps.
+     2.04 rather than 2: the asset carries a 4-unit bleed on each side so its
+     edges do not sit flush against the viewBox (with no bleed, antialiasing
+     has nothing to blend into and the curves read as clipped). That bleed is
+     2% of the box, so the multiplier carries 2% to keep the drawn bird at the
+     ratio actually chosen. */
+  height: calc(var(--wm-cap) * 2.04);
   width: auto;
   color: var(--ink-strong);
   flex: none;
