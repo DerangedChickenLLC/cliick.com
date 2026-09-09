@@ -1256,18 +1256,23 @@ body.page-gray .page-hero h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
   border: 1px solid var(--line);
 }
 
-/* Founders. The photograph carries the trust argument the rest of the page
-   makes in words, so it gets real estate rather than a thumbnail. Photo left,
-   because the section above puts its art on the right and the page should
-   alternate rather than stack two identical layouts. */
-.founders {
+/* About's hero carries the founders' photograph. Every other page opens on
+   something to look at -- Home has the phone, Membership the plan cards -- and
+   About was text alone, which read as an article rather than a page. A trust
+   page in particular should lead with faces: the claim is "here are the people
+   asking", so the people go first.
+
+   Not .page-hero-art: that is a 360px plate sized to sit beside a title
+   without competing with it, and here the photograph is the point. */
+.page-hero--people .wrap {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr);
   align-items: center;
-  gap: clamp(32px, 5vw, 78px);
+  gap: clamp(30px, 4.6vw, 68px);
 }
-.founders-photo { margin: 0; }
-.founders-photo img {
+.page-hero--people .page-head { max-width: none; }
+.hero-people { margin: 0; }
+.hero-people img {
   display: block;
   width: 100%;
   height: auto;
@@ -1275,14 +1280,24 @@ body.page-gray .page-hero h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
   border: 1px solid var(--panel-edge);
   box-shadow: var(--panel-shadow);
 }
-.founders-eyebrow { text-align: left; }
+@media (max-width: 980px) {
+  .page-hero--people .wrap { grid-template-columns: minmax(0, 1fr); }
+  /* Stacked, the photo leads: a face above the headline still opens the page
+     with people, where a face below it opens with a wall of text. */
+  .page-hero--people .hero-people { order: -1; }
+}
+
+/* The closing quote. It is a "so that is why we are doing this" line, which
+   only lands once the argument above it has been made -- so it ends the page
+   rather than starting it. */
 .founders-quote {
-  margin-top: 14px;
   font-size: var(--fs-h3);
   font-weight: 500;
   line-height: 1.2;
   letter-spacing: -0.015em;
   text-wrap: balance;
+  max-width: 20ch;
+  margin-inline: auto;
 }
 .founders-by {
   margin-top: 24px;
@@ -1294,14 +1309,12 @@ body.page-gray .page-hero h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
 }
 .founders-by::before { content: "\2014\00a0\00a0"; }
 .founders-note {
-  margin-top: 26px;
+  margin-top: 30px;
   font-size: var(--fs-body);
   line-height: 1.5;
   color: var(--ink-muted);
-  max-width: 40ch;
-}
-@media (max-width: 900px) {
-  .founders { grid-template-columns: minmax(0, 1fr); }
+  max-width: 54ch;
+  margin-inline: auto;
 }
 
 /* Avatar cluster (About) — ring colors approximated from the mock */

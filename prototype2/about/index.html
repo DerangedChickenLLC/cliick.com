@@ -46,7 +46,7 @@
       </div>
     </header>
 
-    <section class="page-hero">
+    <section class="page-hero page-hero--people">
       <div class="wrap">
         <div class="page-head">
           <p class="page-eyebrow">Who's behind Cliick</p>
@@ -59,10 +59,13 @@
           </p>
           <p class="page-kicker">You should know who is asking for your trust.</p>
         </div>
-        <!-- Supporting art slot. Replace this plate with an
-             <img class="page-hero-art" src="..." alt="..."> when the real
-             photography lands; it lays out beside the title on wide
-             viewports and is hidden below 900px. -->
+        <figure class="hero-people">
+          <img
+            src="/prototype2/images/brand/founders.jpg"
+            width="1122" height="835" decoding="async"
+            alt="Nina and John outdoors at sunset, cheek to cheek, with a hillside and treeline behind them"
+          />
+        </figure>
       </div>
     </section>
 
@@ -136,35 +139,23 @@
       </div>
     </section>
 
-    <!-- The page argues "not anonymous founders"; this is where it stops
-         arguing and shows them. The quote is set in the site's own type rather
-         than shipped as the baked social card it came from: pixels do not
-         reflow, are not selectable, are invisible to a screen reader, bring a
-         second typeface with them, and would not follow a second colour
-         scheme. The photograph is the part that has to be a photograph. -->
-    <section class="section">
-      <div class="wrap founders">
-        <figure class="founders-photo">
-          <img
-            src="/prototype2/images/brand/founders.jpg"
-            width="1122" height="835" loading="lazy" decoding="async"
-            alt="Nina and John outdoors at sunset, cheek to cheek, with a hillside and treeline behind them"
-          />
-        </figure>
-        <div class="founders-copy">
-          <p class="eyebrow founders-eyebrow">The founders</p>
-          <blockquote class="founders-quote">
-            Sometimes the change you&rsquo;re waiting for is the one you have
-            to build.
-          </blockquote>
-          <p class="founders-by">Nina &amp; John</p>
-          <p class="founders-note">
-            Cliick started as a conversation between the two of us about where
-            our own family photos ought to live. It is self&#8209;funded: no
-            investors, and no funding round waiting to change the terms. A few
-            volunteers help out because they believe in it.
-          </p>
-        </div>
+    <!-- The quote closes the page rather than opening it. The photograph
+         belongs at the top, where a trust page should lead with faces; the
+         line is a "so that is why we are doing this", which only works once
+         the argument above it has been made. -->
+    <section class="section section--center founders-close">
+      <div class="wrap">
+        <blockquote class="founders-quote">
+          Sometimes the change you&rsquo;re waiting for is the one you have to
+          build.
+        </blockquote>
+        <p class="founders-by">Nina &amp; John</p>
+        <p class="founders-note">
+          Cliick started as a conversation between the two of us about where
+          our own family photos ought to live. It is self&#8209;funded: no
+          investors, and no funding round waiting to change the terms. A few
+          volunteers help out because they believe in it.
+        </p>
       </div>
     </section>
 
