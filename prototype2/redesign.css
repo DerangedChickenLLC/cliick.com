@@ -1302,6 +1302,9 @@ body.page-gray .page-hero h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
    rather than starting it. */
 /* The close sits on the latte band, which already centres and repoints every
    token for the light ground. These rules only handle measure and rhythm. */
+/* The close is centred on the page's own ground rather than a band, so it
+   needs the breathing room .latte used to supply. */
+.about-close { padding-bottom: 120px; }
 .about-close .founders-note { max-width: 54ch; margin-inline: auto; }
 .founders-quote {
   /* The band opens on the quote now, so this only has to clear the band's own

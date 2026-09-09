@@ -215,6 +215,14 @@ it is parked, not lost.
 
 ## Copy parked, not discarded
 
+- [ ] **About's close is centred on the page's own ground, not a light band.**
+  Tried the homepage's latte treatment first; the surface change was not what
+  the centring needed. Membership already centres its close on the dark, and
+  the row above supplies enough width to counterweight the footer. Cream also
+  put two hard transitions in a row on the way into a black footer, where dark
+  is one soft step. If the second colour scheme ever changes the backdrop's
+  drama, revisit — the quote currently relies on the lit layer behind it.
+
 - [ ] **"Not a platform. A place."** was About's positioning heading. It sat
   directly above the founders' quote in the closing band and the two competed
   for the same beat; the quote won, so the heading came out and its paragraph
