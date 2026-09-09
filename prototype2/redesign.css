@@ -339,7 +339,6 @@ a { color: inherit; }
 /* Three doors. Same panel treatment as the About ledger, because they do the
    same job: a set of parallel choices you scan rather than prose you read. */
 .doors {
-  margin-top: 42px;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 22px;
@@ -1275,6 +1274,15 @@ body.page-gray .page-hero h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
 /* The ledger row wants a wider prose column than an even split: the copy
    carries a heading and two paragraphs, the object is one 440 stack. */
 .two-col--wide { grid-template-columns: minmax(0, 1fr) minmax(0, 0.82fr); }
+/* Object left, prose right -- alternating down the page the way the homepage
+   scenes do, so three consecutive rows do not read as a list. */
+.two-col--flip { grid-template-columns: minmax(0, 0.82fr) minmax(0, 1fr); }
+@media (max-width: 900px) {
+  /* Stacked, copy always leads: a screenshot above the heading is a picture of
+     something you have not been told about yet. */
+  .two-col--flip .win { order: 2; }
+}
+.doors { margin-top: 64px; }
 /* Narrower column than a full-width section, so the heading needs balancing
    for the same reason the page titles do: without it a short last word
    strands on its own line. */
@@ -1436,6 +1444,22 @@ body.page-gray .page-hero h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
 
 /* Phone-in-window, static (About) */
 .win--inline { max-width: 758px; width: 100%; justify-self: center; }
+/* A shot that already includes its own device frame. Centred in the window at
+   its natural size -- it is 462px wide, so scaling it up would only soften it. */
+.win-mockup {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  display: grid;
+  place-items: center;
+}
+.win-mockup img {
+  display: block;
+  max-width: min(82%, 462px);
+  max-height: 86%;
+  width: auto;
+  height: auto;
+}
 
 /* Steps (About) */
 .steps { list-style: none; max-width: 420px; }

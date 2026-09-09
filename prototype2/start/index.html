@@ -51,80 +51,92 @@
          objection. People arrive believing they know what this is -- a feed
          with things in it -- and get an empty room. Told beforehand, that
          lands as the promise being kept. Discovered afterwards, it reads as a
-         broken app. -->
+         broken app.
+
+         Deliberately no comparison to other apps here. "Every other app opens
+         on a feed assembled for you" is the kind of unverifiable universal the
+         claims audit took out of the rest of the site, and saying what Cliick
+         does needs no competitor to lean on. -->
     <section class="page-hero page-hero--split">
       <div class="wrap">
         <div class="page-head">
           <p class="page-eyebrow">Start a Cliick</p>
-          <h1>It starts empty. That&rsquo;s the point.</h1>
+          <h1>It starts empty. You fill it.</h1>
           <p class="page-lede">
-            Every other app opens on a feed somebody else assembled for you.
-            Cliick opens on a room with nobody in it but you. You can post on
-            day one &mdash; it goes to your Peeps, and you are the only member,
-            so you are the only one who sees it.
+            Cliick opens on a room with nobody in it but you. Post on day one
+            if you like &mdash; it goes to your Peeps, where you are the only
+            member, so you are the only one who sees it.
           </p>
-          <p class="page-kicker">What happens next is entirely yours.</p>
+          <p class="page-kicker">It is yours before it is anyone else&rsquo;s.</p>
         </div>
         <div class="win win--inline">
-          <div class="phone phone--static phone--placeholder">
-            <div class="phone-screen">
-              <img
-                src="/prototype2/images/redesign/phone-dashboard.png"
-                alt="The Cliick dashboard, showing a handful of private groups"
-              />
-              <span class="film-slate" data-film="Your first Cliick" aria-hidden="true"></span>
-            </div>
-          </div>
+          <!-- This shot already carries its own device frame, so it sits in
+               the window directly; wrapping it in .phone would frame a frame. -->
+          <figure class="win-mockup">
+            <img src="/prototype2/images/fluffy-post.png" alt="A brand new Cliick feed holding a single welcome post" />
+            <span class="film-slate" data-film="Day one" aria-hidden="true"></span>
+          </figure>
         </div>
       </div>
     </section>
 
-    <!-- The mechanic, which is the thing nobody can guess from outside: posts
-         are addressed, never broadcast. It is also the answer to "why would I
-         make a Cliick" -- a Cliick is the address. -->
+    <!-- The mechanic nobody can guess from outside: posts are addressed, and a
+         Cliick is the address. Which doubles as the reason to make one. -->
     <section class="section">
-      <div class="wrap two-col two-col--wide">
+      <div class="wrap two-col two-col--wide two-col--flip">
+        <div class="win win--inline">
+          <div class="phone phone--static phone--placeholder">
+            <div class="phone-screen">
+              <img src="/prototype2/images/gallery.png" alt="A gallery of photos shared inside a single Cliick" />
+              <span class="film-slate" data-film="One Cliick" aria-hidden="true"></span>
+            </div>
+          </div>
+        </div>
         <div class="copy">
           <h2>Every post is addressed.</h2>
           <p>
-            Nothing on Cliick is broadcast. When you post, you choose which
-            Cliick it goes to, and only the people in that Cliick see it. That
-            is what a Cliick is for &mdash; it decides who is in the room.
+            When you post, you choose which Cliick it goes to, and the people
+            in that Cliick are the ones who see it. That is what a Cliick is
+            for &mdash; you decide who is in the room.
           </p>
           <p>
             Add someone next month and they see what came before. Cliick keeps
-            your history, so nothing you put in early is wasted.
+            your history, so anything you put in early is still there when your
+            people arrive.
           </p>
         </div>
-        <ul class="examples" aria-label="Examples of a Cliick">
-          <li>My Peeps</li>
-          <li>Family</li>
-          <li>Favorite Pets</li>
-          <li>Book Club</li>
-          <li>Recipe Swap</li>
-          <li>The cousins</li>
-          <li>Sunday dinners</li>
-        </ul>
       </div>
     </section>
 
     <!-- Three doors rather than one path. People differ, and telling someone
          with two close friends to go and organise their life is how you lose
-         them. Peeps first, because it is the door that needs no setup at all. -->
-    <section class="section section--center">
+         them. Peeps leads, because it is the door that needs no setup at all. -->
+    <section class="section">
       <div class="wrap">
-        <h2>Organize it however suits you.</h2>
-        <p class="section-sub">
-          You connect with people in person &mdash; they scan your code, or you
-          send them a link. There is no search box and no directory. Then you
-          decide where everyone belongs.
-        </p>
+        <div class="two-col two-col--wide">
+          <div class="copy">
+            <h2>Organize it however suits you.</h2>
+            <p>
+              You connect with people in person &mdash; they scan your code, or
+              you send them a link. From there you decide where everyone
+              belongs, and you can change your mind whenever you like.
+            </p>
+          </div>
+        <div class="win win--inline">
+          <div class="phone phone--static phone--placeholder">
+            <div class="phone-screen">
+              <img src="/prototype2/images/drawer.png" alt="The Cliick dashboard fanned out, showing groups and connections" />
+              <span class="film-slate" data-film="Your people" aria-hidden="true"></span>
+            </div>
+          </div>
+        </div>
+        </div>
         <div class="doors">
           <div class="door">
             <h3>A few close friends</h3>
             <p>
-              Use Peeps and stop there. Everyone you add sees what you post
-              there. No setting up, no naming anything.
+              Use Peeps and stop there. Everyone you add sees what you post.
+              Nothing to set up, nothing to name.
             </p>
           </div>
           <div class="door">
