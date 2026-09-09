@@ -213,19 +213,40 @@ a { color: inherit; }
   align-items: center;
   gap: 14px;
 }
+/* Brand lockup. Both marks are inline SVG filled with currentColor, so they
+   follow --ink-strong through every context -- and through a second scheme --
+   the way the rest of the type does. An <img> could not.
+
+   --wm-cap is the wordmark's CAP height, which is the only metric worth
+   setting: the SVG box is taller than the caps because the tittles sit above
+   them, so sizing by box height would silently change the letters' size
+   whenever the tittle geometry moved. */
+.nav { --wm-cap: 22px; }
 .nav-logo {
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  object-fit: cover;
+  display: block;
+  /* The mark reads best at twice the wordmark's cap height. Below ~1.6x it
+     goes subordinate; above ~2.4x it towers over the caps. */
+  height: calc(var(--wm-cap) * 2);
+  width: auto;
+  color: var(--ink-strong);
+  flex: none;
 }
 .nav-wordmark {
-  font-size: 2rem;
-  font-weight: 500;
+  display: flex;
+  align-items: center;
   color: var(--ink-strong);
   text-decoration: none;
-  line-height: 1;
 }
+.nav-wordmark svg {
+  display: block;
+  /* 1.7 = box height / cap height, straight off the viewBox (170 / 100). */
+  height: calc(var(--wm-cap) * 1.7);
+  width: auto;
+}
+/* Sit the CAP BAND on the nav's midline rather than the SVG box. The box
+   centres at 0.5; the caps centre at 0.6 of it (data-capmid on the asset), so
+   box-centring drops the letters visibly low against the mark. */
+.nav-wordmark svg { transform: translateY(calc(var(--wm-cap) * 1.7 * -0.1)); }
 .nav-links {
   margin-left: auto;
   display: flex;
@@ -254,9 +275,6 @@ body.nav-solid .nav {
   backdrop-filter: blur(12px);
   box-shadow: 0 1px 0 rgba(0, 0, 0, 0.08);
 }
-body.nav-solid .nav-wordmark,
-body.nav-solid .nav-links a { color: #000; }
-
 /* --------------------------------------------------------------------------
    Home hero
    -------------------------------------------------------------------------- */
@@ -1511,7 +1529,7 @@ body.page-gray .page-hero h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
   .hero .wrap { padding-block: 0; }
 
   .nav-wordmark { display: none; }
-  .nav-logo { width: 40px; height: 40px; }
+  .nav-logo { height: 40px; }
   .nav-links { gap: 14px; }
   .nav-links a { font-size: 0.95rem; }
   .win { height: 480px; }
