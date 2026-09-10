@@ -311,6 +311,48 @@ it is parked, not lost.
   describe app screens and the two drifting apart is worse than either being
   wrong alone.
 
+## App vs site — found by reading the Maestro flows
+
+The start flow was checked against `.maestro/flows/01-onboarding.yaml` and
+`destructive/08-connect-lifecycle.yaml` rather than against assumptions. Steps
+one and three of the ladder succeed unaided. What follows is what does not.
+
+- [ ] **Onboarding pre-selects Premium Yearly, and Complete Setup buys it.**
+  Straight from the capture notes: *"The subscription step arrives with PREMIUM
+  YEARLY already selected. Tapping 'Complete Setup' without changing it starts a
+  real purchase."* The site tells a first-timer it is free to start and walks
+  them into setup unattended. This is an app fix, not a copy fix — default to
+  Guest, or to nothing selected. Warning people about it on the site would be
+  worse than the bug, because it advertises a pattern the brand exists to
+  reject.
+
+- [ ] **The app says 5 members, the site says 6.** Onboarding's Guest tier reads
+  "5 members per cliick"; the plan cards say "6 members per Cliick". Both are
+  arguable depending on whether you count yourself, and a person following the
+  start flow sees them minutes apart. Pick one convention and use it on both
+  surfaces. This is the counting question already on the list, now a live
+  contradiction rather than a theoretical one.
+
+- [ ] **Step two cannot complete alone.** Connect → Become Peeps → *they accept*.
+  The last move belongs to somebody else, so it is the one rung the page cannot
+  promise. Worth deciding whether "about five minutes" survives that, and
+  whether the app could let a first post reach a new connection without the
+  Peeps round-trip.
+
+- [ ] **"Three small things, about five minutes" is measured after setup.**
+  Setup is five screens: name (required), photo, hatch tag, subscription, then
+  the feed. It is the longest part of the first run and the flow deliberately
+  skips it.
+
+- [x] ~~A third sign-in provider exists.~~ Dev-only. "Apple or Google" is
+  accurate for users.
+
+- [ ] **Vocabulary drift between app and site.** The app's empty feed says
+  *"It'll feel a bit empty to start with, but that's kinda the point. Cliick is
+  your zen space."* The site makes the same argument in a different register and
+  never says "zen space". Onboarding's welcome, *"It's time to reclaim your
+  feed"*, matches the hero exactly and should be protected in any rewrite.
+
 ## Brand — wordmark rollout
 
 - [ ] **Pull the CLIICK wordmark through the rest of the system.** Deliberately
