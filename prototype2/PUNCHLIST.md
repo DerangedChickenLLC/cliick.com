@@ -331,54 +331,20 @@ one and three of the ladder succeed unaided. What follows is what does not.
   subscription product whose free tier is an unbounded trial, so this is the
   right default for the business.
 
-- [ ] **Check the on-screen capacity wording, but this may be my error.**
-  I flagged the app saying 5 where the site says 6, on the strength of a Maestro
-  comment reading "free tier, 5 members per cliick". That is the capture
-  author's paraphrase, not verified on-screen text — and `utils/paywallCopy.ts`
-  says "Guests get up to 5 **others** in each cliick", which reconciles exactly
-  with the site's 6 including yourself. Worth confirming against the real
-  membership screen before treating it as a contradiction.
+- [ ] **The app displays 5 where the site displays 6, and both say "members".**
+  Confirmed from source, not from a capture comment — I softened this once and
+  should not have. `CapacityConfig.java` sets `freeMemberCap = 6` and says in a
+  comment that this "means owner + 5 others". `apiConfig.ts` mirrors it at 6.
+  But `useAvailableSubscriptions.ts` renders
+  `${MAX_CLIICK_MEMBERS_FREE_TIER - 1} members per cliick`, so the app puts
+  **5 members** on screen while the plan cards say **6 members**. Same cap, same
+  noun, different arithmetic, minutes apart in the start flow.
 
-## Money framing — think about it as one thing
-
-- [ ] **Decide the money story across the whole site at once, rather than card
-  by card.** "Free forever" → "Free to start" was the sharpest single fix and it
-  is done, but it exposed that the site has never decided this question
-  deliberately — every surface answers it slightly differently, and they were
-  written at different times.
-
-  What is currently said, in the order a visitor meets it:
-
-  | where | what it says | what it implies |
-  |---|---|---|
-  | Home scene 3 | "Members pay for Cliick, and guests are on the house" | free as hospitality |
-  | Home, latte band | "Your privacy is worth more than a latte" | price as trivial |
-  | Plan cards | Guest first, $0, "Start small · upgrade anytime" | free as the entry |
-  | Membership hero | "You're not just paying for an app. You're buying back your privacy" | price as principle |
-  | App, throughout | "Guests get up to 5 others. Become a Member to go bigger" | free as a floor |
-
-  None of those contradict outright. But they are five different frames, and the
-  intent — a subscription product whose free tier is a generous unbounded trial
-  — is only stated plainly in the app.
-
-  Questions worth settling together:
-
-  - **Does Guest still lead the cards?** It reads as the recommended option by
-    position. The app pre-selects Premium for exactly the opposite reason.
-  - **Should the free tier be named as a trial?** It is one. Saying so is more
-    honest than implying it is a destination, and it makes the upgrade expected
-    rather than a defeat.
-  - **Is $6 being under-sold?** People who hear the price in person reportedly
-    worry it is *too low*. That reaction is worth something and the site does not
-    reach for it anywhere. "More than a latte" argues the price is small; the
-    live reaction says the value is large. Those are not the same pitch.
-  - **Should Home mention price before the band at all?** Scene 3 sets up the
-    money question and the band answers it, which works. Adding price earlier
-    would spend the reveal.
-  - **What happens at the cap?** Nothing on the site says what it feels like to
-    outgrow Guest. The app has a whole paywall vocabulary for it —
-    `utils/paywallCopy.ts`, "Room for more Peeps?", "This cliick's full" — and
-    the site never prepares anyone for that moment.
+  The unambiguous phrasing is the one the paywall already uses — "up to 5
+  **others**" — and it is also what the site said originally: "Up to 6 members
+  per Cliick, you and 5 others". That gloss was dropped when the capacity bar
+  was ported to Home. Restoring it on both surfaces would close this without
+  either side having to be wrong.
 
 - [ ] **The site sells free-first; the app is paid-by-design. The site should
   move.** This runs opposite to what I first recommended. The plan cards say
