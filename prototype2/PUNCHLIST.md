@@ -317,21 +317,37 @@ The start flow was checked against `.maestro/flows/01-onboarding.yaml` and
 `destructive/08-connect-lifecycle.yaml` rather than against assumptions. Steps
 one and three of the ladder succeed unaided. What follows is what does not.
 
-- [ ] **Onboarding pre-selects Premium Yearly, and Complete Setup buys it.**
-  Straight from the capture notes: *"The subscription step arrives with PREMIUM
-  YEARLY already selected. Tapping 'Complete Setup' without changing it starts a
-  real purchase."* The site tells a first-timer it is free to start and walks
-  them into setup unattended. This is an app fix, not a copy fix — default to
-  Guest, or to nothing selected. Warning people about it on the site would be
-  worse than the bug, because it advertises a pattern the brand exists to
-  reject.
+- [x] ~~Onboarding pre-selects Premium Yearly, and Complete Setup buys it.~~
+  **Withdrawn — I was wrong.** `useSetupSubscription` calls `requestSubscription`
+  from expo-iap, which routes through StoreKit and Play Billing, so the OS
+  purchase sheet with Face ID or a password is mandatory and the error path
+  handles `"Purchase cancelled."` explicitly. Nobody is charged by tapping
+  through. The capture note was warning a test engineer off triggering a real
+  purchase during a screenshot run; I read a QA caution as a dark pattern.
 
-- [ ] **The app says 5 members, the site says 6.** Onboarding's Guest tier reads
-  "5 members per cliick"; the plan cards say "6 members per Cliick". Both are
-  arguable depending on whether you count yourself, and a person following the
-  start flow sees them minutes apart. Pick one convention and use it on both
-  surfaces. This is the counting question already on the list, now a live
-  contradiction rather than a theoretical one.
+  Pre-selecting Premium is also a deliberate and defensible call: status-quo
+  bias means whatever is selected reads as the thing in hand, and starting at
+  Premium frames that as full capacity rather than as free-ness. Cliick is a
+  subscription product whose free tier is an unbounded trial, so this is the
+  right default for the business.
+
+- [ ] **Check the on-screen capacity wording, but this may be my error.**
+  I flagged the app saying 5 where the site says 6, on the strength of a Maestro
+  comment reading "free tier, 5 members per cliick". That is the capture
+  author's paraphrase, not verified on-screen text — and `utils/paywallCopy.ts`
+  says "Guests get up to 5 **others** in each cliick", which reconciles exactly
+  with the site's 6 including yourself. Worth confirming against the real
+  membership screen before treating it as a contradiction.
+
+- [ ] **The site sells free-first; the app is paid-by-design. The site should
+  move.** This runs opposite to what I first recommended. The plan cards say
+  "Free forever" and list Guest first, which frames the free tier as a
+  destination. The app never uses that phrase — its framing throughout
+  `paywallCopy.ts` is "Guests get up to 5 others in each cliick. Become a Member
+  to go bigger", which frames it as a floor. The intent is a generous unbounded
+  trial, and someone following the start flow reads one framing and meets the
+  other minutes later. The single sharpest change is "Free forever" → something
+  that reads as a starting point; card order and emphasis are a second question.
 
 - [ ] **Step two cannot complete alone.** Connect → Become Peeps → *they accept*.
   The last move belongs to somebody else, so it is the one rung the page cannot
