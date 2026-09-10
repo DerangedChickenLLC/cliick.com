@@ -3,6 +3,51 @@
 Knock-on effects and deferred cleanups noticed while iterating. Not blocking;
 review before finalising. Delete this file when prototype2 is promoted.
 
+## Copy principle — describe the result, not the mechanism
+
+Not a task. A rule to write against, and the reason several rewrites in this
+file went the way they did.
+
+**A connectKey is an address, not an invitation.** Holding someone's code lets
+you ask; they keep the right of refusal, and the key is revokable, which is what
+makes publishing an address safe at all. That is the true model — and people
+reliably cannot hold it, however carefully it is explained. Explaining it harder
+does not work. It has been tried.
+
+So the site does not try. **Use words that are true about the outcome and vague
+about the mechanism.** A person needs a model that predicts what will happen.
+They do not need the model the system runs on, and being handed it makes them
+worse at predicting, not better.
+
+| use | why it works |
+|---|---|
+| **join** | absorbs the asking as a sub-step of arriving |
+| **share** | "share a Cliick" carries no direction at all |
+| **connected**, **in** | states where things ended up |
+| **invite only** | describes the *result* — only vetted people get in — not who asked whom |
+
+| avoid | why it fails |
+|---|---|
+| **invite** (as a verb) | asserts a direction that is often backwards |
+| **request** | names the mechanism and raises the question it answers |
+| **accept**, **approve** | drags the reader into who-asked-whom |
+
+The test: *does following this sentence require understanding an asymmetry?*
+If yes, rewrite it.
+
+The clearest failure was a line on the Start flow that read well and taught
+nothing: "Being connected is not the same as being let in, which is the point."
+Pure mechanism. It asked the reader to hold two states apart and grasp why, at
+the exact moment they were trying to follow an instruction. Removed in `74c47f6`.
+
+Note that **"invite only" is safe and "invite them" is not** — same word, and
+the difference is whether it names a result or an action. That pair is the
+quickest way to check whether a sentence is on the right side of the rule.
+
+Where this applies beyond the marketing site: the FAQ (38 answers, several of
+which explain mechanics), the app's own strings, and the store listings. Any
+sweep of one should carry this rule into the others.
+
 ## Copy
 
 - [ ] **"Collects nothing" deserves more than three chips.** Verified in code:
