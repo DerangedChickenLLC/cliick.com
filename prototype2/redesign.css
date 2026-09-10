@@ -1,0 +1,1875 @@
+/* ==========================================================================
+   Cliick.com redesign prototype — issue #3
+   Derived from Figma: Cliick-UX (nodes 878-3893, 908-4101, 909-4340, 1176-5196)
+   Type: Poppins only. Colors sampled from the mock frames.
+   ========================================================================== */
+
+:root {
+  --font: "Poppins", sans-serif;
+
+  /* ------------------------------------------------------------------
+     SCHEME — "gallery" (dark)
+     Every colour in the site resolves through this block. A second scheme
+     is defined by overriding these values alone; nothing below should
+     introduce a new colour literal. Two schemes are planned, visitor
+     selectable, so keep it that way.
+     ------------------------------------------------------------------ */
+  /* The surfaces are near-neutral on purpose. All the warmth in this scheme
+     comes from the backdrop light, never from the pigment — bake brown into
+     the surfaces themselves and every page turns flat brown-on-brown. Panels
+     are translucent so the lit backdrop reads through them. */
+  --wall: #221E17;        /* the page itself, behind the backdrop layer */
+  --recess: rgba(0, 0, 0, 0.30);            /* tracks, backing panels */
+  --surface: rgba(252, 246, 234, 0.055);    /* cards, chips, inputs, rows */
+  --surface-2: rgba(252, 246, 234, 0.105);  /* hover, raised knobs */
+  --line: rgba(252, 240, 220, 0.14);        /* borders on dark */
+
+  /* Interactive objects — cards, rows, controls. These are NOT the room.
+     Surfaces above are environment: translucent, made of the same light.
+     A control has to read as a thing placed in the room, so it is near
+     opaque (it occludes the backdrop), catches the light on its top lip,
+     and casts a real shadow. Keep that distinction in any second scheme:
+     if controls are made of the same stuff as the wall, the page reads as
+     shelves with no bartender. */
+  --panel: rgba(24, 21, 17, 0.82);
+  --panel-hover: rgba(36, 32, 26, 0.90);
+  --panel-edge: rgba(255, 244, 224, 0.13);
+  --panel-lip: rgba(255, 246, 228, 0.22);   /* top edge, lit from above */
+  --panel-shadow: 0 24px 52px rgba(0, 0, 0, 0.55), 0 3px 10px rgba(0, 0, 0, 0.38);
+  --panel-shadow-sm: 0 10px 24px rgba(0, 0, 0, 0.42), 0 2px 6px rgba(0, 0, 0, 0.30);
+
+  /* A selected control has to read as ON. On a dark scheme the lazy move is
+     to make the active segment a slightly lighter dark, which reads as "off
+     and more off" rather than as a choice. Selection is lit. */
+  --control-on: #EBD9B6;
+  --control-on-ink: #1F1A12;
+
+  --ink-strong: #F2ECDE;  /* primary copy */
+  --ink-muted: #CFC6B2;   /* secondary copy */
+  --ink-faint: #A79E8B;   /* tertiary, eyebrows */
+  --ink-on-light: #211D16;/* copy on the one light band */
+  --accent: #E9C88A;      /* links, "learn more" */
+
+  --glow: 255, 232, 192;  /* the gallery pool, as RGB parts for rgba() */
+  --band-alt: rgba(252, 246, 234, 0.035); /* alternating band */
+  --band-light: #F2EBDF;  /* the ONE light surface: the beat before the footer */
+
+  /* Legacy names, aliased to the scheme so existing rules follow it. */
+  --ink: var(--ink-strong);
+  --paper: var(--surface);   /* NOTE: surfaces, not the page — body uses --wall */
+  --page-gray: var(--wall);  /* subpage body background */
+  --band-gray: var(--band-alt);
+  --window-gray: var(--recess); /* phone viewport windows, pill tracks */
+  --pill-border: var(--line);
+
+  --radius-card: 22px;
+  --radius-window: 30px;
+  --radius-pill: 21px;
+  --shadow-card: 0 14px 34px rgba(0, 0, 0, 0.42);
+
+  --fs-display: clamp(3.25rem, 6.6vw, 6rem);      /* 96px hero/page titles */
+  --fs-h2: clamp(2.25rem, 3.75vw, 3.375rem);      /* 54px section heads */
+  --fs-h2-sm: clamp(1.75rem, 3.3vw, 3rem);        /* 48px centered heads */
+  --fs-h3: clamp(2.125rem, 4.1vw, 3.25rem);       /* 52px scene + showcase heads */
+  --fs-page-title: clamp(2.5rem, 4.9vw, 4rem);    /* 64px page headlines */
+  --fs-body: clamp(1.0625rem, 1.4vw, 1.25rem);    /* 20px body */
+  --fs-small: 1rem;                                /* 16px */
+
+  --nav-h: 96px;
+  --wrap-pad: clamp(20px, 4.3vw, 62px);
+  --phone-w: 403px;
+  --phone-h: 869px;
+  --window-h: 604px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* Keyboard focus. Nothing suppressed outlines, so the browser default was
+   applying — but a default ring is tuned for a generic page, not a dark one
+   with its own palette. :where() keeps specificity at zero so any component
+   can still override it. --accent resolves per context, so this stays legible
+   on the light band as well as the dark. */
+:where(a, button, summary, input, [tabindex]):focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+/* --------------------------------------------------------------------------
+   Touch targets
+   Links here are set at their text height — nav items came out 23px tall,
+   footer links 24px, the scene CTAs 28px. On a touch screen the guidance is
+   44px, and the gap is the difference between tapping and aiming. These pad
+   the hit area without moving the text: the extra height is centred on the
+   label, so layout is unchanged on pointer devices too.
+   -------------------------------------------------------------------------- */
+@media (hover: none), (pointer: coarse) {
+  .nav-links a,
+  .footer-bottom a,
+  .footer-dl span,
+  .learn-more {
+    position: relative;
+  }
+  .nav-links a::after,
+  .footer-bottom a::after,
+  .footer-dl span::after,
+  .learn-more::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    height: 44px;
+    transform: translateY(-50%);
+    /* sits behind the label, so it never covers the arrow glyph */
+    z-index: -1;
+  }
+}
+
+/* Available to the accessibility tree, not to the eye. Used where a region
+   needs a heading for the document outline but not a visible one. */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+
+body {
+  font-family: var(--font);
+  font-weight: 400;
+  color: var(--ink);
+  background: var(--wall);
+  -webkit-font-smoothing: antialiased;
+}
+
+body.page-gray { background: var(--page-gray); }
+
+/* The lit space. Without this the subpages are flat pigment; the homepage
+   scenes get their warmth from the stage backdrop and the subpages had none,
+   which read as brown-on-brown. Fixed rather than scrolling, so the whole
+   site feels like one room. */
+body.page-gray::before {
+  content: "";
+  position: fixed;
+  inset: -6%;
+  z-index: -2;
+  background: url("/prototype2/images/redesign/hero-bg-sim.svg") center / cover no-repeat;
+  filter: blur(44px) saturate(0.92) brightness(1.05);
+  opacity: 0.62;
+  pointer-events: none;
+}
+/* A pool of light up where the page content starts, so content is lit rather
+   than sitting on an even field. */
+body.page-gray::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: radial-gradient(
+    ellipse 90% 55% at 50% 22%,
+    rgba(var(--glow), 0.13) 0%,
+    rgba(var(--glow), 0.05) 45%,
+    rgba(var(--glow), 0) 75%
+  );
+  pointer-events: none;
+}
+
+img { max-width: 100%; display: block; }
+a { color: inherit; }
+
+.wrap {
+  max-width: 1440px;
+  margin-inline: auto;
+  padding-inline: var(--wrap-pad);
+}
+
+/* --------------------------------------------------------------------------
+   Nav (Figma Component 15) — sits over the dark hero photo on every page
+   -------------------------------------------------------------------------- */
+.nav {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  height: var(--nav-h);
+  display: flex;
+  align-items: center;
+}
+.nav .wrap {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+/* Brand lockup. Both marks are inline SVG filled with currentColor, so they
+   follow --ink-strong through every context -- and through a second scheme --
+   the way the rest of the type does. An <img> could not.
+
+   --wm-cap is the wordmark's CAP height, which is the only metric worth
+   setting: the SVG box is taller than the caps because the tittles sit above
+   them, so sizing by box height would silently change the letters' size
+   whenever the tittle geometry moved. */
+.nav { --wm-cap: 22px; }
+.nav-logo {
+  display: block;
+  /* The mark reads best at twice the wordmark's cap height. Below ~1.6x it
+     goes subordinate; above ~2.4x it towers over the caps.
+     2.04 rather than 2: the asset carries a 4-unit bleed on each side so its
+     edges do not sit flush against the viewBox (with no bleed, antialiasing
+     has nothing to blend into and the curves read as clipped). That bleed is
+     2% of the box, so the multiplier carries 2% to keep the drawn bird at the
+     ratio actually chosen. */
+  height: calc(var(--wm-cap) * 2.04);
+  width: auto;
+  color: var(--ink-strong);
+  flex: none;
+}
+.nav-wordmark {
+  display: flex;
+  align-items: center;
+  color: var(--ink-strong);
+  text-decoration: none;
+}
+.nav-wordmark svg {
+  display: block;
+  /* 1.7 = box height / cap height, straight off the viewBox (170 / 100). */
+  height: calc(var(--wm-cap) * 1.7);
+  width: auto;
+}
+/* Sit the wordmark on the mark's OPTICAL centre.
+
+   Box-centring drops the letters low, because the box is taller than the caps.
+   But cap-band centring -- (0.5 - capmid) = -0.100 -- overcorrects: the
+   tittles put ink above the caps, which lifts the wordmark's centre of mass,
+   so the name reads a hair high. That is exactly what reviewers reported.
+
+   -0.074 aligns the two alpha-weighted ink centroids instead. Measured, not
+   nudged: rasterised at 600px wide, the mark's centroid sits at 0.515 of its
+   box and the wordmark's at 0.592 of its own, which left the wordmark 0.99px
+   high at a 22px cap. It is a ratio, so it holds at any --wm-cap. */
+.nav-wordmark svg { transform: translateY(calc(var(--wm-cap) * 1.7 * -0.074)); }
+.nav-links {
+  margin-left: auto;
+  display: flex;
+  gap: clamp(18px, 2.6vw, 38px);
+}
+.nav-links a {
+  color: var(--ink-strong);
+  text-decoration: none;
+  font-size: 1.25rem;
+}
+.nav-links a:hover,
+.nav-links a[aria-current="page"] { text-decoration: underline; text-underline-offset: 6px; }
+
+/* The nav's CTA. Deliberately not a fifth nav link: "Start a Cliick" is a
+   verb, and putting it in the list would make it read as another section of
+   the site. It is a lit control, the same ON treatment the billing toggle
+   uses, so it reads as the one thing on the bar you are meant to press. */
+.nav-cta {
+  flex: none;
+  margin-left: clamp(18px, 2.6vw, 38px);
+  padding: 11px 22px;
+  border-radius: var(--radius-pill);
+  background: var(--control-on);
+  color: var(--control-on-ink);
+  font-size: 1.05rem;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+  box-shadow: var(--panel-shadow-sm);
+  transition: transform 0.18s ease, filter 0.18s ease;
+}
+.nav-cta:hover { filter: brightness(1.06); transform: translateY(-1px); }
+
+/* Example first Cliicks. Named groups rather than an abstraction: the whole
+   job of this page is to make someone think of a specific set of people, and
+   "Book Club" does that where "a private group" does not. */
+.examples {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-content: center;
+}
+.examples li {
+  padding: 12px 20px;
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  font-size: var(--fs-body);
+  line-height: 1.2;
+}
+/* The doorway. The code is not a download button tidied away at the foot of
+   the page -- it is how the follow-along starts, so it takes the hero's object
+   slot and is the first thing on the page with any weight to it. */
+.doorway {
+  display: grid;
+  justify-items: center;
+  gap: 30px;
+  padding: 38px 30px;
+  background: var(--panel);
+  border: 1px solid var(--panel-edge);
+  border-radius: var(--radius-card);
+  box-shadow: var(--panel-shadow), inset 0 1px 0 var(--panel-lip);
+}
+.doorway-qr { margin: 0; display: grid; justify-items: center; gap: 16px; }
+.doorway-qr img {
+  width: min(240px, 60vw);
+  height: auto;
+  border-radius: 16px;
+  background: #fff;
+  padding: 16px;
+}
+.doorway-qr figcaption {
+  font-size: var(--fs-small);
+  color: var(--ink-muted);
+  text-align: center;
+  max-width: 26ch;
+}
+.doorway-store { display: grid; justify-items: center; gap: 12px; }
+.doorway-note { font-size: var(--fs-small); color: var(--ink-faint); }
+.doorway .store-badges { justify-content: center; margin: 0; }
+.doorway .store-badges img { height: 44px; }
+
+/* On a phone the code is useless -- a camera cannot read its own screen -- so
+   the store becomes the doorway and stops apologising for itself. */
+.is-handheld .doorway-qr { display: none; }
+.is-handheld .doorway-note { display: none; }
+.is-handheld .doorway .store-badges img { height: 52px; }
+
+/* The start flow's numbered steps. Numbering here is not decoration: these
+   are a real sequence, and each rung is a completion the reader can actually
+   finish before the next one asks anything of them. */
+/* The rung marker. A numeral rather than a word: these steps are a real
+   sequence -- each one depends on the one before it -- so the figure is
+   carrying information, not decoration. Set large and light so it reads as a
+   marker in the margin rather than a badge stuck on the heading. */
+/* .two-col .copy p is (0,2,1) and was winning this outright, forcing the
+   numeral back to body size -- hence the extra class in the selector. */
+.step .copy .step-num {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-top: 0;
+  margin-bottom: 12px;
+  max-width: none;
+  color: var(--accent);
+  font-size: clamp(1.8rem, 2.4vw, 2.3rem);
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+.step-num span {
+  font-size: var(--fs-small);
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+.step .copy h2 { margin-top: 0; }
+
+/* Declining the caddy. Someone who already knows they want the app should not
+   have to scroll past three things they do not need to reach it. */
+.page-decline {
+  margin-top: 26px;
+  font-size: var(--fs-small);
+  color: var(--ink-muted);
+}
+.page-decline a { color: var(--accent); text-underline-offset: 4px; }
+
+/* Help offered before it is asked for -- the difference between a showroom
+   and a lot. */
+.help .learn-more { margin-top: 26px; display: inline-block; }
+
+/* A follow-along is read with a phone in the other hand, so its instructions
+   want a little more room than body copy usually gets. */
+.follow .page-lede { max-width: 46ch; }
+
+/* The hero narrates the whole arrival now -- install, sign-in, look around --
+   so its paragraphs need to read as a sequence rather than one block. */
+.follow .page-lede + .page-lede { margin-top: 16px; }
+.step .copy b { font-weight: 600; color: var(--ink-strong); }
+
+
+/* In the motion experience the nav rides fixed through the whole page and
+   switches skins by scene: transparent white-text over the hero photo,
+   frosted light bar with dark text everywhere else (body.nav-solid). */
+body.stage-motion .nav {
+  position: fixed;
+  transition: background-color 0.4s ease, box-shadow 0.4s ease;
+}
+body.stage-motion .nav-wordmark,
+body.stage-motion .nav-links a { transition: color 0.4s ease; }
+body.nav-solid .nav {
+  background: rgba(255, 255, 255, 0.82);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.08);
+}
+/* --------------------------------------------------------------------------
+   Home hero
+   -------------------------------------------------------------------------- */
+.hero {
+  position: relative;
+  min-height: min(866px, 100vh);
+  background: #130e04;
+  overflow: hidden;
+  color: var(--ink-strong);
+}
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0) 18%),
+    linear-gradient(90deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.15) 60%);
+  z-index: 1;
+}
+.hero .wrap {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  align-items: center;
+  gap: 40px;
+  min-height: inherit;
+  padding-top: var(--nav-h);
+}
+.hero-title {
+  font-size: var(--fs-display);
+  font-weight: 500;
+  line-height: 1.05;
+  max-width: 12ch;
+}
+.hero-tagline {
+  margin-top: 28px;
+  font-size: var(--fs-body);
+  line-height: 1.5;
+  max-width: 44ch;
+}
+.store-badges {
+  margin-top: 36px;
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+.store-badges img { height: 52px; width: auto; }
+
+.hero-win .hero-phone {
+  position: absolute;
+  left: 50%;
+  top: 61px;
+  transform: translateX(-50%);
+  width: var(--phone-w);
+  border-radius: 62px; /* clip the white corner nubs left by the export's mask */
+}
+
+/* --------------------------------------------------------------------------
+   Home showcase — stationary phone, copy scrolls past.
+   Each gray window clips its own viewport-fixed phone copy (clip-path makes
+   the fixed element paint only inside the window), so scrolling windows
+   sweep across a phone that never moves. Screens differ per window.
+   -------------------------------------------------------------------------- */
+/* The fallback flow's counterpart to .stage-eyebrow. When the eyebrow became a
+   small spaced label in the type pass this was left as a 48px centred heading,
+   so the same words read as a section title on a phone and a quiet label on
+   the desktop stage. Matched to the eyebrow, and left-aligned like everything
+   beneath it. */
+.welcome-head {
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  padding: 72px var(--wrap-pad) 0;
+  max-width: 1440px;
+  margin-inline: auto;
+}
+
+.showcase .row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) min(758px, 52vw);
+  align-items: center;
+  column-gap: clamp(24px, 3vw, 70px);
+  padding-block: 74px;
+}
+.showcase-copy h3 {
+  font-size: var(--fs-h3);
+  font-weight: 500;
+  line-height: 1.4;
+  max-width: 14ch;
+}
+.showcase-copy ul {
+  margin-top: 20px;
+  list-style: none;
+}
+.showcase-copy li {
+  font-size: var(--fs-body);
+  line-height: 2.2;
+}
+.showcase-copy li::before { content: "•  "; }
+.showcase-copy p {
+  margin-top: 20px;
+  font-size: var(--fs-body);
+  line-height: 1.6;
+  max-width: 30ch;
+}
+.learn-more {
+  display: inline-block;
+  margin-top: 34px;
+  font-size: 1.125rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--accent);
+  text-decoration: none;
+}
+.learn-more::after { content: "  ⟶"; }
+.learn-more:hover { text-decoration: underline; text-underline-offset: 8px; }
+
+.win {
+  position: relative;
+  height: var(--window-h);
+  background:
+    radial-gradient(
+      ellipse at 50% 44%,
+      rgba(var(--glow), 0.20) 0%,
+      rgba(var(--glow), 0.08) 38%,
+      rgba(var(--glow), 0) 72%
+    ),
+    var(--recess);
+  clip-path: inset(0 round var(--radius-window));
+}
+
+/* Phone frame (placeholder for app screen recordings — swap img for video) */
+.phone {
+  width: var(--phone-w);
+  height: var(--phone-h);
+  background: #0b0b0b;
+  border-radius: 62px;
+  padding: 13px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+}
+.phone-screen {
+  width: 100%;
+  height: 100%;
+  border-radius: 50px;
+  overflow: hidden;
+  background: #000;
+}
+.phone-screen img,
+.phone-screen video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background: #000; /* some app screenshots carry alpha; keep crossfades opaque */
+}
+.phone-blank {
+  background: var(--surface-2);
+  box-shadow: none;
+}
+.phone-blank .phone-screen { background: var(--surface-2); }
+
+/* Static copy: shown on small screens / reduced motion / no JS */
+.phone--static {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 61px;
+}
+
+/* --------------------------------------------------------------------------
+   Pinned scene stage. The .stage-frame pins (sticky) while the .stage-track
+   scrolls through ~4.5 viewport-heights. JS maps scroll progress to a scene
+   index (data-scene on the frame + is-past/is-active/is-future on scenes);
+   everything else — copy enter/exit, screen crossfade, window and photo
+   fades — is CSS keyed off those attributes, so all motion shares one clock.
+   Enabled by body.stage-motion (JS + wide viewport + motion allowed);
+   otherwise .fallback-flow renders instead.
+   -------------------------------------------------------------------------- */
+.stage-track { display: none; }
+body.stage-motion .stage-track {
+  display: block;
+  height: 460vh;
+}
+body.stage-motion .fallback-flow { display: none; }
+
+.stage-frame {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+  background: var(--wall);
+}
+
+/* Hero photo backdrop — only for scene 0 */
+.stage-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 1;
+  transition: opacity 0.6s ease;
+}
+.stage-shade {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0) 18%),
+    linear-gradient(90deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.15) 60%);
+  opacity: 1;
+  transition: opacity 0.6s ease;
+}
+.stage-frame:not([data-scene="0"]) .stage-bg,
+.stage-frame:not([data-scene="0"]) .stage-shade { opacity: 0; }
+
+/* Gray mock window — fades in when the story leaves the hero */
+.stage-window {
+  position: absolute;
+  top: calc(50vh - var(--window-h) / 2);
+  right: max(var(--wrap-pad), calc((100vw - 1440px) / 2 + 62px));
+  width: min(758px, 52vw);
+  height: var(--window-h);
+  border-radius: var(--radius-window);
+  background: var(--window-gray);
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+.stage-frame:not([data-scene="0"]) .stage-window { opacity: 1; }
+
+/* THE phone — anchored dead center of the window column, never moves */
+.stage-phone {
+  position: absolute;
+  top: calc(50vh - var(--window-h) / 2 + 61px);
+  right: calc(max(var(--wrap-pad), calc((100vw - 1440px) / 2 + 62px)) + min(758px, 52vw) / 2 - var(--phone-w) / 2);
+  width: var(--phone-w);
+}
+.stage-phone .phone-screen { position: relative; }
+.stage-phone .phone-screen img {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+.stage-phone .phone-screen img.active { opacity: 1; }
+
+/* --------------------------------------------------------------------------
+   Full-phone hero (trial — revert this block to restore the cropped device)
+   The stage phone is 869px tall but sits 61px below the window's top edge, so
+   it normally runs off the bottom of the viewport and the device is cut. This
+   caps its height to the space actually available below its anchor, so the
+   whole phone reads. The top anchor is untouched, so its composition with the
+   stage window and the copy column is unchanged.
+   Corner radius and bezel are re-derived from the width to keep the device's
+   proportions honest at the smaller size.
+   -------------------------------------------------------------------------- */
+.stage-phone {
+  --phone-h: min(869px, calc(100vh - var(--nav-h) - 60px));
+  --phone-w: calc(var(--phone-h) * 0.46375);
+  /* Centred in the space below the nav, overriding the original anchor. That
+     anchor put the phone 61px below the stage window's top edge, which framed
+     a device meant to overhang the viewport; once the phone fits, it left the
+     device bottom-heavy (209px above, 30px below at 900px tall) and sitting
+     ~90px lower than the copy column's optical centre. Centring gives equal
+     margins and lets the device be larger for the same fit. */
+  top: calc(var(--nav-h) + (100vh - var(--nav-h) - var(--phone-h)) / 2);
+}
+.stage-phone .phone {
+  border-radius: calc(var(--phone-w) * 0.15385);
+  padding: calc(var(--phone-w) * 0.03226);
+}
+.stage-phone .phone-screen { border-radius: calc(var(--phone-w) * 0.12407); }
+
+/* --------------------------------------------------------------------------
+   Dark gallery
+   Scenes 1-3 previously switched the backdrop off and put a flat #d9d9d9
+   rectangle on #ffffff. With no light source in the frame it read as drab,
+   and a rectangle at ~15% contrast with no edge, shadow or tonal jump could
+   neither blend nor stand on its own.
+
+   The scenes become a gallery wall: warm charcoal, the hero's backdrop
+   carried straight through, and the phone lit by an ambient pool rather than
+   backed by a box. Photography is the product, and photographs read on dark
+   the way art does on a gallery wall.
+
+   Note this needs no colour correction on the backdrop. An earlier pass kept
+   the scenes light and had to lift and sepia() the backdrop hard, because it
+   is a night image being forced to behave as a pale wash. On a dark wall it
+   simply belongs, which is the main argument for this direction.
+   -------------------------------------------------------------------------- */
+
+/* The wall. Warm charcoal, not pure black — pure black reads as "screen off". */
+.stage-frame { background: var(--wall); }
+
+.stage-frame:not([data-scene="0"]) .stage-bg {
+  opacity: 0.58;
+  filter: blur(26px) saturate(0.86) brightness(1.22);
+  transform: scale(1.12); /* covers the blur bleeding in at the edges */
+}
+
+/* Copy flips to light. Warm off-white rather than #fff, since the wall is warm. */
+.stage-frame:not([data-scene="0"]) { color: var(--ink-strong); }
+.stage-frame:not([data-scene="0"]) .scene li { color: var(--ink-muted); }
+.stage-frame:not([data-scene="0"]) .learn-more { color: var(--accent); }
+.stage-frame:not([data-scene="0"]) .stage-eyebrow { color: var(--ink-faint); }
+
+/* The grey box is replaced by light. A glow has no edge, so it cannot have
+   the "neither blends nor stands alone" problem the rectangle had. */
+.stage-window { display: none; }
+
+.stage-phone { z-index: 1; }
+.stage-phone::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  left: 50%;
+  top: 50%;
+  width: 250%;
+  height: 124%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity 0.6s ease;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse at 50% 48%,
+    rgba(255, 238, 208, 0.62) 0%,
+    rgba(255, 230, 188, 0.38) 20%,
+    rgba(255, 224, 178, 0.17) 40%,
+    rgba(255, 224, 178, 0.05) 58%,
+    rgba(255, 224, 178, 0) 74%
+  );
+}
+.stage-frame:not([data-scene="0"]) .stage-phone::before { opacity: 1; }
+
+/* The device casts into darkness, and takes a faint warm rim so its silhouette
+   holds — its bezel is near-black and would otherwise melt into the wall. */
+.stage-frame:not([data-scene="0"]) .stage-phone .phone {
+  box-shadow:
+    0 46px 104px rgba(0, 0, 0, 0.62),
+    0 10px 30px rgba(0, 0, 0, 0.44),
+    0 0 0 1px rgba(255, 230, 188, 0.22);
+}
+
+/* The nav has to follow the wall, or it floats as a white plank. */
+body.nav-solid .nav {
+  background: rgba(23, 20, 15, 0.72);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+body.nav-solid .nav-wordmark,
+body.nav-solid .nav-links a { color: #F2ECDE; }
+
+/* The closing band is the one light surface in the scheme — the "back out into
+   the light" beat before the black footer. It is deliberately not dark:
+   .latte-fluffy relies on mix-blend-mode:multiply to drop its baked-in white
+   background, which only works over a light band. Its copy has to invert. */
+.band.latte { background: var(--band-light); color: var(--ink-on-light); }
+.band.latte .plans { margin-top: 72px; }
+
+/* --------------------------------------------------------------------------
+   Objects on the light band
+   The object and control tokens above assume a dark room: a panel occludes
+   the backdrop by being darker, a selected control is lit. The homepage runs
+   the same .plan component inside the light band, where every one of those
+   relationships inverts — dark cards on cream read as inactive and dreary.
+   Re-point the tokens for this context rather than restyling the component,
+   so .plan stays a single component. The light gallery exploration, if we
+   take it, is this block applied site-wide.
+   -------------------------------------------------------------------------- */
+.band.latte {
+  --panel: #FFFCF6;               /* on light, an object is raised, not sunken */
+  --panel-hover: #FFFFFF;
+  --panel-edge: rgba(64, 48, 22, 0.16);
+  --panel-lip: rgba(255, 255, 255, 0.95);
+  --panel-shadow: 0 20px 44px rgba(72, 52, 22, 0.16), 0 3px 9px rgba(72, 52, 22, 0.10);
+  --panel-shadow-sm: 0 8px 20px rgba(72, 52, 22, 0.14);
+
+  --ink-strong: var(--ink-on-light);
+  --ink-muted: #5B5245;
+  --accent: #7A5210;              /* the warm accent has to darken to hold */
+  --recess: rgba(64, 48, 22, 0.10);
+  --line: rgba(64, 48, 22, 0.18);
+  --glow: 122, 86, 30;            /* the tint darkens with everything else */
+
+  --control-on: #211D16;          /* and ON inverts: dark segment, light copy */
+  --control-on-ink: #F6EFE0;
+}
+/* the top-face sheen is light falling on the card, so on a light band it has
+   to be white — the dark-room version tints the top edge downward instead */
+.band.latte .plan::before {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.85) 0%,
+    rgba(255, 255, 255, 0.30) 30%,
+    rgba(255, 255, 255, 0) 60%
+  );
+}
+
+/* Persistent header once the story starts. It lives in the copy column
+   (left of the window at every width) and below the fixed nav at every
+   height, so it can never collide with either; its fade-in trails the
+   photo fade-out so it never reads dark-on-dark. */
+.stage-eyebrow {
+  position: absolute;
+  top: max(calc(var(--nav-h) + 8px), calc(50vh - var(--window-h) / 2 - 82px));
+  left: max(calc(var(--wrap-pad) + 62px), calc((100vw - 1440px) / 2 + 124px));
+  transform: translateY(-14px);
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  opacity: 0;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+.stage-frame:not([data-scene="0"]) .stage-eyebrow {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.3s;
+}
+
+/* Scenes — copy panels in a reserved left region; enter from below,
+   exit upward, direction-aware on reverse scroll */
+.scene {
+  position: absolute;
+  top: 50%;
+  left: max(calc(var(--wrap-pad) + 62px), calc((100vw - 1440px) / 2 + 124px));
+  width: min(470px, 34vw); /* must stay clear of the window's left edge at all widths */
+  transform: translateY(-50%);
+  opacity: 1;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  pointer-events: none;
+}
+.scene.is-active { pointer-events: auto; }
+.scene.is-past {
+  opacity: 0;
+  transform: translateY(calc(-50% - 70px));
+}
+.scene.is-future {
+  opacity: 0;
+  transform: translateY(calc(-50% + 70px));
+}
+.scene h3 {
+  font-size: var(--fs-h3);
+  font-weight: 600;
+  line-height: 1.22;
+  max-width: 14ch;
+}
+.scene ul { margin-top: 20px; list-style: none; }
+.scene li { font-size: var(--fs-body); line-height: 1.9; }
+.scene li::before { content: "•  "; }
+.scene p:not(.hero-tagline) {
+  margin-top: 20px;
+  font-size: var(--fs-body);
+  line-height: 1.6;
+  max-width: 30ch;
+}
+
+/* Scene 0 = the hero copy. It uses the same ink as scenes 1-3: as a literal
+   white it was the one headline in the site not lit by the room's lamp, and
+   it changed colour at 1200 as the stage handed over to the fallback flow. */
+.scene--hero { width: min(640px, 44vw); }
+
+/* --------------------------------------------------------------------------
+   Latte band (home) + pricing cards (home & membership)
+   -------------------------------------------------------------------------- */
+.band { background: var(--band-gray); }
+.latte {
+  padding: 90px 0 110px;
+  text-align: center;
+}
+.latte-fluffy {
+  width: min(340px, 70vw);
+  margin-inline: auto;
+  mix-blend-mode: multiply; /* the source art has a white background; blend it into the band */
+}
+.latte h2 {
+  font-size: var(--fs-h2-sm);
+  font-weight: 500;
+  line-height: 1.25;
+  margin-top: 8px;
+}
+.latte .sub,
+.section-sub {
+  margin: 18px auto 0;
+  font-size: var(--fs-body);
+  line-height: 1.5;
+  max-width: 62ch;
+  /* These run two or three lines, which is too short for text-wrap: pretty to
+     help — pretty only tunes the last few lines of a longer block. balance
+     evens every line instead, so no single word is left trailing. */
+  text-wrap: balance;
+}
+
+.plans {
+  margin-top: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 440px));
+  gap: 28px;
+  justify-content: center;
+  text-align: left;
+}
+.plan {
+  position: relative;
+  background: var(--panel);
+  border: 1px solid var(--panel-edge);
+  border-radius: var(--radius-card);
+  box-shadow: var(--panel-shadow), inset 0 1px 0 var(--panel-lip);
+  padding: 40px 42px 48px;
+}
+/* the room's light falling across the top face of the card */
+.plan::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    rgba(var(--glow), 0.10) 0%,
+    rgba(var(--glow), 0.03) 26%,
+    rgba(var(--glow), 0) 55%
+  );
+}
+.plan > * { position: relative; }
+.plan h3 {
+  font-weight: 600;
+  font-size: 2.25rem;
+  font-weight: 500;
+}
+.plan-price {
+  margin-top: 28px;
+  font-weight: 500;
+  letter-spacing: -0.03em;
+}
+.plan-price .amount { font-size: 3rem; }
+.plan-price .term-note {
+  display: block;
+  margin-top: 4px;
+  font-size: var(--fs-small);
+  color: var(--ink-muted);
+}
+.plan-price .term {
+  font-size: var(--fs-small);
+  font-weight: 400;
+  letter-spacing: -0.03em;
+}
+.plan-note,
+.plan-toggle {
+  margin-top: 20px;
+  border: 1px solid var(--pill-border);
+  background: var(--recess);
+  border-radius: var(--radius-pill);
+  font-size: var(--fs-small);
+  line-height: 2.5;
+  text-align: center;
+}
+.plan-note {
+  background: rgba(var(--glow), 0.10);
+  border-color: rgba(var(--glow), 0.24);
+  color: var(--accent);
+}
+.plan-toggle {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  cursor: pointer;
+  user-select: none;
+}
+.plan-toggle .knob {
+  position: absolute;
+  top: 2px;
+  bottom: 2px;
+  left: 2px;
+  width: calc(50% - 4px);
+  background: var(--control-on);
+  border-radius: calc(var(--radius-pill) - 3px);
+  box-shadow: 0 2px 7px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.55);
+  transition: transform 0.25s ease;
+}
+.plan-toggle[data-cycle="monthly"] .knob { transform: translateX(calc(100% + 4px)); }
+.plan-toggle span {
+  position: relative;
+  z-index: 1;
+  color: var(--ink-muted);
+  transition: color 0.25s ease;
+}
+/* The saving sits on the control rather than in the selected plan's copy, so
+   it is legible from either side of the toggle. Inherits its colour so it
+   works both on the lit knob and on the dark track. */
+.plan-toggle .save {
+  font-size: 0.72em;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  opacity: 0.72;
+  margin-left: 4px;
+  white-space: nowrap;
+}
+.plan-toggle[data-cycle="annual"] span:nth-of-type(1),
+.plan-toggle[data-cycle="monthly"] span:nth-of-type(2) {
+  color: var(--control-on-ink);
+  font-weight: 600;
+}
+/* Capacity scale. The plans differ by one number that matters — 6 members per
+   Cliick against 250 — and it was a bullet among four. The fill is each plan's
+   share of the larger cap, so the comparison is to scale rather than decorative. */
+.plan-scale {
+  margin-top: 14px;
+}
+.plan-scale-track {
+  display: block;
+  height: 8px;
+  border-radius: 99px;
+  background: var(--recess);
+  border: 1px solid var(--panel-edge);
+  overflow: hidden;
+}
+.plan-scale-fill {
+  display: block;
+  width: var(--fill);
+  height: 100%;
+  border-radius: 99px;
+  background: linear-gradient(90deg, rgba(var(--glow), 0.55), var(--accent));
+}
+.plan-scale--guest { --fill: 2.4%; }
+.plan-scale--premium { --fill: 100%; }
+.plan-scale-label {
+  margin-top: 10px;
+  font-size: var(--fs-small);
+  color: var(--ink-muted);
+}
+.plan-cap {
+  margin-top: 14px;
+  font-size: var(--fs-small);
+  color: var(--ink-muted);
+}
+/* BEST VALUE, as the app marks the annual row. Only meaningful while annual is
+   the selected cycle, so it hides when the toggle moves to monthly. */
+/* The chip sits on its own line under the title rather than trailing it.
+   Inline, it wrapped or not depending on the card's width, so the title's
+   height changed as you resized -- and on the Membership subgrid that pulled
+   the neighbouring card with it.
+
+   Every title reserves the line via the ::after placeholder, whether or not it
+   carries a chip, and the chip is laid into that reserved space. So all four
+   cards keep one title height: prices share a baseline on the homepage band,
+   which is not a subgrid, and toggling the cycle cannot resize anything. */
+.best-chip,
+.plan h3::after {
+  display: block;
+  width: fit-content;
+  margin-top: 14px;
+  font-size: 0.4em;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  border-radius: 4px;
+  padding: 4px 8px;
+}
+.plan h3 { position: relative; }
+.plan h3::after { content: "Best value"; visibility: hidden; }
+.best-chip {
+  position: absolute;
+  inset: auto auto 0 0;
+  color: var(--control-on-ink);
+  background: var(--control-on);
+}
+.plan[data-cycle="monthly"] .best-chip { visibility: hidden; }
+
+.plan-scale-label b {
+  color: var(--ink-strong);
+  font-weight: 600;
+}
+
+/* --------------------------------------------------------------------------
+   Subpage hero band
+   -------------------------------------------------------------------------- */
+/* --------------------------------------------------------------------------
+   Page header
+   One pattern for every page below Home. Previously a bare <h1> bottom-aligned
+   in a fixed 366px band: the space above the title was leftover rather than
+   composed, and the title had nothing to hand off to, so the eye fell straight
+   into the content below.
+
+   The header is now a composed block — title, lede, and a slot for supporting
+   art — with its rhythm set by padding rather than a fixed height, so it grows
+   with its content instead of trapping it. Any page added later gets a
+   coherent header by using this markup:
+
+     <section class="page-hero">
+       <div class="wrap">
+         <div class="page-head">
+           <h1>Title</h1>
+           <p class="page-lede">One line on what the page is for.</p>
+         </div>
+         <img class="page-hero-art" src="..." alt="..." />   <- optional
+       </div>
+     </section>
+   -------------------------------------------------------------------------- */
+.page-hero {
+  position: relative;
+  padding-top: calc(var(--nav-h) + 62px);
+  padding-bottom: 64px;
+  overflow: hidden;
+  color: var(--ink-strong);
+}
+.page-hero .wrap {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 48px;
+}
+.page-head { max-width: min(640px, 62%); }
+.page-hero h1 {
+  font-size: var(--fs-page-title);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  /* Page headlines are sentences now, and the aside layout gives them a narrow
+     column — without balancing, a short final word strands on its own line. */
+  text-wrap: balance;
+}
+/* The page name survives as the eyebrow rather than a billboard: the nav
+   already marks the current page, and Home does not announce itself either. */
+.page-eyebrow {
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  /* --ink-muted, matching .eyebrow and the stage eyebrow's resting ink. The
+     white it replaces composited to about the same lightness over the header
+     scrim, so this is the token swap, not a dimming. */
+  color: var(--ink-muted);
+  margin-bottom: 18px;
+}
+.page-kicker {
+  margin-top: 16px;
+  font-size: var(--fs-body);
+  font-weight: 600;
+  color: var(--ink-strong);
+}
+.page-lede {
+  margin-top: 22px;
+  max-width: 48ch;
+  font-size: var(--fs-body);
+  line-height: 1.55;
+  color: var(--ink-muted);
+}
+/* The header is a darkened region of the page's own lit space, not a band with
+   its own backdrop — it previously painted #130e04 plus its own copy of the
+   backdrop at a different crop, which left a hard seam. The scrim is masked so
+   it fades out at the bottom rather than ending on an edge, and sits under
+   .wrap (z-index 2) so it never dims the copy. */
+body.page-gray .page-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0.66) 0%,
+    rgba(0, 0, 0, 0.34) 55%,
+    rgba(0, 0, 0, 0.20) 100%
+  );
+  -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 56%, transparent 100%);
+  mask-image: linear-gradient(180deg, #000 0%, #000 56%, transparent 100%);
+}
+body.page-gray .page-hero h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
+
+/* Aside column — the site's spatial grammar.
+   The homepage stage puts the argument on the left and the thing itself on the
+   right, and holds them there while you scroll. Subpages had abandoned that and
+   stacked everything centre, so each page read as a different site. .page-hero
+   --aside lets a page keep the grammar: headline and lede left, the subject
+   right, composed together rather than sequentially. */
+.page-hero--aside .wrap {
+  grid-template-columns: minmax(300px, 32%) minmax(0, 1fr);
+  align-items: center;
+  gap: 56px;
+}
+.page-hero--aside .page-head { max-width: none; }
+.page-hero--aside .page-lede { max-width: 38ch; }
+.page-hero-aside { min-width: 0; }
+/* the cards size to the column they are in rather than a fixed 440 */
+.page-hero-aside .plans {
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  /* Six rows: name, price, control, scale, label, caption. Keep this in step
+     with the card's child count or the subgrid stops aligning — it has moved
+     with the content three times now (7 with feature lists, 6 without, 5 once
+     the live-region paragraph went, 6 again with the app's plan captions). */
+  grid-template-rows: repeat(6, auto);
+  gap: 22px;
+}
+.page-hero-aside .plan {
+  display: grid;
+  grid-template-rows: subgrid;
+  grid-row: span 6;
+  align-content: start;
+}
+/* Tighter side padding only while the cards are squeezed into the split's
+   right-hand column. Stacked, they use the site-wide card padding so they
+   match the homepage band at every width. */
+@media (min-width: 1241px) {
+  .page-hero-aside .plan { padding: 32px 30px 36px; }
+}
+
+@media (max-width: 1240px) {
+  .page-hero--aside .wrap { grid-template-columns: minmax(0, 1fr); gap: 44px; }
+  .page-hero--aside .page-lede { max-width: 48ch; }
+  /* Stacked: copy and cards share one measure and one left edge, so the
+     column the split establishes survives the breakpoint instead of the copy
+     running full width while the cards sit centred inside it. The measure is
+     908 = two 440 cards plus the 28 gutter; at the old 900 the band could
+     never go two-up, leaving 960-1199 as one card beside an empty half. */
+  .page-hero--aside .page-head,
+  .page-hero--aside .page-hero-aside { width: min(100%, 908px); margin-inline: 0; }
+  /* Stacked, the cards are no longer sizing to the split's narrow column, so
+     the 1fr override has nothing left to do but let them balloon (548px in a
+     600px viewport). Hand them back to the site-wide card measure and the
+     centring the homepage band uses. */
+  .page-hero-aside .plans {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 440px));
+    justify-content: center;
+    gap: 28px;
+  }
+}
+
+/* Optional supporting art. Sized so it can never crowd the title, and dropped
+   entirely on narrow viewports rather than shrinking to a stamp. */
+.page-hero-art {
+  width: min(360px, 32vw);
+  height: auto;
+  border-radius: var(--radius-card);
+  align-self: end;
+}
+
+@media (max-width: 900px) {
+  .page-hero .wrap { grid-template-columns: minmax(0, 1fr); }
+  .page-hero-art { display: none; }
+  .page-hero { padding-top: calc(var(--nav-h) + 54px); padding-bottom: 54px; }
+}
+
+/* --------------------------------------------------------------------------
+   Generic sections (About & Membership)
+   -------------------------------------------------------------------------- */
+.section { padding: 90px 0; }
+/* The first section carries the header's own bottom padding already;
+   without this the two stack into a gap nothing lives in. */
+.page-hero + .section { padding-top: 30px; }
+/* Same problem one step further down, and it was an oversight rather than a
+   decision: two adjacent sections stacked 90 + 90 and opened a 190px void
+   where the hero boundary opens 104. Only About currently has this
+   adjacency, so nothing else moves. */
+.section + .section { padding-top: 24px; }
+.section--center { text-align: center; }
+.eyebrow {
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  text-align: center;
+}
+.section h2 {
+  font-size: var(--fs-h2);
+  font-weight: 600;
+  line-height: 1.3;
+  margin-top: 10px;
+}
+.section--center h2 { margin-inline: auto; max-width: 24ch; }
+.section--center .section-sub { max-width: 48ch; }
+.section-sub strong { font-weight: 500; }
+.section-sub + .section-sub { margin-top: 24px; }
+
+.two-col {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(32px, 5vw, 90px);
+}
+/* The ledger row wants a wider prose column than an even split: the copy
+   carries a heading and two paragraphs, the object is one 440 stack. */
+.two-col--wide { grid-template-columns: minmax(0, 1fr) minmax(0, 0.82fr); }
+/* Object left, prose right -- alternating down the page the way the homepage
+   scenes do, so three consecutive rows do not read as a list. */
+.two-col--flip { grid-template-columns: minmax(0, 0.82fr) minmax(0, 1fr); }
+@media (max-width: 900px) {
+  /* Stacked, copy always leads: a screenshot above the heading is a picture of
+     something you have not been told about yet. */
+  .two-col--flip .win { order: 2; }
+}
+/* Narrower column than a full-width section, so the heading needs balancing
+   for the same reason the page titles do: without it a short last word
+   strands on its own line. */
+.two-col h2 { margin-top: 0; text-wrap: balance; }
+.two-col .copy p {
+  margin-top: 22px;
+  font-size: var(--fs-body);
+  line-height: 1.5;
+  max-width: 46ch;
+}
+
+/* The About ledger: what we hold, beside what we have nowhere to put. Two
+   panels rather than prose, because the point is that it is a list you can
+   check against the schema -- prose invites skimming, a ledger invites
+   auditing. The "none" column is the one that matters, so it carries the
+   accent rule while the "held" column stays quiet. */
+/* .section-sub centres itself, which is right in .section--center and wrong
+   anywhere else -- in a left-aligned section it reads as a stray indent under
+   a flush heading. Every centred use is inside .section--center, so scoping by
+   that is safe. */
+.section:not(.section--center) > .wrap > .section-sub { margin-inline: 0; }
+
+/* The ledger is the object in a prose-left / object-right row, so the panels
+   stack down the right column rather than sitting side by side. Held to 440,
+   the same measure the plan cards use. */
+.ledger {
+  display: grid;
+  grid-template-columns: minmax(0, 440px);
+  gap: 18px;
+  justify-content: start;
+}
+.ledger-col {
+  background: var(--panel);
+  border: 1px solid var(--panel-edge);
+  border-radius: var(--radius-card);
+  box-shadow: var(--panel-shadow), inset 0 1px 0 var(--panel-lip);
+  padding: 30px 32px 34px;
+}
+.ledger-col h3 {
+  font-size: var(--fs-small);
+  font-weight: 600;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+.ledger-col ul { list-style: none; margin-top: 18px; }
+.ledger-col li {
+  font-size: var(--fs-body);
+  line-height: 1.45;
+  padding: 9px 0 9px 26px;
+  position: relative;
+}
+.ledger-col li + li { border-top: 1px solid var(--line); }
+/* A quiet tick for what is held. */
+.ledger-col li::before {
+  content: "";
+  position: absolute;
+  left: 2px;
+  top: 1.02em;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 1px solid var(--ink-faint);
+}
+/* And a struck-through dot for what is not: the absence is the product. */
+.ledger-col--none li::before {
+  border-color: var(--accent);
+  background: linear-gradient(
+    to bottom right,
+    transparent calc(50% - 0.5px), var(--accent) calc(50% - 0.5px),
+    var(--accent) calc(50% + 0.5px), transparent calc(50% + 0.5px)
+  );
+}
+.ledger-col--none li { color: var(--ink-strong); }
+.ledger-note { margin-top: 26px; font-size: var(--fs-small); color: var(--ink-muted); }
+.ledger-note code {
+  font: 0.92em/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+  padding: 2px 6px;
+  border-radius: 5px;
+  background: var(--recess);
+  border: 1px solid var(--line);
+}
+
+/* A hero with a real object beside the title, rather than the 360px plate
+   .page-hero-art provides. About puts the founders' photograph here; Start a
+   Cliick puts a phone.
+
+   This variant has to exist because .page-hero .wrap sets its second track to
+   `auto`, which collapses to zero for any child whose contents are absolutely
+   positioned -- which is every .win on the site. */
+.page-hero--split .wrap {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr);
+  align-items: center;
+  gap: clamp(30px, 4.6vw, 68px);
+}
+.page-hero--split .page-head { max-width: none; }
+.hero-people { margin: 0; }
+.hero-people img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-card);
+  border: 1px solid var(--panel-edge);
+  box-shadow: var(--panel-shadow);
+}
+@media (max-width: 980px) {
+  .page-hero--split .wrap { grid-template-columns: minmax(0, 1fr); }
+  /* Stacked, the photograph leads: a face above the headline still opens the
+     page with people, where a face below it opens with a wall of text. Scoped
+     to .hero-people, not the layout -- a phone mockup above the title would
+     just push the copy down. */
+  .page-hero--split .hero-people { order: -1; }
+}
+
+/* The closing quote. It is a "so that is why we are doing this" line, which
+   only lands once the argument above it has been made -- so it ends the page
+   rather than starting it. */
+/* The close sits on the latte band, which already centres and repoints every
+   token for the light ground. These rules only handle measure and rhythm. */
+/* The close is centred on the page's own ground rather than a band, so it
+   needs the breathing room .latte used to supply.
+
+   It also opts out of the tightened .section + .section boundary above it.
+   That rule exists to stop two content sections opening a void between them;
+   this is not a boundary between arguments, it is the pause before the last
+   word, and the quote needs room to land. Specificity matches the rule it
+   overrides, so it has to come after it. */
+.section + .about-close { padding-top: 78px; }
+.about-close { padding-bottom: 120px; }
+.about-close .founders-note { max-width: 54ch; margin-inline: auto; }
+.founders-quote {
+  /* The band opens on the quote now, so this only has to clear the band's own
+     padding rather than separate two competing statements. */
+  margin-top: 0;
+  font-size: var(--fs-h3);
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+  max-width: 20ch;
+  margin-inline: auto;
+}
+.founders-by {
+  margin-top: 24px;
+  font-size: var(--fs-small);
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+.founders-by::before { content: "\2014\00a0\00a0"; }
+.founders-note {
+  margin-top: 30px;
+  font-size: var(--fs-body);
+  line-height: 1.5;
+  color: var(--ink-muted);
+}
+
+/* Phone-in-window, static (About) */
+.win--inline { max-width: 758px; width: 100%; justify-self: center; }
+/* A shot that already includes its own device frame. Centred in the window at
+   its natural size -- it is 462px wide, so scaling it up would only soften it. */
+.win-mockup {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  display: grid;
+  place-items: center;
+}
+.win-mockup img {
+  display: block;
+  max-width: min(82%, 462px);
+  max-height: 86%;
+  width: auto;
+  height: auto;
+}
+
+/* Steps (About) */
+.steps { list-style: none; max-width: 420px; }
+/* In a two-column row the steps have their own track, so the 350 measure that
+   kept them from sprawling under full-width copy only makes them cramped --
+   and there they are the row's object, not a footnote, so they get numerals
+   and a heavier title. The list was already an <ol> with its markers
+   suppressed, which threw away the one thing a sequence needs to read as a
+   sequence. */
+.two-col .steps { max-width: none; counter-reset: step; }
+.two-col .steps li {
+  counter-increment: step;
+  position: relative;
+  padding-left: 52px;
+  min-height: 34px;
+}
+.two-col .steps li::before {
+  content: counter(step);
+  position: absolute;
+  left: 0;
+  top: -3px;
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  font-size: var(--fs-small);
+  font-weight: 600;
+  color: var(--ink-muted);
+}
+.two-col .steps li + li { margin-top: 30px; }
+.two-col .steps .step-title { font-size: var(--fs-body); font-weight: 600; }
+.steps li + li { margin-top: 26px; }
+.steps .step-title {
+  font-weight: 500;
+  font-size: var(--fs-small);
+}
+.steps p { font-size: var(--fs-small); line-height: 1.5; }
+
+.jump-in-cols {
+  margin-top: 64px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(32px, 5vw, 90px);
+  text-align: left;
+}
+.jump-in-cols .phone { justify-self: center; height: auto; aspect-ratio: 403 / 800; max-width: min(340px, 80vw); width: 100%; }
+
+/* Promise pills (Membership) */
+.pills {
+  margin: 44px auto 40px;
+  display: grid;
+  grid-template-columns: repeat(3, max-content);
+  justify-content: center;
+  gap: 14px 16px;
+}
+@media (max-width: 720px) {
+  .pills { grid-template-columns: repeat(2, max-content); }
+}
+@media (max-width: 520px) {
+  .pills { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .pills span { padding: 6px 14px; }
+}
+.pills span {
+  text-align: center;
+  background: var(--paper);
+  border-radius: var(--radius-pill);
+  padding: 6px 26px;
+  font-size: var(--fs-small);
+  line-height: 2;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+}
+
+/* --------------------------------------------------------------------------
+   FAQ
+   -------------------------------------------------------------------------- */
+.faq-search-wrap {
+  max-width: 900px;
+  margin-inline: auto;
+  padding: 0 var(--wrap-pad) 44px;
+  display: flex;
+  justify-content: center;
+}
+.faq-search {
+  width: 100%;
+  height: 69px;
+  border: 1px solid var(--line);
+  border-radius: 40px;
+  background: var(--recess);
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.18);
+  font: inherit;
+  font-size: var(--fs-body);
+  padding: 0 34px;
+}
+.faq-search::placeholder { color: var(--ink-muted); opacity: 1; }
+.faq-search:focus { outline: 3px solid var(--accent); outline-offset: 2px; }
+
+.faq-list {
+  max-width: 900px;
+  margin-inline: auto;
+  padding: 0 var(--wrap-pad) 96px;
+}
+.faq-section + .faq-section { margin-top: 64px; }
+.faq-section-title {
+  font-size: 1.75rem;
+  font-weight: 600;
+  margin: 0 0 18px;
+}
+.faq-list details:first-of-type { margin-top: 0; }
+.faq-list details {
+  background: var(--panel);
+  border: 1px solid var(--panel-edge);
+  border-radius: 14px;
+  margin-top: 14px;
+  box-shadow: var(--panel-shadow-sm), inset 0 1px 0 var(--panel-lip);
+  overflow: hidden;
+  transition: background 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
+}
+.faq-list details:hover { background: var(--panel-hover); }
+.faq-list details[open] {
+  background: var(--panel-hover);
+  border-color: rgba(var(--glow), 0.22);
+}
+.faq-list summary {
+  cursor: pointer;
+  list-style: none;
+  padding: 18px 56px 18px 24px;
+  font-size: var(--fs-body);
+  font-weight: 500;
+  position: relative;
+}
+.faq-list summary::-webkit-details-marker { display: none; }
+.faq-list summary::after {
+  content: "+";
+  position: absolute;
+  right: 24px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.35rem;
+  font-weight: 400;
+  line-height: 1;
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--accent);
+  background: rgba(var(--glow), 0.10);
+  border: 1px solid rgba(var(--glow), 0.18);
+}
+.faq-list details[open] summary::after { content: "–"; }
+.faq-list .answer {
+  padding: 0 24px 22px;
+  font-size: var(--fs-small);
+  line-height: 1.6;
+}
+.faq-list .answer ul { margin: 10px 0 0 22px; }
+.faq-list .answer li { margin-top: 8px; }
+.faq-empty {
+  display: none;
+  text-align: center;
+  font-size: var(--fs-body);
+  padding: 60px 0;
+}
+
+/* --------------------------------------------------------------------------
+   Footer (Figma Group 155)
+   -------------------------------------------------------------------------- */
+.footer-v2 {
+  background: #000;
+  color: var(--ink-strong);
+  text-align: center;
+  padding: 96px 0 20px;
+}
+.footer-v2 h2 {
+  font-size: clamp(2.25rem, 4.4vw, 4rem);
+  font-weight: 500;
+  line-height: 1.15;
+}
+.footer-dl {
+  margin-top: 26px;
+  font-size: var(--fs-body);
+  display: flex;
+  justify-content: center;
+  gap: 2.5em;
+  flex-wrap: wrap;
+}
+.footer-v2 .store-badges {
+  justify-content: center;
+  margin-top: 30px;
+}
+.footer-qr {
+  width: 148px;
+  margin: 56px auto 0;
+  border-radius: 6px;
+}
+.footer-qr-caption { margin-top: 14px; font-size: var(--fs-body); }
+.footer-legal {
+  margin-top: 48px;
+  font-size: var(--fs-body);
+}
+.footer-legal a { text-decoration: none; }
+.footer-legal a:hover { text-decoration: underline; }
+.footer-bottom {
+  margin-top: 56px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  font-size: var(--fs-body);
+  text-align: left;
+}
+.footer-bottom nav { display: flex; gap: 28px; flex-wrap: wrap; }
+.footer-bottom a { text-decoration: none; }
+.footer-bottom a:hover { text-decoration: underline; }
+
+/* --------------------------------------------------------------------------
+   Placeholder film slates
+   The phone screens are stand-in stills for films that have not been shot
+   yet. The still stays in full colour (desaturating it shifted the page's
+   overall colour temperature); the play glyph, hatch and caption carry the
+   placeholder signal instead. Each caption names the film that will replace
+   it, so a reviewer can see which section each film belongs to.
+   REMOVE (this block + every .phone--placeholder class and .film-slate span
+   in the HTML) once real <video> screens land — .phone-screen video is
+   already styled above and ready for the swap.
+   -------------------------------------------------------------------------- */
+.phone--placeholder .phone-screen { position: relative; }
+.phone--placeholder .phone-screen::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  border-radius: 50px;
+  background: repeating-linear-gradient(45deg, transparent 0 12px, rgba(255, 255, 255, 0.07) 12px 24px);
+  pointer-events: none;
+}
+.film-slate {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  padding: 0 18px;
+  /* Centred stack, not bottom-pinned: the stage phone is deliberately cropped
+     by the viewport, so a bottom-anchored caption falls below the fold on the
+     hero — the frame reviewers look at most. */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+}
+.film-slate::before {
+  content: "";
+  flex: none;
+  width: 66px;
+  height: 66px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.9);
+  background: rgba(0, 0, 0, 0.48)
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M8 5v14l11-7z' fill='%23ffffff' fill-opacity='0.95'/%3E%3C/svg%3E")
+    52% 50% / 26px no-repeat;
+}
+.film-slate::after {
+  content: attr(data-film) " · film to come";
+  text-align: center;
+  font: 600 10.5px/1.35 var(--font);
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.95);
+  background: rgba(0, 0, 0, 0.72);
+  padding: 7px 12px;
+  border-radius: 20px;
+}
+/* The stage phone crossfades four stills inside one screen, so its label is
+   driven by the active scene rather than a static data-film attribute. */
+.stage-frame[data-scene="0"] .film-slate::after { content: "Your feed · film to come"; }
+.stage-frame[data-scene="1"] .film-slate::after { content: "People you know · film to come"; }
+.stage-frame[data-scene="2"] .film-slate::after { content: "A personal place · film to come"; }
+.stage-frame[data-scene="3"] .film-slate::after { content: "Member funded · film to come"; }
+
+/* --------------------------------------------------------------------------
+   Responsive
+   -------------------------------------------------------------------------- */
+@media (max-width: 1199px) {
+  .showcase .row {
+    grid-template-columns: 1fr;
+    row-gap: 40px;
+    padding-block: 48px;
+  }
+  .showcase .win { order: 2; }
+  .two-col,
+  .jump-in-cols { grid-template-columns: 1fr; }
+  .hero .wrap { grid-template-columns: 1fr; }
+}
+/* The fallback flow renders from 1199px down, so its lit space has to start
+   there too. Scoped to 720 this left a band from 721 to 1199 still running
+   the old treatment — a dark #130e04 hero carrying its own backdrop, with
+   the sections on flat wall — which is why the window appeared to change
+   colour between widths. */
+@media (max-width: 1199px) {
+/* --- One lit space, as on the subpages ---------------------------------
+   Collapsed, the hero was a dark band carrying its own copy of the backdrop
+   while the scenes below sat on flat wall colour, so the hero read as a
+   different design from the sections it introduces. The backdrop becomes one
+   fixed layer for the whole flow and the hero becomes a darkened region of
+   it, with its scrim masked so it fades out instead of ending on an edge —
+   the same treatment that removed the seam on About and Membership. */
+.fallback-flow::before {
+  content: "";
+  position: fixed;
+  inset: -6%;
+  z-index: -2;
+  background: url("/prototype2/images/redesign/hero-bg-sim.svg") 76% 26% / cover no-repeat;
+  filter: blur(26px) saturate(0.86) brightness(1.22);
+  opacity: 0.58;
+  pointer-events: none;
+}
+.fallback-flow .hero { background: transparent; }
+.fallback-flow .hero > .hero-bg { display: none; }
+.fallback-flow .hero::after {
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.42) 0%,
+    rgba(0, 0, 0, 0.20) 46%,
+    rgba(0, 0, 0, 0.06) 100%
+  );
+  -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 62%, transparent 100%);
+  mask-image: linear-gradient(180deg, #000 0%, #000 62%, transparent 100%);
+}
+/* and its copy takes the same ink as the scenes, not pure white */
+.fallback-flow .hero { color: var(--ink-strong); }
+}
+
+@media (max-width: 720px) {
+  /* The hero loses its phone at this width, so a 100vh opener is left holding
+     about 310px of copy in an 844px screen — half the first view is backdrop,
+     and everything that would invite a scroll is pushed under the fold. Size
+     it to its content instead, so the section below peeks into view. */
+  /* The hero keeps its subject. Deleting the phone was what emptied it: a
+     product site's hero with no product is just a paragraph on a photo. It is
+     scaled to about half, which leaves a composition rather than filling the
+     screen, and it keeps its crop at the hero's bottom edge. */
+  .hero {
+    min-height: 0;
+    padding-top: calc(var(--nav-h) + 44px);
+    padding-bottom: 0;
+  }
+  .hero .wrap { padding-block: 0; }
+
+  .nav-wordmark { display: none; }
+  /* Four links plus a button overflow well before this width. The footer nav
+     carries "Start a Cliick" on narrow viewports instead. */
+  .nav-cta { display: none; }
+  .nav-logo { height: 40px; }
+  .nav-links { gap: 14px; }
+  .nav-links a { font-size: 0.95rem; }
+  .win { height: 480px; }
+  /* The hero's device scales with the scenes', since it now shares their
+     window. transform-origin matters as much as the scale: without top center
+     the phone shrinks about its middle and drops 236px into the window instead
+     of 40, so it is cut by 282px rather than 81. */
+  .showcase .phone--static,
+  .hero-win .hero-phone {
+    top: 40px;
+    transform: translateX(-50%) scale(0.6);
+    transform-origin: top center;
+  }
+  .phone--static { top: 40px; transform: translateX(-50%) scale(0.82); transform-origin: top center; }
+  .plan { padding: 30px 26px 36px; }
+  .footer-bottom { justify-content: center; text-align: center; }
+}

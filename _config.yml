@@ -1,0 +1,29 @@
+# GitHub Pages serves this repository's branch directly, which makes the repo
+# root the web root: every tracked file is fetchable unless Jekyll is told to
+# leave it out of the build. That was verified rather than assumed — before this
+# file existed, https://cliick.com/CLAUDE.md returned 200 as raw text/markdown,
+# as did build-partials.py, sync-logos.sh, README.md and LOGO_SYNC.md.
+#
+# Nothing below is a page. It is working notes, tooling, or build input, and
+# none of it should be readable by anyone who guesses a URL.
+#
+# Safe to introduce: no HTML file in this repo carries YAML front matter, so
+# Jekyll copies every page verbatim and this config changes only what ships.
+
+exclude:
+  # Working notes and internal docs
+  - CLAUDE.md
+  - README.md
+  - LOGO_SYNC.md
+  - prototype2/PUNCHLIST.md
+  - prototype2/brand/
+
+  # Tooling
+  - build-partials.py
+  - sync-documents.sh
+  - sync-logos.sh
+
+  # Build input, not a page. partials/footer.html carries a {{BASE}} placeholder
+  # that build-partials.py substitutes at build time; it is a source file that
+  # happens to end in .html.
+  - partials/
