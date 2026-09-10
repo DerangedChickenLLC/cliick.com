@@ -339,6 +339,47 @@ one and three of the ladder succeed unaided. What follows is what does not.
   with the site's 6 including yourself. Worth confirming against the real
   membership screen before treating it as a contradiction.
 
+## Money framing — think about it as one thing
+
+- [ ] **Decide the money story across the whole site at once, rather than card
+  by card.** "Free forever" → "Free to start" was the sharpest single fix and it
+  is done, but it exposed that the site has never decided this question
+  deliberately — every surface answers it slightly differently, and they were
+  written at different times.
+
+  What is currently said, in the order a visitor meets it:
+
+  | where | what it says | what it implies |
+  |---|---|---|
+  | Home scene 3 | "Members pay for Cliick, and guests are on the house" | free as hospitality |
+  | Home, latte band | "Your privacy is worth more than a latte" | price as trivial |
+  | Plan cards | Guest first, $0, "Start small · upgrade anytime" | free as the entry |
+  | Membership hero | "You're not just paying for an app. You're buying back your privacy" | price as principle |
+  | App, throughout | "Guests get up to 5 others. Become a Member to go bigger" | free as a floor |
+
+  None of those contradict outright. But they are five different frames, and the
+  intent — a subscription product whose free tier is a generous unbounded trial
+  — is only stated plainly in the app.
+
+  Questions worth settling together:
+
+  - **Does Guest still lead the cards?** It reads as the recommended option by
+    position. The app pre-selects Premium for exactly the opposite reason.
+  - **Should the free tier be named as a trial?** It is one. Saying so is more
+    honest than implying it is a destination, and it makes the upgrade expected
+    rather than a defeat.
+  - **Is $6 being under-sold?** People who hear the price in person reportedly
+    worry it is *too low*. That reaction is worth something and the site does not
+    reach for it anywhere. "More than a latte" argues the price is small; the
+    live reaction says the value is large. Those are not the same pitch.
+  - **Should Home mention price before the band at all?** Scene 3 sets up the
+    money question and the band answers it, which works. Adding price earlier
+    would spend the reveal.
+  - **What happens at the cap?** Nothing on the site says what it feels like to
+    outgrow Guest. The app has a whole paywall vocabulary for it —
+    `utils/paywallCopy.ts`, "Room for more Peeps?", "This cliick's full" — and
+    the site never prepares anyone for that moment.
+
 - [ ] **The site sells free-first; the app is paid-by-design. The site should
   move.** This runs opposite to what I first recommended. The plan cards say
   "Free forever" and list Guest first, which frames the free tier as a
