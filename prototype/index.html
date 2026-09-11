@@ -35,111 +35,40 @@
     />
 
     <link rel="apple-touch-icon" href="https://cliick.com/images/cliick-icon.png" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/prototype/images/favicon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;1,400&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="/prototype/redesign.css" />
-    <script src="/prototype/js/redesign.js" defer></script>
+    <link rel="stylesheet" href="./redesign.css" />
+    <script src="./redesign.js" defer></script>
   </head>
   <body>
     <header class="nav">
       <div class="wrap">
-        <img class="nav-logo" src="/prototype/images/cliick-icon.png" alt="" />
-        <a class="nav-wordmark" href="/prototype/">CliiCK</a>
-        <nav class="nav-links" aria-label="Primary">
-          <a href="/prototype/" aria-current="page">Home</a>
-          <a href="/prototype/about/">About</a>
-          <a href="/prototype/membership/">Membership</a>
-          <a href="/prototype/faq/">FAQ</a>
+        <img class="nav-logo" src="./images/cliick-icon-white.png" alt="" />
+        <a class="nav-wordmark" href="./">CliiCK</a>
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Open menu">
+          <span></span><span></span><span></span>
+        </button>
+        <nav class="nav-links" id="nav-links" aria-label="Primary">
+          <a href="./" aria-current="page">Home</a>
+          <a href="./about/">About</a>
+          <a href="./membership/">Membership</a>
+          <a href="./faq/">FAQ</a>
+          <a class="nav-links-legal" href="/terms/">Terms of Service</a>
+          <a class="nav-links-legal" href="/privacy/">Privacy Policy</a>
         </nav>
       </div>
     </header>
 
-    <!--
-      Pinned scene stage (desktop + motion). One viewport-sized frame pins
-      while ~4.5 screens of scroll play through it. Scroll progress drives
-      the active scene: hero copy exits, section copy enters, and the phone's
-      screen crossfades — all keyed to the same scroll fraction, so nothing
-      can drift or collide. The phone/window/heading are always composed
-      together, and the frame releases naturally at the end of the story.
-      Screens are placeholder stills — swap each <img data-screen> for a
-      <video> (or one looped video seeked per scene) when recordings exist.
-      NOTE: hero + section copy exists twice (stage scenes here, fallback
-      flow below) — edit both until the design settles.
-    -->
-    <div class="stage-track" id="stage">
-      <div class="stage-frame" data-scene="0">
-        <img class="stage-bg" src="/prototype/images/redesign/hero-bg.png" alt="" />
-        <div class="stage-shade" aria-hidden="true"></div>
-        <div class="stage-window" aria-hidden="true"></div>
-        <div class="stage-phone" aria-hidden="true">
-          <div class="phone">
-            <div class="phone-screen">
-              <img data-screen="0" class="active" src="/prototype/images/feed.png" alt="" />
-              <img data-screen="1" src="/prototype/images/gallery.png" alt="" />
-              <img data-screen="2" src="/prototype/images/drawer.png" alt="" />
-              <img data-screen="3" src="/prototype/images/comments.png" alt="" />
-            </div>
-          </div>
-        </div>
-        <p class="stage-eyebrow" aria-hidden="true">Welcome to Cliick</p>
-
-        <div class="scene scene--hero is-active">
-          <h1 class="hero-title">Post Like Nobody's Watching.</h1>
-          <p class="hero-tagline">
-            Cliick is your private network — a clean start, free from ads,
-            algorithms, and strangers. Cliick is where you connect with the
-            people who matter most.
-          </p>
-          <div class="store-badges">
-            <a href="https://apps.apple.com/us/app/cliick-your-private-network/id6608980465"
-              ><img src="/prototype/images/redesign/badge-appstore.svg" alt="Download on the App Store"
-            /></a>
-            <a href="https://play.google.com/store/apps/details?id=com.derangedchicken.clique"
-              ><img src="/prototype/images/redesign/badge-googleplay.svg" alt="Get it on Google Play"
-            /></a>
-          </div>
-        </div>
-
-        <div class="scene is-future">
-          <h3>Your private network for real life.</h3>
-          <ul>
-            <li>No ads</li>
-            <li>No strangers</li>
-            <li>No algorithms</li>
-          </ul>
-          <a class="learn-more" href="/prototype/about/">Learn more</a>
-        </div>
-
-        <div class="scene is-future">
-          <h3>Start fresh and reclaim your feed</h3>
-          <ul>
-            <li>Your People</li>
-            <li>Your Groups</li>
-            <li>Your rules</li>
-          </ul>
-          <a class="learn-more" href="/prototype/about/">Learn more</a>
-        </div>
-
-        <div class="scene is-future">
-          <h3>Funded by members. Not ads.</h3>
-          <p>Cliick will never sell your data or your personal info, ever.</p>
-          <a class="learn-more" href="/prototype/membership/">Learn more</a>
-        </div>
-      </div>
-    </div>
-
-    <!-- Fallback flow: small screens, reduced motion, or no JS -->
-    <div class="fallback-flow">
     <section class="hero">
-      <img class="hero-bg" src="/prototype/images/redesign/hero-bg.png" alt="" />
+      <img class="hero-bg" src="./images/redesign/hero-bg.png" alt="" />
       <div class="wrap">
-        <div>
-          <h1 class="hero-title">Post Like Nobody's Watching.</h1>
+        <div class="hero-copy">
+          <h1 class="hero-title">Post Like Nobody's Watching</h1>
           <p class="hero-tagline">
             Cliick is your private network — a clean start, free from ads,
             algorithms, and strangers. Cliick is where you connect with the
@@ -147,83 +76,118 @@
           </p>
           <div class="store-badges">
             <a href="https://apps.apple.com/us/app/cliick-your-private-network/id6608980465"
-              ><img src="/prototype/images/redesign/badge-appstore.svg" alt="Download on the App Store"
+              ><img src="./images/redesign/badge-appstore.svg" alt="Download on the App Store"
             /></a>
             <a href="https://play.google.com/store/apps/details?id=com.derangedchicken.clique"
-              ><img src="/prototype/images/redesign/badge-googleplay.svg" alt="Get it on Google Play"
+              ><img src="./images/redesign/badge-googleplay.svg" alt="Get it on Google Play"
             /></a>
           </div>
         </div>
         <img
           class="hero-phone"
-          src="/prototype/images/redesign/hero-phone.png"
+          src="./images/redesign/hero-phone.png"
           alt="The Cliick app showing a post shared with a private circle"
         />
       </div>
     </section>
 
-    <h2 class="welcome-head">Welcome to Cliick</h2>
+    <!--
+      Statement section — animates in on scroll (see redesign.js). The
+      circle is a placeholder for an image/avatar to swap in later.
+    -->
+    <section class="statement">
+      <img class="statement-avatar" src="./images/redesign/fluffy.gif" alt="" aria-hidden="true" />
+      <p class="eyebrow">Welcome to Cliick</p>
+      <h2 class="statement-headline">Private network<br />Real people</h2>
+      <p class="statement-sub">
+        Photos, videos, messages — posted directly to the people or groups
+        you choose, in the order they were shared.<br />No algorithms, no
+        surprises.
+      </p>
+    </section>
+
+    <div class="page-content">
 
     <!--
-      Showcase copy scrolls past the fixed stage phone above. The .win boxes
-      only render on small screens / reduced motion / no JS, where each holds
-      a static phone instead.
+      Phone-pin showcase, stage 2: sticky phone (position:sticky via
+      .phone-pin-stage, top:50vh + translateY(-50%) — NOT top:50%, which
+      resolves against the tall track instead of the viewport and breaks
+      pinning partway through) pins centered while 3 text panels crossfade
+      in a fixed slot beside it, driven by scroll-fraction math in
+      redesign.js (the panels never move, so IntersectionObserver can't
+      drive this). Each panel enters sliding up from the phone's bottom
+      edge + fading in over 1.5s, then fades out before the next one's
+      enter starts. The phone's screen swaps per panel too (3 placeholder
+      SVGs for now — real scroll-tied animated SVGs come later; whichever
+      is showing is keyed to the same data-panel index as the text).
+      Below 1200px (or reduced motion) this disables via CSS/JS and
+      degrades to a normal stacked flow: each phone+text pair stacked
+      normally, no pin, no animation.
     -->
-    <div class="showcase">
-      <div class="wrap row">
-        <div class="showcase-copy">
-          <h3>Your private network for real life.</h3>
-          <ul>
-            <li>No ads</li>
-            <li>No strangers</li>
-            <li>No algorithms</li>
-          </ul>
-          <a class="learn-more" href="/prototype/about/">Learn more</a>
-        </div>
-        <div class="win" aria-hidden="true">
-          <div class="phone phone--static"><div class="phone-screen"><img src="/prototype/images/gallery.png" alt="" /></div></div>
+    <section class="phone-pin">
+      <div class="wrap phone-pin-track" id="phone-pin-track">
+        <div class="phone-pin-stage">
+          <div class="phone-pin-phone-slot">
+            <div class="phone-shape" aria-hidden="true">
+              <img class="phone-screen-img" data-panel="0" src="./images/redesign/feed.png" alt="" />
+              <img class="phone-screen-img" data-panel="1" src="./images/redesign/drawer.png" alt="" />
+              <img class="phone-screen-img" data-panel="2" src="./images/redesign/comments.png" alt="" />
+            </div>
+          </div>
+          <div class="phone-pin-text-slot">
+            <div class="phone-pin-panel" data-panel="0">
+              <h3>Reclaim your feed</h3>
+              <div class="phone-pin-mobile-phone" aria-hidden="true">
+                <div class="phone-shape"><img src="./images/redesign/feed.png" alt="" /></div>
+              </div>
+              <ul>
+                <li>No ads</li>
+                <li>No strangers</li>
+                <li>No algorithms</li>
+              </ul>
+              <a class="learn-more" href="./about/">Learn more</a>
+            </div>
+            <div class="phone-pin-panel" data-panel="1">
+              <h3>It's all about<br />who you know</h3>
+              <div class="phone-pin-mobile-phone" aria-hidden="true">
+                <div class="phone-shape"><img src="./images/redesign/drawer.png" alt="" /></div>
+              </div>
+              <ul>
+                <li>Your People</li>
+                <li>Your Groups</li>
+                <li>Your rules</li>
+              </ul>
+              <a class="learn-more" href="./about/">Learn more</a>
+            </div>
+            <div class="phone-pin-panel" data-panel="2">
+              <h3>All in one place</h3>
+              <div class="phone-pin-mobile-phone" aria-hidden="true">
+                <div class="phone-shape"><img src="./images/redesign/comments.png" alt="" /></div>
+              </div>
+              <ul>
+                <li>Post images, videos, and messages</li>
+                <li>Create groups by interest</li>
+                <li>DM groups or individuals</li>
+              </ul>
+              <a class="learn-more" href="./membership/">Learn more</a>
+            </div>
+          </div>
         </div>
       </div>
-
-      <div class="wrap row">
-        <div class="showcase-copy">
-          <h3>Start fresh and reclaim your feed</h3>
-          <ul>
-            <li>Your People</li>
-            <li>Your Groups</li>
-            <li>Your rules</li>
-          </ul>
-          <a class="learn-more" href="/prototype/about/">Learn more</a>
-        </div>
-        <div class="win" aria-hidden="true">
-          <div class="phone phone--static"><div class="phone-screen"><img src="/prototype/images/drawer.png" alt="" /></div></div>
-        </div>
-      </div>
-
-      <div class="wrap row">
-        <div class="showcase-copy">
-          <h3>Funded by members. Not ads.</h3>
-          <p>Cliick will never sell your data or your personal info, ever.</p>
-          <a class="learn-more" href="/prototype/membership/">Learn more</a>
-        </div>
-        <div class="win" aria-hidden="true">
-          <div class="phone phone--static"><div class="phone-screen"><img src="/prototype/images/comments.png" alt="" /></div></div>
-        </div>
-      </div>
-    </div>
-    </div><!-- /.fallback-flow -->
+    </section>
+    </div><!-- /.page-content -->
 
     <section class="band latte">
       <div class="wrap">
         <img
           class="latte-fluffy"
-          src="/prototype/images/redesign/fluffy-latte.png"
+          src="./images/redesign/fluffy-latte.png"
           alt="Fluffy, the Cliick mascot, wearing an orange beanie behind a latte"
         />
         <h2>Your privacy is worth<br />more than a latte</h2>
         <p class="sub">
           Cliick is funded entirely by its members — not by advertisers,
-          trackers, or data mining. When you support the network, you come
+          trackers,<br />or data mining. When you support the network, you come
           first.
         </p>
 
@@ -231,29 +195,31 @@
           <div class="plan">
             <h3>Guest</h3>
             <p class="plan-price"><span class="amount">$0</span><span class="term">/month</span></p>
-            <p class="plan-note">Free forever — no credit card required</p>
+            <p class="plan-note"><span>Free Forever</span></p>
+            <p class="plan-toggle-note plan-toggle-note--static">No Credit Card Required</p>
             <ul>
               <li>Full access to all features</li>
               <li>Create unlimited Cliicks</li>
-              <li>Up to 6 members per Cliick — you and 5 others</li>
+              <li>Up to 6 members per Cliick —<br />you and 5 others</li>
               <li>Join unlimited Cliicks</li>
             </ul>
           </div>
           <div class="plan">
             <h3>Premium</h3>
             <p class="plan-price">
-              <span class="amount">$6</span><span class="term">/month&nbsp;&nbsp;($72/year billed annually)</span>
+              <span class="amount">$6</span><span class="term">/month</span>
             </p>
             <div class="plan-toggle" data-cycle="annual" role="group" aria-label="Billing cycle">
               <div class="knob" aria-hidden="true"></div>
               <span>Annual</span>
               <span>Monthly</span>
             </div>
+            <p class="plan-toggle-note plan-toggle-note--static">$72/year billed annually.</p>
             <p class="plan-toggle-note" aria-live="polite"></p>
             <ul>
               <li>Full access to all features</li>
               <li>Create unlimited Cliicks</li>
-              <li>Up to 250 members per Cliick — you and 249 others</li>
+              <li>Up to 250 members per Cliick —<br />you and 249 others</li>
               <li>Join unlimited Cliicks</li>
             </ul>
           </div>
@@ -265,16 +231,15 @@
     <footer class="footer-v2">
       <div class="wrap">
         <h2>Join the Reset.<br />Reclaim your feed.</h2>
-        <p class="footer-dl"><span>Download Cliick on iOS</span><span>Download on Android</span></p>
         <div class="store-badges">
           <a href="https://apps.apple.com/us/app/cliick-your-private-network/id6608980465"
-            ><img src="/prototype/images/redesign/badge-appstore.svg" alt="Download on the App Store"
+            ><img src="./images/redesign/badge-appstore.svg" alt="Download on the App Store"
           /></a>
           <a href="https://play.google.com/store/apps/details?id=com.derangedchicken.clique"
-            ><img src="/prototype/images/redesign/badge-googleplay.svg" alt="Get it on Google Play"
+            ><img src="./images/redesign/badge-googleplay.svg" alt="Get it on Google Play"
           /></a>
         </div>
-        <img class="footer-qr" src="/prototype/images/redesign/footer-qr.png" alt="QR code to download Cliick" />
+        <img class="footer-qr" src="./images/redesign/footer-qr.png" alt="QR code to download Cliick" />
         <p class="footer-qr-caption">Download Cliick</p>
         <p class="footer-legal">
           <a href="/terms/">Terms of Service</a> &nbsp;|&nbsp;
@@ -283,10 +248,10 @@
         <div class="footer-bottom">
           <p>© Cliick. Member-funded. Ad-free. Always.</p>
           <nav aria-label="Footer">
-            <a href="/prototype/">Home</a>
-            <a href="/prototype/about/">About</a>
-            <a href="/prototype/membership/">Membership</a>
-            <a href="/prototype/faq/">FAQ</a>
+            <a href="./">Home</a>
+            <a href="./about/">About</a>
+            <a href="./membership/">Membership</a>
+            <a href="./faq/">FAQ</a>
           </nav>
         </div>
       </div>
