@@ -9,9 +9,9 @@
 
   --ink: #000000;
   --paper: #ffffff;
-  --page-gray: #c9c8c8;   /* subpage body background */
-  --band-gray: #dbdbdb;   /* alternating band background */
-  --window-gray: #d9d9d9; /* phone viewport windows, pill tracks */
+  --page-gray: #ffffff;   /* subpage body background */
+  --band-gray: #ececea;   /* alternating band background */
+  --window-gray: #e9e9e7; /* phone viewport windows, pill tracks */
   --pill-border: #a3a3a3;
 
   --radius-card: 22px;
@@ -26,11 +26,17 @@
   --fs-body: clamp(1.0625rem, 1.4vw, 1.25rem);    /* 20px body */
   --fs-small: 1rem;                                /* 16px */
 
-  --nav-h: 96px;
+  --nav-h: 60px;
   --wrap-pad: clamp(20px, 4.3vw, 62px);
   --phone-w: 403px;
   --phone-h: 869px;
   --window-h: 604px;
+
+  /* Header/footer sizing — matched from the Athletics reference screenshots:
+     ~24px side margin, ~1800px max content width before it stops growing,
+     regardless of how wide the window gets. */
+  --chrome-pad: 24px;
+  --chrome-max-width: 1320px;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -60,32 +66,39 @@ a { color: inherit; }
 }
 
 /* --------------------------------------------------------------------------
-   Nav (Figma Component 15) — sits over the dark hero photo on every page
+   Nav (Figma Component 15) — sits over the dark hero photo on every page.
+   Always fixed, transparent at the very top. Any scroll down hides it
+   immediately (as if it scrolls away with the hero); scrolling back up
+   reveals it again on a black 75%-opacity bar (body.nav-solid + nav-hidden,
+   both driven from redesign.js).
    -------------------------------------------------------------------------- */
 .nav {
-  position: absolute;
+  position: absolute; /* scrolls away naturally with the hero on first load — "pinned" to it, not a free-floating fixed bar. Switches to fixed (see body.nav-floating) once scrolled past the hero, where it resumes the usual hide/reveal-on-scroll behavior. */
   top: 0;
   left: 0;
   right: 0;
-  z-index: 10;
+  z-index: 50;
   height: var(--nav-h);
   display: flex;
   align-items: center;
+  transition: background-color 0.4s ease, transform 0.35s ease;
 }
+body.nav-floating .nav { position: fixed; }
 .nav .wrap {
   width: 100%;
+  max-width: var(--chrome-max-width);
+  padding-inline: var(--chrome-pad);
   display: flex;
   align-items: center;
   gap: 14px;
 }
 .nav-logo {
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  object-fit: cover;
+  height: 44px;
+  width: auto;
 }
 .nav-wordmark {
-  font-size: 2rem;
+  margin-left: -4px;
+  font-size: 1.4rem;
   font-weight: 500;
   color: #fff;
   text-decoration: none;
@@ -99,28 +112,41 @@ a { color: inherit; }
 .nav-links a {
   color: #fff;
   text-decoration: none;
-  font-size: 1.25rem;
+  font-size: 1rem;
 }
+.nav-links-legal { display: none; } /* only shown in the mobile hamburger panel — see the ≤1199px override */
 .nav-links a:hover,
 .nav-links a[aria-current="page"] { text-decoration: underline; text-underline-offset: 6px; }
 
-/* In the motion experience the nav rides fixed through the whole page and
-   switches skins by scene: transparent white-text over the hero photo,
-   frosted light bar with dark text everywhere else (body.nav-solid). */
-body.stage-motion .nav {
-  position: fixed;
-  transition: background-color 0.4s ease, box-shadow 0.4s ease;
+body.nav-solid .nav { background: rgba(0, 0, 0, 1); }
+body.nav-hidden .nav { transform: translateY(-100%); }
+
+/* Hamburger toggle — hidden on desktop, shown ≤1199px (see Responsive) */
+.nav-toggle {
+  display: none;
+  margin-left: auto;
+  width: 40px;
+  height: 40px;
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
 }
-body.stage-motion .nav-wordmark,
-body.stage-motion .nav-links a { transition: color 0.4s ease; }
-body.nav-solid .nav {
-  background: rgba(255, 255, 255, 0.82);
-  -webkit-backdrop-filter: blur(12px);
-  backdrop-filter: blur(12px);
-  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.08);
+.nav-toggle span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: #fff;
+  transition: transform 0.3s ease, opacity 0.3s ease, background-color 0.4s ease;
 }
-body.nav-solid .nav-wordmark,
-body.nav-solid .nav-links a { color: #000; }
+body.nav-open .nav-toggle span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+body.nav-open .nav-toggle span:nth-child(2) { opacity: 0; }
+body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
 
 /* --------------------------------------------------------------------------
    Home hero
@@ -139,6 +165,7 @@ body.nav-solid .nav-links a { color: #000; }
   height: 100%;
   object-fit: cover;
   z-index: 0;
+  filter: brightness(0.78); /* the mock's hero photo reads darker than the scrims alone */
 }
 .hero::after {
   content: "";
@@ -158,11 +185,18 @@ body.nav-solid .nav-links a { color: #000; }
   gap: 40px;
   min-height: inherit;
   padding-top: var(--nav-h);
+  /* Aligned to the same max-width/padding system as the nav and footer
+     (--chrome-max-width/--chrome-pad) instead of the wider default .wrap
+     sizing, so "inset from the header" below has a consistent edge to
+     measure from. */
+  max-width: var(--chrome-max-width);
+  padding-inline: var(--chrome-pad);
 }
+.hero-copy { margin-left: 100px; } /* desktop only — the mobile grid collapses to one column, where this would just eat into limited width */
 .hero-title {
   font-size: var(--fs-display);
   font-weight: 500;
-  line-height: 1.05;
+  line-height: 1.15;
   max-width: 12ch;
 }
 .hero-tagline {
@@ -178,13 +212,20 @@ body.nav-solid .nav-links a { color: #000; }
   align-items: center;
 }
 .store-badges img { height: 52px; width: auto; }
+/* The badge SVGs declare width/height="100%" with no fixed intrinsic size,
+   so browsers can't derive an aspect ratio from them and fall back to the
+   300x150 UA default — stretching the badge. Pin the real ratios here. */
+.store-badges img[src*="badge-appstore"] { aspect-ratio: 156 / 52; }
+.store-badges img[src*="badge-googleplay"] { aspect-ratio: 175.5 / 52; }
 
 .hero-phone {
-  justify-self: center;
+  justify-self: start;
   align-self: end;
   width: min(406px, 100%);
+  margin-left: 100px;
   margin-bottom: -120px; /* phone crops at the hero's bottom edge, per mock */
-  border-radius: 62px; /* clip the white corner nubs left by the export's mask */
+  -webkit-mask-image: linear-gradient(to bottom, #000 85%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 85%, transparent 100%);
 }
 
 /* --------------------------------------------------------------------------
@@ -193,49 +234,324 @@ body.nav-solid .nav-links a { color: #000; }
    the fixed element paint only inside the window), so scrolling windows
    sweep across a phone that never moves. Screens differ per window.
    -------------------------------------------------------------------------- */
-.welcome-head {
+
+/* Statement section — big centered claim below the hero. Eyebrow + headline
+   animate in on scroll (redesign.js adds .in-view via IntersectionObserver);
+   the headline trails the eyebrow by a short delay. */
+.statement {
   text-align: center;
-  font-size: var(--fs-h2-sm);
+  padding: 110px 20px 40px;
+  max-width: 900px;
+  margin-inline: auto;
+}
+.statement-avatar {
+  display: block;
+  width: 224px;
+  height: 224px;
+  border-radius: 50%;
+  background: #9a9a9a; /* shows briefly while the gif loads */
+  object-fit: cover;
+  margin-inline: auto;
+}
+.statement-avatar,
+.statement .eyebrow,
+.statement-headline,
+.statement-sub {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.statement .eyebrow {
+  margin-top: 28px;
+  font-weight: 700;
+  font-size: 1.25rem; /* base .eyebrow is 1.125rem — 2pt/~2px larger */
+  transition-delay: 0.08s;
+}
+.statement-headline {
+  margin-top: 14px;
+  font-size: clamp(2.25rem, 4.5vw, 3.75rem);
   font-weight: 500;
-  padding: 72px 20px 8px;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  transition-delay: 0.15s;
+}
+.statement-sub {
+  margin-top: 22px;
+  font-size: var(--fs-body);
+  line-height: 1.6;
+  max-width: 52ch;
+  margin-inline: auto;
+  opacity: 0; /* overridden by transition target below once in-view */
+  color: var(--ink);
+  transition-delay: 0.22s;
+}
+.statement.in-view .statement-avatar,
+.statement.in-view .eyebrow,
+.statement.in-view .statement-headline,
+.statement.in-view .statement-sub {
+  opacity: 1;
+  transform: translateY(0);
+}
+@media (prefers-reduced-motion: reduce) {
+  .statement-avatar,
+  .statement .eyebrow,
+  .statement-headline,
+  .statement-sub {
+    transition: none;
+    opacity: 1;
+    transform: none;
+  }
 }
 
-.showcase .row {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) min(758px, 52vw);
+/* --------------------------------------------------------------------------
+   Phone-pin showcase (home) — stage 2: sticky phone + fixed-position
+   crossfading text, both restored with the fixes validated in stage-1
+   testing:
+     - sticky centering uses `top: 50vh; transform: translateY(-50%)`, NOT
+       `top: 50%` — percentage offsets on a sticky element resolve against
+       its containing block (our tall track), not the viewport, so `50%`
+       silently breaks pinning partway through the scroll. `50vh` is a
+       real viewport-relative unit and isn't subject to that.
+     - `.phone-pin-track > .phone-pin-stage`'s width chain needs an
+       explicit `width: 100%` on `.wrap` — otherwise `.wrap` (a flex item
+       with no set width) shrinks to fit `.phone-shape` at the same time
+       `.phone-shape` sizes itself to 100% of `.wrap`, and both collapse
+       to zero (same circular-sizing bug as the About page avatar cluster
+       earlier in this project).
+   Text panels: stacked on top of each other (position:absolute) inside a
+   fixed slot next to the phone, so they never scroll — only their
+   opacity/transform crossfades, driven by scroll-fraction math in
+   redesign.js (IntersectionObserver can't drive this since the panels'
+   own position never changes once the stage is stuck). Each panel starts
+   below its resting position (as if entering from the phone's bottom
+   edge) and slides up while fading in.
+   The phone's screen swaps per panel too — 3 placeholder SVGs for now,
+   crossfading the same way; swap them for the real scroll-tied animated
+   SVGs later, keyed off the same data-panel index.
+   Below 1200px (or reduced motion) the whole thing disables via CSS/JS
+   and degrades to a normal stacked flow: each phone+text pair stacked
+   normally, first screen only, no pin, no animation.
+   -------------------------------------------------------------------------- */
+.phone-pin-track {
+  position: relative;
+  height: 450vh; /* more scroll travel per panel — was 300vh, felt rushed */
+  /* .phone-pin-stage now engages at top:0 (see below) instead of
+     top:50vh, which needs only a small aesthetic gap here instead of a
+     ~50vh mathematically-required buffer — top:0 means the stage can't
+     reach its stuck position until it's already scrolled to the very
+     top of the viewport, by which point the statement section above has
+     necessarily scrolled out of the way on its own. */
+  margin-top: 12px;
+}
+.phone-pin-stage {
+  position: sticky;
+  /* top:0 + this translateY centers the stage vertically using its OWN
+     rendered height (the "50%" here resolves against the element's own
+     box, a standard CSS centering trick) — unlike top:50vh, which would
+     need a large gap above this section to avoid overlapping the
+     statement section, this only needs a small one.
+     display:flex + justify-content:center (not grid) is deliberate: a
+     grid track sized minmax(0,1fr) allocates leftover space to the text
+     COLUMN regardless of how much the text content actually uses, so a
+     "centered" grid box can still look left-heavy if the text doesn't
+     fill its track. Flex with both children sized to their natural
+     content width centers the actual visible pixels instead. */
+  top: 0;
+  transform: translateY(calc(50vh - 50%));
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  gap: clamp(32px, 5vw, 90px);
+  width: 100%;
+}
+.phone-pin-phone-slot {
+  flex: 0 0 auto;
+  width: min(340px, 42vw);
+  display: flex;
   align-items: center;
-  column-gap: clamp(24px, 3vw, 70px);
-  padding-block: 74px;
+  justify-content: center;
 }
-.showcase-copy h3 {
+.phone-shape {
+  position: relative;
+  width: 100%;
+  max-width: 340px;
+  aspect-ratio: 403 / 869; /* matches --phone-w/--phone-h proportions (aspect-ratio needs unitless numbers) */
+  margin-inline: auto;
+}
+.phone-screen-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* these are transparent PNGs — contain (not cover) so nothing gets cropped */
+  opacity: 0; /* JS drives this per scroll frame, in sync with its text panel */
+}
+.phone-screen-img[data-panel="0"] { opacity: 1; } /* visible immediately, before JS even runs */
+.phone-screen-img.is-active { pointer-events: auto; }
+
+.phone-pin-text-slot {
+  flex: 0 0 auto;
+  position: relative;
+  width: min(480px, 46vw); /* sized to fit the actual copy, not a leftover grid track */
+}
+.phone-pin-panel {
+  /* Container itself starts invisible and stays that way until JS raises
+     its opacity — its own opacity is what performs the exit fade (no
+     motion), since the headline/bullets/link below animate in on their
+     own terms while entering. */
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+}
+.phone-pin-panel.is-active { pointer-events: auto; }
+.phone-pin-panel h3 {
   font-size: var(--fs-h3);
-  font-weight: 500;
+  font-weight: 700;
   line-height: 1.4;
+  letter-spacing: -0.02em;
   max-width: 14ch;
+  /* Starting position/opacity — JS drives both every scroll frame from
+     here on, fading in faster than it finishes sliding (see redesign.js). */
+  opacity: 0;
+  transform: translateY(220px);
 }
-.showcase-copy ul {
+.phone-pin-panel ul {
   margin-top: 20px;
   list-style: none;
 }
-.showcase-copy li {
+.phone-pin-panel li {
   font-size: var(--fs-body);
   line-height: 2.2;
+  /* Hidden via a left-to-right wipe (not opacity) until the headline has
+     landed and it's this item's turn — JS animates the right inset from
+     100% (fully clipped) to 0% (fully revealed). */
+  clip-path: inset(0 100% 0 0);
 }
-.showcase-copy li::before { content: "•  "; }
-.showcase-copy p {
+.phone-pin-panel li::before { content: "•  "; }
+.phone-pin-panel p {
   margin-top: 20px;
   font-size: var(--fs-body);
   line-height: 1.6;
   max-width: 30ch;
+  clip-path: inset(0 100% 0 0); /* same left-to-right wipe as bullets, for panels with no list */
 }
 .learn-more {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
   margin-top: 40px;
-  font-size: clamp(1.25rem, 1.8vw, 1.75rem);
+  font-size: clamp(1rem, 1.2vw, 1.125rem);
   text-decoration: none;
 }
-.learn-more::after { content: "  ⟶"; }
+.phone-pin-panel .learn-more { opacity: 0; } /* JS fades this in alongside the last bullet's wipe */
+.learn-more::after {
+  content: "";
+  width: 24px;
+  height: 12px;
+  flex-shrink: 0;
+  background: currentColor;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 12' fill='none'%3E%3Cpath d='M0 6H22M22 6L16 1M22 6L16 11' stroke='black' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat center / contain;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 12' fill='none'%3E%3Cpath d='M0 6H22M22 6L16 1M22 6L16 11' stroke='black' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat center / contain;
+  transition: transform 0.25s ease;
+}
+.learn-more:hover::after { transform: translateX(4px); }
 .learn-more:hover { text-decoration: underline; text-underline-offset: 8px; }
+
+@media (max-width: 1199px) {
+  .phone-pin-track { height: auto; margin-top: 0; }
+  .phone-pin-stage {
+    position: static;
+    transform: none;
+    display: block;
+  }
+  /* On mobile there's no single pinned phone to share between sections —
+     each stacked panel gets its own phone image instead (see
+     .phone-pin-mobile-phone below), matching the comp where every
+     section has its own screenshot rather than one shared at the top. */
+  .phone-pin-phone-slot { display: none; }
+  .phone-screen-img.is-active { opacity: 1; }
+  /* Each panel is its own full-bleed card with a soft gradient — text
+     centered above the phone, no CTA link (removed per latest comp). */
+  .phone-pin-text-slot {
+    position: static;
+    height: auto;
+    min-height: 0;
+    width: auto;
+    margin-inline: calc(-1 * var(--wrap-pad)); /* cancel the wrap's side padding for true edge-to-edge */
+  }
+  .phone-pin-panel {
+    position: static;
+    opacity: 1;
+    transform: none;
+    transition: none;
+    pointer-events: auto;
+    padding: 40px 24px;
+    background: linear-gradient(180deg, #d9e9f4 0%, #f7f9fa 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .phone-pin-panel + .phone-pin-panel { margin-top: 0; }
+  .phone-pin-panel h3,
+  .phone-pin-panel li,
+  .phone-pin-panel p {
+    opacity: 1;
+    transform: none;
+    clip-path: none;
+  }
+  .phone-pin-panel h3 { order: 1; font-size: 1.75rem; }
+  .phone-pin-panel ul,
+  .phone-pin-panel p { order: 2; margin-top: 10px; }
+  .phone-pin-panel .phone-pin-mobile-phone { order: 3; }
+  .phone-pin-panel .learn-more { display: none; } /* removed per latest comp */
+  /* Bullet list reads as one joined sentence on mobile, matching the
+     comp — no dots/markers, periods between clauses instead. */
+  .phone-pin-panel ul {
+    list-style: none;
+    padding: 0;
+  }
+  .phone-pin-panel li { display: inline; }
+  .phone-pin-panel li::before { content: none; }
+  .phone-pin-panel li:not(:last-child)::after { content: ". "; }
+  .phone-pin-panel li:last-child::after { content: "."; }
+  .phone-pin-mobile-phone {
+    display: flex;
+    justify-content: center;
+    margin-top: 24px;
+  }
+  .phone-pin-mobile-phone .phone-shape {
+    width: 92%;
+    max-width: 360px;
+    margin-inline: auto;
+  }
+  .phone-pin-mobile-phone .phone-shape img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* transparent PNGs — no cropping */
+    display: block;
+  }
+}
+@media (min-width: 1200px) {
+  .phone-pin-mobile-phone { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .phone-pin-panel.is-active { opacity: 1; transform: none; pointer-events: auto; }
+  .phone-screen-img.is-active { opacity: 1; }
+  .phone-pin-panel h3,
+  .phone-pin-panel li,
+  .phone-pin-panel p,
+  .phone-pin-panel .learn-more {
+    opacity: 1;
+    transform: none;
+    clip-path: none;
+  }
+  .phone-pin-stage { opacity: 1 !important; }
+}
 
 .win {
   position: relative;
@@ -282,153 +598,30 @@ body.nav-solid .nav-links a { color: #000; }
 }
 
 /* --------------------------------------------------------------------------
-   Pinned scene stage. The .stage-frame pins (sticky) while the .stage-track
-   scrolls through ~4.5 viewport-heights. JS maps scroll progress to a scene
-   index (data-scene on the frame + is-past/is-active/is-future on scenes);
-   everything else — copy enter/exit, screen crossfade, window and photo
-   fades — is CSS keyed off those attributes, so all motion shares one clock.
-   Enabled by body.stage-motion (JS + wide viewport + motion allowed);
-   otherwise .fallback-flow renders instead.
-   -------------------------------------------------------------------------- */
-.stage-track { display: none; }
-body.stage-motion .stage-track {
-  display: block;
-  height: 460vh;
-}
-body.stage-motion .fallback-flow { display: none; }
-
-.stage-frame {
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  overflow: hidden;
-  background: var(--paper);
-}
-
-/* Hero photo backdrop — only for scene 0 */
-.stage-bg {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  opacity: 1;
-  transition: opacity 0.6s ease;
-}
-.stage-shade {
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(180deg, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0) 18%),
-    linear-gradient(90deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.15) 60%);
-  opacity: 1;
-  transition: opacity 0.6s ease;
-}
-.stage-frame:not([data-scene="0"]) .stage-bg,
-.stage-frame:not([data-scene="0"]) .stage-shade { opacity: 0; }
-
-/* Gray mock window — fades in when the story leaves the hero */
-.stage-window {
-  position: absolute;
-  top: calc(50vh - var(--window-h) / 2);
-  right: max(var(--wrap-pad), calc((100vw - 1440px) / 2 + 62px));
-  width: min(758px, 52vw);
-  height: var(--window-h);
-  border-radius: var(--radius-window);
-  background: var(--window-gray);
-  opacity: 0;
-  transition: opacity 0.6s ease;
-}
-.stage-frame:not([data-scene="0"]) .stage-window { opacity: 1; }
-
-/* THE phone — anchored dead center of the window column, never moves */
-.stage-phone {
-  position: absolute;
-  top: calc(50vh - var(--window-h) / 2 + 61px);
-  right: calc(max(var(--wrap-pad), calc((100vw - 1440px) / 2 + 62px)) + min(758px, 52vw) / 2 - var(--phone-w) / 2);
-  width: var(--phone-w);
-}
-.stage-phone .phone-screen { position: relative; }
-.stage-phone .phone-screen img {
-  position: absolute;
-  inset: 0;
-  opacity: 0;
-  transition: opacity 0.5s ease;
-}
-.stage-phone .phone-screen img.active { opacity: 1; }
-
-/* Persistent header once the story starts. It lives in the copy column
-   (left of the window at every width) and below the fixed nav at every
-   height, so it can never collide with either; its fade-in trails the
-   photo fade-out so it never reads dark-on-dark. */
-.stage-eyebrow {
-  position: absolute;
-  top: max(calc(var(--nav-h) + 8px), calc(50vh - var(--window-h) / 2 - 82px));
-  left: max(calc(var(--wrap-pad) + 62px), calc((100vw - 1440px) / 2 + 124px));
-  transform: translateY(-14px);
-  font-size: clamp(1.5rem, 2.2vw, 2rem);
-  font-weight: 500;
-  opacity: 0;
-  transition: opacity 0.4s ease, transform 0.4s ease;
-}
-.stage-frame:not([data-scene="0"]) .stage-eyebrow {
-  opacity: 1;
-  transform: translateY(0);
-  transition-delay: 0.3s;
-}
-
-/* Scenes — copy panels in a reserved left region; enter from below,
-   exit upward, direction-aware on reverse scroll */
-.scene {
-  position: absolute;
-  top: 50%;
-  left: max(calc(var(--wrap-pad) + 62px), calc((100vw - 1440px) / 2 + 124px));
-  width: min(470px, 34vw); /* must stay clear of the window's left edge at all widths */
-  transform: translateY(-50%);
-  opacity: 1;
-  transition: opacity 0.5s ease, transform 0.5s ease;
-  pointer-events: none;
-}
-.scene.is-active { pointer-events: auto; }
-.scene.is-past {
-  opacity: 0;
-  transform: translateY(calc(-50% - 70px));
-}
-.scene.is-future {
-  opacity: 0;
-  transform: translateY(calc(-50% + 70px));
-}
-.scene h3 {
-  font-size: var(--fs-h3);
-  font-weight: 500;
-  line-height: 1.4;
-  max-width: 14ch;
-}
-.scene ul { margin-top: 20px; list-style: none; }
-.scene li { font-size: var(--fs-body); line-height: 2.2; }
-.scene li::before { content: "•  "; }
-.scene p:not(.hero-tagline) {
-  margin-top: 20px;
-  font-size: var(--fs-body);
-  line-height: 1.6;
-  max-width: 30ch;
-}
-
-/* Scene 0 = the hero copy, white on the photo */
-.scene--hero { color: #fff; width: min(640px, 44vw); }
-
-/* --------------------------------------------------------------------------
    Latte band (home) + pricing cards (home & membership)
    -------------------------------------------------------------------------- */
 .band { background: var(--band-gray); }
 .latte {
+  background: #82e5e6;
   padding: 90px 0 110px;
   text-align: center;
+  /* Extra clearance above this section specifically: the phone-pin
+     showcase just above relies on position:sticky's own release to
+     scroll the phone away (no JS fade), and that release only has
+     exactly one viewport-height of scroll room reserved for it in
+     .phone-pin-track's height. The phone itself is a fixed ~730px tall
+     at most, so on short/laptop viewports (under ~800px tall) one
+     viewport-height of release room can run out before the phone has
+     fully cleared, and this section's content would start showing
+     through while the phone is still finishing its exit. This margin
+     adds a flat buffer on top of that so the phone is guaranteed fully
+     gone first, regardless of viewport height. */
+  margin-top: 300px;
 }
 .latte-fluffy {
   width: min(340px, 70vw);
   margin-inline: auto;
-  mix-blend-mode: multiply; /* the source art has a white background; blend it into the band */
+  mix-blend-mode: normal; /* transparent source art now — no blend trick needed */
 }
 .latte h2 {
   font-size: var(--fs-h2-sm);
@@ -483,6 +676,21 @@ body.stage-motion .fallback-flow { display: none; }
   line-height: 2.5;
   text-align: center;
 }
+.plan-note {
+  margin-top: 20px;
+  padding: 2px;
+  border: 1px solid var(--pill-border);
+  background: var(--window-gray);
+  border-radius: var(--radius-pill);
+}
+.plan-note span {
+  display: block;
+  background: var(--paper);
+  border-radius: calc(var(--radius-pill) - 3px);
+  font-size: var(--fs-small);
+  line-height: 2.5;
+  text-align: center;
+}
 .plan-toggle {
   position: relative;
   display: grid;
@@ -501,6 +709,9 @@ body.stage-motion .fallback-flow { display: none; }
   transition: transform 0.25s ease;
 }
 .plan-toggle[data-cycle="monthly"] .knob { transform: translateX(calc(100% + 4px)); }
+/* The "$72/year billed annually" caption only makes sense for the annual
+   plan — hide it once the toggle switches to monthly. */
+.plan-toggle[data-cycle="monthly"] ~ .plan-toggle-note--static { display: none; }
 .plan-toggle span { position: relative; z-index: 1; }
 .plan-toggle-note {
   margin-top: 10px;
@@ -508,6 +719,12 @@ body.stage-motion .fallback-flow { display: none; }
   text-align: center;
   opacity: 0.7;
   min-height: 1.2em;
+}
+/* Annual mode leaves this note empty (JS only fills it in for Monthly) —
+   collapse its reserved space so it doesn't push the bullet list down. */
+.plan-toggle-note:empty {
+  margin-top: 0;
+  min-height: 0;
 }
 .plan ul {
   margin-top: 26px;
@@ -576,6 +793,7 @@ body.stage-motion .fallback-flow { display: none; }
   align-items: center;
   gap: clamp(32px, 5vw, 90px);
 }
+.two-col > * { min-width: 0; }
 .two-col h2 { margin-top: 0; }
 .two-col .copy p {
   margin-top: 22px;
@@ -587,9 +805,8 @@ body.stage-motion .fallback-flow { display: none; }
 /* Avatar cluster (About) — ring colors approximated from the mock */
 .cluster {
   position: relative;
-  width: 492px;
+  width: min(492px, 90vw);
   height: 306px;
-  max-width: 100%;
   justify-self: center;
 }
 .cluster .av {
@@ -629,6 +846,7 @@ body.stage-motion .fallback-flow { display: none; }
   gap: clamp(32px, 5vw, 90px);
   text-align: left;
 }
+.jump-in-cols > * { min-width: 0; }
 .jump-in-cols .phone { justify-self: center; height: auto; aspect-ratio: 403 / 800; max-width: min(340px, 80vw); width: 100%; }
 
 .team-art { width: min(500px, 100%); border-radius: 8px; justify-self: center; }
@@ -641,7 +859,7 @@ body.stage-motion .fallback-flow { display: none; }
 
 /* Promise pills (Membership) */
 .pills {
-  margin: 48px auto 0;
+  margin: 20px auto 0;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -737,18 +955,14 @@ body.stage-motion .fallback-flow { display: none; }
   text-align: center;
   padding: 96px 0 20px;
 }
+.footer-v2 .wrap {
+  max-width: var(--chrome-max-width);
+  padding-inline: var(--chrome-pad);
+}
 .footer-v2 h2 {
   font-size: clamp(2.25rem, 4.4vw, 4rem);
   font-weight: 500;
   line-height: 1.15;
-}
-.footer-dl {
-  margin-top: 26px;
-  font-size: var(--fs-body);
-  display: flex;
-  justify-content: center;
-  gap: 2.5em;
-  flex-wrap: wrap;
 }
 .footer-v2 .store-badges {
   justify-content: center;
@@ -762,7 +976,7 @@ body.stage-motion .fallback-flow { display: none; }
 .footer-qr-caption { margin-top: 14px; font-size: var(--fs-body); }
 .footer-legal {
   margin-top: 48px;
-  font-size: var(--fs-body);
+  font-size: 1rem;
 }
 .footer-legal a { text-decoration: none; }
 .footer-legal a:hover { text-decoration: underline; }
@@ -773,7 +987,7 @@ body.stage-motion .fallback-flow { display: none; }
   align-items: center;
   gap: 20px;
   flex-wrap: wrap;
-  font-size: var(--fs-body);
+  font-size: 1rem;
   text-align: left;
 }
 .footer-bottom nav { display: flex; gap: 28px; flex-wrap: wrap; }
@@ -781,85 +995,83 @@ body.stage-motion .fallback-flow { display: none; }
 .footer-bottom a:hover { text-decoration: underline; }
 
 /* --------------------------------------------------------------------------
-   Prototype palette switcher — candidates for the unresolved mock grays.
-   REMOVE (this block + the matching js/redesign.js block) before launch.
-   -------------------------------------------------------------------------- */
-body[data-palette="white"] { --page-gray: #ffffff; --band-gray: #ececea; --window-gray: #e9e9e7; }
-body[data-palette="soft"]  { --page-gray: #f5f5f4; --band-gray: #e8e8e6; --window-gray: #e2e2e0; }
-body[data-palette="warm"]  { --page-gray: #f7f5f1; --band-gray: #ece8e1; --window-gray: #e7e2d9; }
-
-/* photo: warm tokens + the hero scene's photo washed through every page.
-   The wash is a fixed pre-blurred layer behind everything; bands become
-   translucent tints so the atmosphere reads through them. */
-body[data-palette="photo"] {
-  --page-gray: transparent;
-  --band-gray: rgba(60, 42, 12, 0.06);
-  --window-gray: #e7e2d9;
-  background: transparent;
-}
-body[data-palette="photo"]::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  background:
-    linear-gradient(rgba(247, 245, 241, 0.88), rgba(247, 245, 241, 0.88)),
-    url("/prototype/images/redesign/hero-bg-wash.jpg") center / cover no-repeat;
-}
-body[data-palette="photo"] .stage-frame { background: transparent; }
-/* Hero tone tester — the mock's hero photo reads darker/contrastier than
-   our scrims alone; these candidates approximate it. Same removal rule. */
-body[data-herotone="dark"] .hero-bg,
-body[data-herotone="dark"] .stage-bg {
-  filter: brightness(0.78);
-}
-body[data-herotone="deep"] .hero-bg,
-body[data-herotone="deep"] .stage-bg {
-  filter: contrast(1.22) brightness(0.72) saturate(1.12);
-}
-
-.palette-switch,
-.tone-switch {
-  position: fixed;
-  bottom: 16px;
-  left: 16px;
-  z-index: 99;
-  font: 500 13px/1 var(--font);
-  padding: 10px 16px;
-  border-radius: 20px;
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  background: rgba(255, 255, 255, 0.92);
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.18);
-  cursor: pointer;
-}
-.tone-switch { bottom: 58px; }
-.palette-switch:hover,
-.tone-switch:hover { background: #fff; }
-
-/* --------------------------------------------------------------------------
    Responsive
    -------------------------------------------------------------------------- */
 @media (max-width: 1199px) {
-  .showcase .row {
-    grid-template-columns: 1fr;
-    row-gap: 40px;
-    padding-block: 48px;
-  }
-  .showcase .win { order: 2; }
   .two-col,
   .jump-in-cols { grid-template-columns: 1fr; }
   .hero .wrap { grid-template-columns: 1fr; }
   .hero-phone { margin-bottom: -180px; }
+
+  /* No sticky/pin on mobile, so the 300px buffer above .latte (needed on
+     desktop so the phone's sticky release always finishes first) is just
+     unwanted empty space here — cut way down. */
+  .latte { margin-top: 0; }
+
+  /* Hamburger nav: link row becomes a slide-down panel, toggled by
+     body.nav-open (set in redesign.js). Covers the full remaining
+     viewport height (bottom:0, not auto) rather than just hugging its
+     own content height. */
+  .nav-toggle { display: inline-flex; }
+  .nav-links {
+    position: fixed;
+    inset: var(--nav-h) 0 0 0;
+    margin-left: 0;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+    background: #82e5e6;
+    padding: 24px var(--wrap-pad) 40px;
+    transform: translateY(-12px);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 0.25s ease, opacity 0.25s ease;
+  }
+  .nav-links a {
+    color: #000;
+    width: 100%;
+    padding: 16px 0;
+    font-size: 1.375rem;
+    font-weight: 500;
+  }
+  .nav-links-legal {
+    display: block;
+    padding: 12px 0 !important;
+    font-size: 1rem !important;
+    font-weight: 400 !important;
+    opacity: 0.75;
+  }
+  .nav-links a:not(.nav-links-legal) + .nav-links-legal { margin-top: 12px; border-top: 1px solid rgba(0, 0, 0, 0.15); }
+  body.nav-open .nav-links {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
 }
 @media (max-width: 720px) {
-  .nav-wordmark { display: none; }
-  .nav-logo { width: 40px; height: 40px; }
-  .nav-links { gap: 14px; }
-  .nav-links a { font-size: 0.95rem; }
+  /* Hero content is anchored to the bottom (align-items:end below), so
+     the hero's own height directly determines whether the copy+badges
+     end up "above the fold" — reduced from 930px so they fit within a
+     typical phone's visible viewport (browser chrome eats ~100-150px of
+     the ~800-930px many iPhones report) without needing to scroll. */
+  .hero { min-height: 700px; }
+  .hero .wrap { align-items: end; padding-bottom: 24px; }
+  .hero-copy { min-width: 0; margin-left: 0; } /* grid items default to min-width:auto, which lets a long word in the H1 force the whole column (and everything in it, including the badges) wider than the viewport — this lets it shrink and wrap normally instead. margin-left reset since the 100px desktop inset isn't wanted on a single-column mobile layout. */
+  .hero-title { font-size: 4rem; }
+  .store-badges {
+    justify-content: center;
+    margin-top: 44px;
+  }
+  .statement { padding-top: 170px; padding-bottom: 170px; }
+  .statement-avatar { width: 224px; height: 224px; }
+  .nav-logo { height: 28px; width: auto; }
   .win { height: 480px; }
   .phone--static { top: 40px; transform: translateX(-50%) scale(0.82); transform-origin: top center; }
   .hero-phone { display: none; }
-  .cluster { transform: scale(0.72); transform-origin: top center; height: 240px; }
+  .cluster { height: 220px; }
+  .cluster .av { width: 72px; height: 72px; border-width: 3px; }
+  .cluster .av img { width: 62px; height: 62px; }
   .plan { padding: 30px 26px 36px; }
   .footer-bottom { justify-content: center; text-align: center; }
+  .footer-bottom nav { display: none; }
 }
