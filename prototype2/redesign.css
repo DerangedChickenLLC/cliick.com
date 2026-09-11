@@ -1265,6 +1265,12 @@ body.page-gray .page-hero h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
   align-self: end;
 }
 
+/* A hero with nothing beside the title. The .page-head cap above exists only
+   to keep the title clear of .page-hero-art; with no art in the second track
+   it just folds a two-word title onto two lines on wide viewports and pushes
+   the whole page down. FAQ is the only page here for now. */
+.page-hero--solo .page-head { max-width: none; }
+
 @media (max-width: 900px) {
   .page-hero .wrap { grid-template-columns: minmax(0, 1fr); }
   .page-hero-art { display: none; }
