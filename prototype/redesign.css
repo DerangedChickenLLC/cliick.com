@@ -240,7 +240,7 @@ body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-7px) rotate
    the headline trails the eyebrow by a short delay. */
 .statement {
   text-align: center;
-  padding: 110px 20px 40px;
+  padding: 110px 20px; /* equal top/bottom — was 110px/40px */
   max-width: 900px;
   margin-inline: auto;
 }
@@ -264,7 +264,6 @@ body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-7px) rotate
 .statement .eyebrow {
   margin-top: 28px;
   font-weight: 700;
-  font-size: 1.25rem; /* base .eyebrow is 1.125rem — 2pt/~2px larger */
   transition-delay: 0.08s;
 }
 .statement-headline {
@@ -335,13 +334,13 @@ body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-7px) rotate
 .phone-pin-track {
   position: relative;
   height: 450vh; /* more scroll travel per panel — was 300vh, felt rushed */
-  /* .phone-pin-stage now engages at top:0 (see below) instead of
-     top:50vh, which needs only a small aesthetic gap here instead of a
-     ~50vh mathematically-required buffer — top:0 means the stage can't
-     reach its stuck position until it's already scrolled to the very
-     top of the viewport, by which point the statement section above has
-     necessarily scrolled out of the way on its own. */
-  margin-top: 12px;
+  /* Vertical breathing room above the pinned phone/text lives on the
+     .phone-pin section itself now (padding-top, desktop only, see below)
+     rather than as a margin here — a margin on this element collapses
+     through the section (which has no padding/border of its own) and
+     ends up sitting ABOVE the section's gradient background instead of
+     inside it, which read as zero breathing room within the colored
+     band. */
 }
 .phone-pin-stage {
   position: sticky;
@@ -408,6 +407,15 @@ body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-7px) rotate
   pointer-events: none;
 }
 .phone-pin-panel.is-active { pointer-events: auto; }
+.phone-pin-panel .eyebrow {
+  text-align: left;
+  margin-bottom: 2px; /* tight, so it reads as attached to the headline directly below it rather than a separate floating label */
+  font-weight: 700;
+  color: inherit;
+  opacity: 0;
+  transform: translateY(220px);
+  clip-path: none; /* overrides the default .phone-pin-panel p wipe-clip — the eyebrow is synced with the headline's fade/slide instead, not the bullet wipe sequence */
+}
 .phone-pin-panel h3 {
   font-size: var(--fs-h3);
   font-weight: 700;
@@ -418,6 +426,17 @@ body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-7px) rotate
      here on, fading in faster than it finishes sliding (see redesign.js). */
   opacity: 0;
   transform: translateY(220px);
+  /* Color wipe: once the panel has settled, JS sweeps --wipe from 0% to
+     100% across the "hold" phase, sweeping the headline from black to
+     #fc318b left-to-right — a visible beat of motion during the pause
+     so scrolling slowly through it doesn't feel like it's stuck, right
+     before the panel exits. Defaults to 0% (solid black, indistinguishable
+     from plain text) so mobile/no-JS just shows normal black headlines. */
+  --wipe: 0%;
+  background-image: linear-gradient(to right, #fc318b var(--wipe), #000 var(--wipe));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 .phone-pin-panel ul {
   margin-top: 20px;
@@ -436,7 +455,7 @@ body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-7px) rotate
   margin-top: 20px;
   font-size: var(--fs-body);
   line-height: 1.6;
-  max-width: 30ch;
+  max-width: 360px; /* ~25% narrower than the 480px the old bullet text used */
   clip-path: inset(0 100% 0 0); /* same left-to-right wipe as bullets, for panels with no list */
 }
 .learn-more {
@@ -505,6 +524,7 @@ body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-7px) rotate
     clip-path: none;
   }
   .phone-pin-panel h3 { order: 1; font-size: 1.75rem; }
+  .phone-pin-panel .eyebrow { order: 0; text-align: center; opacity: 1; transform: none; }
   .phone-pin-panel ul,
   .phone-pin-panel p { order: 2; margin-top: 10px; }
   .phone-pin-panel .phone-pin-mobile-phone { order: 3; }
@@ -538,10 +558,24 @@ body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-7px) rotate
 }
 @media (min-width: 1200px) {
   .phone-pin-mobile-phone { display: none; }
+  /* Same soft gradient the mobile per-step cards use (see
+     .phone-pin-panel background below), extended full-bleed behind the
+     whole desktop showcase instead of behind each individual card, and
+     fading all the way to pure white at the bottom rather than the
+     mobile cards' slightly-off-white f7f9fa. */
+  .phone-pin {
+    background: linear-gradient(180deg, #d9e9f4 0%, #ffffff 100%);
+    /* Padding (not the track's own margin — see the note on
+       .phone-pin-track) so the pinned phone/text sits down inside the
+       gradient with real breathing room instead of starting right at
+       its top edge. */
+    padding-top: 160px;
+  }
 }
 @media (prefers-reduced-motion: reduce) {
   .phone-pin-panel.is-active { opacity: 1; transform: none; pointer-events: auto; }
   .phone-screen-img.is-active { opacity: 1; }
+  .phone-pin-panel .eyebrow,
   .phone-pin-panel h3,
   .phone-pin-panel li,
   .phone-pin-panel p,
@@ -558,6 +592,7 @@ body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-7px) rotate
   height: var(--window-h);
   background: var(--window-gray);
   clip-path: inset(0 round var(--radius-window));
+  overflow: hidden; /* clip-path alone is purely visual — without this, an oversized absolutely-positioned child (like .phone--half) still counts toward the page's real scrollable width even though nothing is visibly wrong */
 }
 
 /* Phone frame (placeholder for app screen recordings — swap img for video) */
@@ -598,11 +633,52 @@ body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-7px) rotate
 }
 
 /* --------------------------------------------------------------------------
+   Closing quote band (About) — same teal as the pricing section
+   -------------------------------------------------------------------------- */
+.quote-band {
+  background: #fc318a;
+  padding: 100px 0;
+  text-align: center;
+  color: #fff;
+}
+/* Same fix as .latte on the homepage: when a phone-pin section (wrapped
+   in .page-content) sits directly above, its sticky phone needs this
+   extra clearance to fully scroll away first — otherwise the quote text
+   can start showing through while the phone is still finishing its
+   exit. Scoped to this adjacency only, so it doesn't add unwanted space
+   before .quote-band on pages where it follows a normal section (About). */
+.page-content + .quote-band { margin-top: 300px; }
+.quote-band-logo {
+  height: 100px;
+  width: auto;
+  margin: 0 auto 40px;
+}
+.quote-band-text {
+  font-size: var(--fs-h2-sm);
+  font-weight: 500;
+  line-height: 1.35;
+  max-width: 20ch;
+  margin-inline: auto;
+}
+.quote-band-text--wide {
+  font-size: 1.5rem; /* smaller than the default punchy-quote size, since this is a longer explanatory paragraph */
+  max-width: 34ch;
+}
+/* Second paragraph (e.g. the "how to create a Cliick" follow-up) gets its
+   own gap, same pattern as .section-sub + .section-sub. */
+.quote-band-text + .quote-band-text { margin-top: 24px; }
+.quote-band-attr {
+  margin-top: 28px;
+  font-size: var(--fs-body);
+  font-weight: 600;
+}
+
+/* --------------------------------------------------------------------------
    Latte band (home) + pricing cards (home & membership)
    -------------------------------------------------------------------------- */
 .band { background: var(--band-gray); }
 .latte {
-  background: #82e5e6;
+  background: #88cecc;
   padding: 90px 0 110px;
   text-align: center;
   /* Extra clearance above this section specifically: the phone-pin
@@ -650,6 +726,7 @@ body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-7px) rotate
   border-radius: var(--radius-card);
   box-shadow: var(--shadow-card);
   padding: 40px 42px 48px;
+  color: var(--ink); /* .latte sets white text for its own copy on the teal bg — cards are white, so reset back to normal ink color, don't inherit */
 }
 .plan h3 {
   font-size: 2.25rem;
@@ -745,6 +822,21 @@ body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-7px) rotate
   align-items: flex-end;
   color: #fff;
 }
+.page-hero-chicken {
+  height: clamp(120px, 24vw, 230px);
+  width: auto;
+  flex-shrink: 0;
+  z-index: 1; /* above hero-bg, below the title text */
+  pointer-events: none;
+}
+.page-hero h1.page-hero-title--tight {
+  font-size: clamp(2rem, 4.1vw, 3.75rem); /* smaller than the default page-hero h1 so this longer line fits on one row instead of wrapping */
+  max-width: none;
+  white-space: nowrap;
+  margin-left: 40px; /* inset from the wrap's edge, on top of --chrome-pad */
+  transform: translateY(-40px);
+}
+.title-accent { color: #fc318a; }
 .page-hero .hero-bg { object-position: center 75%; }
 .page-hero::after {
   content: "";
@@ -758,12 +850,19 @@ body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-7px) rotate
   position: relative;
   z-index: 2;
   width: 100%;
-  padding-bottom: 28px;
+  max-width: var(--chrome-max-width);
+  padding-inline: var(--chrome-pad);
+  margin-inline: auto;
+  padding-bottom: 0;
+  display: flex;
+  align-items: flex-end;
+  gap: 80px; /* chicken (if present) sits exactly this far right of the title's last letter, however wide the title renders */
 }
 .page-hero h1 {
   font-size: var(--fs-display);
   font-weight: 500;
   line-height: 1.05;
+  max-width: 15ch; /* keeps long titles from running into the chicken peeking up on the right */
 }
 
 /* --------------------------------------------------------------------------
@@ -772,8 +871,8 @@ body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-7px) rotate
 .section { padding: 90px 0; }
 .section--center { text-align: center; }
 .eyebrow {
-  font-size: 1.125rem;
-  font-weight: 500;
+  font-size: 1.25rem;
+  font-weight: 700; /* matches the bold eyebrow weight used on the homepage/Quick Start statements and the phone-pin panels — was 500, which made "Why Cliick" read lighter than every other eyebrow on the site */
   text-align: center;
 }
 .section h2 {
@@ -801,13 +900,30 @@ body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-7px) rotate
   line-height: 1.5;
   max-width: 46ch;
 }
+.copy--narrow p { max-width: 36ch; }
 
 /* Avatar cluster (About) — ring colors approximated from the mock */
+.win-box {
+  position: relative;
+  border-radius: var(--radius-window);
+  padding: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--window-h);
+  max-width: 758px;
+  justify-self: center;
+  width: 100%;
+  overflow: hidden;
+}
+.win-box--1 { background: rgba(252, 151, 196, 0.25); }
+.win-box--2 { background: rgba(135, 211, 208, 0.25); }
+.win-box--3 { background: rgba(235, 165, 142, 0.25); }
+.win-box--4 { background: rgba(252, 227, 238, 0.25); }
 .cluster {
   position: relative;
   width: min(492px, 90vw);
   height: 306px;
-  justify-self: center;
 }
 .cluster .av {
   position: absolute;
@@ -828,6 +944,24 @@ body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-7px) rotate
 
 /* Phone-in-window, static (About) */
 .win--inline { max-width: 758px; width: 100%; justify-self: center; }
+.win--half-phone { max-width: 758px; width: 100%; justify-self: center; }
+.phone--half {
+  position: absolute;
+  left: calc(50% - var(--phone-w) / 2 - var(--phone-w) / 2); /* box is now full-size (same as the other boxes) — shift the phone a full half-width left of center so only its right half renders inside the box, left half clipped by .win's overflow:hidden */
+  top: 61px;
+}
+.team-photo-wrap {
+  justify-self: center;
+  width: min(375px, 90vw); /* 25% smaller — was 500px */
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.team-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 
 /* Steps (About) */
 .steps { list-style: none; max-width: 350px; }
@@ -1000,8 +1134,6 @@ body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-7px) rotate
 @media (max-width: 1199px) {
   .two-col,
   .jump-in-cols { grid-template-columns: 1fr; }
-  .hero .wrap { grid-template-columns: 1fr; }
-  .hero-phone { margin-bottom: -180px; }
 
   /* No sticky/pin on mobile, so the 300px buffer above .latte (needed on
      desktop so the phone's sticky release always finishes first) is just
@@ -1048,7 +1180,52 @@ body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-7px) rotate
     pointer-events: auto;
   }
 }
+@media (min-width: 721px) and (max-width: 1199px) {
+  /* Tablet-specific hero: unlike true mobile (≤720px, single column,
+     phone hidden), this range keeps a two-column layout — text left,
+     phone cropped in from the top-right (hero's overflow:hidden clips
+     it) — sized down from desktop rather than blown up from mobile. */
+  .hero { min-height: 620px; }
+  .hero .wrap {
+    grid-template-columns: 1.15fr 0.85fr;
+    align-items: start;
+    padding-top: calc(var(--nav-h) + 32px);
+  }
+  .hero-copy { margin-left: 0; min-width: 0; }
+  .hero-title { font-size: 2.75rem; line-height: 1.15; }
+  .hero-tagline { font-size: var(--fs-body); }
+  .store-badges { margin-top: 28px; }
+  .store-badges img { height: 44px; }
+  .hero-phone {
+    justify-self: end;
+    align-self: start;
+    width: 130%;
+    max-width: none;
+    margin: -48px -64px 0 0;
+    -webkit-mask-image: linear-gradient(to bottom, #000 80%, transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 80%, transparent 100%);
+  }
+
+  /* Statement: same body-copy size as the hero tagline above (both are
+     just body text, not scaled to match the headline/badge sizing) —
+     and a more proportionate avatar for this width instead of the
+     140/224px meant for full mobile or desktop. */
+  .statement { padding-top: 96px; padding-bottom: 96px; }
+  .statement-avatar { width: 140px; height: 140px; }
+  .statement .eyebrow { font-size: 1.125rem; }
+  .statement-headline { font-size: clamp(2rem, 4vw, 2.75rem); }
+  .statement-sub { font-size: var(--fs-body); max-width: 46ch; }
+}
 @media (max-width: 720px) {
+  /* The About page-hero chicken is sized for wide viewports (per the
+     reference comp) — at narrow widths, the full 80px gap plus the
+     chicken's own width push it mostly off the right edge (silently
+     clipped by .page-hero's overflow:hidden, not caught by a page-level
+     overflow check) — reduce the gap here to keep it visible. */
+  .page-hero-chicken { height: clamp(70px, 20vw, 120px); }
+  .page-hero .wrap { gap: 16px; }
+  .page-hero h1.page-hero-title--tight { font-size: clamp(1.375rem, 6.2vw, 2rem); }
+
   /* Hero content is anchored to the bottom (align-items:end below), so
      the hero's own height directly determines whether the copy+badges
      end up "above the fold" — reduced from 930px so they fit within a

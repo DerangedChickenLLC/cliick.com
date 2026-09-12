@@ -22,12 +22,15 @@
 // transitions at all. Every value below is a pure function of scroll
 // fraction through the track — scroll a little, it moves a little; stop
 // scrolling, it stops exactly where it is. Spec per panel:
-//   1. Headline fades in FAST while it's still sliding up — opacity hits
-//      1 partway through the slide (HEADLINE_FADE_FRAC of the ENTER
-//      phase), so it reads clearly for the remainder of its travel
-//      instead of still-fading right up until it lands. Bullets/link are
-//      not part of this — they stay fully hidden until the headline
-//      actually reaches its resting spot.
+//   1. Headline (and its eyebrow, e.g. "Step 1.") fades in FAST while it's
+//      still sliding up — opacity hits 1 partway through the slide
+//      (HEADLINE_FADE_FRAC of the ENTER phase), so it reads clearly for the
+//      remainder of its travel instead of still-fading right up until it
+//      lands. The eyebrow rides in lock-step with the headline (same
+//      opacity/offset every frame), since it's meant to read as part of the
+//      same entrance, not a separate reveal. Bullets/link are not part of
+//      this — they stay fully hidden until the headline actually reaches
+//      its resting spot.
 //   2. Once the headline lands, each bullet (or the panel's paragraph,
 //      for panels with no list) wipe-reveals left-to-right, one at a
 //      time, as the user keeps scrolling — a clip-path inset animated
@@ -57,6 +60,7 @@
 
     const panelData = panels.map((panel) => ({
       panel,
+      eyebrow: panel.querySelector(".eyebrow"),
       headline: panel.querySelector("h3"),
       revealItems: Array.from(panel.querySelectorAll("li, p")),
       link: panel.querySelector(".learn-more"),
@@ -77,9 +81,27 @@
     const HOLD = 0.3;
     const EXIT = 0.3;
     const GAP = 0.1;
-    const CYCLE = ENTER + BULLETS + HOLD + EXIT;
-    const LAST_CYCLE = ENTER + BULLETS + HOLD; // no EXIT for the last panel
-    const TOTAL = (N - 1) * (CYCLE + GAP) + LAST_CYCLE;
+    // Panel 1 ("It's all about who you know") gets a bit of extra hold
+    // time once it's fully in place — a slight pause before it starts
+    // fading out, on top of everyone else's normal HOLD duration.
+    const EXTRA_HOLD = [0, 0.15, 0];
+    const holdFor = (i) => HOLD + (EXTRA_HOLD[i] || 0);
+
+    // base[i] is cumulative rather than i*(CYCLE+GAP) — panels no longer
+    // have equal length once EXTRA_HOLD varies per panel, so each one's
+    // start has to be computed from the actual sum of everything before
+    // it, not a uniform multiple.
+    const bases = [];
+    let cumulative = 0;
+    panels.forEach((_, i) => {
+      bases.push(cumulative);
+      const isLast = i === N - 1;
+      const thisCycle = isLast
+        ? ENTER + BULLETS + holdFor(i)
+        : ENTER + BULLETS + holdFor(i) + EXIT;
+      cumulative += thisCycle + (isLast ? 0 : GAP);
+    });
+    const TOTAL = cumulative;
 
     // Container-level envelope: drives the panel's own opacity (which,
     // since it wraps the headline/bullets/link, is what actually fades
@@ -110,6 +132,15 @@
     // lands (u=0), before the headline has even started its own fade.
     const screenOpacity = (u, base, cycleEnd) => (u >= base && u < cycleEnd ? 1 : 0);
 
+    // Headline color wipe: sweeps left-to-right from black to #fc318b
+    // across the hold phase (after the panel has fully landed, before it
+    // starts to exit) — see the --wipe custom property in the CSS.
+    const headlineWipeProgress = (u, wipeStart, wipeEnd) => {
+      if (u <= wipeStart) return 0;
+      if (u >= wipeEnd) return 1;
+      return (u - wipeStart) / (wipeEnd - wipeStart);
+    };
+
     const headlineState = (u, base, enterEnd) => {
       if (u <= base) return { opacity: 0, y: OFFSET };
       if (u < enterEnd) {
@@ -138,29 +169,46 @@
       const p = Math.min(1, Math.max(0, -rect.top / runway));
       const u = p * TOTAL;
 
-      panelData.forEach(({ panel, headline, revealItems, link }, i) => {
+      panelData.forEach(({ panel, eyebrow, headline, revealItems, link }, i) => {
         const isLast = i === N - 1;
         // Panel 0 (only) skips the headline slide/fade and bullet wipe —
         // everything's already fully visible the moment the container
         // itself becomes visible, no entrance animation. Panels 1+ are
         // unchanged.
         const skipEntrance = i === 0;
-        const base = i * (CYCLE + GAP);
+        const base = bases[i];
         const enterEnd = base + ENTER;
         const bulletsEnd = enterEnd + BULLETS;
-        const holdEnd = bulletsEnd + HOLD;
+        const holdEnd = bulletsEnd + holdFor(i);
         const exitEnd = isLast ? holdEnd : holdEnd + EXIT;
 
         const cOpacity = containerOpacity(u, base, holdEnd, exitEnd, isLast, skipEntrance);
         panel.style.opacity = String(cOpacity);
         panel.classList.toggle("is-active", cOpacity > 0.02);
 
+        // Headline and eyebrow share the exact same entrance timing — the
+        // eyebrow (e.g. "Step 1.") is meant to land in lock-step with its
+        // headline right above it, not reveal separately.
+        const { opacity, y } = skipEntrance
+          ? { opacity: 1, y: 0 }
+          : headlineState(u, base, enterEnd);
+
         if (headline) {
-          const { opacity, y } = skipEntrance
-            ? { opacity: 1, y: 0 }
-            : headlineState(u, base, enterEnd);
           headline.style.opacity = String(opacity);
           headline.style.transform = `translateY(${y}px)`;
+          // Wipe now matches panels 1/2's exact timing rhythm: a lag
+          // before it starts (same duration as their entrance take —
+          // ENTER+BULLETS, i.e. bulletsEnd), then the wipe runs the full
+          // hold and finishes right as the exit begins (holdEnd), no
+          // lingering fully-pink pause afterward. Simpler and now
+          // uniform across all three panels — no panel-0 special case.
+          const wipe = headlineWipeProgress(u, bulletsEnd, holdEnd);
+          headline.style.setProperty("--wipe", `${(wipe * 100).toFixed(2)}%`);
+        }
+
+        if (eyebrow) {
+          eyebrow.style.opacity = String(opacity);
+          eyebrow.style.transform = `translateY(${y}px)`;
         }
 
         const m = revealItems.length;
@@ -174,7 +222,7 @@
 
         const screen = screens[i];
         if (screen) {
-          const cycleEnd = isLast ? Infinity : base + CYCLE + GAP;
+          const cycleEnd = isLast ? Infinity : bases[i + 1];
           const sOpacity = screenOpacity(u, base, cycleEnd);
           screen.style.opacity = String(sOpacity);
           screen.classList.toggle("is-active", sOpacity > 0.02);
@@ -198,12 +246,16 @@
         update();
       } else {
         window.removeEventListener("scroll", onScroll);
-        panelData.forEach(({ panel, headline, revealItems, link }, i) => {
+        panelData.forEach(({ panel, eyebrow, headline, revealItems, link }, i) => {
           panel.style.opacity = "";
           panel.classList.toggle("is-active", i === 0);
           if (headline) {
             headline.style.opacity = "";
             headline.style.transform = "";
+          }
+          if (eyebrow) {
+            eyebrow.style.opacity = "";
+            eyebrow.style.transform = "";
           }
           revealItems.forEach((item) => { item.style.clipPath = ""; });
           if (link) link.style.opacity = "";
