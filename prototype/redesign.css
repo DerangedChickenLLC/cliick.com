@@ -210,13 +210,17 @@ body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-7px) rotate
   display: flex;
   gap: 20px;
   align-items: center;
+  /* Rather than squeeze in a column too narrow for both, drop to two rows. */
+  flex-wrap: wrap;
 }
-.store-badges img { height: 52px; width: auto; }
-/* The badge SVGs declare width/height="100%" with no fixed intrinsic size,
-   so browsers can't derive an aspect ratio from them and fall back to the
-   300x150 UA default — stretching the badge. Pin the real ratios here. */
-.store-badges img[src*="badge-appstore"] { aspect-ratio: 156 / 52; }
-.store-badges img[src*="badge-googleplay"] { aspect-ratio: 175.5 / 52; }
+/* The badge SVGs carry their own width/height now, so width: auto resolves to
+   the real 156x52 / 175.5x52 and no ratio pinning is needed. The links must not
+   shrink either: a shrunken link caps the image's width via max-width:100%
+   while its height stays pinned, which is exactly the distortion the intrinsic
+   size just fixed. object-fit letterboxes rather than stretches if anything
+   ever does constrain the box. */
+.store-badges a { flex: 0 0 auto; }
+.store-badges img { height: 52px; width: auto; flex-shrink: 0; object-fit: contain; }
 
 .hero-phone {
   justify-self: start;
@@ -1235,10 +1239,15 @@ body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-7px) rotate
   .hero .wrap { align-items: end; padding-bottom: 24px; }
   .hero-copy { min-width: 0; margin-left: 0; } /* grid items default to min-width:auto, which lets a long word in the H1 force the whole column (and everything in it, including the badges) wider than the viewport — this lets it shrink and wrap normally instead. margin-left reset since the 100px desktop inset isn't wanted on a single-column mobile layout. */
   .hero-title { font-size: 4rem; }
+  /* Both badges at 52px plus the gap need ~352px, which a 390px phone cannot
+     give once the page gutters are taken out — they would wrap to two rows.
+     A slightly smaller pair keeps them side by side, at their true ratio. */
   .store-badges {
     justify-content: center;
     margin-top: 44px;
+    gap: 12px;
   }
+  .store-badges img { height: 46px; }
   .statement { padding-top: 170px; padding-bottom: 170px; }
   .statement-avatar { width: 224px; height: 224px; }
   .nav-logo { height: 28px; width: auto; }

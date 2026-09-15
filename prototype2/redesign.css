@@ -471,8 +471,16 @@ body.nav-solid .nav {
   display: flex;
   gap: 20px;
   align-items: center;
+  /* Rather than squeeze in a column too narrow for both, drop to two rows. */
+  flex-wrap: wrap;
 }
-.store-badges img { height: 52px; width: auto; }
+/* The badge SVGs carry their own width/height, so width: auto resolves to the
+   real 156x52 / 175.5x52. The links must not shrink either: a shrunken link
+   caps the image's width via max-width:100% while its height stays pinned,
+   which is exactly the distortion the intrinsic size just fixed. object-fit
+   letterboxes rather than stretches if anything ever does constrain the box. */
+.store-badges a { flex: 0 0 auto; }
+.store-badges img { height: 52px; width: auto; flex-shrink: 0; object-fit: contain; }
 
 .hero-win .hero-phone {
   position: absolute;
@@ -1856,6 +1864,12 @@ body.page-gray .page-hero h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
     padding-bottom: 0;
   }
   .hero .wrap { padding-block: 0; }
+
+  /* Both badges at 52px plus the gap need ~352px, which a 390px phone cannot
+     give once the page gutters are taken out — they would wrap to two rows.
+     A slightly smaller pair keeps them side by side, at their true ratio. */
+  .store-badges { gap: 12px; }
+  .store-badges img { height: 46px; }
 
   .nav-wordmark { display: none; }
   /* Four links plus a button overflow well before this width. The footer nav
