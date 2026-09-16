@@ -1449,49 +1449,52 @@ body.page-gray .page-hero h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
   .page-hero--split .hero-people { order: -1; }
 }
 
-/* The closing quote. It is a "so that is why we are doing this" line, which
-   only lands once the argument above it has been made -- so it ends the page
-   rather than starting it. */
-/* The close sits on the latte band, which already centres and repoints every
-   token for the light ground. These rules only handle measure and rhythm. */
-/* The close is centred on the page's own ground rather than a band, so it
-   needs the breathing room .latte used to supply.
-
-   It also opts out of the tightened .section + .section boundary above it.
-   That rule exists to stop two content sections opening a void between them;
-   this is not a boundary between arguments, it is the pause before the last
-   word, and the quote needs room to land. Specificity matches the rule it
-   overrides, so it has to come after it. */
+/* The About close is the origin note alone, centred on the page's own
+   ground rather than a band, so it needs the breathing room .latte used to
+   supply. It also opts out of the tightened .section + .section boundary
+   above it: this is the pause before the last word, not a boundary between
+   arguments. Specificity matches the rule it overrides, so it has to come
+   after it. */
 .section + .about-close { padding-top: 78px; }
 .about-close { padding-bottom: 120px; }
 .about-close .founders-note { max-width: 54ch; margin-inline: auto; }
-.founders-quote {
-  /* The band opens on the quote now, so this only has to clear the band's own
-     padding rather than separate two competing statements. */
-  margin-top: 0;
-  font-size: var(--fs-h3);
-  font-weight: 500;
-  line-height: 1.2;
-  letter-spacing: -0.015em;
-  text-wrap: balance;
-  max-width: 20ch;
-  margin-inline: auto;
-}
-.founders-by {
-  margin-top: 24px;
-  font-size: var(--fs-small);
-  font-weight: 600;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--ink-muted);
-}
-.founders-by::before { content: "\2014\00a0\00a0"; }
 .founders-note {
-  margin-top: 30px;
+  margin-top: 0;
   font-size: var(--fs-body);
   line-height: 1.5;
   color: var(--ink-muted);
 }
+
+/* The founders' quote, set as a caption under their photo: centred beneath
+   it like a gallery label, but at a size and weight that holds its own
+   against the headline beside it -- small and quiet got lost on the page. */
+.founders-caption {
+  margin-top: 22px;
+  padding-inline: 8px;
+  text-align: center;
+}
+.founders-caption-quote {
+  display: block;
+  font-size: clamp(1.375rem, 2vw, 1.75rem);
+  font-style: italic;
+  font-weight: 500;
+  line-height: 1.4;
+  color: var(--ink-strong);
+  text-wrap: balance;
+}
+.founders-caption-by {
+  display: block;
+  margin-top: 14px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  /* letter-spacing trails the last letter too, which nudges a centred line
+     left; widening the box by the same amount re-centres it on the letters */
+  margin-right: -0.18em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+.founders-caption-by::before { content: "\2014\00a0\00a0"; }
 
 /* Phone-in-window, static (About) */
 .win--inline { max-width: 758px; width: 100%; justify-self: center; }
