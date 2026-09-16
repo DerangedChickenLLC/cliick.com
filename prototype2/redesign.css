@@ -1688,10 +1688,12 @@ body.page-gray .page-hero h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
   text-align: center;
   padding: 96px 0 20px;
 }
+/* The sign-off answers the page's opener, so it takes the same display size
+   as "Reclaim your Feed" rather than sitting a step below it. */
 .footer-v2 h2 {
-  font-size: clamp(2.25rem, 4.4vw, 4rem);
+  font-size: var(--fs-display);
   font-weight: 500;
-  line-height: 1.15;
+  line-height: 1.05;
 }
 .footer-dl {
   margin-top: 26px;
