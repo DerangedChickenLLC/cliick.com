@@ -14,7 +14,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Caveat:wght@500&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="/prototype2/redesign.css" />
@@ -47,21 +47,22 @@
       </div>
     </header>
 
+    <!-- About is a trust ladder: who we are -> what you get -> why it lasts ->
+         proof -> how it is protected -> our word. The headlines carry the
+         argument on their own for skimmers; captions are feelings, not
+         features, and the facts sit one layer down behind "How we know" and
+         "The details" for the few who go looking. -->
+
+    <!-- 1 · Us -->
     <section class="page-hero page-hero--split">
       <div class="wrap">
         <div class="page-head">
           <p class="page-eyebrow">Who's behind Cliick</p>
-          <h1>We wanted this for our own lives.</h1>
+          <h1>We wanted this for our own lives</h1>
           <p class="page-lede">
-            Cliick isn't a business plan looking for a market. It's two
-            people building the thing we wished existed &mdash; somewhere to
-            keep up with our own families, our own friends, our own ordinary
-            days, without handing all of it to an advertising platform.
-          </p>
-          <p class="page-lede">
-            We are not trying to build the next big social network. There is no
-            audience to grow here, no reach to chase, and nothing to optimize
-            for except whether the people you invited are glad they came.
+            Not a market. Not a plan.<br />
+            Just two people who wanted somewhere quieter for the people they
+            love.
           </p>
           <p class="page-kicker">You should know who is asking for your trust.</p>
         </div>
@@ -80,29 +81,70 @@
       </div>
     </section>
 
-    <!-- The page's strongest section, and the reason About exists: a privacy
-         claim that can be checked rather than believed. Every line here is
-         verified against the schema and the OAuth handlers, not aspirational.
-         If the model gains a column, this section is wrong and must change.
+    <!-- 2 · Serenity -->
+    <section class="section">
+      <div class="wrap two-col">
+        <div class="copy">
+          <h2>Peace, by invitation</h2>
+          <p>
+            No strangers at the door. No one selling anything. No one you
+            didn&rsquo;t ask for.<br />
+            Just the people you&rsquo;d open the door for anyway.
+          </p>
+        </div>
+        <div class="win win--inline" aria-hidden="true">
+          <div class="phone phone--static phone--placeholder"><div class="phone-screen"><img src="/prototype2/images/feed.png" alt="" /><span class="film-slate" data-film="Just your people" aria-hidden="true"></span></div></div>
+        </div>
+      </div>
+    </section>
 
-         Laid out prose-left / object-right, the same rhythm the hero sets and
-         the homepage repeats. The ledger is the object. -->
+    <!-- 3 · Money -->
+    <section class="section">
+      <div class="wrap two-col two-col--flip">
+        <div class="money-flow" role="img" aria-label="Money flows from you to Cliick. Advertisers, investors and data brokers are not part of it.">
+          <div class="flow-row">
+            <span class="flow-node">You</span>
+            <span class="flow-arrow" aria-hidden="true"></span>
+            <span class="flow-node flow-node--us">Cliick</span>
+          </div>
+          <ul class="flow-none" aria-hidden="true">
+            <li>Advertisers</li>
+            <li>Investors</li>
+            <li>Data brokers</li>
+          </ul>
+        </div>
+        <div class="copy">
+          <h2>Follow the money</h2>
+          <p>
+            It leads back to you.<br />
+            Members keep the lights on, so members are who we answer to.
+            That&rsquo;s the whole business model.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4 · Proof. Every line of the ledger is verified against the schema
+         and the OAuth handlers, not aspirational. If the model gains a
+         column, this section is wrong and must change. -->
     <section class="section">
       <div class="wrap two-col two-col--wide">
         <div class="copy">
-          <h2>Don&rsquo;t take our word for it.</h2>
+          <h2>Don&rsquo;t take our word for it</h2>
           <p>
-            Most privacy promises are policy, and policy changes with a funding
-            round. We would rather it be structural. So here is everything
-            Cliick holds about you &mdash; and everything it has nowhere to put.
+            Here&rsquo;s everything we know about you.<br />
+            It&rsquo;s a short list.
           </p>
-          <p class="ledger-note">
-            When you sign in, we ask Apple for no scopes at all and Google for
-            exactly one: <code>openid</code>. Your email address never reaches
-            us, so we could not email you if we wanted to. Membership runs
-            through the App&nbsp;Store and Google&nbsp;Play, so your card never
-            touches us either.
-          </p>
+          <details class="fine-print">
+            <summary>How we know</summary>
+            <p>
+              When you sign in, we ask Apple for no scopes at all and Google for
+              exactly one: <code>openid</code>. Your email address never reaches
+              us, so we could not email you if we wanted to. Membership runs
+              through the App&nbsp;Store and Google&nbsp;Play, so your card
+              never touches us either.
+            </p>
+          </details>
         </div>
         <div class="ledger">
           <div class="ledger-col">
@@ -128,18 +170,54 @@
       </div>
     </section>
 
-    <!-- Centred on the page's own ground, as Membership's closing section is.
-         The founders' quote used to open this section; it now captions their
-         photo in the hero, gallery-style, so the close is the origin note
-         alone. -->
+    <!-- 5 · Security -->
+    <section class="section">
+      <div class="wrap two-col two-col--flip">
+        <div class="key-art" role="img" aria-label="A phone holding its own key, signing every request it sends">
+          <div class="key-phone">
+            <svg class="key-glyph" viewBox="0 0 48 48" aria-hidden="true">
+              <circle cx="16" cy="24" r="9" fill="none" stroke="currentColor" stroke-width="3"/>
+              <path d="M25 24h18M37 24v7M42 24v5" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <ul class="key-sends" aria-hidden="true">
+            <li>signed</li>
+            <li>signed</li>
+            <li>signed</li>
+          </ul>
+        </div>
+        <div class="copy">
+          <h2>Locked, without the fuss</h2>
+          <p>
+            The best locks are the ones you never notice.<br />
+            Yours are built in, and the key never leaves your phone.
+          </p>
+          <details class="fine-print">
+            <summary>The details</summary>
+            <ul>
+              <li>Every request your phone makes is signed with a key that never leaves the device.</li>
+              <li>There are no Cliick passwords to steal. You sign in with Apple or Google.</li>
+              <li>Photos and videos open through signed links, not public addresses.</li>
+              <li>From the outside, a Cliick can&rsquo;t even be confirmed to exist.</li>
+              <li>Everything is encrypted in transit and at rest.</li>
+            </ul>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6 · Promise -->
     <section class="section section--center about-close">
       <div class="wrap">
-        <p class="founders-note">
-          Cliick started as a conversation between the two of us about where
-          our own family photos ought to live. It is self&#8209;funded: no
-          investors, and no funding round waiting to change the terms. A few
-          volunteers help out because they believe in it.
+        <h2>You&rsquo;ll hear it from us first</h2>
+        <p class="section-sub">
+          If anything here ever changes, we&rsquo;ll tell you before it does.<br />
+          Signed, sealed, and meant.
         </p>
+        <p class="signatures" aria-label="Signed, Nina and John">
+          <span>Nina</span><span class="signatures-amp">&amp;</span><span>John</span>
+        </p>
+        <a class="learn-more" href="/prototype2/start/">Start a Cliick</a>
       </div>
     </section>
 
