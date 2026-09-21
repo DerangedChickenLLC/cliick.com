@@ -796,12 +796,30 @@ body.nav-solid .nav-links a { color: #F2ECDE; }
 
 /* The footnote under the membership cards: the quiet register the cards
    already use for their own caps, centred under both of them. */
+/* The line the page lands on. At body size it read as one more paragraph
+   after the pills and got lost against the footer below it; this gives it
+   the weight of a closing statement without making it a heading. */
+/* Specificity, not order: .section-sub is defined further down the file and
+   would otherwise win on font-size. */
+.section-sub.promise-closer {
+  margin-top: 44px;
+  max-width: 26ch;
+  font-size: clamp(1.375rem, 2.1vw, 1.875rem);
+  font-weight: 500;
+  line-height: 1.35;
+  color: var(--ink-strong);
+}
+
 .plans-note {
-  margin: 22px auto 0;
-  max-width: 46ch;
+  /* Clear of the cards' own shadow, and narrower than they are so it reads
+     as a footnote to the pair rather than a third column of text. */
+  margin: 34px auto 0;
+  max-width: 56ch;
+  padding-inline: 12px;
   text-align: center;
+  text-wrap: balance;
   font-size: var(--fs-small);
-  line-height: 1.5;
+  line-height: 1.65;
   color: var(--ink-muted);
 }
 
