@@ -143,6 +143,42 @@ sweep of one should carry this rule into the others.
   invisible over photography but shows as visible stripes across the app's
   dark nav bar. Consider masking it to the photo area or dropping its opacity.
 
+- [ ] **Match the backdrop to the app's welcome screen — parked 2026-09-21,
+  to revisit.** A founder asked what the landing page would look like tinted
+  to the welcome screen's palette. Four passes were built and all four lost to
+  the shipped file; the variants were deleted and `hero-bg-sim.svg` is
+  untouched. What the attempt established, so the next one starts further on:
+
+  - **One file is the whole room.** `hero-bg-sim.svg` is the homepage hero,
+    the backdrop behind scene 0, and — blurred, via `body.page-gray::before` —
+    the fixed wash behind every subpage. Retinting it moves the entire site,
+    which is what makes this cheap to try and risky to ship.
+  - **The welcome screen is `Clique/assets/empty-fluffy.mp4`**, not
+    `fluffy_aurora.png`. The still is rose-dominant and sent the first pass
+    pink; the video is a milky way over a dawn horizon. Figma:
+    `Cliick — App Screens`, node 38-11 (the founder's note). Sampled from a
+    frame: night `#01030E` `#040F2E` `#101E3E` `#202C50`, band `#C0BBD7`
+    `#C6BDCC` `#E5C0B8`, horizon `#F0D7A9` `#E0A45E`.
+  - **The site's own palette**, for reference: ground runs `#101827` →
+    `#22283d` → `#4a3f4d` (plum) → `#8a5f4a` → `#c2884f` → `#e8bd82`; warm
+    bokeh `#ffd9a0`/`#ffb765`/`#ff9d45`; cool bokeh `#9fd4ff`/`#5f9fd6`/
+    `#3f7ab0`; mass `#171018`; key light `#ffe0b0`/`#ffc07a`/`#ffab5e`;
+    vignette `#000814`. The plum mid is what reads as mocha; it is the hinge
+    if the room is ever moved toward night.
+  - **What failed, and why.** Simulated stars looked cheap — if we ever want a
+    galaxy, blur a real frame of the video as its own layer rather than
+    drawing dots. Hue rotation alone produced a pink room with no character.
+    Brightening only the warm peaks was invisible at hero scale. Stretching
+    the range (deeper darks, brighter lights) was the most promising of the
+    four and still lost, probably because this hero already carries a headline
+    and a phone mockup, so the backdrop is supporting work by design.
+  - **Note for the tint attempt:** an even contrast curve crushes this file's
+    shadows to flat black before the lights move — it lives dark, so any curve
+    has to be lopsided (darks at roughly 40% of the lights' rate).
+  - **Related:** the same palette question is open for the onboarding flow, so
+    whatever lands should be expressed as a small table of values both can
+    read from.
+
 ## Colour schemes
 
 - [ ] **A second scheme is planned** (visitor-selectable, a completely

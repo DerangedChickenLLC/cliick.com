@@ -107,12 +107,14 @@
   .nav-links a,
   .footer-bottom a,
   .footer-dl span,
+  .fine-print summary,
   .learn-more {
     position: relative;
   }
   .nav-links a::after,
   .footer-bottom a::after,
   .footer-dl span::after,
+  .fine-print summary::before,
   .learn-more::before {
     content: "";
     position: absolute;
@@ -792,6 +794,17 @@ body.nav-solid .nav-links a { color: #F2ECDE; }
 .band.latte { background: var(--band-light); color: var(--ink-on-light); }
 .band.latte .plans { margin-top: 72px; }
 
+/* The footnote under the membership cards: the quiet register the cards
+   already use for their own caps, centred under both of them. */
+.plans-note {
+  margin: 22px auto 0;
+  max-width: 46ch;
+  text-align: center;
+  font-size: var(--fs-small);
+  line-height: 1.5;
+  color: var(--ink-muted);
+}
+
 /* --------------------------------------------------------------------------
    Objects on the light band
    The object and control tokens above assume a dark room: a panel occludes
@@ -1332,7 +1345,9 @@ body.page-gray .page-hero h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
 @media (max-width: 900px) {
   /* Stacked, copy always leads: a screenshot above the heading is a picture of
      something you have not been told about yet. */
-  .two-col--flip .win { order: 2; }
+  .two-col--flip .win,
+  .two-col--flip .money-flow,
+  .two-col--flip .key-art { order: 2; }
 }
 /* Narrower column than a full-width section, so the heading needs balancing
    for the same reason the page titles do: without it a short last word
@@ -1449,21 +1464,163 @@ body.page-gray .page-hero h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
   .page-hero--split .hero-people { order: -1; }
 }
 
-/* The About close is the origin note alone, centred on the page's own
-   ground rather than a band, so it needs the breathing room .latte used to
-   supply. It also opts out of the tightened .section + .section boundary
-   above it: this is the pause before the last word, not a boundary between
-   arguments. Specificity matches the rule it overrides, so it has to come
-   after it. */
-.section + .about-close { padding-top: 78px; }
+/* The About close: the promise, centred on the page's own ground. It opts
+   out of the tightened .section + .section boundary above it -- this is the
+   pause before the last word, not a boundary between arguments. Specificity
+   matches the rule it overrides, so it has to come after it. */
+.section + .about-close { padding-top: 96px; }
 .about-close { padding-bottom: 120px; }
-.about-close .founders-note { max-width: 54ch; margin-inline: auto; }
-.founders-note {
-  margin-top: 0;
-  font-size: var(--fs-body);
-  line-height: 1.5;
+.about-close .learn-more { margin-top: 30px; }
+
+/* Draft signatures. A handwriting face stands in until Nina and John sign
+   for real; swap this for their signature images. */
+.signatures {
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  gap: 18px;
+  font-family: "Caveat", cursive;
+  font-size: clamp(2.2rem, 3.4vw, 3rem);
+  line-height: 1;
+  color: var(--ink-strong);
+}
+.signatures-amp { font-size: 0.6em; color: var(--ink-faint); }
+
+/* One layer down: the facts behind a feeling, for the few who go looking.
+   The summary reads like the site's other text links, and says so when it
+   opens. */
+.fine-print { margin-top: 26px; max-width: 46ch; }
+.fine-print summary {
+  display: inline-block;
+  cursor: pointer;
+  list-style: none;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--accent);
+}
+.fine-print summary::-webkit-details-marker { display: none; }
+.fine-print summary::after { content: "  +"; }
+.fine-print[open] summary::after { content: "  \2212"; }
+.fine-print summary:hover { text-decoration: underline; text-underline-offset: 6px; }
+.fine-print p,
+.fine-print ul {
+  margin-top: 14px;
+  font-size: var(--fs-small);
+  line-height: 1.55;
   color: var(--ink-muted);
 }
+.two-col .copy .fine-print p { font-size: var(--fs-small); margin-top: 14px; }
+.fine-print ul { padding-left: 1.1em; }
+.fine-print li + li { margin-top: 6px; }
+.fine-print code {
+  font: 0.92em/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+  padding: 2px 6px;
+  border-radius: 5px;
+  background: var(--recess);
+  border: 1px solid var(--line);
+}
+
+/* Follow the money: you -> Cliick, with everyone else struck off to the
+   side. The same panel and the same struck dot as the ledger's "none"
+   column, so the two read as one argument. */
+.money-flow,
+.key-art {
+  justify-self: center;
+  width: min(100%, 440px);
+  background: var(--panel);
+  border: 1px solid var(--panel-edge);
+  border-radius: var(--radius-card);
+  box-shadow: var(--panel-shadow), inset 0 1px 0 var(--panel-lip);
+  padding: 40px 36px;
+}
+.flow-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.flow-node {
+  flex: none;
+  padding: 12px 22px;
+  border-radius: 999px;
+  border: 1px solid var(--panel-edge);
+  background: var(--recess);
+  font-weight: 600;
+  font-size: 1.125rem;
+}
+.flow-node--us { color: #1b1510; background: var(--accent); border-color: transparent; }
+.flow-arrow {
+  flex: 1;
+  height: 2px;
+  background: var(--accent);
+  position: relative;
+}
+.flow-arrow::after {
+  content: "";
+  position: absolute;
+  right: -1px;
+  top: 50%;
+  width: 10px;
+  height: 10px;
+  border-top: 2px solid var(--accent);
+  border-right: 2px solid var(--accent);
+  transform: translateY(-50%) rotate(45deg);
+}
+.flow-none {
+  list-style: none;
+  margin-top: 30px;
+  padding-top: 22px;
+  border-top: 1px solid var(--line);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 22px;
+}
+.flow-none li {
+  color: var(--ink-faint);
+  text-decoration: line-through;
+  text-decoration-color: var(--accent);
+  text-decoration-thickness: 1.5px;
+}
+
+/* Locked, without the fuss: a phone holding its own key, with every
+   request leaving it signed. */
+.key-art {
+  display: flex;
+  align-items: center;
+  gap: 26px;
+}
+.key-phone {
+  flex: none;
+  width: 118px;
+  height: 204px;
+  border-radius: 26px;
+  border: 2px solid var(--ink-faint);
+  display: grid;
+  place-items: center;
+  background: var(--recess);
+}
+.key-glyph { width: 58px; height: 58px; color: var(--accent); }
+.key-sends { list-style: none; flex: 1; display: grid; gap: 16px; }
+.key-sends li {
+  position: relative;
+  white-space: nowrap;
+  padding-left: clamp(34px, 8vw, 58px);
+  font-size: var(--fs-small);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+.key-sends li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: clamp(24px, 6vw, 46px);
+  border-top: 2px dashed var(--line);
+}
+.key-sends li::after { content: " \2713"; color: var(--accent); }
 
 /* The founders' quote, set as a caption under their photo: centred beneath
    it like a gallery label, but at a size and weight that holds its own
