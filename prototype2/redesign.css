@@ -2231,7 +2231,11 @@ body[data-look="pair"].page-gray::after {
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  opacity: 0.66;
+  /* Zero at the top: a landing is the photograph, the same as Home's scene 0,
+     which carries no pair at all. redesign.js ramps this to the stage's 0.66
+     as the hero scrolls out, so the colour is something that arrives while
+     you read rather than something the page opens with. */
+  opacity: var(--pair-op, 0);
   /* No transition: redesign.js interpolates these parts continuously against
      scroll progress, so the colour moves with the page rather than snapping
      at thresholds. The stepped version was fine on the homepage, where each

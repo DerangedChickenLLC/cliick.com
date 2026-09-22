@@ -220,7 +220,15 @@ if (faqSearch) {
       const t = p * (STOPS.length - 1) - seg;
       const a = STOPS[seg];
       const b = STOPS[seg + 1];
+      /* The pair arrives as the hero leaves, the way it arrives on Home when
+         scene 0 gives way. The hero's own height is the runway, so a tall
+         hero holds the photograph longer — which is what it is there for. */
+      const hero = document.querySelector(".page-hero");
+      const runway = hero ? hero.offsetHeight : window.innerHeight;
+      const arrive = Math.min(1, window.scrollY / runway);
+
       const st = body.style;
+      st.setProperty("--pair-op", (arrive * arrive * (3 - 2 * arrive) * 0.66).toFixed(3));
       st.setProperty("--pair-cool", rgb(a.cool, b.cool, t));
       st.setProperty("--pair-cool-a", mix(a.coolA, b.coolA, t).toFixed(3));
       st.setProperty("--pair-cool-y", mix(a.coolY, b.coolY, t).toFixed(1) + "%");
