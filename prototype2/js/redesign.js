@@ -154,3 +154,30 @@ if (faqSearch) {
   if (mq.addEventListener) mq.addEventListener("change", apply);
   else if (mq.addListener) mq.addListener(apply);
 })();
+
+// --- SPIKE (#37): look switcher ---------------------------------------------
+// The site reads brown once the hero photo fades toward the wall. Cycles the
+// candidate looks so they can be compared on the real pages rather than in
+// swatches. ?look=deep|ink|royal also works, and the choice follows you across
+// pages. REMOVE this block and the matching redesign.css block with the spike.
+{
+  const LOOKS = ["shipped", "deep", "ink", "royal"];
+  const fromQuery = new URLSearchParams(location.search).get("look");
+  const saved = LOOKS.includes(fromQuery) ? fromQuery : localStorage.getItem("proto-look");
+  if (LOOKS.includes(saved) && saved !== "shipped") document.body.dataset.look = saved;
+
+  const sw = document.createElement("button");
+  sw.className = "look-switch";
+  sw.type = "button";
+  const label = () => `Look: ${document.body.dataset.look || "shipped"}`;
+  sw.textContent = label();
+  sw.addEventListener("click", () => {
+    const cur = document.body.dataset.look || "shipped";
+    const next = LOOKS[(LOOKS.indexOf(cur) + 1) % LOOKS.length];
+    if (next === "shipped") delete document.body.dataset.look;
+    else document.body.dataset.look = next;
+    localStorage.setItem("proto-look", next);
+    sw.textContent = label();
+  });
+  document.body.appendChild(sw);
+}
