@@ -98,6 +98,20 @@ if (stageTrack) {
     }
   };
   stageMotion.addEventListener("change", applyMode);
+  /* .nav is position:fixed only while .stage-motion is on, so if the gate is
+     ever evaluated against a viewport width that has not settled — Safari
+     reports transient sizes while a window is being restored — the nav falls
+     back to position:absolute and scrolls away with the page instead of
+     riding the top. Re-run the gate itself, not just the scene maths, once
+     the page has finished loading.
+
+     pageshow with persisted covers Safari's back/forward cache: returning to
+     the page restores the DOM and the scroll position without firing load,
+     so whatever state was frozen on the way out is still sitting there. */
+  window.addEventListener("load", applyMode);
+  window.addEventListener("pageshow", (e) => {
+    if (e.persisted) applyMode();
+  });
   applyMode();
 }
 
