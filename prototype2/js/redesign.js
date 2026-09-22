@@ -214,19 +214,16 @@ if (faqSearch) {
        A bright tint here would be identical to painting normally, because
        nothing in the picture is brighter than it. That is what the previous
        values were doing, and why they read as raised highlights. */
-    /* The two floors are not the same height, because the two halves of the
-       photograph are not. The left is deep shade, so a dark indigo floor
-       catches it. The right is the sunset — its own darkest parts still sit
-       around 53,42,43, so a floor down at 56,28,26 never touched a pixel and
-       the warm side was doing nothing at all. Raised until it engages the
-       shade under the light without reaching the light itself: measured, it
-       moves the right-hand mid-tones and shadows while the highlights stay
-       within a point of untouched. Low blue on purpose — this lifts warm
-       shade toward gold, not toward a wash. */
+    /* Home's sequence, exactly: the same three pairs at the same alphas and
+       the same gradient centres as .stage-frame[data-scene="1|2|3"]. The
+       spread stops and the shadow-lift blend were both experiments off this
+       baseline; Home stayed the better read, so the subpages come back to it
+       rather than the other way round. If these change, change them there
+       too — the two sets have to stay identical. */
     const STOPS = [
-      { cool: [16, 24, 62], coolA: 0.95, coolY: 28, warm: [118, 76, 36], warmA: 0.85, warmY: 22 },
-      { cool: [30, 24, 70], coolA: 1.00, coolY: 46, warm: [128, 66, 58], warmA: 0.95, warmY: 38 },
-      { cool: [46, 26, 66], coolA: 0.95, coolY: 62, warm: [136, 92, 40], warmA: 1.00, warmY: 54 },
+      { cool: [38, 53, 111], coolA: 0.82, coolY: 46, warm: [224, 164, 94], warmA: 0.42, warmY: 38 },
+      { cool: [52, 54, 104], coolA: 0.70, coolY: 46, warm: [224, 144, 126], warmA: 0.44, warmY: 38 },
+      { cool: [62, 56, 108], coolA: 0.68, coolY: 46, warm: [217, 160, 91], warmA: 0.46, warmY: 38 },
     ];
     /* The opaque closing band covers the last stretch of every subpage, so the
        arc has to finish before you reach it or its end never gets seen. */
@@ -252,16 +249,15 @@ if (faqSearch) {
       const arrive = Math.min(1, window.scrollY / runway);
 
       const st = body.style;
-      /* Full strength: with `lighten` the layer opacity dilutes the floor back
-         toward the backdrop, so 0.66 was only two thirds of a lift. The mode
-         already protects the highlights — the scrim does not need holding
-         back the way an additive one did. */
-      st.setProperty("--pair-op", (arrive * arrive * (3 - 2 * arrive)).toFixed(3));
+            /* The ramp rides in the alphas rather than the layer's opacity, because
+         the layer also carries the stage shade and that must not fade in.
+         0.66 is what the stage scrim sits at. */
+      const gain = arrive * arrive * (3 - 2 * arrive) * 0.66;
       st.setProperty("--pair-cool", rgb(a.cool, b.cool, t));
-      st.setProperty("--pair-cool-a", mix(a.coolA, b.coolA, t).toFixed(3));
+      st.setProperty("--pair-cool-a", (mix(a.coolA, b.coolA, t) * gain).toFixed(3));
       st.setProperty("--pair-cool-y", mix(a.coolY, b.coolY, t).toFixed(1) + "%");
       st.setProperty("--pair-warm", rgb(a.warm, b.warm, t));
-      st.setProperty("--pair-warm-a", mix(a.warmA, b.warmA, t).toFixed(3));
+      st.setProperty("--pair-warm-a", (mix(a.warmA, b.warmA, t) * gain).toFixed(3));
       st.setProperty("--pair-warm-y", mix(a.warmY, b.warmY, t).toFixed(1) + "%");
     };
 
