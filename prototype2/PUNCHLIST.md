@@ -357,6 +357,19 @@ it is parked, not lost.
 
 ## About — follow-ups
 
+- [ ] **The security scene was dropped, 2026-09-22 — it needs specifics or
+  nothing.** About carried a scene built on five guarantees (signed requests,
+  no Cliick passwords, signed media links, a Cliick that cannot be confirmed
+  to exist from outside, encrypted in transit and at rest). It was cut because
+  the lines read as table stakes: "every request is signed with a key that
+  never leaves the device" sounds like SSL to anyone technical, and SSL is not
+  the novelty. What is actually unusual — the key is device-bound, so a stolen
+  token alone cannot be replayed from another phone — was never said, because
+  it needs confirming against the backend first. Bring the scene back only
+  with claims that are both verified and clearly beyond transport security,
+  in words a non-engineer can hold. The ledger keeps carrying the
+  data-minimisation half on its own in the meantime.
+
 - [ ] **Try the founders' quote at the top of About.** Reverted for now
   (`d4ffe44`, reverted in `1a0791b`), not rejected: the reasoning behind it
   stands, which is that most visitors never reach the bottom of a page and the
