@@ -2259,6 +2259,34 @@ body[data-look="pair"] {
   --band-alt: rgba(234, 240, 255, 0.035);
 }
 
+/* --- The accents ----------------------------------------------------------
+   Same fix as the CTA, applied to the rest of the controls. Tan at text
+   weight still reads gold; tan as a FILL is a brown block at any size. So
+   the two roles split: filled controls (segment ON, badges, the progress
+   bar, the "us" node) go paper-neutral like .nav-cta already does, and the
+   text accent brightens so it stays gold instead of sinking to brown. The
+   tint parts behind chips and hairlines go cool, since a warm wash at 10%
+   over a blue page is exactly the mud we are removing. */
+body[data-look="pair"] {
+  --accent: #F7DCA8;
+  --glow: 232, 238, 255;
+  --control-on: #FAF7F1;
+  --control-on-ink: #16130E;
+  --ink-strong: #F3F2EF;
+  --ink-muted: #C9C8CC;
+  --ink-faint: #9C9BA3;
+  --wall: #16171E;
+}
+/* the subpage hero paints a warm-black under the photo */
+body[data-look="pair"] .hero { background: #0C0D13; }
+/* the one filled node that hardcodes its ink against --accent */
+body[data-look="pair"] .flow-node--us { color: #16130E; }
+
+/* The latte band stays warm on purpose. Its ground is cream because the
+   photograph above it is a cup of coffee — cool it and the one warm beat in
+   the site turns into a cold room with a hot drink in it. It is a single
+   band, it is light, and nothing about it reads brown. Left alone. */
+
 /* The switcher itself. */
 .look-switch {
   position: fixed;
