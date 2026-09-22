@@ -48,6 +48,35 @@ Where this applies beyond the marketing site: the FAQ (38 answers, several of
 which explain mechanics), the app's own strings, and the store listings. Any
 sweep of one should carry this rule into the others.
 
+## Scope principle — real use cases we are not building for
+
+Two requests keep arriving, and both get answered from the same place
+rather than re-argued each time:
+
+> **End-to-end encryption** and **child accounts** are out of scope — not
+> because they are unimportant, but because they serve people Cliick is not
+> built for.
+
+E2EE answers a different question from the one Cliick answers. Its own
+positioning is elsewhere in this file and in the security memory; the short
+version is that privacy here comes from structure — no email or phone on
+file, no search, no strangers — and that encrypting anonymous traffic invites
+a user base this product is not trying to serve. Someday, maybe. Not now, and
+the site must not promise it either way.
+
+Child accounts are the same shape of answer: a real need, a different
+product, and one that brings obligations (verifiable parental consent,
+age assurance, a moderation apparatus) that a two-person company cannot
+carry honestly today. The FAQ already says Cliick is not built specifically
+for kids and leaves teen use to a parent's judgement.
+
+**How this shows up in copy.** Do not write to the audience these decisions
+exclude. The reader who recognises `openid` is mostly already on Signal for
+reasons this site does not answer — writing for them costs the readers the
+product is for. Say what Cliick does, in the words its own people use, and
+let the FAQ hold the direct questions. 99.9% of users want the serenity
+thing; write to them.
+
 ## Copy principle — a headline that speaks takes a period
 
 Punctuation in the headlines looked inconsistent until the pages were read
