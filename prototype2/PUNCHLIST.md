@@ -357,6 +357,23 @@ it is parked, not lost.
 
 ## About — follow-ups
 
+- [ ] **Two verified claims with no home yet.** Both were checked against the
+  code and then cut from About for the same reason: they need room to explain,
+  and the panels assert.
+  - **Notifications don't spill on the way to your phone.** The cleartext
+    banner carries the actor's name and a verb phrase ("Left a comment."); the
+    message text and the post author's name travel inside an encrypted
+    envelope the client opens (#500/#501), and the code's rule is that banners
+    never name anyone but the actor. Cut because framing it as "encrypted
+    notifications" invites the end-to-end question Cliick does not answer —
+    *only notifications?* — and framing it around the banner describes a
+    hazard most readers have never noticed. It wants a page that can teach
+    before it claims.
+  - **Media has no public address.** Every media URL is signed
+    (`CloudFrontSignerService`), 30-minute minimum validity quantized into
+    10-minute windows so repeat requests share a cacheable URL. Nothing sits
+    at a guessable path.
+
 - [ ] **The security scene was dropped, 2026-09-22 — it needs specifics or
   nothing.** About carried a scene built on five guarantees (signed requests,
   no Cliick passwords, signed media links, a Cliick that cannot be confirmed
