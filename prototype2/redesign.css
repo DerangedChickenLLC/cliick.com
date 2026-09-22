@@ -1514,6 +1514,41 @@ body.page-gray .page-hero h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
 }
 .signatures-amp { font-size: 0.6em; color: var(--ink-faint); }
 
+/* The three structural oddities: no profile page, no search, a code you can
+   change. Panels rather than prose, for the same reason the ledger is a
+   ledger — these are properties of the build, and a row of objects reads as
+   a specification where a paragraph reads as a boast. */
+.oddities {
+  /* Three to a row at full width, so five items break 3 + 2 rather than
+     stranding one on its own line. */
+  margin: 44px auto 0;
+  max-width: 1040px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  text-align: left;
+}
+.oddity {
+  background: var(--panel);
+  border: 1px solid var(--panel-edge);
+  border-radius: var(--radius-card);
+  box-shadow: var(--panel-shadow-sm), inset 0 1px 0 var(--panel-lip);
+  padding: 28px 28px 30px;
+}
+.oddity h3 {
+  font-size: var(--fs-small);
+  font-weight: 600;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+.oddity p {
+  margin-top: 14px;
+  font-size: var(--fs-body);
+  line-height: 1.5;
+  color: var(--ink-strong);
+}
+
 /* One layer down: the facts behind a feeling, for the few who go looking.
    The summary reads like the site's other text links, and says so when it
    opens. */
