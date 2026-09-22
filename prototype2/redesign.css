@@ -1680,6 +1680,30 @@ body.page-gray .page-hero h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
   color: var(--ink-muted);
 }
 .founders-caption-by::before { content: "\2014\00a0\00a0"; }
+/* Place and occasion, the way a gallery label carries them under the title:
+   quieter than the attribution, and the tie between the photo and the story
+   the page opens with. */
+.founders-caption-where {
+  display: block;
+  margin-top: 6px;
+  font-size: 0.8rem;
+  font-style: italic;
+  color: var(--ink-faint);
+}
+
+/* The close: the founders' role under their signatures, then the host line
+   that hands off to Membership. */
+.founders-role {
+  margin-top: 10px;
+  font-size: var(--fs-small);
+  letter-spacing: 0.02em;
+  color: var(--ink-faint);
+}
+.section-sub.about-host {
+  margin-top: 40px;
+  max-width: 44ch;
+  color: var(--ink-muted);
+}
 
 /* Phone-in-window, static (About) */
 .win--inline { max-width: 758px; width: 100%; justify-self: center; }
