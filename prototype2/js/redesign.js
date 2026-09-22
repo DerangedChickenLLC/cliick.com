@@ -203,11 +203,21 @@ if (faqSearch) {
 {
   const body = document.body;
   if (body.classList.contains("page-gray")) {
+    /* A walk you can see. The scene colours these came from are within a few
+       RGB points of each other — on Home each one arrives under a new scene
+       and reads as movement, but as a pure backdrop it was nothing. Spread
+       far enough to register: royal blue and gold at the top, through
+       indigo-plum and rose, to warm violet and honey. The alphas and the
+       gradient centres travel too, so the room also changes where it is lit
+       from, not only what colour the light is. */
     const STOPS = [
-      { cool: [38, 53, 111], coolA: 0.72, coolY: 34, warm: [224, 164, 94], warmA: 0.36, warmY: 26 },
-      { cool: [52, 54, 104], coolA: 0.70, coolY: 42, warm: [224, 144, 126], warmA: 0.38, warmY: 34 },
-      { cool: [62, 56, 108], coolA: 0.68, coolY: 50, warm: [217, 160, 91], warmA: 0.40, warmY: 42 },
+      { cool: [30, 46, 120], coolA: 0.70, coolY: 28, warm: [232, 170, 92], warmA: 0.32, warmY: 22 },
+      { cool: [58, 48, 132], coolA: 0.80, coolY: 46, warm: [230, 132, 116], warmA: 0.48, warmY: 38 },
+      { cool: [84, 56, 124], coolA: 0.72, coolY: 62, warm: [238, 176, 104], warmA: 0.56, warmY: 54 },
     ];
+    /* The opaque closing band covers the last stretch of every subpage, so the
+       arc has to finish before you reach it or its end never gets seen. */
+    const RUNWAY = 0.78;
     const mix = (a, b, t) => a + (b - a) * t;
     const rgb = (a, b, t) => a.map((v, i) => Math.round(mix(v, b[i], t))).join(", ");
     let queued = false;
@@ -215,7 +225,8 @@ if (faqSearch) {
     const paint = () => {
       queued = false;
       const span = document.documentElement.scrollHeight - window.innerHeight;
-      const p = span > 0 ? Math.min(1, Math.max(0, window.scrollY / span)) : 0;
+      const raw = span > 0 ? Math.min(1, Math.max(0, window.scrollY / span)) : 0;
+      const p = Math.min(1, raw / RUNWAY);
       const seg = Math.min(STOPS.length - 2, Math.floor(p * (STOPS.length - 1)));
       const t = p * (STOPS.length - 1) - seg;
       const a = STOPS[seg];
