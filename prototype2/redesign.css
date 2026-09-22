@@ -1173,6 +1173,19 @@ body.nav-solid .nav-links a { color: #F2ECDE; }
 }
 .plan-scale--guest { --fill: 2.4%; }
 .plan-scale--premium { --fill: 100%; }
+/* A warm tip where the bar reaches the cap. Only on the premium bar: the
+   gradient is painted across the FILL, not the track, so on the 2.4% guest
+   bar the same stop would land as a one-pixel warm edge — a hairline, which
+   is the thing --accent-mark exists to keep off. The tip also means
+   something here, since guest never arrives at the end. */
+.plan-scale--premium .plan-scale-fill {
+  background: linear-gradient(
+    90deg,
+    rgba(var(--glow), 0.55) 0%,
+    var(--accent-mark) 58%,
+    var(--accent) 100%
+  );
+}
 .plan-scale-label {
   margin-top: 10px;
   font-size: var(--fs-small);
