@@ -904,25 +904,26 @@ body.nav-solid .nav-links a { color: #F2ECDE; }
    browser chrome is taller than Safari's at the same window size — the
    viewport, not the engine.
 
-   Below 860px the copy scales with the height it has; below 780px the
-   eyebrow stands down rather than fight for the same band. */
-/* Specificity, not order: the .scene rules below this block would
+   The repair is where the scene centres, not how big it is: below 860px it
+   centres in the space under the eyebrow rather than in the whole frame,
+   so the eyebrow keeps its band at every height and the copy keeps its
+   size. Only under 640px, where even that runs out of room, does the type
+   come down.
+
+   Specificity, not order: the .scene rules below this block would
    otherwise win on top and font-size. */
 @media (min-width: 1200px) and (max-height: 860px) {
-  .stage-frame .scene h3 { font-size: clamp(1.75rem, 3.7vh, 2.6rem); }
-  .stage-frame .scene p { font-size: 1.0625rem; margin-top: 16px; }
-  .stage-frame .scene .learn-more { margin-top: 22px; }
-}
-@media (min-width: 1200px) and (max-height: 780px) {
-  .stage-frame .stage-eyebrow { display: none; }
-  /* Centred in the frame, a tall block eventually climbs under the fixed
-     nav no matter how small the type gets. Below this height the scene
-     centres in the space the nav leaves instead, which cannot collide. */
   .stage-frame .scene {
-    top: calc(var(--nav-h) + (100% - var(--nav-h)) / 2);
+    --stage-zone: calc(var(--nav-h) + 44px);
+    top: calc(var(--stage-zone) + (100% - var(--stage-zone)) / 2);
   }
   .stage-frame .scene.is-past { transform: translateY(calc(-50% - 70px)); }
   .stage-frame .scene.is-future { transform: translateY(calc(-50% + 70px)); }
+}
+@media (min-width: 1200px) and (max-height: 640px) {
+  .stage-frame .scene h3 { font-size: clamp(2.25rem, 5.2vh, 3.25rem); }
+  .stage-frame .scene p { font-size: 1.0625rem; margin-top: 16px; }
+  .stage-frame .scene .learn-more { margin-top: 22px; }
 }
 
 .scene {
