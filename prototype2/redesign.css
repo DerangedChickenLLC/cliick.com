@@ -2174,24 +2174,33 @@ body.page-gray .page-hero h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
   inset: 0;
   pointer-events: none;
   opacity: 0;
-  transition: opacity 0.9s ease, background 0.9s ease;
+  /* background-image rather than background: the drift below rides on
+     background-position, and transitioning the shorthand would animate every
+     frame of it into a smear. */
+  transition: opacity 0.9s ease, background-image 0.9s ease;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  /* The two pools drift in opposite directions as the stage plays, the way
+     they do down a subpage — see redesign.js. The colours still step per
+     scene; it is the light that moves. */
+  background-position: 0 var(--stage-cool-d, 0px), 0 var(--stage-warm-d, 0px);
 }
 
 /* indigo <-> gold */
 .stage-frame[data-scene="1"]::before {
-  background:
+  background-image:
     radial-gradient(ellipse at 16% 46%, rgba(38, 53, 111, 0.82) 0%, rgba(38, 53, 111, 0) 60%),
     radial-gradient(ellipse at 86% 38%, rgba(224, 164, 94, 0.42) 0%, rgba(224, 164, 94, 0) 58%);
 }
 /* plum <-> rose-gold */
 .stage-frame[data-scene="2"]::before {
-  background:
+  background-image:
     radial-gradient(ellipse at 16% 46%, rgba(52, 54, 104, 0.70) 0%, rgba(58, 47, 110, 0) 60%),
     radial-gradient(ellipse at 86% 38%, rgba(224, 144, 126, 0.44) 0%, rgba(224, 144, 126, 0) 58%);
 }
 /* violet <-> amber, handing off to the gold of the band below */
 .stage-frame[data-scene="3"]::before {
-  background:
+  background-image:
     radial-gradient(ellipse at 16% 46%, rgba(62, 56, 108, 0.68) 0%, rgba(74, 46, 112, 0) 60%),
     radial-gradient(ellipse at 86% 38%, rgba(217, 160, 91, 0.46) 0%, rgba(217, 160, 91, 0) 58%);
 }

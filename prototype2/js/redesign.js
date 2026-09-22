@@ -30,6 +30,16 @@ if (stageTrack) {
     BOUNDS.forEach((b, i) => {
       if (p >= b) scene = i + 1;
     });
+    /* The light drifts while the stage plays, the same gesture the subpages
+       use down their own length: cool sinks, warm rises at 0.7 the rate.
+       Outside the scene check on purpose — the colours step, the light does
+       not, and that continuous motion is what reads as the glow being alive
+       rather than the page being tinted. */
+    const drift = p * window.innerHeight * 0.26;
+    const fs = frame.style;
+    fs.setProperty("--stage-cool-d", drift.toFixed(1) + "px");
+    fs.setProperty("--stage-warm-d", (-drift * 0.7).toFixed(1) + "px");
+
     if (scene === current) return;
     current = scene;
     frame.dataset.scene = String(scene);
