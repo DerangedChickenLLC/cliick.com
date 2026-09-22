@@ -2131,88 +2131,76 @@ body.page-gray .page-hero h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
    SPIKE (#37) — the site reads brown once you scroll
    --------------------------------------------------------------------------
    The landing reads royal: blue and gold, because the hero photo is at full
-   strength. Scrolling fades it toward the wall, and the wall is a warm
-   charcoal — so what is left as the colour drains out is brown.
+   strength. Scrolling fades it toward the wall, and what is left as the
+   colour drains out is brown. The wall is not the main culprit — the brown
+   is the photo's own amber half, blurred across the frame, so deepening it
+   only made it worse. Holding the photo instead of fading it is what worked.
 
-   Three looks, switched with ?look=deep|ink|royal (or the button, bottom
-   right). Nothing below this line runs without that attribute, so the
-   shipped look is untouched.
+   Looks: ?look=hold|hue|hue-bold, or the button bottom right.
+   Dropped after the first pass: deep, ink, royal, hold-light.
 
    REMOVE this block, the switcher in js/redesign.js, and every data-look
    attribute before launch.
    ========================================================================== */
 
-/* 1 · DEEP — the photo deepens instead of washing out. Same wall. */
-body[data-look="deep"] .stage-frame:not([data-scene="0"]) .stage-bg {
-  opacity: 0.72;
-  filter: blur(26px) saturate(1.12) brightness(0.78);
+/* --- Shared base: the backdrop never fades, and nothing tan survives ----- */
+body[data-look] .stage-frame:not([data-scene="0"]) .stage-bg {
+  opacity: 1;
+  transform: none;
 }
-body[data-look="deep"] .stage-frame:not([data-scene="0"]) {
-  background: #1A1712;
+body[data-look] .stage-frame:not([data-scene="0"]) .stage-shade { opacity: 1; }
+/* The grey mock window framed the muted wall; over a live photo it is a
+   smudge. */
+body[data-look] .stage-frame:not([data-scene="0"]) .stage-window { opacity: 0; }
+body[data-look] .nav-cta {
+  background: #FAF7F1;
+  color: #16130E;
+}
+body[data-look].nav-solid .nav {
+  /* Neutral and cool rather than warm-black: rgba(23,20,15,.72) is a brown
+     pane, and everything gold behind it goes muddy. */
+  background: rgba(10, 11, 14, 0.52);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.10);
 }
 
-/* 2 · INK — the wall moves to a deep blue-ink and keeps gold as the accent.
-   --wall is also --page-gray, so this reaches every subpage. */
-body[data-look="ink"] {
-  --wall: #161A24;
-  --panel: rgba(18, 21, 30, 0.82);
-  --panel-hover: rgba(26, 30, 42, 0.90);
-  --recess: rgba(0, 0, 0, 0.34);
-}
-body[data-look="ink"] .stage-frame:not([data-scene="0"]) .stage-bg {
-  opacity: 0.66;
-  filter: blur(26px) saturate(1.0) brightness(0.92);
-}
-/* The brown is mostly the photo's amber half, blurred across the frame — so
-   a cool scrim over it, rather than a darker wall behind it. */
-body[data-look="ink"] .stage-frame:not([data-scene="0"])::before {
+/* 1 · HOLD — the landing backdrop, unchanged through every scene. */
+body[data-look="hold"] .stage-frame:not([data-scene="0"]) .stage-bg { filter: none; }
+
+/* 2 · PAIR — the landing is blue on the left and gold on the right, so the
+   scenes keep that pairing and move both ends together: a cool side and its
+   warm complement, one pair per scene. An earlier pass tinted only the left,
+   which left the photo's amber doing the same thing in every scene. */
+body[data-look="pair"] .stage-frame::before {
   content: "";
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background: linear-gradient(120deg, rgba(14, 20, 38, 0.78) 0%, rgba(18, 24, 44, 0.52) 58%, rgba(24, 28, 46, 0.34) 100%);
+  opacity: 0;
+  transition: opacity 0.9s ease, background 0.9s ease;
 }
+body[data-look="pair"] .stage-frame .stage-bg { filter: none; z-index: -1; }
 
-/* 3 · ROYAL — both: ink wall, and the photo deepens rather than fades. The
-   glow cools so the pools of light stop reading as candlelight. */
-body[data-look="royal"] {
-  --wall: #141A28;
-  --panel: rgba(16, 21, 34, 0.84);
-  --panel-hover: rgba(24, 31, 48, 0.90);
-  --recess: rgba(0, 0, 0, 0.36);
-  --glow: 214, 226, 255;
-}
-body[data-look="royal"] .stage-frame:not([data-scene="0"]) .stage-bg {
-  /* Lean on the photo's cool corner rather than its amber one, and keep the
-     gold as a rim rather than a wash. */
-  opacity: 0.80;
-  filter: blur(22px) saturate(1.16) brightness(0.80);
-  object-position: 18% 62%;
-}
-body[data-look="royal"] .stage-frame:not([data-scene="0"]) {
-  background: #101624;
-}
-body[data-look="royal"] .stage-frame:not([data-scene="0"])::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
+/* indigo ↔ gold */
+body[data-look="pair"] .stage-frame[data-scene="1"]::before {
   background:
-    radial-gradient(ellipse at 78% 38%, rgba(233, 200, 138, 0.16) 0%, rgba(233, 200, 138, 0) 58%),
-    linear-gradient(118deg, rgba(10, 16, 34, 0.86) 0%, rgba(14, 22, 44, 0.62) 55%, rgba(20, 26, 48, 0.40) 100%);
+    radial-gradient(ellipse at 16% 46%, rgba(38, 53, 111, 0.82) 0%, rgba(38, 53, 111, 0) 60%),
+    radial-gradient(ellipse at 86% 38%, rgba(224, 164, 94, 0.42) 0%, rgba(224, 164, 94, 0) 58%);
 }
-
-/* The subpages take their colour from the same photo, blurred as a fixed
-   wash (body.page-gray::before) — so the wall alone never moved them. Pull
-   the wash back and let the wall carry the room. */
-body[data-look="ink"].page-gray::before {
-  opacity: 0.36;
-  filter: blur(44px) saturate(0.88) brightness(0.86);
+/* plum ↔ rose-gold */
+body[data-look="pair"] .stage-frame[data-scene="2"]::before {
+  background:
+    radial-gradient(ellipse at 16% 46%, rgba(52, 54, 104, 0.70) 0%, rgba(58, 47, 110, 0) 60%),
+    radial-gradient(ellipse at 86% 38%, rgba(224, 144, 126, 0.44) 0%, rgba(224, 144, 126, 0) 58%);
 }
-body[data-look="royal"].page-gray::before {
-  opacity: 0.30;
-  filter: blur(44px) saturate(0.94) brightness(0.8);
+/* violet ↔ amber, handing off to the gold of the band below */
+body[data-look="pair"] .stage-frame[data-scene="3"]::before {
+  background:
+    radial-gradient(ellipse at 16% 46%, rgba(62, 56, 108, 0.68) 0%, rgba(74, 46, 112, 0) 60%),
+    radial-gradient(ellipse at 86% 38%, rgba(217, 160, 91, 0.46) 0%, rgba(217, 160, 91, 0) 58%);
 }
+body[data-look="pair"] .stage-frame:not([data-scene="0"])::before { opacity: 0.66; }
 
 /* The switcher itself. */
 .look-switch {
@@ -2229,9 +2217,3 @@ body[data-look="royal"].page-gray::before {
   letter-spacing: 0.04em;
   cursor: pointer;
 }
-
-/* The scrims paint as ::before — generated first, so every positioned child
-   after them (window, phone, copy, eyebrow) paints on top without needing a
-   z-index of its own. Only the backdrop is pushed behind. */
-body[data-look="ink"] .stage-frame .stage-bg,
-body[data-look="royal"] .stage-frame .stage-bg { z-index: -1; }

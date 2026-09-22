@@ -161,7 +161,7 @@ if (faqSearch) {
 // swatches. ?look=deep|ink|royal also works, and the choice follows you across
 // pages. REMOVE this block and the matching redesign.css block with the spike.
 {
-  const LOOKS = ["shipped", "deep", "ink", "royal"];
+  const LOOKS = ["shipped", "hold", "pair"];
   const fromQuery = new URLSearchParams(location.search).get("look");
   const saved = LOOKS.includes(fromQuery) ? fromQuery : localStorage.getItem("proto-look");
   if (LOOKS.includes(saved) && saved !== "shipped") document.body.dataset.look = saved;
