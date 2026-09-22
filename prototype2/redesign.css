@@ -2236,18 +2236,25 @@ body[data-look="pair"].page-gray::after {
      as the hero scrolls out, so the colour is something that arrives while
      you read rather than something the page opens with. */
   opacity: var(--pair-op, 0);
+  /* Painted normally the pair adds light on top of light — it lands where the
+     photograph is already bright and raises the highlights. `lighten` takes
+     the per-channel maximum instead, so anywhere the photo is brighter than
+     the tint nothing happens at all, and anywhere it is darker the tint sets
+     the floor. The colour lives in the shadows and the lit half is left
+     alone. */
+  mix-blend-mode: lighten;
   /* No transition: redesign.js interpolates these parts continuously against
      scroll progress, so the colour moves with the page rather than snapping
      at thresholds. The stepped version was fine on the homepage, where each
      step lands on a scene you can see arriving; on a subpage there is nothing
      to explain the jump. */
   background:
-    radial-gradient(ellipse at 14% var(--pair-cool-y, 34%),
-      rgba(var(--pair-cool, 38, 53, 111), var(--pair-cool-a, 0.72)) 0%,
-      rgba(var(--pair-cool, 38, 53, 111), 0) 60%),
-    radial-gradient(ellipse at 88% var(--pair-warm-y, 26%),
-      rgba(var(--pair-warm, 224, 164, 94), var(--pair-warm-a, 0.36)) 0%,
-      rgba(var(--pair-warm, 224, 164, 94), 0) 58%);
+    radial-gradient(ellipse 78% 86% at 12% var(--pair-cool-y, 34%),
+      rgba(var(--pair-cool, 16, 24, 62), var(--pair-cool-a, 0.95)) 0%,
+      rgba(var(--pair-cool, 16, 24, 62), 0) 78%),
+    radial-gradient(ellipse 78% 86% at 90% var(--pair-warm-y, 26%),
+      rgba(var(--pair-warm, 44, 30, 16), var(--pair-warm-a, 0.85)) 0%,
+      rgba(var(--pair-warm, 44, 30, 16), 0) 76%);
 }
 
 /* Home is the look, so the subpages stop approximating it and take the same

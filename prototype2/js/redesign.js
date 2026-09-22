@@ -203,17 +203,21 @@ if (faqSearch) {
 {
   const body = document.body;
   if (body.classList.contains("page-gray")) {
-    /* A walk you can see. The scene colours these came from are within a few
-       RGB points of each other — on Home each one arrives under a new scene
-       and reads as movement, but as a pure backdrop it was nothing. Spread
-       far enough to register: royal blue and gold at the top, through
-       indigo-plum and rose, to warm violet and honey. The alphas and the
-       gradient centres travel too, so the room also changes where it is lit
-       from, not only what colour the light is. */
+    /* EXPERIMENT (#37) — the colour lives in the shadows, not the highlights.
+       The scrim blends with `lighten`, which takes the per-channel maximum:
+       it can only ever raise a pixel to the tint, never past it. So the tint
+       is a DARK colour — it sets a floor. Black corners become deep indigo;
+       anything already brighter than the floor (the photograph's own sunset)
+       is left exactly as it was. That is a split tone: cool shadows, the
+       photo's warm highlights untouched.
+
+       A bright tint here would be identical to painting normally, because
+       nothing in the picture is brighter than it. That is what the previous
+       values were doing, and why they read as raised highlights. */
     const STOPS = [
-      { cool: [30, 46, 120], coolA: 0.70, coolY: 28, warm: [232, 170, 92], warmA: 0.32, warmY: 22 },
-      { cool: [58, 48, 132], coolA: 0.80, coolY: 46, warm: [230, 132, 116], warmA: 0.48, warmY: 38 },
-      { cool: [84, 56, 124], coolA: 0.72, coolY: 62, warm: [238, 176, 104], warmA: 0.56, warmY: 54 },
+      { cool: [16, 24, 62], coolA: 0.95, coolY: 28, warm: [44, 30, 16], warmA: 0.85, warmY: 22 },
+      { cool: [30, 24, 70], coolA: 1.00, coolY: 46, warm: [56, 28, 26], warmA: 0.95, warmY: 38 },
+      { cool: [46, 26, 66], coolA: 0.95, coolY: 62, warm: [60, 40, 18], warmA: 1.00, warmY: 54 },
     ];
     /* The opaque closing band covers the last stretch of every subpage, so the
        arc has to finish before you reach it or its end never gets seen. */
@@ -239,7 +243,11 @@ if (faqSearch) {
       const arrive = Math.min(1, window.scrollY / runway);
 
       const st = body.style;
-      st.setProperty("--pair-op", (arrive * arrive * (3 - 2 * arrive) * 0.66).toFixed(3));
+      /* Full strength: with `lighten` the layer opacity dilutes the floor back
+         toward the backdrop, so 0.66 was only two thirds of a lift. The mode
+         already protects the highlights — the scrim does not need holding
+         back the way an additive one did. */
+      st.setProperty("--pair-op", (arrive * arrive * (3 - 2 * arrive)).toFixed(3));
       st.setProperty("--pair-cool", rgb(a.cool, b.cool, t));
       st.setProperty("--pair-cool-a", mix(a.coolA, b.coolA, t).toFixed(3));
       st.setProperty("--pair-cool-y", mix(a.coolY, b.coolY, t).toFixed(1) + "%");
