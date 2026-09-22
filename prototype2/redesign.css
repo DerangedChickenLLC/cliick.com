@@ -810,6 +810,16 @@ body.nav-solid .nav-links a { color: #F2ECDE; }
   color: var(--ink-strong);
 }
 
+/* Below ~992px the two cards go one-up, and a note after them becomes a note
+   after Premium: "free for you and five others" lands directly under $6/month
+   and 250 members, and "want a bigger Cliick?" follows the bigger plan.
+   Stacked, it leads instead — which is what it always was, a preamble to the
+   pair rather than a footnote to the last card. */
+@media (max-width: 991px) {
+  .page-hero-aside { display: flex; flex-direction: column; }
+  .page-hero-aside .plans-note { order: -1; margin: 0 auto 26px; }
+}
+
 .plans-note {
   /* Clear of the cards' own shadow, and narrower than they are so it reads
      as a footnote to the pair rather than a third column of text. */
