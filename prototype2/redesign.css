@@ -2203,36 +2203,30 @@ body[data-look="pair"] .stage-frame[data-scene="3"]::before {
 body[data-look="pair"] .stage-frame:not([data-scene="0"])::before { opacity: 0.66; }
 
 /* --- PAIR on the subpages ------------------------------------------------
-   The stage is a homepage thing; the subpages get the same idea as a fixed
-   pair behind the whole page, one per page, so the site still has no single
-   colour. Pages are identified by something only they contain, so the spike
-   touches no HTML: About has the founders' photo, Membership the plan cards,
-   FAQ its search field, Start its numbered steps. */
+   The homepage's colour moves as you scroll, so the subpages do the same
+   thing rather than each holding a colour of its own. Same three pairs, same
+   order: the page walks cool-to-warm from top to bottom. redesign.js sets
+   data-tint from scroll progress. */
 body[data-look="pair"].page-gray::after {
   content: "";
   position: fixed;
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  /* the shipped pool of light is warm; these replace it */
+  transition: background 0.9s ease;
   background:
-    radial-gradient(ellipse at 14% 30%, rgba(38, 53, 111, 0.72) 0%, rgba(38, 53, 111, 0) 58%),
-    radial-gradient(ellipse at 88% 22%, rgba(224, 164, 94, 0.34) 0%, rgba(224, 164, 94, 0) 56%);
+    radial-gradient(ellipse at 14% 34%, rgba(38, 53, 111, 0.72) 0%, rgba(38, 53, 111, 0) 60%),
+    radial-gradient(ellipse at 88% 26%, rgba(224, 164, 94, 0.36) 0%, rgba(224, 164, 94, 0) 58%);
 }
-body[data-look="pair"].page-gray:has(.plans)::after {
+body[data-look="pair"].page-gray[data-tint="2"]::after {
   background:
-    radial-gradient(ellipse at 14% 30%, rgba(52, 54, 104, 0.70) 0%, rgba(52, 54, 104, 0) 58%),
-    radial-gradient(ellipse at 88% 22%, rgba(224, 144, 126, 0.36) 0%, rgba(224, 144, 126, 0) 56%);
+    radial-gradient(ellipse at 14% 42%, rgba(52, 54, 104, 0.70) 0%, rgba(52, 54, 104, 0) 60%),
+    radial-gradient(ellipse at 88% 34%, rgba(224, 144, 126, 0.38) 0%, rgba(224, 144, 126, 0) 58%);
 }
-body[data-look="pair"].page-gray:has(.faq-search)::after {
+body[data-look="pair"].page-gray[data-tint="3"]::after {
   background:
-    radial-gradient(ellipse at 14% 30%, rgba(62, 56, 108, 0.68) 0%, rgba(62, 56, 108, 0) 58%),
-    radial-gradient(ellipse at 88% 22%, rgba(217, 160, 91, 0.36) 0%, rgba(217, 160, 91, 0) 56%);
-}
-body[data-look="pair"].page-gray:has(.steps)::after {
-  background:
-    radial-gradient(ellipse at 14% 30%, rgba(44, 62, 118, 0.70) 0%, rgba(44, 62, 118, 0) 58%),
-    radial-gradient(ellipse at 88% 22%, rgba(226, 178, 110, 0.34) 0%, rgba(226, 178, 110, 0) 56%);
+    radial-gradient(ellipse at 14% 50%, rgba(62, 56, 108, 0.68) 0%, rgba(62, 56, 108, 0) 60%),
+    radial-gradient(ellipse at 88% 42%, rgba(217, 160, 91, 0.40) 0%, rgba(217, 160, 91, 0) 58%);
 }
 /* The subpage wash is the same amber photograph; pull it back so the pair
    above is what colours the page. */

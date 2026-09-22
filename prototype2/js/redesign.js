@@ -181,3 +181,24 @@ if (faqSearch) {
   });
   document.body.appendChild(sw);
 }
+
+/* SPIKE (#37) — subpage tint follows scroll, the way the stage does on the
+   homepage. Three steps over the length of the page; the CSS crossfades. */
+{
+  const body = document.body;
+  if (body.classList.contains("page-gray")) {
+    let last = "";
+    const tick = () => {
+      const span = document.documentElement.scrollHeight - window.innerHeight;
+      const p = span > 0 ? window.scrollY / span : 0;
+      const tint = p < 0.3 ? "1" : p < 0.58 ? "2" : "3";
+      if (tint !== last) {
+        last = tint;
+        body.dataset.tint = tint;
+      }
+    };
+    tick();
+    window.addEventListener("scroll", tick, { passive: true });
+    window.addEventListener("resize", tick);
+  }
+}
