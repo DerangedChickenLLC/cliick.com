@@ -2270,6 +2270,10 @@ body[data-look="pair"] {
   --ink-muted: #C9C8CC;
   --ink-faint: #9C9BA3;
   --wall: #16171E;
+  /* :root resolves --page-gray from --wall once, and body inherits the
+     computed value, so overriding --wall here alone leaves the subpage body
+     on the brown wall. Re-point both. */
+  --page-gray: #16171E;
 }
 /* the subpage hero paints a warm-black under the photo */
 body[data-look="pair"] .hero { background: #0C0D13; }

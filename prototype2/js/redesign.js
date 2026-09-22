@@ -163,6 +163,9 @@ if (faqSearch) {
 {
   const LOOKS = ["shipped", "hold", "pair"];
   const fromQuery = new URLSearchParams(location.search).get("look");
+  // ?look= has to stick, or the first nav click drops you back to shipped and
+  // the pages look compared when they were not.
+  if (LOOKS.includes(fromQuery)) localStorage.setItem("proto-look", fromQuery);
   const saved = LOOKS.includes(fromQuery) ? fromQuery : localStorage.getItem("proto-look");
   if (LOOKS.includes(saved) && saved !== "shipped") document.body.dataset.look = saved;
 
