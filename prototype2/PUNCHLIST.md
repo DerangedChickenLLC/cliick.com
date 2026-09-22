@@ -48,6 +48,49 @@ Where this applies beyond the marketing site: the FAQ (38 answers, several of
 which explain mechanics), the app's own strings, and the store listings. Any
 sweep of one should carry this rule into the others.
 
+## Copy principle — a headline that speaks takes a period
+
+Punctuation in the headlines looked inconsistent until the pages were read
+together, at which point the rule was already there, holding on four pages
+out of five:
+
+> **A headline that speaks takes a period. A headline that labels doesn't.**
+
+| takes a period | why |
+|---|---|
+| "Here's what happens next." | spoken to the reader |
+| "Post something." | an instruction, said out loud |
+| "You're not the product. You're the host." | two sentences; the period is grammar, not style |
+| "That's not a feature. That's the deal." | it lands *because* it stops |
+| "Questions, answered." | a statement, above sections that are labels |
+
+| no period | why |
+|---|---|
+| "Follow the money" | a label on a section; a period turns it into an order |
+| "What we hold" / "What there is no column for" | column heads |
+| "Privacy & Safety" and the other FAQ sections | labels |
+| "Reclaim your Feed" | a page title |
+
+The period is a tone signal rather than decoration: it is the difference
+between a heading and a sentence, and dropping it from "That's the deal"
+leaves a fragment where a claim should be.
+
+**One deliberate exception.** The homepage's "No ads / No algorithms / No
+noise" is a statement set one item per line, and the periods stacked into a
+column of three full stops. Typography won over the rule; the stacking makes
+it read as intent rather than oversight.
+
+**The simpler alternative, if this ever needs to be handed to someone else:**
+no periods anywhere except where a headline is two sentences, since the
+period between them is doing grammatical work. That keeps "You're not the
+product. You're the host." intact and drops the rest — more mechanical, less
+expressive, easier to follow.
+
+**Open:** About's statement-style headlines ("You'll hear it from us first",
+"Peace, by invitation") currently go bare, which is the one place the rule
+breaks. Punctuate them to match whichever register they land in once that
+page's copy settles — not before.
+
 ## Copy
 
 - [ ] **"Collects nothing" deserves more than three chips.** Verified in code:
