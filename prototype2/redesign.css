@@ -897,6 +897,34 @@ body.nav-solid .nav-links a { color: #F2ECDE; }
 
 /* Scenes — copy panels in a reserved left region; enter from below,
    exit upward, direction-aware on reverse scroll */
+/* --- Short windows ----------------------------------------------------
+   The scenes are centred in the frame, so the shorter the window the
+   higher their top edge climbs: at 760px it touches the eyebrow, and by
+   700px the heading is under the fixed nav. Reported on DuckDuckGo, whose
+   browser chrome is taller than Safari's at the same window size — the
+   viewport, not the engine.
+
+   Below 860px the copy scales with the height it has; below 780px the
+   eyebrow stands down rather than fight for the same band. */
+/* Specificity, not order: the .scene rules below this block would
+   otherwise win on top and font-size. */
+@media (min-width: 1200px) and (max-height: 860px) {
+  .stage-frame .scene h3 { font-size: clamp(1.75rem, 3.7vh, 2.6rem); }
+  .stage-frame .scene p { font-size: 1.0625rem; margin-top: 16px; }
+  .stage-frame .scene .learn-more { margin-top: 22px; }
+}
+@media (min-width: 1200px) and (max-height: 780px) {
+  .stage-frame .stage-eyebrow { display: none; }
+  /* Centred in the frame, a tall block eventually climbs under the fixed
+     nav no matter how small the type gets. Below this height the scene
+     centres in the space the nav leaves instead, which cannot collide. */
+  .stage-frame .scene {
+    top: calc(var(--nav-h) + (100% - var(--nav-h)) / 2);
+  }
+  .stage-frame .scene.is-past { transform: translateY(calc(-50% - 70px)); }
+  .stage-frame .scene.is-future { transform: translateY(calc(-50% + 70px)); }
+}
+
 .scene {
   position: absolute;
   top: 50%;
