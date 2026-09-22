@@ -413,6 +413,24 @@ body.stage-motion .nav {
 }
 body.stage-motion .nav-wordmark,
 body.stage-motion .nav-links a { transition: color 0.4s ease; }
+/* Subpages had the nav absolute, so it scrolled off and only came back when
+   you reached the literal top of the document — scroll up a little and the
+   bar is half off the top edge, which reads as the menu failing to restore.
+   Home already rides fixed; the subpages do the same. .page-hero already
+   reserves --nav-h, so nothing moves. */
+body.page-gray .nav {
+  position: fixed;
+  transition: background-color 0.4s ease, box-shadow 0.4s ease;
+}
+/* Fixed over content needs a ground once you leave the top. The homepage's
+   white bar belongs to its light scenes; a subpage is dark, so it gets a
+   dark one. */
+body.page-gray.nav-stuck .nav {
+  background: rgba(20, 17, 12, 0.58);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.08);
+}
 body.nav-solid .nav {
   background: rgba(255, 255, 255, 0.82);
   -webkit-backdrop-filter: blur(12px);
@@ -2214,21 +2232,20 @@ body[data-look="pair"].page-gray::after {
   z-index: -1;
   pointer-events: none;
   opacity: 0.66;
-  transition: background 0.9s ease;
+  /* No transition: redesign.js interpolates these parts continuously against
+     scroll progress, so the colour moves with the page rather than snapping
+     at thresholds. The stepped version was fine on the homepage, where each
+     step lands on a scene you can see arriving; on a subpage there is nothing
+     to explain the jump. */
   background:
-    radial-gradient(ellipse at 14% 34%, rgba(38, 53, 111, 0.72) 0%, rgba(38, 53, 111, 0) 60%),
-    radial-gradient(ellipse at 88% 26%, rgba(224, 164, 94, 0.36) 0%, rgba(224, 164, 94, 0) 58%);
+    radial-gradient(ellipse at 14% var(--pair-cool-y, 34%),
+      rgba(var(--pair-cool, 38, 53, 111), var(--pair-cool-a, 0.72)) 0%,
+      rgba(var(--pair-cool, 38, 53, 111), 0) 60%),
+    radial-gradient(ellipse at 88% var(--pair-warm-y, 26%),
+      rgba(var(--pair-warm, 224, 164, 94), var(--pair-warm-a, 0.36)) 0%,
+      rgba(var(--pair-warm, 224, 164, 94), 0) 58%);
 }
-body[data-look="pair"].page-gray[data-tint="2"]::after {
-  background:
-    radial-gradient(ellipse at 14% 42%, rgba(52, 54, 104, 0.70) 0%, rgba(52, 54, 104, 0) 60%),
-    radial-gradient(ellipse at 88% 34%, rgba(224, 144, 126, 0.38) 0%, rgba(224, 144, 126, 0) 58%);
-}
-body[data-look="pair"].page-gray[data-tint="3"]::after {
-  background:
-    radial-gradient(ellipse at 14% 50%, rgba(62, 56, 108, 0.68) 0%, rgba(62, 56, 108, 0) 60%),
-    radial-gradient(ellipse at 88% 42%, rgba(217, 160, 91, 0.40) 0%, rgba(217, 160, 91, 0) 58%);
-}
+
 /* Home is the look, so the subpages stop approximating it and take the same
    three layers in the same order: the hero photograph at full strength, the
    stage shade over it, then the pair at the stage's own 0.66. The blurred

@@ -185,22 +185,56 @@ if (faqSearch) {
   document.body.appendChild(sw);
 }
 
-/* SPIKE (#37) — subpage tint follows scroll, the way the stage does on the
-   homepage. Three steps over the length of the page; the CSS crossfades. */
+/* Subpages: the nav rides fixed like the homepage's, so it needs a ground
+   once you leave the top. Not part of the colour spike — keep this. */
 {
   const body = document.body;
   if (body.classList.contains("page-gray")) {
-    let last = "";
-    const tick = () => {
+    const stick = () => body.classList.toggle("nav-stuck", window.scrollY > 24);
+    stick();
+    window.addEventListener("scroll", stick, { passive: true });
+  }
+}
+
+/* SPIKE (#37) — the subpage tint is a continuous function of scroll
+   progress, walking the same three pairs the homepage scenes step through.
+   Home can step because each step lands on a scene you watch arrive; a
+   subpage has no such beat, so it interpolates instead. */
+{
+  const body = document.body;
+  if (body.classList.contains("page-gray")) {
+    const STOPS = [
+      { cool: [38, 53, 111], coolA: 0.72, coolY: 34, warm: [224, 164, 94], warmA: 0.36, warmY: 26 },
+      { cool: [52, 54, 104], coolA: 0.70, coolY: 42, warm: [224, 144, 126], warmA: 0.38, warmY: 34 },
+      { cool: [62, 56, 108], coolA: 0.68, coolY: 50, warm: [217, 160, 91], warmA: 0.40, warmY: 42 },
+    ];
+    const mix = (a, b, t) => a + (b - a) * t;
+    const rgb = (a, b, t) => a.map((v, i) => Math.round(mix(v, b[i], t))).join(", ");
+    let queued = false;
+
+    const paint = () => {
+      queued = false;
       const span = document.documentElement.scrollHeight - window.innerHeight;
-      const p = span > 0 ? window.scrollY / span : 0;
-      const tint = p < 0.3 ? "1" : p < 0.58 ? "2" : "3";
-      if (tint !== last) {
-        last = tint;
-        body.dataset.tint = tint;
-      }
+      const p = span > 0 ? Math.min(1, Math.max(0, window.scrollY / span)) : 0;
+      const seg = Math.min(STOPS.length - 2, Math.floor(p * (STOPS.length - 1)));
+      const t = p * (STOPS.length - 1) - seg;
+      const a = STOPS[seg];
+      const b = STOPS[seg + 1];
+      const st = body.style;
+      st.setProperty("--pair-cool", rgb(a.cool, b.cool, t));
+      st.setProperty("--pair-cool-a", mix(a.coolA, b.coolA, t).toFixed(3));
+      st.setProperty("--pair-cool-y", mix(a.coolY, b.coolY, t).toFixed(1) + "%");
+      st.setProperty("--pair-warm", rgb(a.warm, b.warm, t));
+      st.setProperty("--pair-warm-a", mix(a.warmA, b.warmA, t).toFixed(3));
+      st.setProperty("--pair-warm-y", mix(a.warmY, b.warmY, t).toFixed(1) + "%");
     };
-    tick();
+
+    const tick = () => {
+      if (queued) return;
+      queued = true;
+      requestAnimationFrame(paint);
+    };
+    paint();
     window.addEventListener("scroll", tick, { passive: true });
     window.addEventListener("resize", tick);
   }
