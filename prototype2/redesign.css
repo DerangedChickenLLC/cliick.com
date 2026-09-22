@@ -51,7 +51,14 @@
   --ink-muted: #C9C8CC;   /* secondary copy */
   --ink-faint: #9C9BA3;   /* tertiary, eyebrows */
   --ink-on-light: #211D16;/* copy on the one light band */
-  --accent: #F7DCA8;      /* links, "learn more" */
+  --accent: #FBE7BC;      /* links, "learn more" */
+  /* Brown is dark orange, so a warm mark goes brown by losing luminance —
+     which is exactly what antialiasing does to a hairline. A 1px ring or a
+     thin glyph blends toward the dark ground behind it and lands in the mud,
+     while the same colour in 600-weight text holds its lightness and reads
+     gold. So warmth survives at text weight, not at stroke weight: --accent
+     for type, --accent-mark for hairlines, small glyphs and thin bars. */
+  --accent-mark: #F6F1E7;
 
   /* Cool: a warm wash at 10% behind every chip and hairline is what made the
      objects read brown even on a blue page. */
@@ -888,6 +895,9 @@ body.nav-solid .nav-links a { color: #F2ECDE; }
   --ink-strong: var(--ink-on-light);
   --ink-muted: #5B5245;
   --accent: #7A5210;              /* the warm accent has to darken to hold */
+  /* On a light ground the mud problem inverts — a hairline loses luminance
+     toward cream, not toward black — so marks and type can share a colour. */
+  --accent-mark: var(--accent);
   --recess: rgba(64, 48, 22, 0.10);
   --line: rgba(64, 48, 22, 0.18);
   --glow: 122, 86, 30;            /* the tint darkens with everything else */
@@ -1159,7 +1169,7 @@ body.nav-solid .nav-links a { color: #F2ECDE; }
   width: var(--fill);
   height: 100%;
   border-radius: 99px;
-  background: linear-gradient(90deg, rgba(var(--glow), 0.55), var(--accent));
+  background: linear-gradient(90deg, rgba(var(--glow), 0.55), var(--accent-mark));
 }
 .plan-scale--guest { --fill: 2.4%; }
 .plan-scale--premium { --fill: 100%; }
@@ -1494,11 +1504,11 @@ body.page-gray .page-hero h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
 }
 /* And a struck-through dot for what is not: the absence is the product. */
 .ledger-col--none li::before {
-  border-color: var(--accent);
+  border-color: var(--accent-mark);
   background: linear-gradient(
     to bottom right,
-    transparent calc(50% - 0.5px), var(--accent) calc(50% - 0.5px),
-    var(--accent) calc(50% + 0.5px), transparent calc(50% + 0.5px)
+    transparent calc(50% - 0.5px), var(--accent-mark) calc(50% - 0.5px),
+    var(--accent-mark) calc(50% + 0.5px), transparent calc(50% + 0.5px)
   );
 }
 .ledger-col--none li { color: var(--ink-strong); }
@@ -1907,14 +1917,16 @@ body.page-gray .page-hero h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
   top: 50%;
   transform: translateY(-50%);
   font-size: 1.35rem;
-  font-weight: 400;
   line-height: 1;
   width: 30px;
   height: 30px;
   display: grid;
   place-items: center;
   border-radius: 50%;
-  color: var(--accent);
+  /* 500 rather than 400: at 1.35rem a single stroke is thin enough to
+     antialias into the chip behind it. */
+  font-weight: 500;
+  color: var(--accent-mark);
   background: rgba(var(--glow), 0.10);
   border: 1px solid rgba(var(--glow), 0.18);
 }
