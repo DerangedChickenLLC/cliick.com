@@ -214,10 +214,19 @@ if (faqSearch) {
        A bright tint here would be identical to painting normally, because
        nothing in the picture is brighter than it. That is what the previous
        values were doing, and why they read as raised highlights. */
+    /* The two floors are not the same height, because the two halves of the
+       photograph are not. The left is deep shade, so a dark indigo floor
+       catches it. The right is the sunset — its own darkest parts still sit
+       around 53,42,43, so a floor down at 56,28,26 never touched a pixel and
+       the warm side was doing nothing at all. Raised until it engages the
+       shade under the light without reaching the light itself: measured, it
+       moves the right-hand mid-tones and shadows while the highlights stay
+       within a point of untouched. Low blue on purpose — this lifts warm
+       shade toward gold, not toward a wash. */
     const STOPS = [
-      { cool: [16, 24, 62], coolA: 0.95, coolY: 28, warm: [44, 30, 16], warmA: 0.85, warmY: 22 },
-      { cool: [30, 24, 70], coolA: 1.00, coolY: 46, warm: [56, 28, 26], warmA: 0.95, warmY: 38 },
-      { cool: [46, 26, 66], coolA: 0.95, coolY: 62, warm: [60, 40, 18], warmA: 1.00, warmY: 54 },
+      { cool: [16, 24, 62], coolA: 0.95, coolY: 28, warm: [118, 76, 36], warmA: 0.85, warmY: 22 },
+      { cool: [30, 24, 70], coolA: 1.00, coolY: 46, warm: [128, 66, 58], warmA: 0.95, warmY: 38 },
+      { cool: [46, 26, 66], coolA: 0.95, coolY: 62, warm: [136, 92, 40], warmA: 1.00, warmY: 54 },
     ];
     /* The opaque closing band covers the last stretch of every subpage, so the
        arc has to finish before you reach it or its end never gets seen. */
