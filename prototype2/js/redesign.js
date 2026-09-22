@@ -25,7 +25,20 @@ if (stageTrack) {
     if (!stageMotion.matches) return;
     const rect = stageTrack.getBoundingClientRect();
     const runway = rect.height - window.innerHeight;
-    const p = Math.min(1, Math.max(0, -rect.top / runway));
+    /* The track is taller than the viewport once laid out, but this runs at
+       readyState "interactive" — the script is deferred, so it fires after
+       the DOM is parsed and before the images have sized anything. WebKit
+       measures the track mid-layout and hands back a height SHORTER than the
+       viewport with a large positive top, which makes runway negative and
+       -top/runway a large POSITIVE number. It clamps to 1, the page opens on
+       the last scene with a solid nav, and nothing corrects it until you
+       scroll. Chrome happens to have laid out far enough by then, which is
+       why this only ever showed up in Safari.
+
+       Measured in WebKit at 1440x900: top 2327.9, height 580.2, runway
+       -319.8, p 7.28 -> 1. A negative or zero runway means there is nothing
+       to scroll through yet, which is scene 0 by definition. */
+    const p = runway > 0 ? Math.min(1, Math.max(0, -rect.top / runway)) : 0;
     let scene = 0;
     BOUNDS.forEach((b, i) => {
       if (p >= b) scene = i + 1;
@@ -66,6 +79,10 @@ if (stageTrack) {
     { passive: true }
   );
   window.addEventListener("resize", update, { passive: true });
+  /* Re-sync once everything has sized. Without this a first measurement taken
+     against an unsettled layout stands until the reader happens to scroll. */
+  window.addEventListener("load", update);
+  if (window.ResizeObserver) new ResizeObserver(update).observe(stageTrack);
 
   // Live gate: engage/disengage the motion experience whenever the media
   // query flips (window resized across 1200px, reduced-motion toggled),
