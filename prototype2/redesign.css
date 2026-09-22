@@ -18,11 +18,11 @@
      comes from the backdrop light, never from the pigment — bake brown into
      the surfaces themselves and every page turns flat brown-on-brown. Panels
      are translucent so the lit backdrop reads through them. */
-  --wall: #221E17;        /* the page itself, behind the backdrop layer */
-  --recess: rgba(0, 0, 0, 0.30);            /* tracks, backing panels */
-  --surface: rgba(252, 246, 234, 0.055);    /* cards, chips, inputs, rows */
-  --surface-2: rgba(252, 246, 234, 0.105);  /* hover, raised knobs */
-  --line: rgba(252, 240, 220, 0.14);        /* borders on dark */
+  --wall: #16171E;        /* the page itself, behind the backdrop layer */
+  --recess: rgba(0, 0, 0, 0.34);            /* tracks, backing panels */
+  --surface: rgba(234, 240, 255, 0.055);    /* cards, chips, inputs, rows */
+  --surface-2: rgba(234, 240, 255, 0.105);  /* hover, raised knobs */
+  --line: rgba(226, 234, 255, 0.14);        /* borders on dark */
 
   /* Interactive objects — cards, rows, controls. These are NOT the room.
      Surfaces above are environment: translucent, made of the same light.
@@ -31,27 +31,32 @@
      and casts a real shadow. Keep that distinction in any second scheme:
      if controls are made of the same stuff as the wall, the page reads as
      shelves with no bartender. */
-  --panel: rgba(24, 21, 17, 0.82);
-  --panel-hover: rgba(36, 32, 26, 0.90);
-  --panel-edge: rgba(255, 244, 224, 0.13);
-  --panel-lip: rgba(255, 246, 228, 0.22);   /* top edge, lit from above */
+  --panel: rgba(16, 18, 26, 0.80);
+  --panel-hover: rgba(24, 27, 38, 0.88);
+  --panel-edge: rgba(226, 232, 255, 0.13);
+  --panel-lip: rgba(232, 238, 255, 0.20);   /* top edge, lit from above */
   --panel-shadow: 0 24px 52px rgba(0, 0, 0, 0.55), 0 3px 10px rgba(0, 0, 0, 0.38);
   --panel-shadow-sm: 0 10px 24px rgba(0, 0, 0, 0.42), 0 2px 6px rgba(0, 0, 0, 0.30);
 
   /* A selected control has to read as ON. On a dark scheme the lazy move is
      to make the active segment a slightly lighter dark, which reads as "off
      and more off" rather than as a choice. Selection is lit. */
-  --control-on: #EBD9B6;
-  --control-on-ink: #1F1A12;
+  /* A tan FILL is a brown block at any size, so filled controls are
+     paper-neutral; tan at TEXT weight still reads gold, so --accent stays
+     warm and only brightens. That split is why these two do not match. */
+  --control-on: #FAF7F1;
+  --control-on-ink: #16130E;
 
-  --ink-strong: #F2ECDE;  /* primary copy */
-  --ink-muted: #CFC6B2;   /* secondary copy */
-  --ink-faint: #A79E8B;   /* tertiary, eyebrows */
+  --ink-strong: #F3F2EF;  /* primary copy */
+  --ink-muted: #C9C8CC;   /* secondary copy */
+  --ink-faint: #9C9BA3;   /* tertiary, eyebrows */
   --ink-on-light: #211D16;/* copy on the one light band */
-  --accent: #E9C88A;      /* links, "learn more" */
+  --accent: #F7DCA8;      /* links, "learn more" */
 
-  --glow: 255, 232, 192;  /* the gallery pool, as RGB parts for rgba() */
-  --band-alt: rgba(252, 246, 234, 0.035); /* alternating band */
+  /* Cool: a warm wash at 10% behind every chip and hairline is what made the
+     objects read brown even on a blue page. */
+  --glow: 232, 238, 255;  /* the gallery pool, as RGB parts for rgba() */
+  --band-alt: rgba(234, 240, 255, 0.035); /* alternating band */
   --band-light: #F2EBDF;  /* the ONE light surface: the beat before the footer */
 
   /* Legacy names, aliased to the scheme so existing rules follow it. */
@@ -157,34 +162,43 @@ body {
 
 body.page-gray { background: var(--page-gray); }
 
-/* The lit space. Without this the subpages are flat pigment; the homepage
-   scenes get their warmth from the stage backdrop and the subpages had none,
-   which read as brown-on-brown. Fixed rather than scrolling, so the whole
-   site feels like one room. */
+/* The subpages take Home's backdrop rather than a paraphrase of it: the same
+   hero photograph, unblurred, at full strength. An earlier version blurred a
+   copy of it at 26% and the tabs read as a different room. */
 body.page-gray::before {
   content: "";
   position: fixed;
-  inset: -6%;
+  inset: 0;
   z-index: -2;
   background: url("/prototype2/images/redesign/hero-bg-sim.svg") center / cover no-repeat;
-  filter: blur(44px) saturate(0.92) brightness(1.05);
-  opacity: 0.62;
   pointer-events: none;
 }
-/* A pool of light up where the page content starts, so content is lit rather
-   than sitting on an even field. */
+/* Layer order is the whole game here. On Home the stack is photograph, then
+   the pair, then the stage shade on top — the shade is what keeps the left
+   side deep. Painting the pair over the shade instead lightens that side and
+   the page reads warmer than Home does. A body has two pseudo-elements and
+   the photograph needs one, so the shade rides with the pair in a single
+   background, above it (first layer paints on top).
+
+   Which means the arrival cannot be element opacity — that would fade the
+   shade too. redesign.js folds it into the pair's own alphas, along with the
+   0.66 the stage scrim sits at. Zero by default, so nothing shows before the
+   script runs. */
 body.page-gray::after {
   content: "";
   position: fixed;
   inset: 0;
   z-index: -1;
-  background: radial-gradient(
-    ellipse 90% 55% at 50% 22%,
-    rgba(var(--glow), 0.13) 0%,
-    rgba(var(--glow), 0.05) 45%,
-    rgba(var(--glow), 0) 75%
-  );
   pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba(0, 0, 0, 0.45) 0%, rgba(0, 0, 0, 0) 18%),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.15) 60%),
+    radial-gradient(ellipse at 16% var(--pair-cool-y, 46%),
+      rgba(var(--pair-cool, 38, 53, 111), var(--pair-cool-a, 0)) 0%,
+      rgba(var(--pair-cool, 38, 53, 111), 0) 60%),
+    radial-gradient(ellipse at 86% var(--pair-warm-y, 38%),
+      rgba(var(--pair-warm, 224, 164, 94), var(--pair-warm-a, 0)) 0%,
+      rgba(var(--pair-warm, 224, 164, 94), 0) 58%);
 }
 
 img { max-width: 100%; display: block; }
@@ -431,19 +445,15 @@ body.page-gray.nav-stuck .nav {
   backdrop-filter: blur(14px);
   box-shadow: 0 1px 0 rgba(255, 255, 255, 0.08);
 }
-body.nav-solid .nav {
-  background: rgba(255, 255, 255, 0.82);
-  -webkit-backdrop-filter: blur(12px);
-  backdrop-filter: blur(12px);
-  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.08);
-}
+/* The scrolled skin lives with the wall further down the file — see
+   "The nav has to follow the wall". */
 /* --------------------------------------------------------------------------
    Home hero
    -------------------------------------------------------------------------- */
 .hero {
   position: relative;
   min-height: min(866px, 100vh);
-  background: #130e04;
+  background: #0C0D13;
   overflow: hidden;
   color: var(--ink-strong);
 }
@@ -667,8 +677,11 @@ body.stage-motion .fallback-flow { display: none; }
   opacity: 1;
   transition: opacity 0.6s ease;
 }
-.stage-frame:not([data-scene="0"]) .stage-bg,
-.stage-frame:not([data-scene="0"]) .stage-shade { opacity: 0; }
+/* The backdrop does NOT fade when the story starts. Fading it toward the
+   wall is what drained the colour out and left the photo's amber half
+   smeared across the frame — which is the brown. Hold the photograph; the
+   scene scrims below do the colouring. */
+.stage-frame:not([data-scene="0"]) .stage-shade { opacity: 1; }
 
 /* Gray mock window — fades in when the story leaves the hero */
 .stage-window {
@@ -748,11 +761,10 @@ body.stage-motion .fallback-flow { display: none; }
 /* The wall. Warm charcoal, not pure black — pure black reads as "screen off". */
 .stage-frame { background: var(--wall); }
 
-.stage-frame:not([data-scene="0"]) .stage-bg {
-  opacity: 0.58;
-  filter: blur(26px) saturate(0.86) brightness(1.22);
-  transform: scale(1.12); /* covers the blur bleeding in at the edges */
-}
+/* The grey mock window framed the muted wall; over a live photo it is a
+   smudge. */
+.stage-frame:not([data-scene="0"]) .stage-window { opacity: 0; }
+.stage-frame .stage-bg { z-index: -1; }
 
 /* Copy flips to light. Warm off-white rather than #fff, since the wall is warm. */
 .stage-frame:not([data-scene="0"]) { color: var(--ink-strong); }
@@ -797,10 +809,14 @@ body.stage-motion .fallback-flow { display: none; }
     0 0 0 1px rgba(255, 230, 188, 0.22);
 }
 
-/* The nav has to follow the wall, or it floats as a white plank. */
+/* The nav has to follow the wall, or it floats as a white plank. Neutral and
+   cool rather than warm-black: rgba(23,20,15,.72) is a brown pane, and
+   everything gold behind it goes muddy. */
 body.nav-solid .nav {
-  background: rgba(23, 20, 15, 0.72);
-  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.08);
+  background: rgba(10, 11, 14, 0.52);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.10);
 }
 body.nav-solid .nav-wordmark,
 body.nav-solid .nav-links a { color: #F2ECDE; }
@@ -1277,21 +1293,10 @@ body.nav-solid .nav-links a { color: #F2ECDE; }
    backdrop at a different crop, which left a hard seam. The scrim is masked so
    it fades out at the bottom rather than ending on an edge, and sits under
    .wrap (z-index 2) so it never dims the copy. */
-body.page-gray .page-hero::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-  background: linear-gradient(
-    90deg,
-    rgba(0, 0, 0, 0.66) 0%,
-    rgba(0, 0, 0, 0.34) 55%,
-    rgba(0, 0, 0, 0.20) 100%
-  );
-  -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 56%, transparent 100%);
-  mask-image: linear-gradient(180deg, #000 0%, #000 56%, transparent 100%);
-}
+/* The page-hero used to carry its own left-dark scrim. That is the job the
+   stage shade in body::after now does one layer down, and two stacked made
+   the tall heroes (About, Membership, Start) read darker than the short one
+   (FAQ) and darker than Home. Keep one. */
 body.page-gray .page-hero h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
 
 /* Aside column — the site's spatial grammar.
@@ -1657,7 +1662,7 @@ body.page-gray .page-hero h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
   font-weight: 600;
   font-size: 1.125rem;
 }
-.flow-node--us { color: #1b1510; background: var(--accent); border-color: transparent; }
+.flow-node--us { color: #16130E; background: var(--accent); border-color: transparent; }
 .flow-arrow {
   flex: 1;
   height: 2px;
@@ -2146,51 +2151,24 @@ body.page-gray .page-hero h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
 }
 
 /* ==========================================================================
-   SPIKE (#37) — the site reads brown once you scroll
+   The scene scrims (#37)
    --------------------------------------------------------------------------
-   The landing reads royal: blue and gold, because the hero photo is at full
-   strength. Scrolling fades it toward the wall, and what is left as the
-   colour drains out is brown. The wall is not the main culprit — the brown
-   is the photo's own amber half, blurred across the frame, so deepening it
-   only made it worse. Holding the photo instead of fading it is what worked.
+   The landing reads royal — blue and gold — because the hero photograph is
+   at full strength. The original design faded it toward the wall as the
+   story started, and what was left once the colour drained out was brown:
+   not the wall, but the photo's own amber half blurred across the frame.
+   Deepening the wall made it worse. Holding the photograph is what worked.
 
-   Looks: ?look=hold|hue|hue-bold, or the button bottom right.
-   Dropped after the first pass: deep, ink, royal, hold-light.
+   On top of the held photograph, each scene gets a pair: a cool side and its
+   warm complement, moving together. An earlier pass tinted only the left,
+   which left the amber doing the same thing in every scene.
 
-   REMOVE this block, the switcher in js/redesign.js, and every data-look
-   attribute before launch.
+   The subpages walk the same three pairs continuously against scroll rather
+   than stepping — see body.page-gray::after above and redesign.js. If these
+   values change, change them in both places; they are meant to be identical.
    ========================================================================== */
 
-/* --- Shared base: the backdrop never fades, and nothing tan survives ----- */
-body[data-look] .stage-frame:not([data-scene="0"]) .stage-bg {
-  opacity: 1;
-  transform: none;
-}
-body[data-look] .stage-frame:not([data-scene="0"]) .stage-shade { opacity: 1; }
-/* The grey mock window framed the muted wall; over a live photo it is a
-   smudge. */
-body[data-look] .stage-frame:not([data-scene="0"]) .stage-window { opacity: 0; }
-body[data-look] .nav-cta {
-  background: #FAF7F1;
-  color: #16130E;
-}
-body[data-look].nav-solid .nav {
-  /* Neutral and cool rather than warm-black: rgba(23,20,15,.72) is a brown
-     pane, and everything gold behind it goes muddy. */
-  background: rgba(10, 11, 14, 0.52);
-  -webkit-backdrop-filter: blur(14px);
-  backdrop-filter: blur(14px);
-  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.10);
-}
-
-/* 1 · HOLD — the landing backdrop, unchanged through every scene. */
-body[data-look="hold"] .stage-frame:not([data-scene="0"]) .stage-bg { filter: none; }
-
-/* 2 · PAIR — the landing is blue on the left and gold on the right, so the
-   scenes keep that pairing and move both ends together: a cool side and its
-   warm complement, one pair per scene. An earlier pass tinted only the left,
-   which left the photo's amber doing the same thing in every scene. */
-body[data-look="pair"] .stage-frame::before {
+.stage-frame::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -2198,140 +2176,28 @@ body[data-look="pair"] .stage-frame::before {
   opacity: 0;
   transition: opacity 0.9s ease, background 0.9s ease;
 }
-body[data-look="pair"] .stage-frame .stage-bg { filter: none; z-index: -1; }
 
-/* indigo ↔ gold */
-body[data-look="pair"] .stage-frame[data-scene="1"]::before {
+/* indigo <-> gold */
+.stage-frame[data-scene="1"]::before {
   background:
     radial-gradient(ellipse at 16% 46%, rgba(38, 53, 111, 0.82) 0%, rgba(38, 53, 111, 0) 60%),
     radial-gradient(ellipse at 86% 38%, rgba(224, 164, 94, 0.42) 0%, rgba(224, 164, 94, 0) 58%);
 }
-/* plum ↔ rose-gold */
-body[data-look="pair"] .stage-frame[data-scene="2"]::before {
+/* plum <-> rose-gold */
+.stage-frame[data-scene="2"]::before {
   background:
     radial-gradient(ellipse at 16% 46%, rgba(52, 54, 104, 0.70) 0%, rgba(58, 47, 110, 0) 60%),
     radial-gradient(ellipse at 86% 38%, rgba(224, 144, 126, 0.44) 0%, rgba(224, 144, 126, 0) 58%);
 }
-/* violet ↔ amber, handing off to the gold of the band below */
-body[data-look="pair"] .stage-frame[data-scene="3"]::before {
+/* violet <-> amber, handing off to the gold of the band below */
+.stage-frame[data-scene="3"]::before {
   background:
     radial-gradient(ellipse at 16% 46%, rgba(62, 56, 108, 0.68) 0%, rgba(74, 46, 112, 0) 60%),
     radial-gradient(ellipse at 86% 38%, rgba(217, 160, 91, 0.46) 0%, rgba(217, 160, 91, 0) 58%);
 }
-body[data-look="pair"] .stage-frame:not([data-scene="0"])::before { opacity: 0.66; }
-
-/* --- PAIR on the subpages ------------------------------------------------
-   The homepage's colour moves as you scroll, so the subpages do the same
-   thing rather than each holding a colour of its own. Same three pairs, same
-   order: the page walks cool-to-warm from top to bottom. redesign.js sets
-   data-tint from scroll progress. */
-body[data-look="pair"].page-gray::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  /* Layer order is the whole game here. On Home the stack is photograph, then
-     the pair, then the stage shade on top — the shade is what keeps the left
-     side deep. Painting the pair over the shade instead lightens that side
-     and the page reads warmer than Home does. A body has two pseudo-elements
-     and the photograph needs one, so the shade rides with the pair in a
-     single background, above it (first layer paints on top).
-
-     Which means the ramp cannot be element opacity any more — that would fade
-     the shade too. redesign.js folds it into the pair's own alphas, along
-     with the 0.66 the stage scrim sits at. Zero by default, so nothing shows
-     before the script runs. */
-  background:
-    linear-gradient(180deg, rgba(0, 0, 0, 0.45) 0%, rgba(0, 0, 0, 0) 18%),
-    linear-gradient(90deg, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.15) 60%),
-    radial-gradient(ellipse at 16% var(--pair-cool-y, 46%),
-      rgba(var(--pair-cool, 38, 53, 111), var(--pair-cool-a, 0)) 0%,
-      rgba(var(--pair-cool, 38, 53, 111), 0) 60%),
-    radial-gradient(ellipse at 86% var(--pair-warm-y, 38%),
-      rgba(var(--pair-warm, 224, 164, 94), var(--pair-warm-a, 0)) 0%,
-      rgba(var(--pair-warm, 224, 164, 94), 0) 58%);
-}
-
-/* Home is the look, so the subpages take its backdrop rather than a
-   paraphrase of it: the hero photograph at full strength, unblurred. The
-   shade and the pair ride together in ::after above this — see there for why
-   they share a layer. */
-body[data-look="pair"].page-gray::before {
-  inset: 0;
-  opacity: 1;
-  filter: none;
-  background: url("/prototype2/images/redesign/hero-bg-sim.svg") center / cover no-repeat;
-}
-
-/* The page-hero carried its own left-dark scrim, which is the same job the
-   stage shade now does one layer down. Two of them stacked is why the tall
-   heroes (About, Membership, Start) read darker than the short one (FAQ)
-   and darker than Home. Keep one. */
-body[data-look="pair"].page-gray .page-hero::after { background: none; }
-
-/* --- The surfaces ---------------------------------------------------------
-   Every card, chip, row and border is keyed warm — cream at low alpha over a
-   brown panel — so even on a blue page the objects stay brown. Neutral-cool
-   equivalents at the same weights: the objects stop carrying a colour of
-   their own and take it from the page behind them. The latte band keeps its
-   own light-ground overrides further up the file. */
-body[data-look="pair"] {
-  --panel: rgba(16, 18, 26, 0.80);
-  --panel-hover: rgba(24, 27, 38, 0.88);
-  --panel-edge: rgba(226, 232, 255, 0.13);
-  --panel-lip: rgba(232, 238, 255, 0.20);
-  --surface: rgba(234, 240, 255, 0.055);
-  --surface-2: rgba(234, 240, 255, 0.105);
-  --line: rgba(226, 234, 255, 0.14);
-  --recess: rgba(0, 0, 0, 0.34);
-  --band-alt: rgba(234, 240, 255, 0.035);
-}
-
-/* --- The accents ----------------------------------------------------------
-   Same fix as the CTA, applied to the rest of the controls. Tan at text
-   weight still reads gold; tan as a FILL is a brown block at any size. So
-   the two roles split: filled controls (segment ON, badges, the progress
-   bar, the "us" node) go paper-neutral like .nav-cta already does, and the
-   text accent brightens so it stays gold instead of sinking to brown. The
-   tint parts behind chips and hairlines go cool, since a warm wash at 10%
-   over a blue page is exactly the mud we are removing. */
-body[data-look="pair"] {
-  --accent: #F7DCA8;
-  --glow: 232, 238, 255;
-  --control-on: #FAF7F1;
-  --control-on-ink: #16130E;
-  --ink-strong: #F3F2EF;
-  --ink-muted: #C9C8CC;
-  --ink-faint: #9C9BA3;
-  --wall: #16171E;
-  /* :root resolves --page-gray from --wall once, and body inherits the
-     computed value, so overriding --wall here alone leaves the subpage body
-     on the brown wall. Re-point both. */
-  --page-gray: #16171E;
-}
-/* the subpage hero paints a warm-black under the photo */
-body[data-look="pair"] .hero { background: #0C0D13; }
-/* the one filled node that hardcodes its ink against --accent */
-body[data-look="pair"] .flow-node--us { color: #16130E; }
+.stage-frame:not([data-scene="0"])::before { opacity: 0.66; }
 
 /* The latte band stays warm on purpose. Its ground is cream because the
    photograph above it is a cup of coffee — cool it and the one warm beat in
    the site turns into a cold room with a hot drink in it. It is a single
    band, it is light, and nothing about it reads brown. Left alone. */
-
-/* The switcher itself. */
-.look-switch {
-  position: fixed;
-  right: 18px;
-  bottom: 18px;
-  z-index: 99;
-  padding: 10px 16px;
-  border-radius: 999px;
-  border: 1px solid var(--panel-edge);
-  background: var(--panel);
-  color: var(--ink-strong);
-  font: 600 13px/1 var(--font);
-  letter-spacing: 0.04em;
-  cursor: pointer;
-}

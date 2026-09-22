@@ -155,36 +155,6 @@ if (faqSearch) {
   else if (mq.addListener) mq.addListener(apply);
 })();
 
-// --- SPIKE (#37): look switcher ---------------------------------------------
-// The site reads brown once the hero photo fades toward the wall. Cycles the
-// candidate looks so they can be compared on the real pages rather than in
-// swatches. ?look=deep|ink|royal also works, and the choice follows you across
-// pages. REMOVE this block and the matching redesign.css block with the spike.
-{
-  const LOOKS = ["shipped", "hold", "pair"];
-  const fromQuery = new URLSearchParams(location.search).get("look");
-  // ?look= has to stick, or the first nav click drops you back to shipped and
-  // the pages look compared when they were not.
-  if (LOOKS.includes(fromQuery)) localStorage.setItem("proto-look", fromQuery);
-  const saved = LOOKS.includes(fromQuery) ? fromQuery : localStorage.getItem("proto-look");
-  if (LOOKS.includes(saved) && saved !== "shipped") document.body.dataset.look = saved;
-
-  const sw = document.createElement("button");
-  sw.className = "look-switch";
-  sw.type = "button";
-  const label = () => `Look: ${document.body.dataset.look || "shipped"}`;
-  sw.textContent = label();
-  sw.addEventListener("click", () => {
-    const cur = document.body.dataset.look || "shipped";
-    const next = LOOKS[(LOOKS.indexOf(cur) + 1) % LOOKS.length];
-    if (next === "shipped") delete document.body.dataset.look;
-    else document.body.dataset.look = next;
-    localStorage.setItem("proto-look", next);
-    sw.textContent = label();
-  });
-  document.body.appendChild(sw);
-}
-
 /* Subpages: the nav rides fixed like the homepage's, so it needs a ground
    once you leave the top. Not part of the colour spike — keep this. */
 {
@@ -196,10 +166,14 @@ if (faqSearch) {
   }
 }
 
-/* SPIKE (#37) — the subpage tint is a continuous function of scroll
-   progress, walking the same three pairs the homepage scenes step through.
-   Home can step because each step lands on a scene you watch arrive; a
-   subpage has no such beat, so it interpolates instead. */
+/* --- Subpage backdrop colour ------------------------------------------------
+   The homepage stage steps through three colour pairs, one per scene. The
+   subpages walk the same three continuously against scroll progress: Home
+   can step because each step lands on a scene you watch arrive, and a
+   subpage has no such beat, so a jump there has nothing explaining it.
+
+   The pair also arrives rather than being there from the first pixel — Home's
+   scene 0 carries no scrim at all, because a landing is the photograph. */
 {
   const body = document.body;
   if (body.classList.contains("page-gray")) {
