@@ -227,12 +227,23 @@ if (faqSearch) {
          the layer also carries the stage shade and that must not fade in.
          0.66 is what the stage scrim sits at. */
       const gain = arrive * arrive * (3 - 2 * arrive) * 0.66;
+
+      /* Home's three pairs sit within a few RGB points of each other — they
+         read as movement there because each one arrives under a new scene,
+         and on a subpage there is no such beat, so the colour walk alone is
+         below perception. Rather than pull the colours apart and break step
+         with Home, move the light instead: the two pools drift in opposite
+         directions down the page. The layer is fixed, so the content scrolls
+         across a slowly moving source, which is what reads as a room being
+         lit rather than a page being tinted. Colours stay identical to the
+         stage scenes. */
+      const drift = raw * 26;
       st.setProperty("--pair-cool", rgb(a.cool, b.cool, t));
       st.setProperty("--pair-cool-a", (mix(a.coolA, b.coolA, t) * gain).toFixed(3));
-      st.setProperty("--pair-cool-y", mix(a.coolY, b.coolY, t).toFixed(1) + "%");
+      st.setProperty("--pair-cool-y", (mix(a.coolY, b.coolY, t) + drift).toFixed(1) + "%");
       st.setProperty("--pair-warm", rgb(a.warm, b.warm, t));
       st.setProperty("--pair-warm-a", (mix(a.warmA, b.warmA, t) * gain).toFixed(3));
-      st.setProperty("--pair-warm-y", mix(a.warmY, b.warmY, t).toFixed(1) + "%");
+      st.setProperty("--pair-warm-y", (mix(a.warmY, b.warmY, t) - drift * 0.7).toFixed(1) + "%");
     };
 
     const tick = () => {
