@@ -439,26 +439,34 @@ body.stage-motion .nav-links a { transition: color 0.4s ease; }
    bar is half off the top edge, which reads as the menu failing to restore.
    Home already rides fixed; the subpages do the same. .page-hero already
    reserves --nav-h, so nothing moves. */
-body.page-gray .nav {
+/* Unconditionally fixed. It used to be fixed only under .stage-motion (the
+   homepage, 1200px and up) or .page-gray (the subpages), which meant that on
+   a phone the nav scrolled away on Home and stayed pinned on every other
+   page — measured at 390px scrolled to 1500: Home absolute at y -1500 and
+   gone, About fixed at y 0. It also took the nav off a JS-set class, which
+   is the mechanism behind the intermittent Safari displacement: a class
+   evaluated against an unsettled viewport could leave it absolute. */
+.nav {
   position: fixed;
   transition: background-color 0.4s ease, box-shadow 0.4s ease;
 }
-/* Fixed over content needs a ground once you leave the top. The homepage's
-   white bar belongs to its light scenes; a subpage is dark, so it gets a
-   dark one. */
-body.page-gray.nav-stuck .nav {
-  background: rgba(20, 17, 12, 0.58);
-  -webkit-backdrop-filter: blur(14px);
-  backdrop-filter: blur(14px);
-  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.08);
-}
-/* The scrolled skin lives with the wall further down the file — see
-   "The nav has to follow the wall". */
+/* Fixed over content needs a ground once you leave the top. The scrolled skin
+   is declared once, with the wall — see "The nav has to follow the wall"
+   further down. nav-stuck is set by scroll position on every page;
+   nav-solid by the stage's scene on the homepage. They have to name the same
+   pane, or the two halves of the site disagree about what the bar is: this
+   rule previously carried rgba(20,17,12,.58), a warm-black left over from
+   when the subpages were brown, so About scrolled to a brown bar while Home
+   scrolled to a cool one. */
 /* --------------------------------------------------------------------------
    Home hero
    -------------------------------------------------------------------------- */
+/* The nav rides fixed over this, so the hero has to reserve its height the
+   way .page-hero already does. Without it the bar sat on the headline at
+   every width below the pinned stage's 1200px. */
 .hero {
   position: relative;
+  padding-top: var(--nav-h);
   min-height: min(866px, 100vh);
   background: #0C0D13;
   overflow: hidden;
@@ -819,7 +827,8 @@ body.stage-motion .fallback-flow { display: none; }
 /* The nav has to follow the wall, or it floats as a white plank. Neutral and
    cool rather than warm-black: rgba(23,20,15,.72) is a brown pane, and
    everything gold behind it goes muddy. */
-body.nav-solid .nav {
+body.nav-solid .nav,
+body.nav-stuck .nav {
   background: rgba(10, 11, 14, 0.52);
   -webkit-backdrop-filter: blur(14px);
   backdrop-filter: blur(14px);
@@ -1995,6 +2004,20 @@ body.page-gray .page-hero h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
   margin: 56px auto 0;
   border-radius: 6px;
 }
+/* You cannot scan a code with the device that is showing it. .is-handheld
+   already hides the Start page's doorway QR on a touch device; the footer
+   one was never covered, so it sat at 148px on every page on a phone. The
+   width rule is the belt: pointer:coarse does not fire in a desktop
+   browser's device emulation, and this needs to be right in both. */
+.is-handheld .footer-qr,
+.is-handheld .footer-qr-caption { display: none; }
+@media (max-width: 700px) {
+  .footer-qr,
+  .footer-qr-caption { display: none; }
+  /* The badges become the only way through, so give them the room the code
+     was taking. */
+  .footer-v2 .store-badges { margin-top: 26px; }
+}
 .footer-qr-caption { margin-top: 14px; font-size: var(--fs-body); }
 .footer-legal {
   margin-top: 48px;
@@ -2156,13 +2179,35 @@ body.page-gray .page-hero h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
   .store-badges { gap: 12px; }
   .store-badges img { height: 46px; }
 
+  /* Four links and a button do not fit on one row here — shrinking both far
+     enough to fit put the button's right edge at 421px on a 390px viewport,
+     off the screen entirely, and took the links below a tappable size on the
+     way. Previously the button was simply dropped, which left a marketing
+     site with no call to action on a phone.
+
+     So the row wraps instead: mark and button on top, the four links
+     centred underneath. Nothing is lost, nothing is clipped, and it costs
+     about 34px of header — which the existing --nav-h of 96px already
+     covers, since two rows come to roughly 69px. Measured at 320, 360, 390
+     and 430: nothing clipped, and every hero heading still clears the bar. */
   .nav-wordmark { display: none; }
-  /* Four links plus a button overflow well before this width. The footer nav
-     carries "Start a Cliick" on narrow viewports instead. */
-  .nav-cta { display: none; }
-  .nav-logo { height: 40px; }
-  .nav-links { gap: 14px; }
-  .nav-links a { font-size: 0.95rem; }
+  .nav .wrap { flex-wrap: wrap; row-gap: 6px; }
+  .nav-logo { order: 1; height: 34px; }
+  .nav-cta {
+    order: 2;
+    margin-left: auto;
+    padding: 8px 15px;
+    font-size: 0.9rem;
+  }
+  .nav-links {
+    order: 3;
+    flex: 0 0 100%;
+    justify-content: center;
+    gap: 16px;
+  }
+  /* 24x24 is the WCAG 2.2 AA minimum for a target; these measured 20px tall
+     with the smaller type, and 23px before that. */
+  .nav-links a { font-size: 0.9rem; padding-block: 3px; }
   .win { height: 480px; }
   /* The hero's device scales with the scenes', since it now shares their
      window. transform-origin matters as much as the scale: without top center
