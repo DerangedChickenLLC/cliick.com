@@ -257,9 +257,24 @@ if (faqSearch) {
    is no scene logic to hand it one. */
 {
   const body = document.body;
-  const stick = () => body.classList.toggle("nav-stuck", window.scrollY > 24);
+  /* The one light band in the scheme. A white-veiled bar disappears into it,
+     so the nav needs to know when that band is the thing underneath it —
+     which is a question about what is behind a fixed element, not about
+     scroll depth, so it is measured against the bar's own height. */
+  const lightBand = document.querySelector(".band.latte");
+  const navEl = document.querySelector(".nav");
+
+  const stick = () => {
+    body.classList.toggle("nav-stuck", window.scrollY > 24);
+    if (lightBand && navEl) {
+      const band = lightBand.getBoundingClientRect();
+      const navH = navEl.getBoundingClientRect().height;
+      body.classList.toggle("nav-on-light", band.top < navH && band.bottom > 0);
+    }
+  };
   stick();
   window.addEventListener("scroll", stick, { passive: true });
+  window.addEventListener("resize", stick, { passive: true });
 }
 
 /* --- Subpage backdrop colour ------------------------------------------------

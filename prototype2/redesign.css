@@ -870,15 +870,36 @@ body.stage-motion .fallback-flow { display: none; }
     0 0 0 1px rgba(255, 230, 188, 0.22);
 }
 
-/* The nav has to follow the wall, or it floats as a white plank. Neutral and
-   cool rather than warm-black: rgba(23,20,15,.72) is a brown pane, and
-   everything gold behind it goes muddy. */
+/* EXPERIMENT — the scrolled bar ghosts white rather than dark. A light veil
+   lets the blur carry legibility instead of a dark pane doing it by
+   brute force. Revert to rgba(10,11,14,.52) with blur(14px) to go back. */
 body.nav-solid .nav,
 body.nav-stuck .nav {
-  background: rgba(10, 11, 14, 0.52);
-  -webkit-backdrop-filter: blur(14px);
-  backdrop-filter: blur(14px);
-  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.10);
+  background: rgba(255, 255, 255, 0.12);
+  -webkit-backdrop-filter: blur(18px);
+  backdrop-filter: blur(18px);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.18);
+}
+/* The site has exactly one light surface, and a white veil dies on it — over
+   the latte band the bar and its light type both vanish into cream. So when
+   that band is what is under the nav, the type inverts and the button flips
+   to a dark fill. The veil itself stays: it is the contents that have to
+   change, not the glass. redesign.js sets the class. */
+body.nav-on-light .nav-logo,
+body.nav-on-light .nav-wordmark,
+body.nav-on-light .nav-links a,
+body.nav-on-light.nav-solid .nav-wordmark,
+body.nav-on-light.nav-solid .nav-links a {
+  color: var(--ink-on-light);
+}
+body.nav-on-light .nav-cta {
+  background: #16130E;
+  color: #FAF7F1;
+}
+body.nav-on-light.nav-solid .nav,
+body.nav-on-light.nav-stuck .nav {
+  background: rgba(255, 255, 255, 0.34);
+  box-shadow: 0 1px 0 rgba(64, 48, 22, 0.14);
 }
 body.nav-solid .nav-wordmark,
 body.nav-solid .nav-links a { color: #F2ECDE; }
