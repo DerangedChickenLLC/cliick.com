@@ -196,6 +196,62 @@ if (faqSearch) {
   else if (mq.addListener) mq.addListener(apply);
 })();
 
+/* --- Mobile menu ------------------------------------------------------------
+   The four links live behind a button below the nav breakpoint. The CTA
+   stays in the bar; only wayfinding is behind the tap.
+
+   State lives in one place — a class on <body> — so CSS owns every visual
+   consequence and JS owns none of them. aria-expanded is kept in step with
+   it, since the class is what the stylesheet reads and the attribute is what
+   a screen reader reads, and those two disagreeing is the usual bug here. */
+{
+  const toggle = document.querySelector(".nav-toggle");
+  const menu = document.getElementById("nav-menu");
+  if (toggle && menu) {
+    const body = document.body;
+    const setOpen = (open) => {
+      body.classList.toggle("nav-open", open);
+      toggle.setAttribute("aria-expanded", String(open));
+    };
+
+    toggle.addEventListener("click", () =>
+      setOpen(!body.classList.contains("nav-open"))
+    );
+
+    /* Escape closes and returns the focus to the control that opened it,
+       otherwise focus is left on a link inside a panel that is now
+       display:none and the tab order starts again from the top. */
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && body.classList.contains("nav-open")) {
+        setOpen(false);
+        toggle.focus();
+      }
+    });
+
+    /* A tap anywhere else closes it. Without this the only way out is the
+       button itself, which is the complaint people actually have about these. */
+    document.addEventListener("click", (e) => {
+      if (!body.classList.contains("nav-open")) return;
+      if (menu.contains(e.target) || toggle.contains(e.target)) return;
+      setOpen(false);
+    });
+
+    /* Navigating to the current page does not reload it in every case, and a
+       panel left open over the destination looks like the tap failed. */
+    menu.addEventListener("click", (e) => {
+      if (e.target.closest("a")) setOpen(false);
+    });
+
+    /* Widen past the breakpoint with the menu open and the links return to
+       the bar, leaving the body class set and the hamburger showing a close
+       mark for a control that is no longer there. */
+    const wide = window.matchMedia("(min-width: 721px)"); // mirrors the nav breakpoint in redesign.css
+    const sync = () => { if (wide.matches) setOpen(false); };
+    if (wide.addEventListener) wide.addEventListener("change", sync);
+    else if (wide.addListener) wide.addListener(sync);
+  }
+}
+
 /* The nav rides fixed on every page, so it needs a ground once you leave the
    top — including the homepage below the pinned stage's 1200px, where there
    is no scene logic to hand it one. */

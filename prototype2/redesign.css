@@ -231,6 +231,7 @@ a { color: inherit; }
   align-items: center;
 }
 .nav .wrap {
+  position: relative; /* the mobile menu panel hangs off this */
   width: 100%;
   display: flex;
   align-items: center;
@@ -315,6 +316,51 @@ a { color: inherit; }
   transition: transform 0.18s ease, filter 0.18s ease;
 }
 .nav-cta:hover { filter: brightness(1.06); transform: translateY(-1px); }
+
+/* The menu button. Absent above the breakpoint, where the four links sit in
+   the bar and there is nothing to toggle. */
+.nav-toggle {
+  display: none;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  margin-left: 6px;
+  flex: none;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--ink-strong);
+  cursor: pointer;
+}
+.nav-toggle-bars,
+.nav-toggle-bars::before,
+.nav-toggle-bars::after {
+  content: "";
+  display: block;
+  width: 22px;
+  height: 2px;
+  border-radius: 2px;
+  background: currentColor;
+  transition: transform 0.22s ease, opacity 0.18s ease;
+}
+/* Open, the bar is the top of the panel rather than a translucent strip over
+   the page: same opaque colour, no blur, so the whole menu is one surface and
+   nothing moves behind the type. */
+body.nav-open .nav {
+  background: #101219;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  box-shadow: none;
+}
+
+.nav-toggle-bars { position: relative; }
+.nav-toggle-bars::before { position: absolute; top: -7px; }
+.nav-toggle-bars::after { position: absolute; top: 7px; }
+/* Open, the bars become the close mark — same three strokes, so the control
+   reads as one thing changing state rather than two different buttons. */
+body.nav-open .nav-toggle-bars { background: transparent; }
+body.nav-open .nav-toggle-bars::before { top: 0; transform: rotate(45deg); }
+body.nav-open .nav-toggle-bars::after { top: 0; transform: rotate(-45deg); }
 
 /* Example first Cliicks. Named groups rather than an abstraction: the whole
    job of this page is to make someone think of a specific set of people, and
@@ -2179,35 +2225,55 @@ body.page-gray .page-hero h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
   .store-badges { gap: 12px; }
   .store-badges img { height: 46px; }
 
-  /* Four links and a button do not fit on one row here — shrinking both far
-     enough to fit put the button's right edge at 421px on a 390px viewport,
-     off the screen entirely, and took the links below a tappable size on the
-     way. Previously the button was simply dropped, which left a marketing
-     site with no call to action on a phone.
-
-     So the row wraps instead: mark and button on top, the four links
-     centred underneath. Nothing is lost, nothing is clipped, and it costs
-     about 34px of header — which the existing --nav-h of 96px already
-     covers, since two rows come to roughly 69px. Measured at 320, 360, 390
-     and 430: nothing clipped, and every hero heading still clears the bar. */
+  /* Four links and a button do not fit on one row — shrinking both far
+     enough put the button's right edge at 421px on a 390px viewport, off the
+     screen entirely, and took the links below a tappable size on the way.
+     The links go behind a menu button, which is what the pattern is for.
+     The CTA stays in the bar: it is the one thing on the page worth acting
+     on, and burying it behind a tap is the mistake this replaces. */
   .nav-wordmark { display: none; }
-  .nav .wrap { flex-wrap: wrap; row-gap: 6px; }
-  .nav-logo { order: 1; height: 34px; }
+  .nav-logo { height: 34px; }
   .nav-cta {
-    order: 2;
     margin-left: auto;
     padding: 8px 15px;
     font-size: 0.9rem;
   }
+  .nav-toggle { display: grid; }
+
+  /* The panel drops from under the bar rather than covering the page: at
+     four items a sheet would be more ceremony than the content deserves. */
   .nav-links {
-    order: 3;
-    flex: 0 0 100%;
-    justify-content: center;
-    gap: 16px;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: 6px 0 10px;
+    /* Opaque, not frosted. The links measured 16-17:1 against the blurred
+       backdrop, so this was never a contrast problem — a photograph moving
+       behind type is hard to read at any ratio, because the difficulty is
+       texture rather than luminance, and no contrast check would have caught
+       it. The bar adopts the same colour while open, so the two are one
+       surface. */
+    background: #101219;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.55), 0 1px 0 rgba(255, 255, 255, 0.08);
+    /* Closed is display:none, not opacity or height: a panel that is merely
+       invisible still takes focus and still reads to a screen reader. */
+    display: none;
   }
-  /* 24x24 is the WCAG 2.2 AA minimum for a target; these measured 20px tall
-     with the smaller type, and 23px before that. */
-  .nav-links a { font-size: 0.9rem; padding-block: 3px; }
+  body.nav-open .nav-links { display: flex; }
+  .nav-links a {
+    padding: 14px var(--wrap-pad);
+    font-size: 1rem;
+    text-decoration: none;
+  }
+  .nav-links a[aria-current="page"] {
+    text-decoration: none;
+    background: var(--surface);
+    box-shadow: inset 3px 0 0 var(--accent-mark);
+  }
   .win { height: 480px; }
   /* The hero's device scales with the scenes', since it now shares their
      window. transform-origin matters as much as the scale: without top center
