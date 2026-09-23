@@ -343,15 +343,10 @@ a { color: inherit; }
   background: currentColor;
   transition: transform 0.22s ease, opacity 0.18s ease;
 }
-/* Open, the bar is the top of the panel rather than a translucent strip over
-   the page: same opaque colour, no blur, so the whole menu is one surface and
-   nothing moves behind the type. */
-body.nav-open .nav {
-  background: #101219;
-  -webkit-backdrop-filter: none;
-  backdrop-filter: none;
-  box-shadow: none;
-}
+/* Opening changes nothing about the bar. It used to take a ground of its own
+   while open, which meant the bar changed colour on the way open and back on
+   the way closed, on top of everything else moving. The only thing that
+   should happen is the page sliding down. */
 
 .nav-toggle-bars { position: relative; }
 .nav-toggle-bars::before { position: absolute; top: -7px; }
@@ -870,15 +865,36 @@ body.stage-motion .fallback-flow { display: none; }
     0 0 0 1px rgba(255, 230, 188, 0.22);
 }
 
-/* The nav has to follow the wall, or it floats as a white plank. Neutral and
-   cool rather than warm-black: rgba(23,20,15,.72) is a brown pane, and
-   everything gold behind it goes muddy. */
+/* EXPERIMENT — the scrolled bar ghosts white rather than dark. A light veil
+   lets the blur carry legibility instead of a dark pane doing it by
+   brute force. Revert to rgba(10,11,14,.52) with blur(14px) to go back. */
 body.nav-solid .nav,
 body.nav-stuck .nav {
-  background: rgba(10, 11, 14, 0.52);
-  -webkit-backdrop-filter: blur(14px);
-  backdrop-filter: blur(14px);
-  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.10);
+  background: rgba(255, 255, 255, 0.12);
+  -webkit-backdrop-filter: blur(18px);
+  backdrop-filter: blur(18px);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.18);
+}
+/* The site has exactly one light surface, and a white veil dies on it — over
+   the latte band the bar and its light type both vanish into cream. So when
+   that band is what is under the nav, the type inverts and the button flips
+   to a dark fill. The veil itself stays: it is the contents that have to
+   change, not the glass. redesign.js sets the class. */
+body.nav-on-light .nav-logo,
+body.nav-on-light .nav-wordmark,
+body.nav-on-light .nav-links a,
+body.nav-on-light.nav-solid .nav-wordmark,
+body.nav-on-light.nav-solid .nav-links a {
+  color: var(--ink-on-light);
+}
+body.nav-on-light .nav-cta {
+  background: #16130E;
+  color: #FAF7F1;
+}
+body.nav-on-light.nav-solid .nav,
+body.nav-on-light.nav-stuck .nav {
+  background: rgba(255, 255, 255, 0.34);
+  box-shadow: 0 1px 0 rgba(64, 48, 22, 0.14);
 }
 body.nav-solid .nav-wordmark,
 body.nav-solid .nav-links a { color: #F2ECDE; }
@@ -2251,27 +2267,68 @@ body.page-gray .page-hero h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
     align-items: stretch;
     gap: 0;
     padding: 6px 0 10px;
-    /* Opaque, not frosted. The links measured 16-17:1 against the blurred
-       backdrop, so this was never a contrast problem — a photograph moving
-       behind type is hard to read at any ratio, because the difficulty is
-       texture rather than luminance, and no contrast check would have caught
-       it. The bar adopts the same colour while open, so the two are one
-       surface. */
-    background: #101219;
-    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.55), 0 1px 0 rgba(255, 255, 255, 0.08);
+    /* No ground of its own. The page is scrolled to the top and then
+       displaced, so the space the menu opens into is genuinely empty and
+       what sits behind it is the site's own backdrop. Nothing to hide, so
+       nothing to hide it with — and no backdrop-filter, which would sample
+       content that is moving for the length of the animation and re-tint the
+       panel every frame. */
+    background: none;
+    box-shadow: none;
     /* Closed is display:none, not opacity or height: a panel that is merely
        invisible still takes focus and still reads to a screen reader. */
     display: none;
   }
   body.nav-open .nav-links { display: flex; }
+
+  /* The page is displaced rather than covered. Everything but the bar slides
+     down by the panel's height, so the menu opens into space instead of on
+     top of the argument. The sticky stage does not exist at this width
+     (.stage-track is display:none and .fallback-flow renders instead), so
+     nothing here is a transformed ancestor of a sticky or fixed element.
+     redesign.js measures the panel and sets --menu-h. */
+  body > *:not(.nav) {
+    transition: transform 0.34s cubic-bezier(0.32, 0.72, 0, 1);
+  }
+  body.nav-open > *:not(.nav) {
+    transform: translateY(var(--menu-h, 0px));
+  }
+  /* .fallback-flow carries the homepage's backdrop as a position:fixed
+     ::before with a negative inset. Transforming the element makes it the
+     containing block for that pseudo, so the backdrop travelled down with the
+     page and its negative top edge landed right behind the menu — which is
+     where the brown came from. The backdrop is the room, not the page, so it
+     stays put and the sections inside move instead. */
+  body.nav-open .fallback-flow { transform: none; }
+  .fallback-flow > * {
+    transition: transform 0.34s cubic-bezier(0.32, 0.72, 0, 1);
+  }
+  body.nav-open .fallback-flow > * {
+    transform: translateY(var(--menu-h, 0px));
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .fallback-flow > * { transition: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    body > *:not(.nav) { transition: none; }
+  }
+  /* Pure white and a touch heavier, not because the panel is dark but
+     because it is not: the menu sits on the site's own backdrop, and on the
+     homepage that backdrop is the brightest of the five. --ink-strong
+     measured 4.29:1 there, just under the 4.5 minimum; white clears it
+     without putting anything behind the type. */
   .nav-links a {
     padding: 14px var(--wrap-pad);
     font-size: 1rem;
+    font-weight: 500;
+    color: #FFFFFF;
     text-decoration: none;
   }
+  /* The current page is marked by the edge alone. A full-width fill behind
+     the row reads as a stripe across the glass rather than as a marker,
+     which is most of what looked banded here. */
   .nav-links a[aria-current="page"] {
     text-decoration: none;
-    background: var(--surface);
     box-shadow: inset 3px 0 0 var(--accent-mark);
   }
   .win { height: 480px; }

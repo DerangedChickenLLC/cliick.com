@@ -209,13 +209,69 @@ if (faqSearch) {
   const menu = document.getElementById("nav-menu");
   if (toggle && menu) {
     const body = document.body;
+    /* Displacement only opens empty space when the page is at the top —
+       scrolled, sliding everything down just pulls the content above into
+       the gap. So opening goes to the top first and the menu follows it
+       down; scrolling closes it again. That keeps the one invariant the
+       panel depends on: when it is open, the page is at zero. */
+    let settling = false;
+
+    const openAtTop = () => {
+      if (window.scrollY === 0) return void reveal();
+      settling = true;
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      /* scrollend is the right signal but is not everywhere yet, so poll for
+         arrival and give up after a second rather than trusting either. */
+      const started = performance.now();
+      const wait = () => {
+        if (window.scrollY === 0 || performance.now() - started > 1000) {
+          settling = false;
+          reveal();
+          return;
+        }
+        requestAnimationFrame(wait);
+      };
+      requestAnimationFrame(wait);
+    };
+
     const setOpen = (open) => {
       body.classList.toggle("nav-open", open);
       toggle.setAttribute("aria-expanded", String(open));
+      if (open) {
+        /* The page slides to the panel's BOTTOM edge, not by the panel's
+           height. Those are different numbers: the panel starts below the
+           bar, so a page displaced by the height alone lands its own top
+           edge partway down the glass — and through a translucent panel that
+           edge is a visible seam, with the content above and below it
+           reading as bands. Measured: panel 70 to 298, so a 228px shift put
+           the hero's top at 228, inside the panel.
+
+           Reading the rect here forces layout inside the same task the class
+           was added in, so the variable is set before anything paints and
+           the slide runs from zero rather than jumping a frame. */
+        body.style.setProperty(
+          "--menu-h",
+          Math.ceil(menu.getBoundingClientRect().bottom) + "px"
+        );
+      }
     };
 
-    toggle.addEventListener("click", () =>
-      setOpen(!body.classList.contains("nav-open"))
+    const reveal = () => setOpen(true);
+
+    toggle.addEventListener("click", () => {
+      if (body.classList.contains("nav-open")) setOpen(false);
+      else openAtTop();
+    });
+
+    /* Any scroll closes it. Guarded against the smooth scroll this opens
+       with, which would otherwise close the menu on its way to the top. */
+    window.addEventListener(
+      "scroll",
+      () => {
+        if (settling) return;
+        if (body.classList.contains("nav-open")) setOpen(false);
+      },
+      { passive: true }
     );
 
     /* Escape closes and returns the focus to the control that opened it,
@@ -257,9 +313,24 @@ if (faqSearch) {
    is no scene logic to hand it one. */
 {
   const body = document.body;
-  const stick = () => body.classList.toggle("nav-stuck", window.scrollY > 24);
+  /* The one light band in the scheme. A white-veiled bar disappears into it,
+     so the nav needs to know when that band is the thing underneath it —
+     which is a question about what is behind a fixed element, not about
+     scroll depth, so it is measured against the bar's own height. */
+  const lightBand = document.querySelector(".band.latte");
+  const navEl = document.querySelector(".nav");
+
+  const stick = () => {
+    body.classList.toggle("nav-stuck", window.scrollY > 24);
+    if (lightBand && navEl) {
+      const band = lightBand.getBoundingClientRect();
+      const navH = navEl.getBoundingClientRect().height;
+      body.classList.toggle("nav-on-light", band.top < navH && band.bottom > 0);
+    }
+  };
   stick();
   window.addEventListener("scroll", stick, { passive: true });
+  window.addEventListener("resize", stick, { passive: true });
 }
 
 /* --- Subpage backdrop colour ------------------------------------------------
