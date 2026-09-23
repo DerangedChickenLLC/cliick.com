@@ -1107,7 +1107,11 @@ body.nav-solid .nav-links a { color: #F2ECDE; }
 .plan-note {
   background: rgba(var(--glow), 0.10);
   border-color: rgba(var(--glow), 0.24);
-  color: var(--accent);
+  /* The pill's ground and ring are --glow, which is cool; warm type inside a
+     cool ring is the clash, not the warmth itself. It is a quiet statement
+     rather than a link, so it takes the mark: still lit, and brighter than
+     --ink-muted, without pulling a second temperature into the object. */
+  color: var(--accent-mark);
 }
 .plan-toggle {
   position: relative;
