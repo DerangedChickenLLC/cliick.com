@@ -2310,9 +2310,11 @@ body.page-gray .page-hero h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
     font-size: 1rem;
     text-decoration: none;
   }
+  /* The current page is marked by the edge alone. A full-width fill behind
+     the row reads as a stripe across the glass rather than as a marker,
+     which is most of what looked banded here. */
   .nav-links a[aria-current="page"] {
     text-decoration: none;
-    background: var(--surface);
     box-shadow: inset 3px 0 0 var(--accent-mark);
   }
   .win { height: 480px; }

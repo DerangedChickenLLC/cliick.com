@@ -213,12 +213,21 @@ if (faqSearch) {
       body.classList.toggle("nav-open", open);
       toggle.setAttribute("aria-expanded", String(open));
       if (open) {
-        /* The page slides down by exactly the panel's height, so the height
-           has to be known before the transition starts. Reading offsetHeight
-           here forces layout inside the same task the class was added in, so
-           the variable is set before anything paints and the slide runs from
-           zero rather than jumping a frame. */
-        body.style.setProperty("--menu-h", menu.offsetHeight + "px");
+        /* The page slides to the panel's BOTTOM edge, not by the panel's
+           height. Those are different numbers: the panel starts below the
+           bar, so a page displaced by the height alone lands its own top
+           edge partway down the glass — and through a translucent panel that
+           edge is a visible seam, with the content above and below it
+           reading as bands. Measured: panel 70 to 298, so a 228px shift put
+           the hero's top at 228, inside the panel.
+
+           Reading the rect here forces layout inside the same task the class
+           was added in, so the variable is set before anything paints and
+           the slide runs from zero rather than jumping a frame. */
+        body.style.setProperty(
+          "--menu-h",
+          Math.ceil(menu.getBoundingClientRect().bottom) + "px"
+        );
       }
     };
 
