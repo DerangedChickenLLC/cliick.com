@@ -60,14 +60,13 @@ agree is a footer that eventually won't.
 
 ## Known issues carried in from the design work
 
-- **The nav overlaps the hero heading below 1200px.** Confirmed in both
-  Chrome and WebKit at 1000x630: `.hero` does not reserve `--nav-h`, and the
-  nav sits on the copy. The pinned stage is off at that width, so this is the
-  fallback layout only.
+- ~~The nav overlaps the hero heading below 1200px.~~ Fixed: `.hero` now
+  reserves `--nav-h` the way `.page-hero` already did.
 - **Intermittent nav displacement in Safari.** Reported, not reproduced —
   seven viewport sizes in a WebKit build, on load and after scrolling away and
   back, all measured `navY: 0`. Two speculative fixes are in (re-running the
   motion gate on `load` and on `pageshow`/bfcache). Still watching. If it
-  recurs, the next move is taking `.nav` off JS entirely: `position: fixed`
-  unconditionally, which removes the mechanism instead of patching triggers.
+  recurs: `.nav` is now `position: fixed` unconditionally rather than under a
+  JS-set class, which removes the mechanism rather than patching its
+  triggers. That was the planned next move and it has been taken.
 - **Backdrop tint exploration** is parked in `PUNCHLIST.md`.

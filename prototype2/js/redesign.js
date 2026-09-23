@@ -196,15 +196,14 @@ if (faqSearch) {
   else if (mq.addListener) mq.addListener(apply);
 })();
 
-/* Subpages: the nav rides fixed like the homepage's, so it needs a ground
-   once you leave the top. Not part of the colour spike — keep this. */
+/* The nav rides fixed on every page, so it needs a ground once you leave the
+   top — including the homepage below the pinned stage's 1200px, where there
+   is no scene logic to hand it one. */
 {
   const body = document.body;
-  if (body.classList.contains("page-gray")) {
-    const stick = () => body.classList.toggle("nav-stuck", window.scrollY > 24);
-    stick();
-    window.addEventListener("scroll", stick, { passive: true });
-  }
+  const stick = () => body.classList.toggle("nav-stuck", window.scrollY > 24);
+  stick();
+  window.addEventListener("scroll", stick, { passive: true });
 }
 
 /* --- Subpage backdrop colour ------------------------------------------------
