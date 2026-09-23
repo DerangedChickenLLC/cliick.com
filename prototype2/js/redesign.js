@@ -212,6 +212,14 @@ if (faqSearch) {
     const setOpen = (open) => {
       body.classList.toggle("nav-open", open);
       toggle.setAttribute("aria-expanded", String(open));
+      if (open) {
+        /* The page slides down by exactly the panel's height, so the height
+           has to be known before the transition starts. Reading offsetHeight
+           here forces layout inside the same task the class was added in, so
+           the variable is set before anything paints and the slide runs from
+           zero rather than jumping a frame. */
+        body.style.setProperty("--menu-h", menu.offsetHeight + "px");
+      }
     };
 
     toggle.addEventListener("click", () =>

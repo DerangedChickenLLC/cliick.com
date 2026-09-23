@@ -343,28 +343,13 @@ a { color: inherit; }
   background: currentColor;
   transition: transform 0.22s ease, opacity 0.18s ease;
 }
-/* Open, the bar is the top of the panel rather than a strip of its own: same
-   glass, same blur, so the menu is one surface. This has to beat the
-   light-band inversion as well — over the latte band the bar would otherwise
-   flip to dark type while the panel hanging off it stays light, which is one
-   object disagreeing with itself. */
-body.nav-open .nav,
-body.nav-open.nav-on-light .nav,
-body.nav-open.nav-on-light.nav-stuck .nav,
-body.nav-open.nav-on-light.nav-solid .nav {
-  background: rgba(12, 14, 20, 0.62);
-  -webkit-backdrop-filter: blur(26px) saturate(0.85);
-  backdrop-filter: blur(26px) saturate(0.85);
+/* Open, the bar and the panel are one piece of glass — same veil, same blur,
+   no seam between them. */
+body.nav-open .nav {
+  background: rgba(30, 34, 44, 0.42);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
   box-shadow: none;
-}
-body.nav-open.nav-on-light .nav-logo,
-body.nav-open.nav-on-light .nav-wordmark,
-body.nav-open.nav-on-light .nav-links a {
-  color: var(--ink-strong);
-}
-body.nav-open.nav-on-light .nav-cta {
-  background: var(--control-on);
-  color: var(--control-on-ink);
 }
 
 .nav-toggle-bars { position: relative; }
@@ -2286,21 +2271,40 @@ body.page-gray .page-hero h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
     align-items: stretch;
     gap: 0;
     padding: 6px 0 10px;
-    /* Frosted like the bar, but dark rather than white. The panel covers a
-       far larger piece of the photograph than a 96px bar does, and measured
-       over the About hero the white veil gives 2.7:1 at .12 and 2.3:1 at
-       .22 — both under the 4.5 minimum, with the founders' faces reading
-       straight through the type. Dark at .62 with a wider blur is the same
-       material and measures 9.9:1. */
-    background: rgba(12, 14, 20, 0.62);
-    -webkit-backdrop-filter: blur(26px) saturate(0.85);
-    backdrop-filter: blur(26px) saturate(0.85);
-    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45), 0 1px 0 rgba(255, 255, 255, 0.08);
+    /* Smoked glass, not the bar's white. Displacement fixed the texture
+       problem — what the panel covers is now the soft fixed backdrop rather
+       than faces and screenshots — but not the luminance one: the wash under
+       the top of a page is bright, and light type on a white veil over it
+       measured 3.2:1 at .12 and 3.8:1 at .06, both under the 4.5 minimum.
+       Tinting the glass rather than whitening it keeps the material and
+       takes the worst case across four pages to 7.3:1. The bar can stay
+       white because it is 96px over a darkened strip; the panel is a third
+       of the screen. */
+    background: rgba(30, 34, 44, 0.42);
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35), 0 1px 0 rgba(255, 255, 255, 0.14);
     /* Closed is display:none, not opacity or height: a panel that is merely
        invisible still takes focus and still reads to a screen reader. */
     display: none;
   }
   body.nav-open .nav-links { display: flex; }
+
+  /* The page is displaced rather than covered. Everything but the bar slides
+     down by the panel's height, so the menu opens into space instead of on
+     top of the argument. The sticky stage does not exist at this width
+     (.stage-track is display:none and .fallback-flow renders instead), so
+     nothing here is a transformed ancestor of a sticky or fixed element.
+     redesign.js measures the panel and sets --menu-h. */
+  body > *:not(.nav) {
+    transition: transform 0.34s cubic-bezier(0.32, 0.72, 0, 1);
+  }
+  body.nav-open > *:not(.nav) {
+    transform: translateY(var(--menu-h, 0px));
+  }
+  @media (prefers-reduced-motion: reduce) {
+    body > *:not(.nav) { transition: none; }
+  }
   .nav-links a {
     padding: 14px var(--wrap-pad);
     font-size: 1rem;
