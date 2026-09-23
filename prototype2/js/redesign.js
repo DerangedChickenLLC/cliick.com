@@ -209,6 +209,31 @@ if (faqSearch) {
   const menu = document.getElementById("nav-menu");
   if (toggle && menu) {
     const body = document.body;
+    /* Displacement only opens empty space when the page is at the top —
+       scrolled, sliding everything down just pulls the content above into
+       the gap. So opening goes to the top first and the menu follows it
+       down; scrolling closes it again. That keeps the one invariant the
+       panel depends on: when it is open, the page is at zero. */
+    let settling = false;
+
+    const openAtTop = () => {
+      if (window.scrollY === 0) return void reveal();
+      settling = true;
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      /* scrollend is the right signal but is not everywhere yet, so poll for
+         arrival and give up after a second rather than trusting either. */
+      const started = performance.now();
+      const wait = () => {
+        if (window.scrollY === 0 || performance.now() - started > 1000) {
+          settling = false;
+          reveal();
+          return;
+        }
+        requestAnimationFrame(wait);
+      };
+      requestAnimationFrame(wait);
+    };
+
     const setOpen = (open) => {
       body.classList.toggle("nav-open", open);
       toggle.setAttribute("aria-expanded", String(open));
@@ -231,8 +256,22 @@ if (faqSearch) {
       }
     };
 
-    toggle.addEventListener("click", () =>
-      setOpen(!body.classList.contains("nav-open"))
+    const reveal = () => setOpen(true);
+
+    toggle.addEventListener("click", () => {
+      if (body.classList.contains("nav-open")) setOpen(false);
+      else openAtTop();
+    });
+
+    /* Any scroll closes it. Guarded against the smooth scroll this opens
+       with, which would otherwise close the menu on its way to the top. */
+    window.addEventListener(
+      "scroll",
+      () => {
+        if (settling) return;
+        if (body.classList.contains("nav-open")) setOpen(false);
+      },
+      { passive: true }
     );
 
     /* Escape closes and returns the focus to the control that opened it,

@@ -2267,23 +2267,14 @@ body.page-gray .page-hero h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
     align-items: stretch;
     gap: 0;
     padding: 6px 0 10px;
-    /* The wall, not glass. Displacement means the page slides down and what
-       you see in its place is the ground it was sitting on, so the panel is
-       that ground — opaque, one flat colour, no filter.
-
-       Transparent does not work, and the reason is worth keeping: displacing
-       the page only opens empty space when the page is AT THE TOP. Scrolled,
-       shifting everything down by 298px simply brings the previous 298px of
-       content into that space, so there is something behind the panel again.
-       Measured on Home at scroll 1400 the links sat over .showcase-copy at
-       3.8:1.
-
-       No backdrop-filter is the other half. A filter samples what is behind
-       it, and what is behind it moves for the whole length of the animation,
-       so the panel shifted colour the entire way open and the entire way
-       closed. Flat colour cannot do that. */
-    background: var(--wall);
-    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+    /* No ground of its own. The page is scrolled to the top and then
+       displaced, so the space the menu opens into is genuinely empty and
+       what sits behind it is the site's own backdrop. Nothing to hide, so
+       nothing to hide it with — and no backdrop-filter, which would sample
+       content that is moving for the length of the animation and re-tint the
+       panel every frame. */
+    background: none;
+    box-shadow: none;
     /* Closed is display:none, not opacity or height: a panel that is merely
        invisible still takes focus and still reads to a screen reader. */
     display: none;
@@ -2302,12 +2293,35 @@ body.page-gray .page-hero h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
   body.nav-open > *:not(.nav) {
     transform: translateY(var(--menu-h, 0px));
   }
+  /* .fallback-flow carries the homepage's backdrop as a position:fixed
+     ::before with a negative inset. Transforming the element makes it the
+     containing block for that pseudo, so the backdrop travelled down with the
+     page and its negative top edge landed right behind the menu — which is
+     where the brown came from. The backdrop is the room, not the page, so it
+     stays put and the sections inside move instead. */
+  body.nav-open .fallback-flow { transform: none; }
+  .fallback-flow > * {
+    transition: transform 0.34s cubic-bezier(0.32, 0.72, 0, 1);
+  }
+  body.nav-open .fallback-flow > * {
+    transform: translateY(var(--menu-h, 0px));
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .fallback-flow > * { transition: none; }
+  }
   @media (prefers-reduced-motion: reduce) {
     body > *:not(.nav) { transition: none; }
   }
+  /* Pure white and a touch heavier, not because the panel is dark but
+     because it is not: the menu sits on the site's own backdrop, and on the
+     homepage that backdrop is the brightest of the five. --ink-strong
+     measured 4.29:1 there, just under the 4.5 minimum; white clears it
+     without putting anything behind the type. */
   .nav-links a {
     padding: 14px var(--wrap-pad);
     font-size: 1rem;
+    font-weight: 500;
+    color: #FFFFFF;
     text-decoration: none;
   }
   /* The current page is marked by the edge alone. A full-width fill behind
