@@ -25,11 +25,34 @@ if (stageTrack) {
     if (!stageMotion.matches) return;
     const rect = stageTrack.getBoundingClientRect();
     const runway = rect.height - window.innerHeight;
-    const p = Math.min(1, Math.max(0, -rect.top / runway));
+    /* The track is taller than the viewport once laid out, but this runs at
+       readyState "interactive" — the script is deferred, so it fires after
+       the DOM is parsed and before the images have sized anything. WebKit
+       measures the track mid-layout and hands back a height SHORTER than the
+       viewport with a large positive top, which makes runway negative and
+       -top/runway a large POSITIVE number. It clamps to 1, the page opens on
+       the last scene with a solid nav, and nothing corrects it until you
+       scroll. Chrome happens to have laid out far enough by then, which is
+       why this only ever showed up in Safari.
+
+       Measured in WebKit at 1440x900: top 2327.9, height 580.2, runway
+       -319.8, p 7.28 -> 1. A negative or zero runway means there is nothing
+       to scroll through yet, which is scene 0 by definition. */
+    const p = runway > 0 ? Math.min(1, Math.max(0, -rect.top / runway)) : 0;
     let scene = 0;
     BOUNDS.forEach((b, i) => {
       if (p >= b) scene = i + 1;
     });
+    /* The light drifts while the stage plays, the same gesture the subpages
+       use down their own length: cool sinks, warm rises at 0.7 the rate.
+       Outside the scene check on purpose — the colours step, the light does
+       not, and that continuous motion is what reads as the glow being alive
+       rather than the page being tinted. */
+    const drift = p * window.innerHeight * 0.26;
+    const fs = frame.style;
+    fs.setProperty("--stage-cool-d", drift.toFixed(1) + "px");
+    fs.setProperty("--stage-warm-d", (-drift * 0.7).toFixed(1) + "px");
+
     if (scene === current) return;
     current = scene;
     frame.dataset.scene = String(scene);
@@ -56,6 +79,10 @@ if (stageTrack) {
     { passive: true }
   );
   window.addEventListener("resize", update, { passive: true });
+  /* Re-sync once everything has sized. Without this a first measurement taken
+     against an unsettled layout stands until the reader happens to scroll. */
+  window.addEventListener("load", update);
+  if (window.ResizeObserver) new ResizeObserver(update).observe(stageTrack);
 
   // Live gate: engage/disengage the motion experience whenever the media
   // query flips (window resized across 1200px, reduced-motion toggled),
@@ -71,6 +98,20 @@ if (stageTrack) {
     }
   };
   stageMotion.addEventListener("change", applyMode);
+  /* .nav is position:fixed only while .stage-motion is on, so if the gate is
+     ever evaluated against a viewport width that has not settled — Safari
+     reports transient sizes while a window is being restored — the nav falls
+     back to position:absolute and scrolls away with the page instead of
+     riding the top. Re-run the gate itself, not just the scene maths, once
+     the page has finished loading.
+
+     pageshow with persisted covers Safari's back/forward cache: returning to
+     the page restores the DOM and the scroll position without firing load,
+     so whatever state was frozen on the way out is still sitting there. */
+  window.addEventListener("load", applyMode);
+  window.addEventListener("pageshow", (e) => {
+    if (e.persisted) applyMode();
+  });
   applyMode();
 }
 
@@ -154,3 +195,105 @@ if (faqSearch) {
   if (mq.addEventListener) mq.addEventListener("change", apply);
   else if (mq.addListener) mq.addListener(apply);
 })();
+
+/* Subpages: the nav rides fixed like the homepage's, so it needs a ground
+   once you leave the top. Not part of the colour spike — keep this. */
+{
+  const body = document.body;
+  if (body.classList.contains("page-gray")) {
+    const stick = () => body.classList.toggle("nav-stuck", window.scrollY > 24);
+    stick();
+    window.addEventListener("scroll", stick, { passive: true });
+  }
+}
+
+/* --- Subpage backdrop colour ------------------------------------------------
+   The homepage stage steps through three colour pairs, one per scene. The
+   subpages walk the same three continuously against scroll progress: Home
+   can step because each step lands on a scene you watch arrive, and a
+   subpage has no such beat, so a jump there has nothing explaining it.
+
+   The pair also arrives rather than being there from the first pixel — Home's
+   scene 0 carries no scrim at all, because a landing is the photograph. */
+{
+  const body = document.body;
+  if (body.classList.contains("page-gray")) {
+    /* EXPERIMENT (#37) — the colour lives in the shadows, not the highlights.
+       The scrim blends with `lighten`, which takes the per-channel maximum:
+       it can only ever raise a pixel to the tint, never past it. So the tint
+       is a DARK colour — it sets a floor. Black corners become deep indigo;
+       anything already brighter than the floor (the photograph's own sunset)
+       is left exactly as it was. That is a split tone: cool shadows, the
+       photo's warm highlights untouched.
+
+       A bright tint here would be identical to painting normally, because
+       nothing in the picture is brighter than it. That is what the previous
+       values were doing, and why they read as raised highlights. */
+    /* Home's sequence, exactly: the same three pairs at the same alphas and
+       the same gradient centres as .stage-frame[data-scene="1|2|3"]. The
+       spread stops and the shadow-lift blend were both experiments off this
+       baseline; Home stayed the better read, so the subpages come back to it
+       rather than the other way round. If these change, change them there
+       too — the two sets have to stay identical. */
+    const STOPS = [
+      { cool: [38, 53, 111], coolA: 0.82, coolY: 46, warm: [224, 164, 94], warmA: 0.42, warmY: 38 },
+      { cool: [52, 54, 104], coolA: 0.70, coolY: 46, warm: [224, 144, 126], warmA: 0.44, warmY: 38 },
+      { cool: [62, 56, 108], coolA: 0.68, coolY: 46, warm: [217, 160, 91], warmA: 0.46, warmY: 38 },
+    ];
+    /* The opaque closing band covers the last stretch of every subpage, so the
+       arc has to finish before you reach it or its end never gets seen. */
+    const RUNWAY = 0.78;
+    const mix = (a, b, t) => a + (b - a) * t;
+    const rgb = (a, b, t) => a.map((v, i) => Math.round(mix(v, b[i], t))).join(", ");
+    let queued = false;
+
+    const paint = () => {
+      queued = false;
+      const span = document.documentElement.scrollHeight - window.innerHeight;
+      const raw = span > 0 ? Math.min(1, Math.max(0, window.scrollY / span)) : 0;
+      const p = Math.min(1, raw / RUNWAY);
+      const seg = Math.min(STOPS.length - 2, Math.floor(p * (STOPS.length - 1)));
+      const t = p * (STOPS.length - 1) - seg;
+      const a = STOPS[seg];
+      const b = STOPS[seg + 1];
+      /* The pair arrives as the hero leaves, the way it arrives on Home when
+         scene 0 gives way. The hero's own height is the runway, so a tall
+         hero holds the photograph longer — which is what it is there for. */
+      const hero = document.querySelector(".page-hero");
+      const runway = hero ? hero.offsetHeight : window.innerHeight;
+      const arrive = Math.min(1, window.scrollY / runway);
+
+      const st = body.style;
+            /* The ramp rides in the alphas rather than the layer's opacity, because
+         the layer also carries the stage shade and that must not fade in.
+         0.66 is what the stage scrim sits at. */
+      const gain = arrive * arrive * (3 - 2 * arrive) * 0.66;
+
+      /* Home's three pairs sit within a few RGB points of each other — they
+         read as movement there because each one arrives under a new scene,
+         and on a subpage there is no such beat, so the colour walk alone is
+         below perception. Rather than pull the colours apart and break step
+         with Home, move the light instead: the two pools drift in opposite
+         directions down the page. The layer is fixed, so the content scrolls
+         across a slowly moving source, which is what reads as a room being
+         lit rather than a page being tinted. Colours stay identical to the
+         stage scenes. */
+      const drift = raw * 26;
+      st.setProperty("--pair-cool", rgb(a.cool, b.cool, t));
+      st.setProperty("--pair-cool-a", (mix(a.coolA, b.coolA, t) * gain).toFixed(3));
+      st.setProperty("--pair-cool-y", (mix(a.coolY, b.coolY, t) + drift).toFixed(1) + "%");
+      st.setProperty("--pair-warm", rgb(a.warm, b.warm, t));
+      st.setProperty("--pair-warm-a", (mix(a.warmA, b.warmA, t) * gain).toFixed(3));
+      st.setProperty("--pair-warm-y", (mix(a.warmY, b.warmY, t) - drift * 0.7).toFixed(1) + "%");
+    };
+
+    const tick = () => {
+      if (queued) return;
+      queued = true;
+      requestAnimationFrame(paint);
+    };
+    paint();
+    window.addEventListener("scroll", tick, { passive: true });
+    window.addEventListener("resize", tick);
+  }
+}

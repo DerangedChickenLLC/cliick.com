@@ -1,3 +1,7 @@
+> Pre-launch finalisations live in [LAUNCH.md](LAUNCH.md) — things that are
+> wrong for a live site rather than merely unfinished. This file is design and
+> copy decisions parked for later.
+
 # prototype2 — running punch list
 
 Knock-on effects and deferred cleanups noticed while iterating. Not blocking;

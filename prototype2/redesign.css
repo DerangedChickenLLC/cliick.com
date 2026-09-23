@@ -18,11 +18,11 @@
      comes from the backdrop light, never from the pigment — bake brown into
      the surfaces themselves and every page turns flat brown-on-brown. Panels
      are translucent so the lit backdrop reads through them. */
-  --wall: #221E17;        /* the page itself, behind the backdrop layer */
-  --recess: rgba(0, 0, 0, 0.30);            /* tracks, backing panels */
-  --surface: rgba(252, 246, 234, 0.055);    /* cards, chips, inputs, rows */
-  --surface-2: rgba(252, 246, 234, 0.105);  /* hover, raised knobs */
-  --line: rgba(252, 240, 220, 0.14);        /* borders on dark */
+  --wall: #16171E;        /* the page itself, behind the backdrop layer */
+  --recess: rgba(0, 0, 0, 0.34);            /* tracks, backing panels */
+  --surface: rgba(234, 240, 255, 0.055);    /* cards, chips, inputs, rows */
+  --surface-2: rgba(234, 240, 255, 0.105);  /* hover, raised knobs */
+  --line: rgba(226, 234, 255, 0.14);        /* borders on dark */
 
   /* Interactive objects — cards, rows, controls. These are NOT the room.
      Surfaces above are environment: translucent, made of the same light.
@@ -31,27 +31,39 @@
      and casts a real shadow. Keep that distinction in any second scheme:
      if controls are made of the same stuff as the wall, the page reads as
      shelves with no bartender. */
-  --panel: rgba(24, 21, 17, 0.82);
-  --panel-hover: rgba(36, 32, 26, 0.90);
-  --panel-edge: rgba(255, 244, 224, 0.13);
-  --panel-lip: rgba(255, 246, 228, 0.22);   /* top edge, lit from above */
+  --panel: rgba(16, 18, 26, 0.80);
+  --panel-hover: rgba(24, 27, 38, 0.88);
+  --panel-edge: rgba(226, 232, 255, 0.13);
+  --panel-lip: rgba(232, 238, 255, 0.20);   /* top edge, lit from above */
   --panel-shadow: 0 24px 52px rgba(0, 0, 0, 0.55), 0 3px 10px rgba(0, 0, 0, 0.38);
   --panel-shadow-sm: 0 10px 24px rgba(0, 0, 0, 0.42), 0 2px 6px rgba(0, 0, 0, 0.30);
 
   /* A selected control has to read as ON. On a dark scheme the lazy move is
      to make the active segment a slightly lighter dark, which reads as "off
      and more off" rather than as a choice. Selection is lit. */
-  --control-on: #EBD9B6;
-  --control-on-ink: #1F1A12;
+  /* A tan FILL is a brown block at any size, so filled controls are
+     paper-neutral; tan at TEXT weight still reads gold, so --accent stays
+     warm and only brightens. That split is why these two do not match. */
+  --control-on: #FAF7F1;
+  --control-on-ink: #16130E;
 
-  --ink-strong: #F2ECDE;  /* primary copy */
-  --ink-muted: #CFC6B2;   /* secondary copy */
-  --ink-faint: #A79E8B;   /* tertiary, eyebrows */
+  --ink-strong: #F3F2EF;  /* primary copy */
+  --ink-muted: #C9C8CC;   /* secondary copy */
+  --ink-faint: #9C9BA3;   /* tertiary, eyebrows */
   --ink-on-light: #211D16;/* copy on the one light band */
-  --accent: #E9C88A;      /* links, "learn more" */
+  --accent: #FBE7BC;      /* links, "learn more" */
+  /* Brown is dark orange, so a warm mark goes brown by losing luminance —
+     which is exactly what antialiasing does to a hairline. A 1px ring or a
+     thin glyph blends toward the dark ground behind it and lands in the mud,
+     while the same colour in 600-weight text holds its lightness and reads
+     gold. So warmth survives at text weight, not at stroke weight: --accent
+     for type, --accent-mark for hairlines, small glyphs and thin bars. */
+  --accent-mark: #F6F1E7;
 
-  --glow: 255, 232, 192;  /* the gallery pool, as RGB parts for rgba() */
-  --band-alt: rgba(252, 246, 234, 0.035); /* alternating band */
+  /* Cool: a warm wash at 10% behind every chip and hairline is what made the
+     objects read brown even on a blue page. */
+  --glow: 232, 238, 255;  /* the gallery pool, as RGB parts for rgba() */
+  --band-alt: rgba(234, 240, 255, 0.035); /* alternating band */
   --band-light: #F2EBDF;  /* the ONE light surface: the beat before the footer */
 
   /* Legacy names, aliased to the scheme so existing rules follow it. */
@@ -157,34 +169,43 @@ body {
 
 body.page-gray { background: var(--page-gray); }
 
-/* The lit space. Without this the subpages are flat pigment; the homepage
-   scenes get their warmth from the stage backdrop and the subpages had none,
-   which read as brown-on-brown. Fixed rather than scrolling, so the whole
-   site feels like one room. */
+/* The subpages take Home's backdrop rather than a paraphrase of it: the same
+   hero photograph, unblurred, at full strength. An earlier version blurred a
+   copy of it at 26% and the tabs read as a different room. */
 body.page-gray::before {
   content: "";
   position: fixed;
-  inset: -6%;
+  inset: 0;
   z-index: -2;
   background: url("/prototype2/images/redesign/hero-bg-sim.svg") center / cover no-repeat;
-  filter: blur(44px) saturate(0.92) brightness(1.05);
-  opacity: 0.62;
   pointer-events: none;
 }
-/* A pool of light up where the page content starts, so content is lit rather
-   than sitting on an even field. */
+/* Layer order is the whole game here. On Home the stack is photograph, then
+   the pair, then the stage shade on top — the shade is what keeps the left
+   side deep. Painting the pair over the shade instead lightens that side and
+   the page reads warmer than Home does. A body has two pseudo-elements and
+   the photograph needs one, so the shade rides with the pair in a single
+   background, above it (first layer paints on top).
+
+   Which means the arrival cannot be element opacity — that would fade the
+   shade too. redesign.js folds it into the pair's own alphas, along with the
+   0.66 the stage scrim sits at. Zero by default, so nothing shows before the
+   script runs. */
 body.page-gray::after {
   content: "";
   position: fixed;
   inset: 0;
   z-index: -1;
-  background: radial-gradient(
-    ellipse 90% 55% at 50% 22%,
-    rgba(var(--glow), 0.13) 0%,
-    rgba(var(--glow), 0.05) 45%,
-    rgba(var(--glow), 0) 75%
-  );
   pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba(0, 0, 0, 0.45) 0%, rgba(0, 0, 0, 0) 18%),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.15) 60%),
+    radial-gradient(ellipse at 16% var(--pair-cool-y, 46%),
+      rgba(var(--pair-cool, 38, 53, 111), var(--pair-cool-a, 0)) 0%,
+      rgba(var(--pair-cool, 38, 53, 111), 0) 60%),
+    radial-gradient(ellipse at 86% var(--pair-warm-y, 38%),
+      rgba(var(--pair-warm, 224, 164, 94), var(--pair-warm-a, 0)) 0%,
+      rgba(var(--pair-warm, 224, 164, 94), 0) 58%);
 }
 
 img { max-width: 100%; display: block; }
@@ -413,19 +434,33 @@ body.stage-motion .nav {
 }
 body.stage-motion .nav-wordmark,
 body.stage-motion .nav-links a { transition: color 0.4s ease; }
-body.nav-solid .nav {
-  background: rgba(255, 255, 255, 0.82);
-  -webkit-backdrop-filter: blur(12px);
-  backdrop-filter: blur(12px);
-  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.08);
+/* Subpages had the nav absolute, so it scrolled off and only came back when
+   you reached the literal top of the document — scroll up a little and the
+   bar is half off the top edge, which reads as the menu failing to restore.
+   Home already rides fixed; the subpages do the same. .page-hero already
+   reserves --nav-h, so nothing moves. */
+body.page-gray .nav {
+  position: fixed;
+  transition: background-color 0.4s ease, box-shadow 0.4s ease;
 }
+/* Fixed over content needs a ground once you leave the top. The homepage's
+   white bar belongs to its light scenes; a subpage is dark, so it gets a
+   dark one. */
+body.page-gray.nav-stuck .nav {
+  background: rgba(20, 17, 12, 0.58);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+/* The scrolled skin lives with the wall further down the file — see
+   "The nav has to follow the wall". */
 /* --------------------------------------------------------------------------
    Home hero
    -------------------------------------------------------------------------- */
 .hero {
   position: relative;
   min-height: min(866px, 100vh);
-  background: #130e04;
+  background: #0C0D13;
   overflow: hidden;
   color: var(--ink-strong);
 }
@@ -649,8 +684,11 @@ body.stage-motion .fallback-flow { display: none; }
   opacity: 1;
   transition: opacity 0.6s ease;
 }
-.stage-frame:not([data-scene="0"]) .stage-bg,
-.stage-frame:not([data-scene="0"]) .stage-shade { opacity: 0; }
+/* The backdrop does NOT fade when the story starts. Fading it toward the
+   wall is what drained the colour out and left the photo's amber half
+   smeared across the frame — which is the brown. Hold the photograph; the
+   scene scrims below do the colouring. */
+.stage-frame:not([data-scene="0"]) .stage-shade { opacity: 1; }
 
 /* Gray mock window — fades in when the story leaves the hero */
 .stage-window {
@@ -730,11 +768,10 @@ body.stage-motion .fallback-flow { display: none; }
 /* The wall. Warm charcoal, not pure black — pure black reads as "screen off". */
 .stage-frame { background: var(--wall); }
 
-.stage-frame:not([data-scene="0"]) .stage-bg {
-  opacity: 0.58;
-  filter: blur(26px) saturate(0.86) brightness(1.22);
-  transform: scale(1.12); /* covers the blur bleeding in at the edges */
-}
+/* The grey mock window framed the muted wall; over a live photo it is a
+   smudge. */
+.stage-frame:not([data-scene="0"]) .stage-window { opacity: 0; }
+.stage-frame .stage-bg { z-index: -1; }
 
 /* Copy flips to light. Warm off-white rather than #fff, since the wall is warm. */
 .stage-frame:not([data-scene="0"]) { color: var(--ink-strong); }
@@ -779,10 +816,14 @@ body.stage-motion .fallback-flow { display: none; }
     0 0 0 1px rgba(255, 230, 188, 0.22);
 }
 
-/* The nav has to follow the wall, or it floats as a white plank. */
+/* The nav has to follow the wall, or it floats as a white plank. Neutral and
+   cool rather than warm-black: rgba(23,20,15,.72) is a brown pane, and
+   everything gold behind it goes muddy. */
 body.nav-solid .nav {
-  background: rgba(23, 20, 15, 0.72);
-  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.08);
+  background: rgba(10, 11, 14, 0.52);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.10);
 }
 body.nav-solid .nav-wordmark,
 body.nav-solid .nav-links a { color: #F2ECDE; }
@@ -854,6 +895,9 @@ body.nav-solid .nav-links a { color: #F2ECDE; }
   --ink-strong: var(--ink-on-light);
   --ink-muted: #5B5245;
   --accent: #7A5210;              /* the warm accent has to darken to hold */
+  /* On a light ground the mud problem inverts — a hairline loses luminance
+     toward cream, not toward black — so marks and type can share a colour. */
+  --accent-mark: var(--accent);
   --recess: rgba(64, 48, 22, 0.10);
   --line: rgba(64, 48, 22, 0.18);
   --glow: 122, 86, 30;            /* the tint darkens with everything else */
@@ -1063,7 +1107,11 @@ body.nav-solid .nav-links a { color: #F2ECDE; }
 .plan-note {
   background: rgba(var(--glow), 0.10);
   border-color: rgba(var(--glow), 0.24);
-  color: var(--accent);
+  /* The pill's ground and ring are --glow, which is cool; warm type inside a
+     cool ring is the clash, not the warmth itself. It is a quiet statement
+     rather than a link, so it takes the mark: still lit, and brighter than
+     --ink-muted, without pulling a second temperature into the object. */
+  color: var(--accent-mark);
 }
 .plan-toggle {
   position: relative;
@@ -1125,10 +1173,23 @@ body.nav-solid .nav-links a { color: #F2ECDE; }
   width: var(--fill);
   height: 100%;
   border-radius: 99px;
-  background: linear-gradient(90deg, rgba(var(--glow), 0.55), var(--accent));
+  background: linear-gradient(90deg, rgba(var(--glow), 0.55), var(--accent-mark));
 }
 .plan-scale--guest { --fill: 2.4%; }
 .plan-scale--premium { --fill: 100%; }
+/* A warm tip where the bar reaches the cap. Only on the premium bar: the
+   gradient is painted across the FILL, not the track, so on the 2.4% guest
+   bar the same stop would land as a one-pixel warm edge — a hairline, which
+   is the thing --accent-mark exists to keep off. The tip also means
+   something here, since guest never arrives at the end. */
+.plan-scale--premium .plan-scale-fill {
+  background: linear-gradient(
+    90deg,
+    rgba(var(--glow), 0.55) 0%,
+    var(--accent-mark) 58%,
+    var(--accent) 100%
+  );
+}
 .plan-scale-label {
   margin-top: 10px;
   font-size: var(--fs-small);
@@ -1259,21 +1320,10 @@ body.nav-solid .nav-links a { color: #F2ECDE; }
    backdrop at a different crop, which left a hard seam. The scrim is masked so
    it fades out at the bottom rather than ending on an edge, and sits under
    .wrap (z-index 2) so it never dims the copy. */
-body.page-gray .page-hero::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-  background: linear-gradient(
-    90deg,
-    rgba(0, 0, 0, 0.66) 0%,
-    rgba(0, 0, 0, 0.34) 55%,
-    rgba(0, 0, 0, 0.20) 100%
-  );
-  -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 56%, transparent 100%);
-  mask-image: linear-gradient(180deg, #000 0%, #000 56%, transparent 100%);
-}
+/* The page-hero used to carry its own left-dark scrim. That is the job the
+   stage shade in body::after now does one layer down, and two stacked made
+   the tall heroes (About, Membership, Start) read darker than the short one
+   (FAQ) and darker than Home. Keep one. */
 body.page-gray .page-hero h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
 
 /* Aside column — the site's spatial grammar.
@@ -1471,11 +1521,11 @@ body.page-gray .page-hero h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
 }
 /* And a struck-through dot for what is not: the absence is the product. */
 .ledger-col--none li::before {
-  border-color: var(--accent);
+  border-color: var(--accent-mark);
   background: linear-gradient(
     to bottom right,
-    transparent calc(50% - 0.5px), var(--accent) calc(50% - 0.5px),
-    var(--accent) calc(50% + 0.5px), transparent calc(50% + 0.5px)
+    transparent calc(50% - 0.5px), var(--accent-mark) calc(50% - 0.5px),
+    var(--accent-mark) calc(50% + 0.5px), transparent calc(50% + 0.5px)
   );
 }
 .ledger-col--none li { color: var(--ink-strong); }
@@ -1639,7 +1689,7 @@ body.page-gray .page-hero h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
   font-weight: 600;
   font-size: 1.125rem;
 }
-.flow-node--us { color: #1b1510; background: var(--accent); border-color: transparent; }
+.flow-node--us { color: #16130E; background: var(--accent); border-color: transparent; }
 .flow-arrow {
   flex: 1;
   height: 2px;
@@ -1884,14 +1934,16 @@ body.page-gray .page-hero h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
   top: 50%;
   transform: translateY(-50%);
   font-size: 1.35rem;
-  font-weight: 400;
   line-height: 1;
   width: 30px;
   height: 30px;
   display: grid;
   place-items: center;
   border-radius: 50%;
-  color: var(--accent);
+  /* 500 rather than 400: at 1.35rem a single stroke is thin enough to
+     antialias into the chip behind it. */
+  font-weight: 500;
+  color: var(--accent-mark);
   background: rgba(var(--glow), 0.10);
   border: 1px solid rgba(var(--glow), 0.18);
 }
@@ -2126,3 +2178,64 @@ body.page-gray .page-hero h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
   .plan { padding: 30px 26px 36px; }
   .footer-bottom { justify-content: center; text-align: center; }
 }
+
+/* ==========================================================================
+   The scene scrims (#37)
+   --------------------------------------------------------------------------
+   The landing reads royal — blue and gold — because the hero photograph is
+   at full strength. The original design faded it toward the wall as the
+   story started, and what was left once the colour drained out was brown:
+   not the wall, but the photo's own amber half blurred across the frame.
+   Deepening the wall made it worse. Holding the photograph is what worked.
+
+   On top of the held photograph, each scene gets a pair: a cool side and its
+   warm complement, moving together. An earlier pass tinted only the left,
+   which left the amber doing the same thing in every scene.
+
+   The subpages walk the same three pairs continuously against scroll rather
+   than stepping — see body.page-gray::after above and redesign.js. If these
+   values change, change them in both places; they are meant to be identical.
+   ========================================================================== */
+
+.stage-frame::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  /* background-image rather than background: the drift below rides on
+     background-position, and transitioning the shorthand would animate every
+     frame of it into a smear. */
+  transition: opacity 0.9s ease, background-image 0.9s ease;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  /* The two pools drift in opposite directions as the stage plays, the way
+     they do down a subpage — see redesign.js. The colours still step per
+     scene; it is the light that moves. */
+  background-position: 0 var(--stage-cool-d, 0px), 0 var(--stage-warm-d, 0px);
+}
+
+/* indigo <-> gold */
+.stage-frame[data-scene="1"]::before {
+  background-image:
+    radial-gradient(ellipse at 16% 46%, rgba(38, 53, 111, 0.82) 0%, rgba(38, 53, 111, 0) 60%),
+    radial-gradient(ellipse at 86% 38%, rgba(224, 164, 94, 0.42) 0%, rgba(224, 164, 94, 0) 58%);
+}
+/* plum <-> rose-gold */
+.stage-frame[data-scene="2"]::before {
+  background-image:
+    radial-gradient(ellipse at 16% 46%, rgba(52, 54, 104, 0.70) 0%, rgba(58, 47, 110, 0) 60%),
+    radial-gradient(ellipse at 86% 38%, rgba(224, 144, 126, 0.44) 0%, rgba(224, 144, 126, 0) 58%);
+}
+/* violet <-> amber, handing off to the gold of the band below */
+.stage-frame[data-scene="3"]::before {
+  background-image:
+    radial-gradient(ellipse at 16% 46%, rgba(62, 56, 108, 0.68) 0%, rgba(74, 46, 112, 0) 60%),
+    radial-gradient(ellipse at 86% 38%, rgba(217, 160, 91, 0.46) 0%, rgba(217, 160, 91, 0) 58%);
+}
+.stage-frame:not([data-scene="0"])::before { opacity: 0.66; }
+
+/* The latte band stays warm on purpose. Its ground is cream because the
+   photograph above it is a cup of coffee — cool it and the one warm beat in
+   the site turns into a cold room with a hot drink in it. It is a single
+   band, it is light, and nothing about it reads brown. Left alone. */
