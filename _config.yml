@@ -16,6 +16,7 @@ exclude:
   - README.md
   - LOGO_SYNC.md
   - prototype2/PUNCHLIST.md
+  - prototype2/LAUNCH.md
   - prototype2/brand/
 
   # Tooling
