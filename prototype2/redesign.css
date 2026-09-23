@@ -343,6 +343,16 @@ a { color: inherit; }
   background: currentColor;
   transition: transform 0.22s ease, opacity 0.18s ease;
 }
+/* Open, the bar is the top of the panel rather than a translucent strip over
+   the page: same opaque colour, no blur, so the whole menu is one surface and
+   nothing moves behind the type. */
+body.nav-open .nav {
+  background: #101219;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  box-shadow: none;
+}
+
 .nav-toggle-bars { position: relative; }
 .nav-toggle-bars::before { position: absolute; top: -7px; }
 .nav-toggle-bars::after { position: absolute; top: 7px; }
@@ -863,12 +873,8 @@ body.stage-motion .fallback-flow { display: none; }
 /* The nav has to follow the wall, or it floats as a white plank. Neutral and
    cool rather than warm-black: rgba(23,20,15,.72) is a brown pane, and
    everything gold behind it goes muddy. */
-/* Open, the bar takes the same ground as the panel hanging off it —
-   otherwise at the top of a page the panel is opaque while the bar above it
-   is still transparent, and the two read as separate objects. */
 body.nav-solid .nav,
-body.nav-stuck .nav,
-body.nav-open .nav {
+body.nav-stuck .nav {
   background: rgba(10, 11, 14, 0.52);
   -webkit-backdrop-filter: blur(14px);
   backdrop-filter: blur(14px);
@@ -2245,10 +2251,14 @@ body.page-gray .page-hero h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
     align-items: stretch;
     gap: 0;
     padding: 6px 0 10px;
-    background: rgba(10, 11, 14, 0.92);
-    -webkit-backdrop-filter: blur(18px);
-    backdrop-filter: blur(18px);
-    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45), 0 1px 0 rgba(255, 255, 255, 0.08);
+    /* Opaque, not frosted. The links measured 16-17:1 against the blurred
+       backdrop, so this was never a contrast problem — a photograph moving
+       behind type is hard to read at any ratio, because the difficulty is
+       texture rather than luminance, and no contrast check would have caught
+       it. The bar adopts the same colour while open, so the two are one
+       surface. */
+    background: #101219;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.55), 0 1px 0 rgba(255, 255, 255, 0.08);
     /* Closed is display:none, not opacity or height: a panel that is merely
        invisible still takes focus and still reads to a screen reader. */
     display: none;
