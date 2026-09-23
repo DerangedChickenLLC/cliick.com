@@ -2193,29 +2193,44 @@ body.page-gray .page-hero h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
    fixed layer for the whole flow and the hero becomes a darkened region of
    it, with its scrim masked so it fades out instead of ending on an edge —
    the same treatment that removed the seam on About and Membership. */
+/* The narrow homepage takes the same backdrop as everything else: the
+   photograph at full strength with the stage shade over it.
+
+   It used to carry the pre-#37 treatment — cropped to 76% across, which is
+   the photo's amber half, then blurred, desaturated, brightened 1.22 and
+   dropped to 0.58 opacity. That is exactly the fade-toward-the-wall that the
+   whole colour pass removed, and it is what "brown" meant. It survived
+   because it only renders below 1200px, so every capture taken at desktop
+   width looked correct. Measured across widths with content hidden: the
+   backdrop went 22,23,30 above 1200 and 78,68,68 below it, warming to
+   89,75,69 by 500px. Now flat. */
 .fallback-flow::before {
   content: "";
   position: fixed;
-  inset: -6%;
+  inset: 0;
   z-index: -2;
-  background: url("/prototype2/images/redesign/hero-bg-sim.svg") 76% 26% / cover no-repeat;
-  filter: blur(26px) saturate(0.86) brightness(1.22);
-  opacity: 0.58;
+  background: url("/prototype2/images/redesign/hero-bg-sim.svg") center / cover no-repeat;
   pointer-events: none;
+}
+.fallback-flow::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba(0, 0, 0, 0.45) 0%, rgba(0, 0, 0, 0) 18%),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.15) 60%);
 }
 .fallback-flow .hero { background: transparent; }
 .fallback-flow .hero > .hero-bg { display: none; }
-.fallback-flow .hero::after {
-  background: linear-gradient(
-    180deg,
-    rgba(0, 0, 0, 0.42) 0%,
-    rgba(0, 0, 0, 0.20) 46%,
-    rgba(0, 0, 0, 0.06) 100%
-  );
-  -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 62%, transparent 100%);
-  mask-image: linear-gradient(180deg, #000 0%, #000 62%, transparent 100%);
-}
-/* and its copy takes the same ink as the scenes, not pure white */
+/* The hero's own scrim is gone: that is the shade's job one layer down, and
+   two stacked is what made this section read darker than the rest. Removing
+   the fallback's override was not enough — the base .hero::after carries the
+   same two gradients and took over, so it is switched off here explicitly.
+   Measured: the fallback backdrop read 51,41,37 against the stage's
+   70,57,52 with both shades stacked. */
+.fallback-flow .hero::after { display: none; }
 .fallback-flow .hero { color: var(--ink-strong); }
 }
 
