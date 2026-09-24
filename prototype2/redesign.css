@@ -1534,6 +1534,13 @@ body.page-gray .page-hero h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
   .page-hero-art { display: none; }
   .page-hero { padding-top: calc(var(--nav-h) + 54px); padding-bottom: 54px; }
 }
+/* On a phone the menu bar is 70px tall, not --nav-h's 96, so that padding
+   left 80px of backdrop between the bar and the heading -- a tenth of the
+   screen before the page says anything. Home's hero takes the same value
+   below, so every page's heading starts at the same height. */
+@media (max-width: 720px) {
+  .page-hero { padding-top: calc(var(--nav-h) + 12px); }
+}
 
 /* --------------------------------------------------------------------------
    Generic sections (About & Membership)
@@ -1697,12 +1704,16 @@ body.page-gray .page-hero h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
   box-shadow: var(--panel-shadow);
 }
 @media not all and (orientation: landscape) and (min-height: 520px) {
-  .page-hero--split .wrap { grid-template-columns: minmax(0, 1fr); }
-  /* Stacked, the photograph leads: a face above the headline still opens the
-     page with people, where a face below it opens with a wall of text. Scoped
-     to .hero-people, not the layout -- a phone mockup above the title would
-     just push the copy down. */
-  .page-hero--split .hero-people { order: -1; }
+  .page-hero--split .wrap { grid-template-columns: minmax(0, 1fr); row-gap: 0; }
+  /* Stacked: heading, then the photograph and its quote, then the story.
+     Photo-first put a face on the first screen but pushed the heading off it
+     at 320x640; heading-first opened with a wall of text before any face.
+     Splitting .page-head lets the photograph sit between the two. Scoped to
+     .hero-people -- a phone mockup between title and copy would just push
+     the copy down. */
+  .page-hero--split:has(.hero-people) .page-head { display: contents; }
+  .page-hero--split:has(.hero-people) .page-head > h1 { order: -2; }
+  .page-hero--split .hero-people { order: -1; margin: 26px 0 30px; }
 }
 
 /* The About close: the promise, centred on the page's own ground. It opts
@@ -2135,7 +2146,7 @@ body.page-gray .page-hero h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
   font-size: var(--fs-body);
   display: flex;
   justify-content: center;
-  gap: 2.5em;
+  gap: 0.35em 2.5em;
   flex-wrap: wrap;
 }
 .footer-v2 .store-badges {
@@ -2341,7 +2352,7 @@ body.page-gray .page-hero h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
      screen, and it keeps its crop at the hero's bottom edge. */
   .hero {
     min-height: 0;
-    padding-top: calc(var(--nav-h) + 44px);
+    padding-top: calc(var(--nav-h) + 12px);
     padding-bottom: 0;
   }
   .hero .wrap { padding-block: 0; }
