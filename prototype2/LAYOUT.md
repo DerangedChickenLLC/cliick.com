@@ -122,8 +122,8 @@ and the Terms URL.
 **Answered 2026-09-24:** 1 yes — shape plus a minimum height of about 520px.
 2 yes — a sideways phone gets portrait. 3 yes — an upright iPad gets portrait.
 4 yes — a 15px body-text floor (the 12.8px photo caption is treated as a
-deliberate exception unless John says otherwise). 5 open — John wants to see
-both orders before choosing.
+deliberate exception unless John says otherwise). 5 decided after seeing three renders — **heading, then photo and quote, then
+the story** (neither of the two options originally offered).
 
 
 1. **The switch.** Shape plus a minimum height (proposed 520px), as above? Or
