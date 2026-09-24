@@ -10,7 +10,7 @@ a line only when it is actually done.
 
 ## Prefix step — before the switch
 
-**A narrow and mobile layout pass across all nine pages (#48).** Nearly every
+**A narrow and mobile layout pass across all nine pages (#48).** Survey done; findings, a portrait/landscape plan and the decisions it needs are in [LAYOUT.md](LAYOUT.md). Nearly every
 review during the design work was done at 1280px and up. The phone-width
 fixes that did land (the call to action, the menu, the footer QR) came up one
 at a time rather than from a pass. The 721–1199px range — tablets and narrow
