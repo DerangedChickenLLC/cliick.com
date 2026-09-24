@@ -21,6 +21,35 @@ for layout.
 Widths: 320, 360, 390, 430 (phones), 768 and 1024 (tablet portrait and
 landscape), 1100–1199 (narrow laptop, just under the stage breakpoint).
 
+**Heights matter as much as widths.** A 12" laptop with the window not
+maximised gives something like 1000–1280 wide by 600–700 tall. The pinned
+stage is built on `100vh`, and the only concession to short windows is two
+height tweaks above 1200px wide.
+
+**Intended direction (John, 2026-09-24) — to be discussed, not yet
+decided:** two layouts instead of the current pile of breakpoints — portrait
+(mobile) and landscape (desktop) — where landscape *scales* to fit the window
+rather than collapsing to a vertical stack. Today the stylesheet has eleven
+width breakpoints (520, 700, 720, 900, 980, 991, 1199/1200, 1240/1241), two
+short-window height adjustments, and a script-driven switch at 1200px, so
+this would be a consolidation rather than a tweak.
+
+Questions for that discussion:
+- **What decides the switch.** Orientation (width versus height) rather than
+  a width threshold means an iPad in landscape gets the desktop layout and a
+  tall, narrow desktop window gets the phone layout — probably right in both
+  cases.
+- **A phone turned sideways** (about 844x390) is landscape too. Scaled to fit
+  390px of height, the desktop layout would be tiny. It likely needs a minimum
+  height to qualify as landscape, falling back to portrait below it.
+- **How far it may scale.** Scaling by both width and height (so a short
+  window shrinks as well as a narrow one) handles the 12" case, but body text
+  needs a floor below which it stops shrinking, or small windows become
+  miniatures.
+- **The pinned stage would run in every landscape window,** not only at 1200px
+  and up. That retires the separate fallback layout for landscape, which is
+  where the brown backdrop bug lived.
+
 Known going in:
 - About at phone width puts the founders' photo, quote and caption above the
   H1, so the page opens with a quote from people it has not introduced yet.
