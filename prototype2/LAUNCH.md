@@ -8,6 +8,60 @@ It is not a backlog of improvements — each line is something that is currently
 Kept out of the web root by `_config.yml`. Add to it as things come up; delete
 a line only when it is actually done.
 
+## Prefix step — before the switch
+
+**A narrow and mobile layout pass across all nine pages (#48).** Nearly every
+review during the design work was done at 1280px and up. The phone-width
+fixes that did land (the call to action, the menu, the footer QR) came up one
+at a time rather than from a pass. The 721–1199px range — tablets and narrow
+laptops, where Home swaps the pinned stage for the fallback layout and the
+split heroes fold at 980px — has only been checked for backdrop colour, never
+for layout.
+
+Widths: 320, 360, 390, 430 (phones), 768 and 1024 (tablet portrait and
+landscape), 1100–1199 (narrow laptop, just under the stage breakpoint).
+
+**Heights matter as much as widths.** A 12" laptop with the window not
+maximised gives something like 1000–1280 wide by 600–700 tall. The pinned
+stage is built on `100vh`, and the only concession to short windows is two
+height tweaks above 1200px wide.
+
+**Intended direction (John, 2026-09-24) — to be discussed, not yet
+decided:** as a visitor experiences the site today there are three width
+scenarios — desktop, a middle one where things collapse to a vertical stack,
+and phone. The intent is two: portrait (phone) and landscape (desktop), where
+landscape *scales* to fit the window rather than collapsing. This is about the
+layouts a person experiences, not the number of CSS breakpoints; the
+implementation uses however many it needs. (For reference, the stylesheet has
+eleven width breakpoints, two short-window height tweaks and a script switch
+at 1200px, most of them producing that middle scenario.)
+
+Questions for that discussion:
+- **What decides the switch.** Orientation (width versus height) rather than
+  a width threshold means an iPad in landscape gets the desktop layout and a
+  tall, narrow desktop window gets the phone layout — probably right in both
+  cases.
+- **A phone turned sideways** (about 844x390) is landscape too. Scaled to fit
+  390px of height, the desktop layout would be tiny. It likely needs a minimum
+  height to qualify as landscape, falling back to portrait below it.
+- **How far it may scale.** Scaling by both width and height (so a short
+  window shrinks as well as a narrow one) handles the 12" case, but body text
+  needs a floor below which it stops shrinking, or small windows become
+  miniatures.
+- **The pinned stage would run in every landscape window,** not only at 1200px
+  and up. That retires the separate fallback layout for landscape, which is
+  where the brown backdrop bug lived.
+
+Known going in:
+- About at phone width puts the founders' photo, quote and caption above the
+  H1, so the page opens with a quote from people it has not introduced yet.
+  A content-order decision.
+- The footer on a phone stacks "Download Cliick on iOS" and "Download on
+  Android" with a large gap between them.
+- Home below 1200px (the fallback layout) has had no layout review of its own.
+- Nothing has been checked in real iOS Safari — only Chrome's device emulation
+  and a WebKit build. The intermittent Safari nav report below is still open.
+
 ## Blocking — the site is broken or incoherent without these
 
 **Decided 2026-09-24:** prototype2 replaces the root site in one go-live PR;
