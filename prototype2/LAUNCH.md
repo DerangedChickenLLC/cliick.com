@@ -27,12 +27,14 @@ stage is built on `100vh`, and the only concession to short windows is two
 height tweaks above 1200px wide.
 
 **Intended direction (John, 2026-09-24) — to be discussed, not yet
-decided:** two layouts instead of the current pile of breakpoints — portrait
-(mobile) and landscape (desktop) — where landscape *scales* to fit the window
-rather than collapsing to a vertical stack. Today the stylesheet has eleven
-width breakpoints (520, 700, 720, 900, 980, 991, 1199/1200, 1240/1241), two
-short-window height adjustments, and a script-driven switch at 1200px, so
-this would be a consolidation rather than a tweak.
+decided:** as a visitor experiences the site today there are three width
+scenarios — desktop, a middle one where things collapse to a vertical stack,
+and phone. The intent is two: portrait (phone) and landscape (desktop), where
+landscape *scales* to fit the window rather than collapsing. This is about the
+layouts a person experiences, not the number of CSS breakpoints; the
+implementation uses however many it needs. (For reference, the stylesheet has
+eleven width breakpoints, two short-window height tweaks and a script switch
+at 1200px, most of them producing that middle scenario.)
 
 Questions for that discussion:
 - **What decides the switch.** Orientation (width versus height) rather than
