@@ -215,16 +215,20 @@ if (faqSearch) {
        down; scrolling closes it again. That keeps the one invariant the
        panel depends on: when it is open, the page is at zero. */
     let settling = false;
+    /* Where the page was when the menu opened. See the scroll listener. */
+    let openedAtY = 0;
 
     const openAtTop = () => {
-      if (window.scrollY === 0) return void reveal();
+      if (window.scrollY <= 0.5) return void reveal();
       settling = true;
       window.scrollTo({ top: 0, behavior: "smooth" });
       /* scrollend is the right signal but is not everywhere yet, so poll for
          arrival and give up after a second rather than trusting either. */
       const started = performance.now();
       const wait = () => {
-        if (window.scrollY === 0 || performance.now() - started > 1000) {
+        /* <= 0.5, not === 0: iOS can report a fractional or rubber-band
+           position at the top of the page. */
+        if (window.scrollY <= 0.5 || performance.now() - started > 1000) {
           settling = false;
           reveal();
           return;
@@ -238,6 +242,7 @@ if (faqSearch) {
       body.classList.toggle("nav-open", open);
       toggle.setAttribute("aria-expanded", String(open));
       if (open) {
+        openedAtY = window.scrollY;
         /* The page slides to the panel's BOTTOM edge, not by the panel's
            height. Those are different numbers: the panel starts below the
            bar, so a page displaced by the height alone lands its own top
@@ -263,13 +268,19 @@ if (faqSearch) {
       else openAtTop();
     });
 
-    /* Any scroll closes it. Guarded against the smooth scroll this opens
-       with, which would otherwise close the menu on its way to the top. */
+    /* Scrolling the page closes it — but only once the page has actually
+       moved from where it was when the menu opened. Closing on any scroll
+       EVENT failed in iOS Safari: after the smooth scroll to the top ends,
+       Safari fires one more scroll event as the scroll settles, which
+       arrived after the menu had opened and shut it straight away, so the
+       menu never opened from anywhere below the top. Chrome does not send
+       that trailing event. A settling event does not move the page, so
+       measuring distance ignores it; a reader's scroll does. */
     window.addEventListener(
       "scroll",
       () => {
-        if (settling) return;
-        if (body.classList.contains("nav-open")) setOpen(false);
+        if (settling || !body.classList.contains("nav-open")) return;
+        if (Math.abs(window.scrollY - openedAtY) > 24) setOpen(false);
       },
       { passive: true }
     );
