@@ -10,6 +10,11 @@ a line only when it is actually done.
 
 ## Blocking — the site is broken or incoherent without these
 
+**Decided 2026-09-24:** prototype2 replaces the root site in one go-live PR;
+its `/prototype2/` paths are rewritten by script at the switch, not before, so
+the preview keeps working until then. `/prototype/` is deleted in the same PR.
+`/terms/` and `/privacy/` keep their URLs because the store listings use them.
+
 ~~**Terms of Service and Privacy Policy are on the old design.**~~ Done
 (#46): `prototype2/terms/` and `prototype2/privacy/` are new-design wrappers
 that fetch the synced bodies from `/terms/tos.html` and `/privacy/privacy.html`,
@@ -56,13 +61,13 @@ agree is a footer that eventually won't.
 - **The phone mock screens carry "FILM TO COME" baked into the artwork.**
   Real screen recordings replace them. The text is in the PNGs, not the HTML,
   so it will not turn up in a content grep.
-- **`footer-qr.png` is a placeholder.** It decodes to the string `YKART`,
-  not a URL — it is the mock from the Figma file, carried over from the first
-  prototype, and there is no real QR anywhere on the site. It is hidden on
-  phones, but every desktop visitor who scans it gets nothing. Needs the
-  install URL it should carry; since a desktop visitor may be on either
-  platform, that URL has to route to the right store rather than being the
-  App Store link.
+- ~~`footer-qr.png` is a placeholder.~~ Done (#46): it decoded to `YKART`,
+  the Figma mock. Replaced with `footer-qr.svg`, generated for
+  `https://cliick.com/get/` and verified by decoding it back. `/get/` sends an
+  iPhone or iPad to the App Store and an Android phone to Google Play before
+  anything paints; anything else sees the page with both badges. The QR only
+  works once the site is live at the root — before that, `/get/` lives at
+  `/prototype2/get/`.
 - **Store badges** — the stretch bug is fixed; confirm these are the final
   approved assets.
 

@@ -2,22 +2,39 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <!-- The footer QR points here. A phone that scans it should land in its
+         own store without seeing this page, so this runs inline in <head>,
+         before anything paints — the site script is deferred and would show
+         the page first. Anything else (a desktop, an unknown device, no
+         script) gets the page with both badges. replace() rather than
+         assign() so Back does not bounce the reader into the store again. -->
+    <script>
+      (function () {
+        var ua = navigator.userAgent;
+        var iPadOS = /Macintosh/.test(ua) && navigator.maxTouchPoints > 1;
+        if (/iPhone|iPad|iPod/.test(ua) || iPadOS) {
+          location.replace("https://apps.apple.com/us/app/cliick-your-private-network/id6608980465");
+        } else if (/Android/.test(ua)) {
+          location.replace("https://play.google.com/store/apps/details?id=com.derangedchicken.clique");
+        }
+      })();
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="robots" content="noindex, nofollow" />
-    <title>Cliick | Terms of Service</title>
+    <title>Cliick | Get the app</title>
     <meta
       name="description"
-      content="The terms that govern your use of Cliick."
+      content="Download Cliick for iPhone or Android."
     />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Cliick" />
-    <meta property="og:title" content="Cliick | Terms of Service" />
-    <meta property="og:description" content="The terms that govern your use of Cliick." />
-    <meta property="og:url" content="https://cliick.com/terms/" />
+    <meta property="og:title" content="Cliick | Get the app" />
+    <meta property="og:description" content="Download Cliick for iPhone or Android." />
+    <meta property="og:url" content="https://cliick.com/get/" />
     <meta property="og:image" content="https://cliick.com/images/cliick-icon.png" />
     <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content="Cliick | Terms of Service" />
-    <meta name="twitter:description" content="The terms that govern your use of Cliick." />
+    <meta name="twitter:title" content="Cliick | Get the app" />
+    <meta name="twitter:description" content="Download Cliick for iPhone or Android." />
     <meta name="twitter:image" content="https://cliick.com/images/cliick-icon.png" />
     <link rel="apple-touch-icon" href="https://cliick.com/images/cliick-icon.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="/prototype2/images/favicon.png" />
@@ -59,22 +76,20 @@
       </div>
     </header>
 
-    <section class="page-hero page-hero--solo">
+    <section class="page-hero page-hero--solo get-hero">
       <div class="wrap">
         <div class="page-head">
-          <h1>Terms of Service</h1>
+          <h1>Get Cliick.</h1>
+          <p class="page-lede">On your phone, this page sends you straight to your store. Here, pick yours.</p>
+          <div class="store-badges get-badges">
+            <a href="https://apps.apple.com/us/app/cliick-your-private-network/id6608980465"
+              ><img src="/prototype2/images/redesign/badge-appstore.svg" alt="Download on the App Store"
+            /></a>
+            <a href="https://play.google.com/store/apps/details?id=com.derangedchicken.clique"
+              ><img src="/prototype2/images/redesign/badge-googleplay.svg" alt="Get it on Google Play"
+            /></a>
+          </div>
         </div>
-      </div>
-    </section>
-
-    <section class="section legal-section">
-      <div class="wrap">
-        <!-- The body is synced from the Documents repo by sync-documents.sh,
-             which writes only /terms/tos.html. This wrapper is hand-kept and the sync
-             never touches it. -->
-        <article class="legal" data-src="/terms/tos.html">
-          <p class="legal-status">Loading the Terms of Service…</p>
-        </article>
       </div>
     </section>
 
