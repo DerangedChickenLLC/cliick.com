@@ -7,8 +7,13 @@
 // move on the same clock. Small screens, reduced motion, and no-JS render
 // the .fallback-flow instead.
 const stageTrack = document.getElementById("stage");
+// The scenes run in LANDSCAPE — wider than tall and at least 520px tall — the
+// one rule every layout switch uses (see the top of redesign.css). They used
+// to need 1200px of width, so a 1024x640 laptop window got the stacked Home
+// while About and Membership sat side by side in the same window.
+const LANDSCAPE = "(orientation: landscape) and (min-height: 520px)";
 const stageMotion = window.matchMedia(
-  "(min-width: 1200px) and (prefers-reduced-motion: no-preference)"
+  LANDSCAPE + " and (prefers-reduced-motion: no-preference)"
 );
 
 if (stageTrack) {
@@ -309,10 +314,10 @@ if (faqSearch) {
       if (e.target.closest("a")) setOpen(false);
     });
 
-    /* Widen past the breakpoint with the menu open and the links return to
-       the bar, leaving the body class set and the hamburger showing a close
-       mark for a control that is no longer there. */
-    const wide = window.matchMedia("(min-width: 721px)"); // mirrors the nav breakpoint in redesign.css
+    /* Turn to landscape with the menu open and the links return to the bar,
+       leaving the body class set and the hamburger showing a close mark for
+       a control that is no longer there. */
+    const wide = window.matchMedia(LANDSCAPE); // the menu button exists only in portrait
     const sync = () => { if (wide.matches) setOpen(false); };
     if (wide.addEventListener) wide.addEventListener("change", sync);
     else if (wide.addListener) wide.addListener(sync);
