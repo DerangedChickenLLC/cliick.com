@@ -2481,11 +2481,6 @@ body.page-gray .page-hero h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
   display: grid;
   gap: 18px;
 }
-.support-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 18px;
-}
 .support-field { display: grid; gap: 8px; }
 .support-field label {
   font-size: var(--fs-small);
@@ -2529,9 +2524,6 @@ body.page-gray .page-hero h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
 .support-status { min-height: 1.4em; color: var(--ink-muted); font-size: var(--fs-small); }
 .support-alt { max-width: 68ch; margin-top: 30px; color: var(--ink-muted); }
 .support-alt a { display: inline-block; padding-block: 2px; color: var(--accent); text-underline-offset: 3px; }
-@media (max-width: 720px) {
-  .support-row { grid-template-columns: 1fr; }
-}
 
 /* ==========================================================================
    The scene scrims (#37)

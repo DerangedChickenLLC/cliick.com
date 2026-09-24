@@ -467,7 +467,9 @@ if (faqSearch) {
 /* --- Support form -------------------------------------------------------------
    No backend: submitting composes an email in the reader's own mail app, so
    nothing leaves this page. The old version built the mailto even with every
-   field empty; this one asks for the missing fields first. */
+   field empty; this one asks for the missing fields first. There is no email
+   field: the message is sent from the reader's own address, so asking for it
+   again collected something we never receive. */
 {
   const form = document.getElementById("supportForm");
   if (form) {
@@ -481,8 +483,7 @@ if (faqSearch) {
       }
       const d = new FormData(form);
       const body =
-        "Name: " + d.get("name") + "\nEmail: " + d.get("email") +
-        "\n\nMessage:\n" + d.get("message");
+        "Name: " + d.get("name") + "\n\nMessage:\n" + d.get("message");
       window.location.href =
         "mailto:support@cliick.com?subject=" + encodeURIComponent(d.get("subject")) +
         "&body=" + encodeURIComponent(body);
