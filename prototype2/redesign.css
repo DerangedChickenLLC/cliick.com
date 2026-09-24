@@ -2107,9 +2107,21 @@ body.page-gray .page-hero h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
   .footer-v2 .store-badges { margin-top: 26px; }
 }
 .footer-qr-caption { margin-top: 14px; font-size: var(--fs-body); }
+/* Four links now — Terms, Privacy, Account deletion, Support — which wraps
+   on a phone. Inline "|" text stranded a bar at the end of the first line,
+   so the bars are their own elements and the row is a wrapping flex line;
+   on a phone the bars go and the gap does the separating. */
 .footer-legal {
   margin-top: 48px;
   font-size: var(--fs-body);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px 12px;
+}
+@media (max-width: 720px) {
+  .footer-legal { column-gap: 24px; }
+  .footer-legal .sep { display: none; }
 }
 .footer-legal a { text-decoration: none; }
 .footer-legal a:hover { text-decoration: underline; }
