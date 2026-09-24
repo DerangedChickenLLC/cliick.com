@@ -9,6 +9,16 @@
       name="description"
       content="Frequently asked questions about Cliick — the private, member-funded network with no ads, no strangers, and no algorithms."
     />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Cliick" />
+    <meta property="og:title" content="Cliick | FAQ" />
+    <meta property="og:description" content="Frequently asked questions about Cliick — the private, member-funded network with no ads, no strangers, and no algorithms." />
+    <meta property="og:url" content="https://cliick.com/faq/" />
+    <meta property="og:image" content="https://cliick.com/images/cliick-icon.png" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Cliick | FAQ" />
+    <meta name="twitter:description" content="Frequently asked questions about Cliick — the private, member-funded network with no ads, no strangers, and no algorithms." />
+    <meta name="twitter:image" content="https://cliick.com/images/cliick-icon.png" />
     <link rel="apple-touch-icon" href="https://cliick.com/images/cliick-icon.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="/prototype2/images/favicon.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -43,7 +53,6 @@
           <a href="/prototype2/membership/">Membership</a>
           <a href="/prototype2/faq/" aria-current="page">FAQ</a>
         </nav>
-        <a class="nav-cta" href="/prototype2/start/">Start a Cliick</a>
         <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-menu" aria-label="Menu">
           <span class="nav-toggle-bars" aria-hidden="true"></span>
         </button>
@@ -53,9 +62,7 @@
     <section class="page-hero page-hero--solo">
       <div class="wrap">
         <div class="page-head">
-          <p class="page-eyebrow">FAQ</p>
           <h1>Questions, answered.</h1>
-          <p class="page-lede">Search below, or browse by topic.</p>
         </div>
         <!-- Supporting art slot. Replace this plate with an
              <img class="page-hero-art" src="..." alt="..."> when the real
@@ -72,6 +79,10 @@
         placeholder="Search the FAQs"
         aria-label="Search the FAQs"
       />
+      <svg class="faq-search-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2" />
+        <line x1="15.4" y1="15.4" x2="20.5" y2="20.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+      </svg>
     </div>
 
     <main class="faq-list">
@@ -121,7 +132,7 @@
         </details>
         <details>
           <summary>What information does Cliick collect about me?</summary>
-          <div class="answer"><p>As little as possible. To run the app we keep a random sign-in ID provided by Apple or Google, anything you choose to add to your profile (like a display name or photo), the messages and media you share inside your Cliicks, and basic technical data needed for security and reliability. We don't collect your name, email, phone number, contacts, location, or advertising IDs, and we don't use analytics or tracking SDKs. Our <a href="/privacy/">Privacy Policy</a> breaks down every category in detail if you want the full picture.</p></div>
+          <div class="answer"><p>As little as possible. To run the app we keep a random sign-in ID provided by Apple or Google, anything you choose to add to your profile (like a display name or photo), the messages and media you share inside your Cliicks, and basic technical data needed for security and reliability. We don't collect your name, email, phone number, contacts, location, or advertising IDs, and we don't use analytics or tracking SDKs. Our <a href="/prototype2/privacy/">Privacy Policy</a> breaks down every category in detail if you want the full picture.</p></div>
         </details>
         <details>
           <summary>Does Cliick have ads or sell my data?</summary>
@@ -137,7 +148,7 @@
         </details>
         <details>
           <summary>Who moderates a Cliick?</summary>
-          <div class="answer"><p>Each Cliick is self-moderated by its owner, who creates the space, invites people in, and handles reports for that cliick. If a post is reported, the report goes privately to the owner — not to the group. The owner can choose to remove the post, remove a member, or take no action. Cliick doesn't use automated moderation inside private Cliicks — these spaces depend on the judgment of the people in them. For serious concerns, you can contact Cliick through our <a href="/support/">support page</a>.</p></div>
+          <div class="answer"><p>Each Cliick is self-moderated by its owner, who creates the space, invites people in, and handles reports for that cliick. If a post is reported, the report goes privately to the owner — not to the group. The owner can choose to remove the post, remove a member, or take no action. Cliick doesn't use automated moderation inside private Cliicks — these spaces depend on the judgment of the people in them. For serious concerns, you can contact Cliick through our <a href="/prototype2/support/">support page</a>.</p></div>
         </details>
         <details>
           <summary>Can I remove or report someone?</summary>
@@ -290,16 +301,20 @@
             ><img src="/prototype2/images/redesign/badge-googleplay.svg" alt="Get it on Google Play"
           /></a>
         </div>
-        <img class="footer-qr" src="/prototype2/images/redesign/footer-qr.png" alt="QR code to download Cliick" />
+        <img class="footer-qr" src="/prototype2/images/redesign/footer-qr.svg" alt="QR code linking to cliick.com/get to download Cliick" />
         <p class="footer-qr-caption">Download Cliick</p>
         <p class="footer-legal">
-          <a href="/terms/">Terms of Service</a> &nbsp;|&nbsp;
-          <a href="/privacy/">Privacy Policy</a>
+          <a href="/prototype2/terms/">Terms of Service</a>
+          <span class="sep" aria-hidden="true">|</span>
+          <a href="/prototype2/privacy/">Privacy Policy</a>
+          <span class="sep" aria-hidden="true">|</span>
+          <a href="/prototype2/deleteme/">Account deletion</a>
+          <span class="sep" aria-hidden="true">|</span>
+          <a href="/prototype2/support/">Support</a>
         </p>
         <div class="footer-bottom">
-          <p>© Cliick. Member-funded. Ad-free. Always.</p>
+          <p>© Deranged Chicken LLC. Member&#8209;funded. Ad-free. Always.</p>
           <nav aria-label="Footer">
-            <a href="/prototype2/start/">Start a Cliick</a>
             <a href="/prototype2/">Home</a>
             <a href="/prototype2/about/">About</a>
             <a href="/prototype2/membership/">Membership</a>
