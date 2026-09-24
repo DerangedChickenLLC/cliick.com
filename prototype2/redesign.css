@@ -2525,6 +2525,45 @@ body.page-gray .page-hero h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
 .support-alt { max-width: 68ch; margin-top: 30px; color: var(--ink-muted); }
 .support-alt a { display: inline-block; padding-block: 2px; color: var(--accent); text-underline-offset: 3px; }
 
+/* --------------------------------------------------------------------------
+   Phones in the stacked layout (#48)
+   The stacked Home used to sit each phone inside its own recessed, glowing
+   panel and crop it at the panel's bottom edge — a second background on top
+   of the page's own, with a phone that never ends. The phones now sit on the
+   page with nothing behind them, whole, and smaller: the whole device is the
+   point, not a slice of its screen. zoom rather than a transform, so the
+   layout box shrinks with the phone and nothing reserves empty space below
+   it. The device keeps its own drop shadow for depth.
+   -------------------------------------------------------------------------- */
+.fallback-flow { --mock-zoom: 0.6; }
+.fallback-flow .win {
+  height: auto;
+  background: none;
+  clip-path: none;
+  display: flex;
+  justify-content: center;
+  padding-block: 12px;
+}
+.fallback-flow .win .phone--static,
+.fallback-flow .hero-win .hero-phone {
+  position: static;
+  transform: none;
+}
+.fallback-flow .win .phone--static { zoom: var(--mock-zoom); }
+.fallback-flow .hero-win .hero-phone {
+  width: calc(var(--phone-w) * var(--mock-zoom));
+  height: auto;
+  border-radius: calc(62px * var(--mock-zoom));
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+}
+@media (max-width: 720px) {
+  /* The phone scales with the screen showing it: about half the width of a
+     390px phone, so the whole device fits well inside one screen. */
+  .fallback-flow { --mock-zoom: 0.5; }
+  .fallback-flow .win .phone--static,
+  .fallback-flow .hero-win .hero-phone { top: auto; transform: none; }
+}
+
 /* ==========================================================================
    The scene scrims (#37)
    --------------------------------------------------------------------------
