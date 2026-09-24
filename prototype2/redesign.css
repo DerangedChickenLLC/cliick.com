@@ -324,7 +324,10 @@ a { color: inherit; }
   place-items: center;
   width: 44px;
   height: 44px;
-  margin-left: 6px;
+  /* auto: with the CTA gone (#46) the toggle is the first thing on the
+     right, so it takes the push itself. When the CTA returns it sits
+     between, and the rule below hands the push back to it. */
+  margin-left: auto;
   flex: none;
   padding: 0;
   border: 0;
@@ -332,6 +335,7 @@ a { color: inherit; }
   color: var(--ink-strong);
   cursor: pointer;
 }
+.nav-cta + .nav-toggle { margin-left: 6px; }
 .nav-toggle-bars,
 .nav-toggle-bars::before,
 .nav-toggle-bars::after {
@@ -1579,7 +1583,12 @@ body.page-gray .page-hero h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
   position: relative;
 }
 .ledger-col li + li { border-top: 1px solid var(--line); }
-/* A quiet tick for what is held. */
+/* Green for what Cliick holds, red for what it doesn't ask for, so the two
+   columns separate at a glance. Both are bright and fairly light on purpose:
+   a mark this small loses luminance to antialiasing, and a dark red or green
+   hairline on this ground goes muddy the same way the tan ones did. The
+   shapes still differ — an open ring against a struck one — so the meaning
+   holds for anyone who can't tell the two colours apart. */
 .ledger-col li::before {
   content: "";
   position: absolute;
@@ -1588,15 +1597,15 @@ body.page-gray .page-hero h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  border: 1px solid var(--ink-faint);
+  border: 1.5px solid #5FD39A;
 }
 /* And a struck-through dot for what is not: the absence is the product. */
 .ledger-col--none li::before {
-  border-color: var(--accent-mark);
+  border-color: #FF6B6B;
   background: linear-gradient(
     to bottom right,
-    transparent calc(50% - 0.5px), var(--accent-mark) calc(50% - 0.5px),
-    var(--accent-mark) calc(50% + 0.5px), transparent calc(50% + 0.5px)
+    transparent calc(50% - 0.75px), #FF6B6B calc(50% - 0.75px),
+    #FF6B6B calc(50% + 0.75px), transparent calc(50% + 0.75px)
   );
 }
 .ledger-col--none li { color: var(--ink-strong); }
@@ -1948,6 +1957,20 @@ body.page-gray .page-hero h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
   padding: 0 var(--wrap-pad) 44px;
   display: flex;
   justify-content: center;
+  position: relative;
+}
+/* The magnifier sits inside the field at the right, where apps put it. It
+   is decoration on a labelled input, so it takes no pointer events and is
+   hidden from assistive tech in the markup. Positioned off the wrap's own
+   right gutter so it tracks the field at every width. */
+.faq-search-icon {
+  position: absolute;
+  right: calc(var(--wrap-pad) + 26px);
+  top: calc((69px - 22px) / 2);
+  width: 22px;
+  height: 22px;
+  color: var(--ink-muted);
+  pointer-events: none;
 }
 .faq-search {
   width: 100%;
@@ -1958,8 +1981,11 @@ body.page-gray .page-hero h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
   box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.18);
   font: inherit;
   font-size: var(--fs-body);
-  padding: 0 34px;
+  /* right padding clears the magnifier */
+  padding: 0 64px 0 34px;
 }
+/* The browser's own clear button would land on top of the magnifier. */
+.faq-search::-webkit-search-cancel-button { -webkit-appearance: none; appearance: none; }
 .faq-search::placeholder { color: var(--ink-muted); opacity: 1; }
 .faq-search:focus { outline: 3px solid var(--accent); outline-offset: 2px; }
 

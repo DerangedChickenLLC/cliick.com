@@ -17,6 +17,9 @@ exclude:
   - LOGO_SYNC.md
   - prototype2/PUNCHLIST.md
   - prototype2/LAUNCH.md
+  # Start a Cliick is not ready for the live cut. The page is kept in the repo
+  # and every link to it is removed; delete this line when it ships.
+  - prototype2/start/
   - prototype2/brand/
 
   # Tooling
