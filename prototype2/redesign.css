@@ -2388,6 +2388,44 @@ body.page-gray .page-hero h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
   .footer-bottom { justify-content: center; text-align: center; }
 }
 
+/* --------------------------------------------------------------------------
+   Legal pages
+   The body is long-form reading on the same backdrop as every other page, so
+   it gets a reading measure and a quiet type scale rather than a surface of
+   its own.
+   -------------------------------------------------------------------------- */
+.legal-section { padding-top: 8px; }
+.legal {
+  max-width: 68ch;
+  font-size: var(--fs-body);
+  line-height: 1.7;
+  color: var(--ink-strong);
+}
+.legal > * + * { margin-top: 1em; }
+/* Sections, not chapters: a legal page has twenty of them, and headings at
+   the site's h3 size turned every one into a billboard. */
+.legal h2 {
+  margin-top: 2em;
+  font-size: clamp(1.2rem, 1.5vw, 1.45rem);
+  font-weight: 600;
+  line-height: 1.3;
+}
+.legal h3 {
+  margin-top: 1.8em;
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+.legal h2 + *,
+.legal h3 + * { margin-top: 0.6em; }
+.legal ul,
+.legal ol { padding-left: 1.3em; }
+.legal li + li { margin-top: 0.45em; }
+.legal a {
+  color: var(--accent);
+  text-underline-offset: 3px;
+}
+.legal-status { color: var(--ink-muted); }
+
 /* ==========================================================================
    The scene scrims (#37)
    --------------------------------------------------------------------------

@@ -10,14 +10,13 @@ a line only when it is actually done.
 
 ## Blocking — the site is broken or incoherent without these
 
-**Terms of Service and Privacy Policy are on the old design.**
-`/terms/` and `/privacy/` load `../styles.css` and use `<nav class="navbar">`,
-which is the live site's stylesheet and the live site's nav markup. The new
-footer links straight at them (`prototype2/index.html`, the Terms/Privacy
-pair), so a reader following those links walks out of the new site mid-journey
-and lands in the old one. Note the bodies are **synced from the Documents
-repo** by `sync-documents.sh` — the fix belongs in whatever wrapper that script
-fills, not in the generated output, or the next sync reverts it.
+~~**Terms of Service and Privacy Policy are on the old design.**~~ Done
+(#46): `prototype2/terms/` and `prototype2/privacy/` are new-design wrappers
+that fetch the synced bodies from `/terms/tos.html` and `/privacy/privacy.html`,
+and every prototype2 footer points at them. `sync-documents.sh` writes only
+those two body files, so the wrappers are safe from the next sync. At go-live
+the wrappers replace the root `/terms/index.html` and `/privacy/index.html` —
+keep those two URLs, since the store listings link to them.
 
 **238 absolute `/prototype2/` references, across 13 files.**
 HTML, CSS and JS all hard-code the prototype path — including the backdrop
@@ -25,6 +24,15 @@ image in `redesign.css` and the script tag on every page. Promoting the
 prototype to the web root is a rewrite of every one of them, not a folder move.
 Decide the approach before starting: relocate and rewrite, or serve from the
 root and keep the paths.
+
+**Every prototype2 page carries `<meta name="robots" content="noindex,
+nofollow">`.** Correct while it is a prototype; it has to come off at go-live
+or the new site will not be indexed at all.
+
+**Start a Cliick is out of the live cut (#46).** The page is kept in the repo
+and excluded from the build in `_config.yml`; every link to it was removed
+(nav CTA, footer link, six scene links on Home). Restore the links and drop the
+exclude line when it ships.
 
 **Retire `/prototype/`.** The first prototype is still published. It should go
 when the new site lands, along with any links pointing at it.
@@ -48,15 +56,23 @@ agree is a footer that eventually won't.
 - **The phone mock screens carry "FILM TO COME" baked into the artwork.**
   Real screen recordings replace them. The text is in the PNGs, not the HTML,
   so it will not turn up in a content grep.
-- **`footer-qr.png`** — confirm it resolves to the live install link.
+- **`footer-qr.png` is a placeholder.** It decodes to the string `YKART`,
+  not a URL — it is the mock from the Figma file, carried over from the first
+  prototype, and there is no real QR anywhere on the site. It is hidden on
+  phones, but every desktop visitor who scans it gets nothing. Needs the
+  install URL it should carry; since a desktop visitor may be on either
+  platform, that URL has to route to the right store rather than being the
+  App Store link.
 - **Store badges** — the stretch bug is fixed; confirm these are the final
   approved assets.
 
 ## Meta and SEO
 
-- **Only the homepage has Open Graph tags.** About, Membership, FAQ and Start
-  have a `<title>` and a description but no `og:` block, so any link shared to
-  them previews as a bare URL. Needs per-page OG images too, not just tags.
+- ~~Only the homepage has Open Graph tags.~~ Tags added to About,
+  Membership, FAQ, Terms and Privacy (#46). **Still open:** every page,
+  including Home, uses the app icon as its `og:image`, so a shared link
+  previews as a small square icon. A proper 1200x630 card per page is an
+  asset job.
 
 ## Known issues carried in from the design work
 
