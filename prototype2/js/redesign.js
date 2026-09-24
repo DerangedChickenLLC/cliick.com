@@ -463,3 +463,30 @@ if (faqSearch) {
       });
   }
 }
+
+/* --- Support form -------------------------------------------------------------
+   No backend: submitting composes an email in the reader's own mail app, so
+   nothing leaves this page. The old version built the mailto even with every
+   field empty; this one asks for the missing fields first. */
+{
+  const form = document.getElementById("supportForm");
+  if (form) {
+    const status = form.querySelector(".support-status");
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      form.classList.add("was-submitted");
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+      const d = new FormData(form);
+      const body =
+        "Name: " + d.get("name") + "\nEmail: " + d.get("email") +
+        "\n\nMessage:\n" + d.get("message");
+      window.location.href =
+        "mailto:support@cliick.com?subject=" + encodeURIComponent(d.get("subject")) +
+        "&body=" + encodeURIComponent(body);
+      if (status) status.textContent = "Your mail app should open with the message ready to send.";
+    });
+  }
+}

@@ -39,17 +39,13 @@ and excluded from the build in `_config.yml`; every link to it was removed
 (nav CTA, footer link, six scene links on Home). Restore the links and drop the
 exclude line when it ships.
 
-**`/support/` and `/deleteme/` are live pages the prototype never covered.**
-Both still run on the old `styles.css` and old nav, and both must keep their
-URLs through the switch:
-- `/deleteme/` is the **Account & data deletion** page — the web deletion URL
-  Google Play requires. Despite the folder name it is not disposable.
-- `/support/` is the support page (an FAQ plus a `mailto:` contact form, no
-  backend), and is the natural Support URL for App Store Connect.
-The new footer now links to both (#46), matching the live footer. What is not
-decided is whether they are migrated to the new design before go-live or kept
-on the old stylesheet, in which case `styles.css` cannot be deleted at the
-switch.
+~~`/support/` and `/deleteme/` are live pages the prototype never covered.~~
+Migrated (#46): `prototype2/support/` and `prototype2/deleteme/` are in the new
+design, and every prototype footer links to them. `/deleteme/` is the web
+deletion URL registered with Google Play — its policy text moved verbatim,
+and the URL must survive the switch unchanged, as must `/support/`. With both
+migrated nothing on the new site uses the old `styles.css`, so it can go at
+the switch along with `partials/` and `build-partials.py`.
 
 **The footer names the legal entity again (#46).** The live footer reads
 "© Deranged Chicken LLC"; the prototype had "© Cliick". The Apple Developer

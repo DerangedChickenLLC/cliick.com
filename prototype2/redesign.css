@@ -2438,6 +2438,101 @@ body.page-gray .page-hero h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
 }
 .legal-status { color: var(--ink-muted); }
 
+/* The deletion page's "On this page" list and its one aside. Both quiet: the
+   page is policy, and the reading column is the point. */
+.legal-toc {
+  max-width: 68ch;
+  margin-bottom: 36px;
+  padding-left: 16px;
+  border-left: 2px solid var(--line);
+}
+.legal-toc-title {
+  font-size: var(--fs-small);
+  font-weight: 600;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  /* --ink-faint measured 3.98:1 here on a phone; small type on the photo
+     backdrop needs the strong ink. */
+  color: var(--ink-strong);
+}
+.legal-toc ul { list-style: none; margin-top: 10px; }
+.legal-toc li + li { margin-top: 6px; }
+/* Stacked links sit one line apart, so each needs its own 24px of height to
+   meet the WCAG 2.2 target minimum; they measured 23. */
+.legal-toc a {
+  display: inline-block;
+  padding-block: 2px;
+  color: var(--accent);
+  text-underline-offset: 3px;
+}
+.legal h2:first-child { margin-top: 0; }
+.legal-note {
+  padding: 4px 0 4px 16px;
+  border-left: 3px solid var(--accent-mark);
+  color: var(--ink-muted);
+}
+
+/* Support: a mailto form. Fields take the FAQ search's material — recessed,
+   hairline edge, the page's own type — so they read as part of this site
+   rather than the old one's white boxes. */
+.support-form {
+  max-width: 68ch;
+  margin-top: 26px;
+  display: grid;
+  gap: 18px;
+}
+.support-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+.support-field { display: grid; gap: 8px; }
+.support-field label {
+  font-size: var(--fs-small);
+  font-weight: 600;
+  /* --ink-muted measured 3.6:1 on a phone where the backdrop is brightest. */
+  color: var(--ink-strong);
+}
+.support-field input,
+.support-field textarea {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--recess);
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.18);
+  color: var(--ink-strong);
+  font: inherit;
+  font-size: var(--fs-body);
+  padding: 14px 18px;
+}
+.support-field textarea { resize: vertical; min-height: 150px; line-height: 1.55; }
+.support-field input::placeholder,
+.support-field textarea::placeholder { color: var(--ink-faint); opacity: 1; }
+.support-field input:focus,
+.support-field textarea:focus { outline: 3px solid var(--accent); outline-offset: 2px; }
+/* An empty required field is marked only after a submit attempt, not on
+   arrival — red boxes on a page you have just opened read as an accusation. */
+.support-form.was-submitted :invalid { border-color: #FF6B6B; }
+.support-submit {
+  justify-self: start;
+  padding: 12px 26px;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: var(--control-on);
+  color: var(--control-on-ink);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: var(--panel-shadow-sm);
+}
+.support-submit:hover { filter: brightness(1.06); }
+.support-status { min-height: 1.4em; color: var(--ink-muted); font-size: var(--fs-small); }
+.support-alt { max-width: 68ch; margin-top: 30px; color: var(--ink-muted); }
+.support-alt a { display: inline-block; padding-block: 2px; color: var(--accent); text-underline-offset: 3px; }
+@media (max-width: 720px) {
+  .support-row { grid-template-columns: 1fr; }
+}
+
 /* ==========================================================================
    The scene scrims (#37)
    --------------------------------------------------------------------------

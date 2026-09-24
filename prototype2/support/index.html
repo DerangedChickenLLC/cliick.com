@@ -4,20 +4,20 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="robots" content="noindex, nofollow" />
-    <title>Cliick | Privacy Policy</title>
+    <title>Cliick | Support</title>
     <meta
       name="description"
-      content="What Cliick holds, what it doesn't, and why."
+      content="Get help with Cliick — FAQs and support contact."
     />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Cliick" />
-    <meta property="og:title" content="Cliick | Privacy Policy" />
-    <meta property="og:description" content="What Cliick holds, what it doesn't, and why." />
-    <meta property="og:url" content="https://cliick.com/privacy/" />
+    <meta property="og:title" content="Cliick | Support" />
+    <meta property="og:description" content="Get help with Cliick — FAQs and support contact." />
+    <meta property="og:url" content="https://cliick.com/support/" />
     <meta property="og:image" content="https://cliick.com/images/cliick-icon.png" />
     <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content="Cliick | Privacy Policy" />
-    <meta name="twitter:description" content="What Cliick holds, what it doesn't, and why." />
+    <meta name="twitter:title" content="Cliick | Support" />
+    <meta name="twitter:description" content="Get help with Cliick — FAQs and support contact." />
     <meta name="twitter:image" content="https://cliick.com/images/cliick-icon.png" />
     <link rel="apple-touch-icon" href="https://cliick.com/images/cliick-icon.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="/prototype2/images/favicon.png" />
@@ -62,19 +62,47 @@
     <section class="page-hero page-hero--solo">
       <div class="wrap">
         <div class="page-head">
-          <h1>Privacy Policy</h1>
+          <h1>How can we help you?</h1>
+          <p class="page-lede">Find answers to common questions or reach out directly.</p>
         </div>
       </div>
     </section>
 
-    <section class="section legal-section">
+    <section class="section legal-section support-section">
       <div class="wrap">
-        <!-- The body is synced from the Documents repo by sync-documents.sh,
-             which writes only /privacy/privacy.html. This wrapper is hand-kept and the sync
-             never touches it. -->
-        <article class="legal" data-src="/privacy/privacy.html">
-          <p class="legal-status">Loading the Privacy Policy…</p>
-        </article>
+        <div class="legal">
+          <h2 id="faq">Common questions</h2>
+          <p>Most answers — how Cliick works, what we keep, how membership works — are in the FAQ.</p>
+          <p><a class="learn-more" href="/prototype2/faq/">Read the FAQ</a></p>
+
+          <h2 id="contact">Contact support</h2>
+          <p>Writing to us opens your own mail app with the message filled in — nothing is sent from this page.</p>
+        </div>
+
+        <form id="supportForm" class="support-form" novalidate>
+          <div class="support-row">
+            <div class="support-field">
+              <label for="name">Name</label>
+              <input type="text" id="name" name="name" placeholder="Your name" autocomplete="name" required />
+            </div>
+            <div class="support-field">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" placeholder="you@example.com" autocomplete="email" required />
+            </div>
+          </div>
+          <div class="support-field">
+            <label for="subject">Subject</label>
+            <input type="text" id="subject" name="subject" placeholder="How can we help?" required />
+          </div>
+          <div class="support-field">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" rows="6" placeholder="Describe your issue or question" required></textarea>
+          </div>
+          <button type="submit" class="support-submit">Send message</button>
+          <p class="support-status" role="status" aria-live="polite"></p>
+        </form>
+
+        <p class="support-alt">Prefer email? <a href="mailto:support@cliick.com">support@cliick.com</a></p>
       </div>
     </section>
 
