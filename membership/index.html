@@ -4,27 +4,27 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="robots" content="noindex, nofollow" />
-    <title>Cliick | Terms of Service</title>
+    <title>Cliick | Membership</title>
     <meta
       name="description"
-      content="The terms that govern your use of Cliick."
+      content="Every feed you've scrolled was built to keep you there. Cliick runs the other way: hosts pay, guests are on the house, and there are no advertisers to please."
     />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Cliick" />
-    <meta property="og:title" content="Cliick | Terms of Service" />
-    <meta property="og:description" content="The terms that govern your use of Cliick." />
-    <meta property="og:url" content="https://cliick.com/terms/" />
+    <meta property="og:title" content="Cliick | Membership" />
+    <meta property="og:description" content="Every feed you've scrolled was built to keep you there. Cliick runs the other way: hosts pay, guests are on the house, and there are no advertisers to please." />
+    <meta property="og:url" content="https://cliick.com/membership/" />
     <meta property="og:image" content="https://cliick.com/images/cliick-icon.png" />
     <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content="Cliick | Terms of Service" />
-    <meta name="twitter:description" content="The terms that govern your use of Cliick." />
+    <meta name="twitter:title" content="Cliick | Membership" />
+    <meta name="twitter:description" content="Every feed you've scrolled was built to keep you there. Cliick runs the other way: hosts pay, guests are on the house, and there are no advertisers to please." />
     <meta name="twitter:image" content="https://cliick.com/images/cliick-icon.png" />
     <link rel="apple-touch-icon" href="https://cliick.com/images/cliick-icon.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Caveat:wght@500&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;1,400&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="/redesign.css" />
@@ -50,7 +50,7 @@
         <nav class="nav-links" id="nav-menu" aria-label="Primary">
           <a href="/">Home</a>
           <a href="/about/">About</a>
-          <a href="/membership/">Membership</a>
+          <a href="/membership/" aria-current="page">Membership</a>
           <a href="/faq/">FAQ</a>
         </nav>
         <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-menu" aria-label="Menu">
@@ -59,25 +59,100 @@
       </div>
     </header>
 
-    <section class="page-hero page-hero--solo">
+    <section class="page-hero page-hero--aside">
       <div class="wrap">
         <div class="page-head">
-          <h1>Terms of Service</h1>
+          <h1>You&rsquo;re not the product. You&rsquo;re the host.</h1>
+          <p class="page-lede">
+            Every feed you&rsquo;ve ever scrolled was built to keep you there.
+            Someone was paying for your attention. You just never saw the
+            invoice.
+          </p>
+          <p class="page-kicker">We built Cliick the other way around.</p>
+        </div>
+        <!-- Aside column. The homepage puts the argument on the left and the
+             thing itself on the right; subpages inherit that grammar. It holds
+             content, not only an image, and stacks under the copy below 900px. -->
+        <div class="page-hero-aside">
+          <h2 class="sr-only">Membership plans</h2>
+          <div class="plans">
+            <div class="plan">
+              <h3>Guest</h3>
+              <p class="plan-price"><span class="amount">$0</span><span class="term">/month</span>
+                <span class="term-note">Free for small Cliicks</span></p>
+              <p class="plan-note">Nothing to cancel</p>
+              <div class="plan-scale plan-scale--guest" aria-hidden="true">
+                <span class="plan-scale-track"><span class="plan-scale-fill"></span></span>
+              </div>
+              <p class="plan-scale-label">You and <b>five</b> others</p>
+                <p class="plan-cap">Start small &middot; grow anytime</p>
+            </div>
+            <div class="plan">
+              <h3>Premium <span class="best-chip">Best value</span></h3>
+              <p class="plan-price" aria-live="polite">
+                <span class="amount">$6</span><span class="term">/month</span>
+                <span class="term-note">$72 a year</span>
+              </p>
+              <div class="plan-toggle" data-cycle="annual" role="group" aria-label="Billing cycle"
+                   data-amount-annual="$6" data-note-annual="$72 a year"
+                   data-amount-monthly="$8" data-note-monthly="$96 a year"
+                   data-cap-annual="Best value &middot; save 3 months" data-cap-monthly="Flexible &middot; cancel anytime">
+                <div class="knob" aria-hidden="true"></div>
+                <span>Annual <b class="save">save 25%</b></span>
+                <span>Monthly</span>
+              </div>
+              <div class="plan-scale plan-scale--premium" aria-hidden="true">
+                <span class="plan-scale-track"><span class="plan-scale-fill"></span></span>
+              </div>
+              <p class="plan-scale-label">Up to <b>250</b> members</p>
+                <p class="plan-cap">Best value &middot; save 3 months</p>
+            </div>
+          </div>
+          <!-- The hero calls the reader "the host"; without this the word
+               appears once, in the largest type on the page, and never again —
+               the cards say Guest and Premium. This ties it to the numbers
+               already on them (6 and 250). -->
+          <p class="plans-note">
+            Every Cliick starts with someone. Be the host. It&rsquo;s free for
+            you and five others. Want a bigger Cliick? Upgrade anytime.
+          </p>
         </div>
       </div>
     </section>
 
-    <section class="section legal-section">
+    <section class="section section--center">
       <div class="wrap">
-        <!-- The body is synced from the Documents repo by sync-documents.sh,
-             which writes only /terms/tos.html. This wrapper is hand-kept and the sync
-             never touches it. -->
-        <article class="legal" data-src="/terms/tos.html">
-          <p class="legal-status">Loading the Terms of Service…</p>
-        </article>
+        <p class="eyebrow">The Cliick Promise</p>
+        <h2>That&rsquo;s not a feature.<br />That&rsquo;s the deal.</h2>
+        <p class="section-sub">
+          You start a Cliick. The people you love join, free. Everything in it
+          comes from someone you know, and that&rsquo;s all there is.
+        </p>
+        <p class="section-sub">
+          Hosts pay, with a simple subscription. That is the entire business
+          model. There are no advertisers to please and no data to sell,
+          because we never asked for your name, your email, or your phone
+          number.
+        </p>
+        <div class="pills">
+          <span>No ads</span>
+          <span>No tracking</span>
+          <span>No data mining</span>
+          <span>No algorithms</span>
+          <span>No uninvited strangers</span>
+          <span>No AI training</span>
+          <span>No email</span>
+          <span>No phone number</span>
+          <span>No card details</span>
+        </div>
+        <p class="section-sub promise-closer">
+          You&rsquo;re not paying for an app.<br />
+          You&rsquo;re paying for a space that stays yours.
+        </p>
       </div>
     </section>
 
+    <!-- FOOTER_V2_START -->
     <footer class="footer-v2">
       <div class="wrap">
         <h2>Join the Reset</h2>
