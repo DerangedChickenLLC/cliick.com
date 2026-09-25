@@ -112,6 +112,31 @@
   --window-h: 604px;
 }
 
+/* Landscape scales (#55). --u is one pixel of the 1440x900 reference,
+   shrunk by whichever of the window's width or height is tighter, and
+   never grown past it. Sizes that make up the desktop composition are
+   multiples of it, so a short unmaximised window gets the same page,
+   smaller, instead of a taller-than-fits one. Not a page transform: that
+   blurs text, breaks browser zoom and fights the pinned scenes.
+
+   It is only defined here. Rules that use it write var(--u, 1px), so in
+   portrait they fall back to their reference size and the phone layout
+   is untouched. Body and small text stop at 15px; headings keep going. */
+@media (orientation: landscape) and (min-height: 520px) {
+  :root {
+    --u: min(1px, calc(100vw / 1440), calc(100vh / 900));
+    --fs-display: calc(96 * var(--u));
+    --fs-page-title: calc(64 * var(--u));
+    --fs-h2: calc(54 * var(--u));
+    --fs-h2-sm: calc(48 * var(--u));
+    --fs-h3: calc(52 * var(--u));
+    --fs-body: max(15px, calc(20 * var(--u)));
+    --fs-small: max(15px, calc(16 * var(--u)));
+    --nav-h: max(64px, calc(96 * var(--u)));
+    --wrap-pad: max(20px, calc(62 * var(--u)));
+  }
+}
+
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 /* Keyboard focus. Nothing suppressed outlines, so the browser default was
@@ -230,7 +255,9 @@ img { max-width: 100%; display: block; }
 a { color: inherit; }
 
 .wrap {
-  max-width: 1440px;
+  /* In a short landscape window the column narrows with --u, so the page
+     keeps its proportions rather than going wide and short. */
+  max-width: calc(1440 * var(--u, 1px));
   margin-inline: auto;
   padding-inline: var(--wrap-pad);
 }
@@ -263,7 +290,7 @@ a { color: inherit; }
    setting: the SVG box is taller than the caps because the tittles sit above
    them, so sizing by box height would silently change the letters' size
    whenever the tittle geometry moved. */
-.nav { --wm-cap: 22px; }
+.nav { --wm-cap: max(16px, calc(22 * var(--u, 1px))); }
 .nav-logo {
   display: block;
   /* The mark reads best at twice the wordmark's cap height. Below ~1.6x it
@@ -310,7 +337,7 @@ a { color: inherit; }
 .nav-links a {
   color: var(--ink-strong);
   text-decoration: none;
-  font-size: 1.25rem;
+  font-size: max(15px, calc(20 * var(--u, 1px)));
 }
 .nav-links a:hover,
 .nav-links a[aria-current="page"] { text-decoration: underline; text-underline-offset: 6px; }
@@ -749,8 +776,8 @@ body.stage-motion .fallback-flow { display: none; }
 .stage-window {
   position: absolute;
   top: calc(50vh - var(--window-h) / 2);
-  right: max(var(--wrap-pad), calc((100vw - 1440px) / 2 + 62px));
-  width: min(758px, 52vw);
+  right: max(var(--wrap-pad), calc((100vw - 1440 * var(--u, 1px)) / 2 + 62 * var(--u, 1px)));
+  width: min(calc(758 * var(--u, 1px)), 52vw);
   height: var(--window-h);
   border-radius: var(--radius-window);
   background: var(--window-gray);
@@ -763,7 +790,7 @@ body.stage-motion .fallback-flow { display: none; }
 .stage-phone {
   position: absolute;
   top: calc(50vh - var(--window-h) / 2 + 61px);
-  right: calc(max(var(--wrap-pad), calc((100vw - 1440px) / 2 + 62px)) + min(758px, 52vw) / 2 - var(--phone-w) / 2);
+  right: calc(max(var(--wrap-pad), calc((100vw - 1440 * var(--u, 1px)) / 2 + 62 * var(--u, 1px))) + min(calc(758 * var(--u, 1px)), 52vw) / 2 - var(--phone-w) / 2);
   width: var(--phone-w);
 }
 .stage-phone .phone-screen { position: relative; }
@@ -786,7 +813,11 @@ body.stage-motion .fallback-flow { display: none; }
    proportions honest at the smaller size.
    -------------------------------------------------------------------------- */
 .stage-phone {
-  --phone-h: min(869px, calc(100vh - var(--nav-h) - 60px));
+  /* The third term is the width limit: height alone let a 1024x768 window
+     keep a 612px phone, which ran into "Reclaim your Feed". 0.5167 is the
+     reference's 744 / 1440, so a width-bound window gets the reference
+     phone, scaled. */
+  --phone-h: min(869px, calc(100vh - var(--nav-h) - 60px), calc(100vw * 0.5167));
   --phone-w: calc(var(--phone-h) * 0.46375);
   /* Centred in the space below the nav, overriding the original anchor. That
      anchor put the phone 61px below the stage window's top edge, which framed
@@ -1002,9 +1033,8 @@ body.nav-solid .nav-links a { color: #F2ECDE; }
    viewport, not the engine.
 
    The repair is where the scene centres, not how big it is: below 860px it
-   centres in the space under the nav rather than in the whole frame, so
-   the copy keeps its size. Only under 640px, where even that runs out of
-   room, does the type come down.
+   centres in the space under the nav rather than in the whole frame. The
+   type itself comes down with --u, which follows the window's height.
 
    Specificity, not order: the .scene rules below this block would
    otherwise win on top and font-size. */
@@ -1016,17 +1046,12 @@ body.nav-solid .nav-links a { color: #F2ECDE; }
   .stage-frame .scene.is-past { transform: translateY(calc(-50% - 70px)); }
   .stage-frame .scene.is-future { transform: translateY(calc(-50% + 70px)); }
 }
-@media (max-height: 640px) {
-  .stage-frame .scene h3 { font-size: clamp(2.25rem, 5.2vh, 3.25rem); }
-  .stage-frame .scene p { font-size: 1.0625rem; margin-top: 16px; }
-  .stage-frame .scene .learn-more { margin-top: 22px; }
-}
 
 .scene {
   position: absolute;
   top: 50%;
-  left: max(calc(var(--wrap-pad) + 62px), calc((100vw - 1440px) / 2 + 124px));
-  width: min(470px, 34vw); /* must stay clear of the window's left edge at all widths */
+  left: max(calc(var(--wrap-pad) + 62 * var(--u, 1px)), calc((100vw - 1440 * var(--u, 1px)) / 2 + 124 * var(--u, 1px)));
+  width: min(calc(470 * var(--u, 1px)), 34vw); /* must stay clear of the window's left edge at all widths */
   transform: translateY(-50%);
   opacity: 1;
   transition: opacity 0.5s ease, transform 0.5s ease;
@@ -1060,7 +1085,7 @@ body.nav-solid .nav-links a { color: #F2ECDE; }
 /* Scene 0 = the hero copy. It uses the same ink as scenes 1-3: as a literal
    white it was the one headline in the site not lit by the room's lamp, and
    it changed colour at 1200 as the stage handed over to the fallback flow. */
-.scene--hero { width: min(640px, 44vw); }
+.scene--hero { width: calc(640 * var(--u, 1px)); }
 
 /* --------------------------------------------------------------------------
    Latte band (home) + pricing cards (home & membership)
@@ -1125,8 +1150,7 @@ body.nav-solid .nav-links a { color: #F2ECDE; }
 }
 .plan > * { position: relative; }
 .plan h3 {
-  font-weight: 600;
-  font-size: 2.25rem;
+  font-size: calc(36 * var(--u, 1px));
   font-weight: 500;
 }
 .plan-price {
@@ -1134,7 +1158,7 @@ body.nav-solid .nav-links a { color: #F2ECDE; }
   font-weight: 500;
   letter-spacing: -0.03em;
 }
-.plan-price .amount { font-size: 3rem; }
+.plan-price .amount { font-size: calc(48 * var(--u, 1px)); }
 .plan-price .term-note {
   display: block;
   margin-top: 4px;
@@ -1272,7 +1296,9 @@ body.nav-solid .nav-links a { color: #F2ECDE; }
   display: block;
   width: fit-content;
   margin-top: 14px;
-  font-size: 0.4em;
+  /* 0.4em of the card title is 14.4px at the reference; the title scales
+     with --u, so the chip is held at 12px rather than following it to 10. */
+  font-size: max(12px, 0.4em);
   font-weight: 600;
   letter-spacing: 0.07em;
   text-transform: uppercase;
@@ -1322,8 +1348,8 @@ body.nav-solid .nav-links a { color: #F2ECDE; }
    -------------------------------------------------------------------------- */
 .page-hero {
   position: relative;
-  padding-top: calc(var(--nav-h) + 62px);
-  padding-bottom: 64px;
+  padding-top: calc(var(--nav-h) + 62 * var(--u, 1px));
+  padding-bottom: calc(64 * var(--u, 1px));
   overflow: hidden;
   color: var(--ink-strong);
 }
@@ -1392,8 +1418,8 @@ body.page-gray .page-hero h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
    for the heading column and for each card no longer fit: two cards needed
    622px beside the heading and 586px was left, so the second card wrapped
    under the first and dragged the heading down the page. The minimums and
-   the gap give a little so the pair stays side by side; proper scaling of
-   the whole composition is #55. */
+   the gap give a little so the pair stays side by side; the rest of the
+   composition scales with --u (#55). */
 .page-hero--aside .wrap {
   grid-template-columns: minmax(260px, 32%) minmax(0, 1fr);
   align-items: center;
@@ -1423,24 +1449,20 @@ body.page-gray .page-hero h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
 }
 /* A narrow card — about 290px in a 1024px landscape window — makes each half
    of the Annual/Monthly toggle about 115px, and "Annual save 25%" is wider
-   than that: it ran edge to edge on the knob with "25%" clipped. The toggle
-   tightens instead. The saving is still on the card twice ("$72 a year",
-   "save 3 months"), so it is the smaller "save 25%" that gives way last,
-   only if tightening is not enough. */
+   than that: it ran edge to edge on the knob with "25%" clipped. The label
+   tightens its spacing instead; the type stays at the 15px floor. The saving
+   is still on the card twice ("$72 a year", "save 3 months"), so "save 25%"
+   gives way if tightening is not enough. */
 /* Landscape only: stacked in portrait, the cards run the full column and
    match Home's cards at the same size — tightening them there made the same
    control two different sizes on two pages. */
 @media (orientation: landscape) and (min-height: 520px) {
   @container (max-width: 330px) {
-    /* The Guest card's pill tightens with it: the two sit on one row and are
-       meant to read as the same kind of control. */
-    .plan-toggle,
-    .plan-note { font-size: 0.8rem; }
     .plan-toggle .save { margin-left: 3px; letter-spacing: 0; }
   }
-  /* Measured against the card's content box (inside its padding): ~246px at
-     1024 wide, where the tightened label is 96px in a 117px knob and fits. It
-     only gives way below that. */
+  /* Measured against the card's content box (inside its padding): ~244px at
+     1024 wide, where the label is 112px in a 117px knob and fits. It only
+     gives way below that. */
   @container (max-width: 225px) {
     .plan-toggle .save { display: none; }
   }
@@ -1449,7 +1471,7 @@ body.page-gray .page-hero h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
    right-hand column. Stacked, they use the site-wide card padding so they
    match the homepage band at every width. */
 @media (orientation: landscape) and (min-height: 520px) {
-  .page-hero-aside .plan { padding: 32px clamp(20px, 2.1vw, 30px) 36px; }
+  .page-hero-aside .plan { padding: calc(32 * var(--u)) max(18px, calc(30 * var(--u))) calc(36 * var(--u)); }
 }
 
 @media not all and (orientation: landscape) and (min-height: 520px) {
