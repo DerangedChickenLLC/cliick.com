@@ -2467,6 +2467,10 @@ body.page-gray .page-hero h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
   font-size: var(--fs-body);
   line-height: 1.7;
   color: var(--ink-strong);
+  /* The synced text carries a 63-character Apple EULA address with nothing
+     to break on, which pushed Terms to 353px on a 320px phone. Fixed here,
+     not in the synced file, so the next sync cannot bring it back. */
+  overflow-wrap: anywhere;
 }
 .legal > * + * { margin-top: 1em; }
 /* Sections, not chapters: a legal page has twenty of them, and headings at
