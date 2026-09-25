@@ -11,24 +11,23 @@
 # Jekyll copies every page verbatim and this config changes only what ships.
 
 exclude:
-  # Working notes and internal docs
+  # Working notes and internal docs. docs/ holds the go-live list, the layout
+  # plan, the punch list and the brand lab (a page, but a review tool).
   - CLAUDE.md
   - README.md
   - LOGO_SYNC.md
-  - prototype2/PUNCHLIST.md
-  - prototype2/LAUNCH.md
-  - prototype2/LAYOUT.md
+  - docs/
   # Start a Cliick is not ready for the live cut. The page is kept in the repo
   # and every link to it is removed; delete this line when it ships.
-  - prototype2/start/
-  - prototype2/brand/
+  - start/
 
   # Tooling
   - build-partials.py
+  - stamp-assets.py
   - sync-documents.sh
   - sync-logos.sh
 
-  # Build input, not a page. partials/footer.html carries a {{BASE}} placeholder
-  # that build-partials.py substitutes at build time; it is a source file that
-  # happens to end in .html.
+  # Build input, not a page. partials/footer.html is the shared footer that
+  # build-partials.py stamps into every page; it is a source file that happens
+  # to end in .html.
   - partials/
