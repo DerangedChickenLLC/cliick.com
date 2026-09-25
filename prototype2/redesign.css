@@ -1386,7 +1386,8 @@ body.nav-solid .nav-links a { color: #F2ECDE; }
   gap: 48px;
 }
 .page-head { max-width: min(640px, 62%); }
-.page-hero h1 {
+.page-hero h1,
+.about-pinned h1 {
   font-size: var(--fs-page-title);
   font-weight: 600;
   line-height: 1.1;
@@ -1430,7 +1431,8 @@ body.nav-solid .nav-links a { color: #F2ECDE; }
    stage shade in body::after now does one layer down, and two stacked made
    the tall heroes (About, Membership, Start) read darker than the short one
    (FAQ) and darker than Home. Keep one. */
-body.page-gray .page-hero h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
+body.page-gray .page-hero h1,
+body.page-gray .about-pinned h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
 
 /* Aside column — the site's spatial grammar.
    The homepage stage puts the argument on the left and the thing itself on the
@@ -1695,7 +1697,10 @@ body.page-gray .page-hero h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
 .page-hero--split .wrap {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr);
-  align-items: center;
+  /* Top, not centre: the photograph starts level with the heading. Centred
+     beside a story that wraps long in a narrow window, it floated halfway
+     down the copy and read as belonging to nothing (#68). */
+  align-items: start;
   gap: clamp(30px, 4.6vw, 68px);
 }
 .page-hero--split .page-head { max-width: none; }
@@ -1720,6 +1725,87 @@ body.page-gray .page-hero h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
   .page-hero--split:has(.hero-people) .page-head > h1 { order: -2; }
   .page-hero--split .hero-people { order: -1; margin: 26px 0 30px; }
 }
+
+/* --------------------------------------------------------------------------
+   About: the photo, then the ledger, stay in view (#68)
+   redesign.js builds .about-pinned where the window fits and moves the story,
+   the photo, the secret copy and the ledger into it; everywhere else the page
+   is the two sections above. It carries .section and .two-col so the moved
+   pieces keep today's type exactly.
+   -------------------------------------------------------------------------- */
+.about-pinned {
+  --about-pin-top: calc(var(--nav-h) + 62 * var(--u, 1px));
+  padding: var(--about-pin-top) 0 0;
+}
+/* Beats .two-col, which stacks in portrait -- an upright iPad runs this too. */
+.about-pinned .about-pinned-grid {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr);
+  align-items: start;
+  gap: clamp(30px, 4.6vw, 68px);
+}
+.about-pinned .page-head { max-width: none; }
+/* Air between the scenes: once the story has gone, the photo holds on its
+   own for half a screen before the secret arrives; a quarter screen after
+   the secret before "What's missing". */
+.about-pinned-secret { margin-top: 50vh; padding-bottom: 28vh; }
+/* The side column's height is set by redesign.js so it lets go just before
+   the secret heading reaches the pinned line; align-self keeps the grid from
+   stretching it back to the text column's height. */
+.about-pinned-side { align-self: start; }
+.about-pinned-pin {
+  position: sticky;
+  top: var(--about-pin-top);
+  height: calc(100vh - var(--about-pin-top) - 24px);
+}
+.about-pinned-obj {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.about-pinned-obj.is-off {
+  opacity: 0;
+  transform: translateY(24px);
+  pointer-events: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .about-pinned-obj { transition: none; }
+  .about-pinned-obj.is-off { transform: none; }
+}
+/* The photo gives way in a short window; the quote and caption stay whole. */
+.about-pinned .hero-people {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  max-height: 100%;
+}
+.about-pinned .hero-people img {
+  flex: 0 1 auto;
+  min-height: 120px;
+  object-fit: cover;
+  object-position: 50% 40%;
+}
+.about-pinned .founders-caption { flex: none; }
+/* The ledger fills the column, stacked; redesign.js tries tighter rows, then
+   side by side, before giving up on the pinned column. */
+.about-pinned .ledger {
+  grid-template-columns: minmax(0, 1fr);
+  align-items: start;
+  gap: max(12px, calc(18 * var(--u, 1px)));
+}
+.about-pinned .ledger-col {
+  padding: calc(30 * var(--u, 1px)) max(16px, calc(26 * var(--u, 1px))) calc(34 * var(--u, 1px));
+}
+.about-pinned .ledger-col ul { margin-top: calc(18 * var(--u, 1px)); }
+.about-pinned .ledger.is-compact { gap: 12px; }
+.about-pinned .ledger.is-compact .ledger-col {
+  padding: calc(22 * var(--u, 1px)) max(16px, calc(26 * var(--u, 1px))) calc(22 * var(--u, 1px));
+}
+.about-pinned .ledger.is-compact .ledger-col ul { margin-top: 8px; }
+.about-pinned .ledger.is-compact .ledger-col li { padding-top: 5px; padding-bottom: 5px; }
+.about-pinned .ledger.is-side { grid-template-columns: 1fr 1fr; }
 
 /* The About close: the promise, centred on the page's own ground. It opts
    out of the tightened .section + .section boundary above it -- this is the

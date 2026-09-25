@@ -405,8 +405,15 @@ if (faqSearch) {
       /* The pair arrives as the hero leaves, the way it arrives on Home when
          scene 0 gives way. The hero's own height is the runway, so a tall
          hero holds the photograph longer — which is what it is there for. */
-      const hero = document.querySelector(".page-hero");
-      const runway = hero ? hero.offsetHeight : window.innerHeight;
+      /* About's pinned column (below) empties and hides its hero while it
+         runs; the story block then marks where the hero ends. Both start at
+         the top of the page, so the runway is where each one ends. */
+      const hero =
+        document.querySelector(".about-pinned:not([hidden]) .about-pinned-story") ||
+        document.querySelector(".page-hero");
+      const runway = hero
+        ? hero.getBoundingClientRect().bottom + window.scrollY
+        : window.innerHeight;
       const arrive = Math.min(1, window.scrollY / runway);
 
       const st = body.style;
@@ -509,5 +516,150 @@ if (faqSearch) {
         "&body=" + encodeURIComponent(body);
       if (status) status.textContent = "Your mail app should open with the message ready to send.";
     });
+  }
+}
+
+/* --- About: the photo, then the ledger, stay in view (#68) --------------------
+   About's first two sections are prose beside an object -- the story beside
+   the founders' photograph, the secret beside the ledger. Where the window
+   can hold it, the two objects share one column that stays in view while the
+   prose scrolls: the photo holds through the story and a pause, the ledger
+   fades in as its heading comes into view and holds while the heading rises
+   to meet it, and the column lets go just before they meet so the pair
+   leaves together with the heading a touch below the ledger's top.
+
+   The markup is today's layout, untouched: that is the fallback, and what a
+   visitor without JavaScript gets. When the window fits, this moves the four
+   pieces into one pinned section and hides the two emptied ones; when it
+   stops fitting, it puts them back. One copy of the content either way.
+
+   "Fits" is measured, not guessed: 768px wide (the story needs a 350px column
+   -- at 500 it ran nearly 1,000px tall in 225px) and 520px tall, and then the
+   ledger has to fit the column -- stacked, stacked with tighter rows, or side
+   by side, in that order. If none fits, today's layout it is. */
+{
+  const story = document.querySelector(".page-hero--split .page-head");
+  const photo = document.querySelector(".page-hero--split .hero-people");
+  const copy = document.querySelector(".two-col--wide > .copy");
+  const ledger = document.querySelector(".two-col--wide > .ledger");
+  if (story && photo && copy && ledger) {
+    const heroSection = story.closest("section");
+    const ledgerSection = ledger.closest("section");
+    const fitsWindow = window.matchMedia("(min-width: 768px) and (min-height: 520px)");
+    /* The heading leaves this far below the ledger's top edge; exactly level
+       read as cramped. */
+    const AIR = 24;
+
+    // Where each piece lives in today's layout, so it can go back.
+    const homes = [story, photo, copy, ledger].map((el) => ({
+      el,
+      parent: el.parentNode,
+      next: el.nextSibling,
+    }));
+
+    const section = document.createElement("section");
+    section.className = "section about-pinned";
+    section.hidden = true;
+    section.innerHTML =
+      '<div class="wrap two-col about-pinned-grid">' +
+      '<div class="about-pinned-text">' +
+      '<div class="about-pinned-block about-pinned-story"></div>' +
+      '<div class="about-pinned-block about-pinned-secret"></div>' +
+      "</div>" +
+      '<div class="about-pinned-side"><div class="about-pinned-pin">' +
+      '<div class="about-pinned-obj"></div>' +
+      '<div class="about-pinned-obj is-off"></div>' +
+      "</div></div>" +
+      "</div>";
+    heroSection.before(section);
+    const [storyBlock, secretBlock] = section.querySelectorAll(".about-pinned-block");
+    const side = section.querySelector(".about-pinned-side");
+    const pin = section.querySelector(".about-pinned-pin");
+    const [photoSlot, ledgerSlot] = section.querySelectorAll(".about-pinned-obj");
+
+    let on = false;
+    const enter = () => {
+      storyBlock.append(story);
+      secretBlock.append(copy);
+      photoSlot.append(photo);
+      ledgerSlot.append(ledger);
+      heroSection.hidden = true;
+      ledgerSection.hidden = true;
+      section.hidden = false;
+      on = true;
+    };
+    const leave = () => {
+      homes.forEach(({ el, parent, next }) => parent.insertBefore(el, next));
+      section.hidden = true;
+      heroSection.hidden = false;
+      ledgerSection.hidden = false;
+      side.style.height = "";
+      on = false;
+    };
+
+    // The ledger's layouts, most preferred first.
+    const LEDGER_FITS = ["", "is-compact", "is-side"];
+    const decide = () => {
+      if (!fitsWindow.matches) {
+        if (on) leave();
+        return;
+      }
+      if (!on) enter();
+      const room = pin.getBoundingClientRect().height;
+      const fit = LEDGER_FITS.find((cls) => {
+        ledger.classList.remove("is-compact", "is-side");
+        if (cls) ledger.classList.add(cls);
+        return ledger.getBoundingClientRect().height <= room;
+      });
+      if (fit === undefined) {
+        ledger.classList.remove("is-compact", "is-side");
+        leave();
+      }
+    };
+
+    /* The column ends where the secret heading meets the column's top line,
+       less AIR: its offset in the grid plus the pinned column's height. */
+    const size = () => {
+      if (!on) return;
+      side.style.height =
+        secretBlock.getBoundingClientRect().top -
+        side.getBoundingClientRect().top +
+        pin.getBoundingClientRect().height -
+        AIR +
+        "px";
+    };
+
+    // The ledger takes over once its heading is 55% of the way up the window.
+    const swap = () => {
+      if (!on) return;
+      const ledgerTurn = secretBlock.getBoundingClientRect().top < window.innerHeight * 0.55;
+      photoSlot.classList.toggle("is-off", ledgerTurn);
+      ledgerSlot.classList.toggle("is-off", !ledgerTurn);
+    };
+
+    const refresh = () => {
+      decide();
+      size();
+      swap();
+    };
+    let queued = false;
+    window.addEventListener(
+      "scroll",
+      () => {
+        if (queued) return;
+        queued = true;
+        requestAnimationFrame(() => {
+          queued = false;
+          swap();
+        });
+      },
+      { passive: true }
+    );
+    window.addEventListener("resize", refresh);
+    fitsWindow.addEventListener("change", refresh);
+    // Layout moves once the photo and the web font arrive; measure again then.
+    window.addEventListener("load", refresh);
+    if (document.fonts) document.fonts.ready.then(refresh);
+    refresh();
   }
 }
