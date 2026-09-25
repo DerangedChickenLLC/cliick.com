@@ -81,8 +81,9 @@
       screen crossfades — all keyed to the same scroll fraction, so nothing
       can drift or collide. The phone/window/heading are always composed
       together, and the frame releases naturally at the end of the story.
-      Screens are placeholder stills — swap each <img data-screen> for a
-      <video> (or one looped video seeked per scene) when recordings exist.
+      Screens are app stills (#63) — swap each <img data-screen> for a
+      <video> (or one looped video seeked per scene) when the films exist;
+      .phone-screen video is already styled.
       NOTE: hero + section copy exists twice (stage scenes here, fallback
       flow below) — edit both until the design settles.
     -->
@@ -92,13 +93,12 @@
         <div class="stage-shade" aria-hidden="true"></div>
         <div class="stage-window" aria-hidden="true"></div>
         <div class="stage-phone" aria-hidden="true">
-          <div class="phone phone--placeholder">
+          <div class="phone">
             <div class="phone-screen">
-              <img data-screen="0" class="active" src="/prototype2/images/feed.png" alt="" />
-              <img data-screen="1" src="/prototype2/images/gallery.png" alt="" />
-              <img data-screen="2" src="/prototype2/images/drawer.png" alt="" />
-              <img data-screen="3" src="/prototype2/images/comments.png" alt="" />
-              <span class="film-slate" data-film="Your feed" aria-hidden="true"></span>
+              <img data-screen="0" class="active" src="/prototype2/images/redesign/screens/feed.webp" alt="" />
+              <img data-screen="1" src="/prototype2/images/redesign/screens/gallery.webp" alt="" />
+              <img data-screen="2" src="/prototype2/images/redesign/screens/drawer.webp" alt="" />
+              <img data-screen="3" src="/prototype2/images/redesign/screens/comments.webp" alt="" />
             </div>
           </div>
         </div>
@@ -171,11 +171,7 @@
           </div>
         </div>
         <div class="win hero-win" aria-hidden="true">
-          <img
-            class="hero-phone"
-            src="/prototype2/images/redesign/hero-phone.png"
-            alt="The Cliick app showing a post shared with a private circle"
-          />
+          <div class="phone phone--static"><div class="phone-screen"><img src="/prototype2/images/redesign/screens/feed.webp" alt="" /></div></div>
         </div>
       </div>
     </section>
@@ -201,7 +197,7 @@
           </p>
         </div>
         <div class="win" aria-hidden="true">
-          <div class="phone phone--static phone--placeholder"><div class="phone-screen"><img src="/prototype2/images/gallery.png" alt="" /><span class="film-slate" data-film="People you know" aria-hidden="true"></span></div></div>
+          <div class="phone phone--static"><div class="phone-screen"><img src="/prototype2/images/redesign/screens/gallery.webp" alt="" /></div></div>
         </div>
       </div>
 
@@ -214,7 +210,7 @@
           </p>
         </div>
         <div class="win" aria-hidden="true">
-          <div class="phone phone--static phone--placeholder"><div class="phone-screen"><img src="/prototype2/images/drawer.png" alt="" /><span class="film-slate" data-film="A personal place" aria-hidden="true"></span></div></div>
+          <div class="phone phone--static"><div class="phone-screen"><img src="/prototype2/images/redesign/screens/drawer.webp" alt="" /></div></div>
         </div>
       </div>
 
@@ -227,7 +223,7 @@
           </p>
         </div>
         <div class="win" aria-hidden="true">
-          <div class="phone phone--static phone--placeholder"><div class="phone-screen"><img src="/prototype2/images/comments.png" alt="" /><span class="film-slate" data-film="Just your people" aria-hidden="true"></span></div></div>
+          <div class="phone phone--static"><div class="phone-screen"><img src="/prototype2/images/redesign/screens/comments.webp" alt="" /></div></div>
         </div>
       </div>
     </div>
