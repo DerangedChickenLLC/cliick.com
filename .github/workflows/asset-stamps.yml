@@ -1,0 +1,19 @@
+# Fails a PR whose pages link a stale redesign.css / js/redesign.js stamp,
+# so a stylesheet or script change cannot ship behind an old cached copy
+# (#75). The fix is always the same: python3 stamp-assets.py, commit.
+name: Asset stamps
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 stamp-assets.py --check
