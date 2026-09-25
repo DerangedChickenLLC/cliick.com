@@ -2611,7 +2611,6 @@ body.page-gray .about-pinned h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
   color: var(--accent);
   text-underline-offset: 3px;
 }
-.legal-status { color: var(--ink-muted); }
 
 /* The deletion page's "On this page" list and its one aside. Both quiet: the
    page is policy, and the reading column is the point. */

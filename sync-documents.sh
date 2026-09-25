@@ -101,6 +101,10 @@ cp /tmp/privacy-temp.html "$SCRIPT_DIR/privacy/privacy.html"
 # Clean up temp files
 rm /tmp/tos-temp.html /tmp/privacy-temp.html
 
+# Build the synced text into the Terms and Privacy pages (#78): they carry it
+# inline so the policy reads without JavaScript.
+python3 "$SCRIPT_DIR/build-partials.py"
+
 echo ""
 echo "✅ Successfully synced legal documents!"
 echo "   - terms/tos.html"
