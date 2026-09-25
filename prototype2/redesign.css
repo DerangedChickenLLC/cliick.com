@@ -911,6 +911,7 @@ body.nav-stuck .nav {
 body.nav-on-light .nav-logo,
 body.nav-on-light .nav-wordmark,
 body.nav-on-light .nav-links a,
+body.nav-on-light .nav-toggle,
 body.nav-on-light.nav-solid .nav-wordmark,
 body.nav-on-light.nav-solid .nav-links a {
   color: var(--ink-on-light);
@@ -1078,6 +1079,37 @@ body.nav-solid .nav-links a { color: #F2ECDE; }
    white it was the one headline in the site not lit by the room's lamp, and
    it changed colour at 1200 as the stage handed over to the fallback flow. */
 .scene--hero { width: calc(640 * var(--u, 1px)); }
+
+/* The stage in a portrait window 480px and wider (see STAGE in redesign.js):
+   the same composition the stacked Home uses there -- copy left, device
+   right -- but pinned, so the device stays put and the copy changes, rather
+   than every section's phone queueing down the page. The geometry above is
+   landscape's (a 758px window column, --u); here the phone is sized from
+   the width in the same steps as the stacked Home's, and the copy takes
+   what is left. */
+@media not all and (orientation: landscape) and (min-height: 520px) {
+  @media (min-width: 480px) and (min-height: 520px) {
+    .stage-frame {
+      --stage-z: 0.6;
+      --stage-gap: clamp(18px, 4vw, 40px);
+    }
+    .stage-phone {
+      --phone-h: min(calc(869px * var(--stage-z)), calc(100vh - var(--nav-h) - 60px));
+      right: var(--wrap-pad);
+    }
+    .scene,
+    .scene--hero {
+      left: var(--wrap-pad);
+      width: calc(100vw - 2 * var(--wrap-pad) - 403px * var(--stage-z) - var(--stage-gap));
+    }
+  }
+  @media (min-width: 480px) and (max-width: 720px) {
+    .stage-frame { --stage-z: 0.5; }
+  }
+  @media (min-width: 480px) and (max-width: 600px) {
+    .stage-frame { --stage-z: 0.42; }
+  }
+}
 
 /* --------------------------------------------------------------------------
    Latte band (home) + pricing cards (home & membership)
@@ -2182,15 +2214,43 @@ body.page-gray .page-hero h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
    Responsive
    -------------------------------------------------------------------------- */
 @media not all and (orientation: landscape) and (min-height: 520px) {
-  .showcase .row {
-    grid-template-columns: 1fr;
-    row-gap: 40px;
-    padding-block: 48px;
-  }
-  .showcase .win { order: 2; }
+  .showcase .row { padding-block: 48px; }
   .two-col,
   .jump-in-cols { grid-template-columns: 1fr; }
-  .hero .wrap { grid-template-columns: 1fr; }
+  /* The hero sizes to its content. At full-screen height an upright iPad
+     centred ~300px of copy in 866px, leaving a band of bare backdrop above
+     the headline. Phones get a tighter top in the 720 block below. */
+  .hero { min-height: 0; padding-top: calc(var(--nav-h) + 54px); padding-bottom: 0; }
+  .hero .wrap { padding-block: 0; }
+}
+/* Real phones (440px and under) stack: copy, then the device. */
+@media not all and (orientation: landscape) and (min-height: 520px) {
+  /* Nested, not "and (max-width)": a leading `not` negates the whole query,
+     width included, so the flat form matched every landscape window. */
+  @media (max-width: 479px) {
+    .showcase .row {
+      grid-template-columns: 1fr;
+      row-gap: 40px;
+    }
+    .showcase .win { order: 2; }
+    .hero .wrap { grid-template-columns: 1fr; }
+  }
+}
+/* Anything wider -- a desktop window at its ~500px minimum, an upright
+   iPad, a phone on its side -- keeps copy left and phone right. Stacked, a
+   500px window held a 240px phone alone in its row with the rest empty.
+   The phone column is the device's own width, so the copy takes all that
+   is left; the device shrinks a step in the narrowest band to leave the
+   headings a readable measure. */
+@media not all and (orientation: landscape) and (min-height: 520px) {
+  @media (min-width: 480px) {
+    .hero .wrap,
+    .showcase .row {
+      grid-template-columns: minmax(0, 1fr) auto;
+      column-gap: clamp(18px, 4vw, 40px);
+    }
+    .fallback-flow .win { width: calc(var(--phone-w) * var(--mock-zoom)); }
+  }
 }
 /* The fallback flow renders from 1199px down, so its lit space has to start
    there too. Scoped to 720 this left a band from 721 to 1199 still running
@@ -2291,8 +2351,10 @@ body.page-gray .page-hero h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
      The links go behind a menu button, which is what the pattern is for.
      The CTA stays in the bar: it is the one thing on the page worth acting
      on, and burying it behind a tap is the mistake this replaces. */
-  .nav-wordmark { display: none; }
-  .nav-logo { height: 34px; }
+  /* The wordmark used to hide here too, to make room for that button. With
+     the CTA parked (#46) the bar has the room, so the lockup stays whole;
+     it just sizes down, the mark to the 34px it already had. */
+  .nav { --wm-cap: 16.7px; }
   .nav-cta {
     margin-left: auto;
     padding: 8px 15px;
@@ -2327,10 +2389,9 @@ body.page-gray .page-hero h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
 
   /* The page is displaced rather than covered. Everything but the bar slides
      down by the panel's height, so the menu opens into space instead of on
-     top of the argument. The sticky stage never runs in portrait
-     (.stage-track is display:none and .fallback-flow renders instead), so
-     nothing here is a transformed ancestor of a sticky or fixed element.
-     redesign.js measures the panel and sets --menu-h. */
+     top of the argument. redesign.js measures the panel and sets --menu-h.
+     Home's two versions each keep their backdrop in place (below): the
+     backdrop is the room, not the page. */
   body > *:not(.nav) {
     transition: transform 0.34s cubic-bezier(0.32, 0.72, 0, 1);
   }
@@ -2353,6 +2414,20 @@ body.page-gray .page-hero h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
   @media (prefers-reduced-motion: reduce) {
     .fallback-flow > * { transition: none; }
   }
+  /* The stage runs in portrait too from 480px wide (#66). Sliding the whole
+     track took its photograph and scrims down with it and left bare wall
+     behind the menu -- the same fault as the fallback's backdrop above. The
+     track stays; the phone and the scene copy move. `translate` rather than
+     `transform`, because the scenes' own enter/exit motion is a transform
+     and the two have to add, not replace each other. */
+  body.nav-open .stage-track { transform: none; }
+  .stage-frame .stage-phone,
+  .stage-frame .scene {
+    transition: opacity 0.5s ease, transform 0.5s ease,
+      translate 0.34s cubic-bezier(0.32, 0.72, 0, 1);
+  }
+  body.nav-open .stage-frame .stage-phone,
+  body.nav-open .stage-frame .scene { translate: 0 var(--menu-h, 0px); }
   @media (prefers-reduced-motion: reduce) {
     body > *:not(.nav) { transition: none; }
   }
@@ -2535,6 +2610,13 @@ body.page-gray .page-hero h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
      390px phone, so the whole device fits well inside one screen. */
   .fallback-flow { --mock-zoom: 0.5; }
   .fallback-flow .win .phone--static { top: auto; transform: none; }
+}
+/* Side by side in the narrowest wide-portrait band (see the 480px rules
+   above): the device steps down so the headings keep a readable measure. */
+@media not all and (orientation: landscape) and (min-height: 520px) {
+  @media (min-width: 480px) and (max-width: 600px) {
+    .fallback-flow { --mock-zoom: 0.42; }
+  }
 }
 
 /* ==========================================================================
