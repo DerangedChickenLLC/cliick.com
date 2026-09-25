@@ -2,21 +2,39 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <!-- The footer QR points here. A phone that scans it should land in its
+         own store without seeing this page, so this runs inline in <head>,
+         before anything paints — the site script is deferred and would show
+         the page first. Anything else (a desktop, an unknown device, no
+         script) gets the page with both badges. replace() rather than
+         assign() so Back does not bounce the reader into the store again. -->
+    <script>
+      (function () {
+        var ua = navigator.userAgent;
+        var iPadOS = /Macintosh/.test(ua) && navigator.maxTouchPoints > 1;
+        if (/iPhone|iPad|iPod/.test(ua) || iPadOS) {
+          location.replace("https://apps.apple.com/us/app/cliick-your-private-network/id6608980465");
+        } else if (/Android/.test(ua)) {
+          location.replace("https://play.google.com/store/apps/details?id=com.derangedchicken.clique");
+        }
+      })();
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Cliick | Support</title>
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Cliick | Get the app</title>
     <meta
       name="description"
-      content="Get help with Cliick — FAQs and support contact."
+      content="Download Cliick for iPhone or Android."
     />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Cliick" />
-    <meta property="og:title" content="Cliick | Support" />
-    <meta property="og:description" content="Get help with Cliick — FAQs and support contact." />
-    <meta property="og:url" content="https://cliick.com/support/" />
+    <meta property="og:title" content="Cliick | Get the app" />
+    <meta property="og:description" content="Download Cliick for iPhone or Android." />
+    <meta property="og:url" content="https://cliick.com/get/" />
     <meta property="og:image" content="https://cliick.com/images/cliick-icon.png" />
     <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content="Cliick | Support" />
-    <meta name="twitter:description" content="Get help with Cliick — FAQs and support contact." />
+    <meta name="twitter:title" content="Cliick | Get the app" />
+    <meta name="twitter:description" content="Download Cliick for iPhone or Android." />
     <meta name="twitter:image" content="https://cliick.com/images/cliick-icon.png" />
     <link rel="apple-touch-icon" href="https://cliick.com/images/cliick-icon.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png" />
@@ -58,44 +76,20 @@
       </div>
     </header>
 
-    <section class="page-hero page-hero--solo">
+    <section class="page-hero page-hero--solo get-hero">
       <div class="wrap">
         <div class="page-head">
-          <h1>How can we help you?</h1>
-          <p class="page-lede">Find answers to common questions or reach out directly.</p>
+          <h1>Get Cliick.</h1>
+          <p class="page-lede">On your phone, this page sends you straight to your store. Here, pick yours.</p>
+          <div class="store-badges get-badges">
+            <a href="https://apps.apple.com/us/app/cliick-your-private-network/id6608980465"
+              ><img src="/images/redesign/badge-appstore.svg" alt="Download on the App Store"
+            /></a>
+            <a href="https://play.google.com/store/apps/details?id=com.derangedchicken.clique"
+              ><img src="/images/redesign/badge-googleplay.svg" alt="Get it on Google Play"
+            /></a>
+          </div>
         </div>
-      </div>
-    </section>
-
-    <section class="section legal-section support-section">
-      <div class="wrap">
-        <div class="legal">
-          <h2 id="faq">Common questions</h2>
-          <p>Most answers — how Cliick works, what we keep, how membership works — are in the FAQ.</p>
-          <p><a class="learn-more" href="/faq/">Read the FAQ</a></p>
-
-          <h2 id="contact">Contact support</h2>
-          <p>Writing to us opens your own mail app with the message filled in — nothing is sent from this page.</p>
-        </div>
-
-        <form id="supportForm" class="support-form" novalidate>
-          <div class="support-field">
-            <label for="name">Name</label>
-            <input type="text" id="name" name="name" placeholder="Your name" autocomplete="name" required />
-          </div>
-          <div class="support-field">
-            <label for="subject">Subject</label>
-            <input type="text" id="subject" name="subject" placeholder="How can we help?" required />
-          </div>
-          <div class="support-field">
-            <label for="message">Message</label>
-            <textarea id="message" name="message" rows="6" placeholder="Describe your issue or question" required></textarea>
-          </div>
-          <button type="submit" class="support-submit">Send message</button>
-          <p class="support-status" role="status" aria-live="polite"></p>
-        </form>
-
-        <p class="support-alt">Prefer email? <a href="mailto:support@cliick.com">support@cliick.com</a></p>
       </div>
     </section>
 

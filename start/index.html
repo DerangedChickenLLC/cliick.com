@@ -3,27 +3,18 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Cliick | Support</title>
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Cliick | Start a Cliick</title>
     <meta
       name="description"
-      content="Get help with Cliick — FAQs and support contact."
+      content="A Cliick is a private group for one part of your life. Pick one, bring a few people, and start sharing there."
     />
-    <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="Cliick" />
-    <meta property="og:title" content="Cliick | Support" />
-    <meta property="og:description" content="Get help with Cliick — FAQs and support contact." />
-    <meta property="og:url" content="https://cliick.com/support/" />
-    <meta property="og:image" content="https://cliick.com/images/cliick-icon.png" />
-    <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content="Cliick | Support" />
-    <meta name="twitter:description" content="Get help with Cliick — FAQs and support contact." />
-    <meta name="twitter:image" content="https://cliick.com/images/cliick-icon.png" />
     <link rel="apple-touch-icon" href="https://cliick.com/images/cliick-icon.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Caveat:wght@500&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;1,400&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="/redesign.css?v=0dffe90e54" />
@@ -52,50 +43,160 @@
           <a href="/membership/">Membership</a>
           <a href="/faq/">FAQ</a>
         </nav>
+        <a class="nav-cta" href="/start/">Start a Cliick</a>
         <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-menu" aria-label="Menu">
           <span class="nav-toggle-bars" aria-hidden="true"></span>
         </button>
       </div>
     </header>
 
-    <section class="page-hero page-hero--solo">
+    <!-- The start flow.
+
+         Scene 0 is the scan. Not a download button tidied away at the end of
+         the page, but the doorway: you point your phone at the code, the app
+         installs, and the page paces you through the rest while you do it.
+         A follow-along, with someone walking beside you.
+
+         It serves two people at once and says so out loud. One has their phone
+         in hand and is doing this now. The other is reading to find out what
+         they would be in for, and will install later. Neither should feel like
+         the page was written for the other. -->
+    <section class="page-hero page-hero--split follow">
       <div class="wrap">
         <div class="page-head">
-          <h1>How can we help you?</h1>
-          <p class="page-lede">Find answers to common questions or reach out directly.</p>
+          <p class="page-eyebrow">Start a Cliick</p>
+          <h1>Here&rsquo;s what happens next.</h1>
+          <p class="page-lede">
+            You&rsquo;ll need to download the app if you haven&rsquo;t already.
+          </p>
+          <p class="page-lede">
+            Once you&rsquo;ve set up your account, feel free to have a look
+            around. Nothing is expected of you yet, and there is nothing to
+            catch up on.
+          </p>
+          <p class="page-lede">
+            When you are ready, follow the steps below to get started. Three
+            small things, about five minutes.
+          </p>
+        </div>
+
+        <div class="doorway">
+          <figure class="doorway-qr">
+            <img src="/images/redesign/footer-qr.png" alt="QR code linking to the Cliick app" />
+            <figcaption>Point your phone&rsquo;s camera at the code</figcaption>
+          </figure>
+          <div class="doorway-store">
+            <p class="doorway-note">Already on your phone?</p>
+            <div class="store-badges">
+              <a href="https://apps.apple.com/us/app/cliick-your-private-network/id6608980465"
+                ><img src="/images/redesign/badge-appstore.svg" alt="Download on the App Store"
+              /></a>
+              <a href="https://play.google.com/store/apps/details?id=com.derangedchicken.clique"
+                ><img src="/images/redesign/badge-googleplay.svg" alt="Get it on Google Play"
+              /></a>
+            </div>
+          </div>
         </div>
       </div>
     </section>
 
-    <section class="section legal-section support-section">
-      <div class="wrap">
-        <div class="legal">
-          <h2 id="faq">Common questions</h2>
-          <p>Most answers — how Cliick works, what we keep, how membership works — are in the FAQ.</p>
-          <p><a class="learn-more" href="/faq/">Read the FAQ</a></p>
-
-          <h2 id="contact">Contact support</h2>
-          <p>Writing to us opens your own mail app with the message filled in — nothing is sent from this page.</p>
+    <!-- Step one is deliberately the one with no other people in it. A first
+         action nobody can witness is a first action nobody can get wrong. -->
+    <section class="section step">
+      <div class="wrap two-col two-col--wide two-col--flip">
+        <div class="win win--inline">
+          <div class="phone phone--static phone--placeholder">
+            <div class="phone-screen">
+              <img src="/images/feed.png" alt="A post sitting in a quiet Cliick feed" />
+              <span class="film-slate" data-film="Your first post" aria-hidden="true"></span>
+            </div>
+          </div>
         </div>
+        <div class="copy">
+          <p class="step-num"><span>Step</span>1</p>
+          <h2>Post something.</h2>
+          <p>
+            Tap the <b>+</b> at the top and share whatever you like: a photo, a
+            video, a few words. It goes to your Peeps, which is the Cliick you
+            already have, and right now you are its only member.
+          </p>
+          <p>
+            So you will see it in your feed, and nobody else will. That is the
+            whole of step one. Nobody is watching, and there is no way to get it
+            wrong.
+          </p>
+        </div>
+      </div>
+    </section>
 
-        <form id="supportForm" class="support-form" novalidate>
-          <div class="support-field">
-            <label for="name">Name</label>
-            <input type="text" id="name" name="name" placeholder="Your name" autocomplete="name" required />
+    <section class="section step">
+      <div class="wrap two-col two-col--wide">
+        <div class="copy">
+          <p class="step-num"><span>Step</span>2</p>
+          <h2>Bring someone in.</h2>
+          <p>
+            Nobody can look you up on Cliick and there is nothing to search, so
+            nothing happens until you share your code. Text it to someone. If
+            they are sitting with you, they can scan it instead. Pick whoever is
+            easiest.
+          </p>
+          <p>
+            Once you are connected, open their profile and tap
+            <b>Become Peeps</b>. When they are in, they will see what you posted
+            in step one, because Cliick keeps your history. Nothing you did
+            first goes to waste.
+          </p>
+        </div>
+        <div class="win win--inline">
+          <div class="phone phone--static phone--placeholder">
+            <div class="phone-screen">
+              <img src="/images/drawer.png" alt="The Cliick dashboard showing groups and connected people" />
+              <span class="film-slate" data-film="Connecting" aria-hidden="true"></span>
+            </div>
           </div>
-          <div class="support-field">
-            <label for="subject">Subject</label>
-            <input type="text" id="subject" name="subject" placeholder="How can we help?" required />
-          </div>
-          <div class="support-field">
-            <label for="message">Message</label>
-            <textarea id="message" name="message" rows="6" placeholder="Describe your issue or question" required></textarea>
-          </div>
-          <button type="submit" class="support-submit">Send message</button>
-          <p class="support-status" role="status" aria-live="polite"></p>
-        </form>
+        </div>
+      </div>
+    </section>
 
-        <p class="support-alt">Prefer email? <a href="mailto:support@cliick.com">support@cliick.com</a></p>
+    <section class="section step">
+      <div class="wrap two-col two-col--wide two-col--flip">
+        <div class="win win--inline">
+          <div class="phone phone--static phone--placeholder">
+            <div class="phone-screen">
+              <img src="/images/gallery.png" alt="Photos shared inside a single Cliick" />
+              <span class="film-slate" data-film="One Cliick" aria-hidden="true"></span>
+            </div>
+          </div>
+        </div>
+        <div class="copy">
+          <p class="step-num"><span>Step</span>3</p>
+          <h2>Make a Cliick, when you want one.</h2>
+          <p>
+            Peeps may be all you ever need, and plenty of people stop there.
+            When you would rather keep one part of life to itself, make a Cliick
+            for it and send those posts there instead: the book club, the
+            cousins, the people you travel with.
+          </p>
+          <p>
+            Every post is addressed to one Cliick, and only the people in it
+            ever see it. Your grandmother and your climbing friends never have
+            to meet.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- The salesperson introduced before you need them. Offering help
+         unprompted is the difference between a showroom and a lot. -->
+    <section class="section section--center help">
+      <div class="wrap">
+        <h2>Questions are welcome.</h2>
+        <p class="section-sub">
+          How invitations work, what we collect, what happens if you stop
+          paying, whether it suits your family. It is all written down, and you
+          do not have to ask.
+        </p>
+        <a class="learn-more" href="/faq/">Read the FAQ</a>
       </div>
     </section>
 
@@ -126,6 +227,7 @@
         <div class="footer-bottom">
           <p>© Deranged Chicken LLC. Member&#8209;funded. Ad-free. Always.</p>
           <nav aria-label="Footer">
+            <a href="/start/">Start a Cliick</a>
             <a href="/">Home</a>
             <a href="/about/">About</a>
             <a href="/membership/">Membership</a>

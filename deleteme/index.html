@@ -1,311 +1,169 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <meta name="description" content="How to delete your Cliick account and associated data, directly from inside the app."/>
-  <title>Cliick | Account Deletion</title>
-  <meta property="og:type" content="website"/>
-  <meta property="og:site_name" content="Cliick"/>
-  <meta property="og:title" content="Cliick | Account Deletion"/>
-  <meta property="og:description" content="How to delete your Cliick account and associated data, directly from inside the app."/>
-  <meta property="og:url" content="https://cliick.com/deleteme/"/>
-  <meta property="og:image" content="https://cliick.com/images/cliick-icon.png"/>
-
-  <meta name="twitter:card" content="summary"/>
-  <meta name="twitter:title" content="Cliick | Account Deletion"/>
-  <meta name="twitter:description" content="How to delete your Cliick account and associated data, directly from inside the app."/>
-  <meta name="twitter:image" content="https://cliick.com/images/cliick-icon.png"/>
-
-  <link rel="apple-touch-icon" href="https://cliick.com/images/cliick-icon.png" />
-  <link rel="icon" type="image/png" sizes="32x32" href="../images/favicon.png" />
-  <link rel="stylesheet" href="../styles.css" />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,600;1,100;1,200;1,300&display=swap" rel="stylesheet">
-
-  <style>
-    /* Hero (support-style) */
-    .delete-hero {
-      background: #000000;
-      padding: 4.5rem 1.5rem 3.5rem;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .delete-hero-inner {
-      max-width: 900px;
-      margin: 0 auto;
-      color: #ffffff;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 1.1rem;
-    }
-
-    .delete-hero h1 {
-      font-size: var(--fs-hero-title-md);
-      font-weight: var(--fw-hero-title);
-      letter-spacing: -1px;
-    }
-
-    .delete-hero .tagline {
-      font-size: var(--fs-hero-tagline);
-      max-width: 720px;
-      line-height: 1.55;
-      opacity: 0.88;
-    }
-
-    /* Main container (support-main style) */
-    .delete-main {
-      width: 100%;
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 3rem 1.5rem 4rem;
-      display: flex;
-      flex-direction: column;
-      gap: 3.25rem;
-    }
-
-    .delete-section { background: #ffffff; }
-
-    .delete-body {
-      max-width: 900px;
-      text-align: left;
-    }
-
-    .delete-body p {
-      margin-bottom: 1rem;
-      font-weight: var(--fw-light);
-      font-size: var(--fs-body);
-      line-height: 1.6;
-      color: #111111;
-    }
-
-    .delete-body ul,
-    .delete-body ol {
-      margin: 0 0 1.2rem 1.25rem;
-      padding: 0;
-    }
-
-    .delete-body li {
-      margin-bottom: 0.55rem;
-      font-weight: var(--fw-light);
-      color: #111111;
-      line-height: 1.55;
-    }
-
-    .delete-body a {
-      color: #000;
-      text-decoration: underline;
-    }
-
-    .callout {
-      border: 1px solid #e5e7eb;
-      border-radius: 14px;
-      padding: 1rem 1.1rem;
-      background: #ffffff;
-    }
-
-    .toc {
-      max-width: 900px;
-    }
-
-    .toc-title {
-      font-size: var(--fs-label);
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: #111;
-      font-weight: var(--fw-semibold);
-      margin-bottom: 0.75rem;
-    }
-
-    .toc-links {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.6rem;
-    }
-
-    .toc-links a {
-      display: inline-block;
-      padding: 0.55rem 0.75rem;
-      border-radius: 10px;
-      background: #000;
-      color: #fff;
-      text-decoration: none;
-      font-weight: var(--fw-regular);
-      font-size: var(--fs-pill);
-      line-height: 1;
-      transition: background 0.25s ease, transform 0.25s ease;
-    }
-
-    .toc-links a:hover { background: #111; transform: translateY(-1px); }
-    .toc-links a:active { transform: translateY(0); }
-
-    .callout p { margin-bottom: 0.75rem; }
-    .callout p:last-child { margin-bottom: 0; }
-
-    @media (max-width: 640px) {
-      .delete-hero h1 { font-size: var(--fs-hero-title-mobile); }
-      .section-title { text-align: left; }
-    }
-  </style>
-</head>
-<body>
-  <nav class="navbar">
-    <div class="nav-container">
-      <a href="/" class="nav-logo">
-        <img src="../images/cliick-icon.png" alt="Cliick Logo" class="logo-img">
-      </a>
-      <div class="nav-menu">
-        <a href="../privacy/" class="nav-link">Privacy Policy</a>
-        <a href="../terms/" class="nav-link">Terms of Service</a>
-        <a href="../support/" class="nav-link">Support</a>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cliick | Account Deletion</title>
+    <meta
+      name="description"
+      content="How to delete your Cliick account and associated data, directly from inside the app."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Cliick" />
+    <meta property="og:title" content="Cliick | Account Deletion" />
+    <meta property="og:description" content="How to delete your Cliick account and associated data, directly from inside the app." />
+    <meta property="og:url" content="https://cliick.com/deleteme/" />
+    <meta property="og:image" content="https://cliick.com/images/cliick-icon.png" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Cliick | Account Deletion" />
+    <meta name="twitter:description" content="How to delete your Cliick account and associated data, directly from inside the app." />
+    <meta name="twitter:image" content="https://cliick.com/images/cliick-icon.png" />
+    <link rel="apple-touch-icon" href="https://cliick.com/images/cliick-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Caveat:wght@500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/redesign.css?v=0dffe90e54" />
+    <script src="/js/redesign.js?v=00ec87903e" defer></script>
+  </head>
+  <body class="page-gray">
+    <header class="nav">
+      <div class="wrap">
+        <svg class="nav-logo" viewBox="46.69 -4.01 282.11 380.43" aria-hidden="true" focusable="false">
+          <path fill="currentColor" id="Body" d="M166.55,160.48c-35.03,13.6-56.47,48.31-51.79,84.21,4.09,31.41,29.9,58.25,63.03,59.66,29.08,1.24,53.96-17.25,59.14-45.07,3.84-20.6-7.96-41.41-27.03-47.67-13.59-4.46-27.41.02-33.28,10.79-4.36,8.01-1.96,17.92,5.49,22.66,7.33,4.66,13.55,2.9,19.51-5.52.13-.19.56-.16,1.97-.52,1.11,3,2.92,6.04,3.27,9.23,1,8.99-3.39,15.55-10.8,20.08-12.07,7.39-30.34,4.26-41.27-6.84-16.1-16.35-17.35-43.16-2.18-62.29,16.42-20.72,38.41-27,63.57-21.24,30.7,7.03,53.45,36.6,54.59,69.46,1.53,44.19-31.13,83.81-74.82,90.76-41.43,6.59-83.3-14.28-103.19-51.37-11.82-22.02-16.41-45.18-9.32-69.51,3.39-11.62,9.07-22.56,13.1-34.02,8.69-24.73,9.87-48.65-9.29-69.75,16.65-14.9,39.64-18.69,59.71-9.52,21.93,10.02,33.6,27.83,38.51,50.75-7.01,2.09-13.12,3.47-18.9,5.72h-.02ZM130.25,123.83c-6.36.17-12.26,6.42-12.3,13.05-.04,6.37,6.28,12.64,12.71,12.6,6.66-.04,12.75-6.36,12.7-13.16-.06-6.93-6.09-12.68-13.11-12.49Z"/>
+          <path fill="currentColor" id="Beak" d="M55.16,143.65c5.23,3.5,9.83,6.59,14.44,9.65,4.48,2.98,8.98,5.95,13.98,9.26,3.38-13.38.1-24.75-7.69-35.91-6.88,5.64-13.52,11.09-20.73,16.99h0Z"/>
+          <path fill="currentColor" id="Circle_Inner_Right" d="M198.33,113.64c3.83,7.25,8.46,11.54,16.66,13.24,50.08,10.39,89.18,55.57,93.63,106.79,1.45,16.67.1,32.83-5.88,48.5-1.3,3.4-1.76,6.84,2.12,8.43,3.91,1.59,6.62-.92,8.21-4.36,5.78-12.48,9.53-25.62,10.89-39.26,3.59-36.08-4.22-69.36-26.01-98.73-16.09-21.69-37.3-36.85-62.27-46.84-1.45-.58-3.8-.83-4.91-.06-9.66,6.71-20.38,10.51-32.44,12.29h0Z"/>
+          <path fill="currentColor" id="Circle_Inner_Left" d="M118.69,346.88c-12.49-7.88-20.91-16.29-26.08-22.21,0,0-27.6-31.77-30.1-75.68-.08-1.42-.1-2.33-.13-2.65-.06-.82-.02-1.65-.09-2.47-.3-3.52-1.93-6.28-5.68-6.16-3.82.11-6.26,2.87-5.88,6.57,1.14,10.92,1.46,22.15,4.42,32.6,5.65,19.98,14.71,37.05,26.96,51.2,19.65,22.68,42.22,32.63,52.98,36.57,36.9,13.51,69.22,5.98,80.87,2.66,2.01-.42,3.48-1.68,3.74-3.2.16-.9-.09-2-.78-2.73-1.72-1.81-5.4-.36-10.13.55-3.97.76-8,1.25-12.03,1.62-10.6.97-37.24,3.1-65.51-9.88-2.97-1.37-7.4-3.56-12.57-6.78h.01Z"/>
+          <path fill="currentColor" id="Comb_3" d="M158.02,90c8.63,4.36,16.66,6.13,25.05,6.64,26.73,1.62,53.24-15.67,60.42-39.43,3.29-10.89-.67-21.14-9.72-25.13-7.19-3.17-13.92-1.47-18.03,5.22-3.35,5.44-5.79,11.44-9.03,16.95-9.87,16.75-23.36,29.17-42.55,34.47-1.57.43-3.19.68-6.13,1.29h0Z"/>
+          <path fill="currentColor" id="Comb_2" d="M162.75,43.31c1.43,12.52-9.41,26.15-29.33,37.5,12.45.16,23.3-3.1,32.99-9.43,17.44-11.39,29.29-26.79,31.61-48.16.88-8.15-1.24-15.63-8.41-20.36-7.35-4.85-14.91-2.93-21.91,1.19-14.29,8.41-23.24,21.55-30.94,35.71-2.28,4.18-4.26,8.52-6.46,12.75-5.57,10.74-12.42,20.53-21.62,28.62,21.73-6.91,40.15-18.64,54.06-37.83h.01Z"/>
+          <path fill="currentColor" id="Comb_1" d="M83.94,93.52c12.34-14.16,25.71-27.64,31.42-46.35,2.21-7.25.43-13.81-3.73-16.19-4.04-2.31-9.55-.54-15.09,5.44-8.85,9.54-13.11,21.24-14.28,33.94-.69,7.55-.13,15.21-.13,22.82.6.12,1.2.23,1.8.35h.01Z"/>
+        </svg>
+        <a class="nav-wordmark" href="/" aria-label="Cliick">
+          <svg viewBox="0 0 680.8 170.0" aria-hidden="true" focusable="false">
+            <g fill="currentColor"><path d="M 131.65 67.08 A 51.20 51.20 0 1 0 131.65 136.92 L 131.65 123.54 A 43.20 43.20 0 1 1 131.65 80.46 Z"/><path d="M 194.40 52.00 H 202.40 V 152.00 H 194.40 Z"/><path d="M 202.40 144.00 H 244.40 V 152.00 H 202.40 Z"/><path d="M 296.40 52.00 H 304.40 V 152.00 H 296.40 Z"/><path d="M 360.40 52.00 H 368.40 V 152.00 H 360.40 Z"/><path d="M 510.05 67.08 A 51.20 51.20 0 1 0 510.05 136.92 L 510.05 123.54 A 43.20 43.20 0 1 1 510.05 80.46 Z"/><path d="M 572.80 52.00 H 580.80 V 152.00 H 572.80 Z"/><path d="M 628.80 52.00 L 580.80 96.51 L 580.80 107.49 L 628.80 62.97 Z"/><path d="M 634.80 141.64 L 580.80 96.82 L 580.80 107.18 L 634.80 152.00 Z"/></g><g fill="currentColor"><path d="M 293.40 25.00 a 7.00 7.00 0 1 0 14.00 0 a 7.00 7.00 0 1 0 -14.00 0 Z"/><path d="M 357.40 25.00 a 7.00 7.00 0 1 0 14.00 0 a 7.00 7.00 0 1 0 -14.00 0 Z"/></g>
+          </svg>
+        </a>
+        <nav class="nav-links" id="nav-menu" aria-label="Primary">
+          <a href="/">Home</a>
+          <a href="/about/">About</a>
+          <a href="/membership/">Membership</a>
+          <a href="/faq/">FAQ</a>
+        </nav>
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-menu" aria-label="Menu">
+          <span class="nav-toggle-bars" aria-hidden="true"></span>
+        </button>
       </div>
-      <div class="nav-toggle">
-        <span class="bar"></span>
-        <span class="bar"></span>
-        <span class="bar"></span>
-        <span class="bar"></span>
+    </header>
+
+    <section class="page-hero page-hero--solo">
+      <div class="wrap">
+        <div class="page-head">
+          <h1>Account &amp; data deletion</h1>
+          <p class="page-lede">This page explains exactly how to delete your Cliick account and the data associated with it.</p>
+        </div>
       </div>
-    </div>
-  </nav>
+    </section>
 
-  <section class="delete-hero">
-    <div class="delete-hero-inner">
-      <h1>Account &amp; Data Deletion</h1>
-      <p class="tagline">This page explains exactly how to delete your Cliick account and the data associated with it.</p>
-    </div>
-  </section>
-
-  <main class="delete-main">
-    <div class="callout toc" aria-label="On this page">
-      <div class="toc-title">On this page</div>
-      <ul class="toc-links">
+    <section class="section legal-section">
+      <div class="wrap">
+        <!-- Policy text, moved verbatim from the old /deleteme/ page. This is
+             the web deletion URL registered with Google Play: keep the URL,
+             and change the wording only on purpose. -->
+        <nav class="legal-toc" aria-label="On this page">
+          <p class="legal-toc-title">On this page</p>
+          <ul>
         <li><a href="#delete-account-title">Delete your account</a></li>
         <li><a href="#what-deleted-title">What gets deleted</a></li>
         <li><a href="#what-remain-title">What may remain</a></li>
         <li><a href="#delete-specific-title">Delete specific content</a></li>
         <li><a href="#help-title">Need help?</a></li>
-      </ul>
-    </div>
-
-    <section class="delete-section" aria-labelledby="intro-title">
-      <h2 id="intro-title" class="section-title">Account &amp; data deletion</h2>
-      <div class="delete-body">
-        <p>Cliick is designed to be privacy-first. If you want to delete your account, you can do it directly in the app (self-serve and push-button).</p>
-        <p>This page covers both account deletion and data deletion.</p>
-        <p>Cliick does not collect contact info like email addresses or phone numbers.</p>
-      </div>
-    </section>
-
-    <section class="delete-section" aria-labelledby="delete-account-title">
-      <h2 id="delete-account-title" class="section-title">Delete your account (in the app)</h2>
-      <div class="delete-body">
-        <p>Account deletion is performed <strong>inside the Cliick app</strong> by the signed-in user.</p>
-        <ol>
+          </ul>
+        </nav>
+        <article class="legal">
+          <p>Cliick is designed to be privacy-first. If you want to delete your account, you can do it directly in the app (self-serve and push-button).</p>
+          <p>This page covers both account deletion and data deletion.</p>
+          <p>Cliick does not collect contact info like email addresses or phone numbers.</p>
+          <h2 id="delete-account-title">Delete your account (in the app)</h2>
+          <p>Account deletion is performed <strong>inside the Cliick app</strong> by the signed-in user.</p>
+          <ol>
           <li>Open the Cliick app</li>
           <li>Go to <strong>Settings</strong></li>
           <li>Select <strong>Delete Account</strong></li>
           <li>Confirm deletion</li>
-        </ol>
-        <div class="callout">
+          </ol>
+          <div class="legal-note">
           <p><strong>Why it works this way:</strong> deletion requires access to the app so we can verify you’re signed in. This protects your privacy and helps prevent unauthorized deletion requests.</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="delete-section" aria-labelledby="what-deleted-title">
-      <h2 id="what-deleted-title" class="section-title">What gets deleted when you delete your account</h2>
-      <div class="delete-body">
-        <ul>
+          </div>
+          <h2 id="what-deleted-title">What gets deleted when you delete your account</h2>
+          <ul>
           <li>Your authentication record is permanently deleted (OAuth association removed; signing in again creates a new, separate account).</li>
           <li>Your memberships in all Cliicks are removed.</li>
           <li>All Cliicks you own are deleted, including their memberships, posts, post media, and comments.</li>
           <li>Your profile name and profile image are removed.</li>
           <li>Invites, requests, and other connection artifacts associated with your account are deleted.</li>
-        </ul>
-        <p>Residual encrypted backups are retained for a limited time and are automatically purged within 30 days.</p>
-      </div>
-    </section>
-
-    <section class="delete-section" aria-labelledby="what-remain-title">
-      <h2 id="what-remain-title" class="section-title">What may remain</h2>
-      <div class="delete-body">
-        <p>In some cases, content can remain in groups owned by other people.</p>
-        <p>This is shared group content and it may remain to preserve that group’s history, but it becomes de-identified after account deletion (no profile, name, or account linkage).</p>
-        <ul>
+          </ul>
+          <p>Residual encrypted backups are retained for a limited time and are automatically purged within 30 days.</p>
+          <h2 id="what-remain-title">What may remain</h2>
+          <p>In some cases, content can remain in groups owned by other people.</p>
+          <p>This is shared group content and it may remain to preserve that group’s history, but it becomes de-identified after account deletion (no profile, name, or account linkage).</p>
+          <ul>
           <li>Posts or comments you created in Cliicks owned by other users may remain if you did not delete them before deleting your account.</li>
           <li>After account deletion, this content is no longer associated with your identity (no profile, name, or account linkage).</li>
-        </ul>
-      </div>
-    </section>
-
-    <section class="delete-section" aria-labelledby="delete-specific-title">
-      <h2 id="delete-specific-title" class="section-title">Delete specific content without deleting your account</h2>
-      <div class="delete-body">
-        <p>If you just want to clean things up (without deleting your whole account), you can do any of the following at any time in the app:</p>
-        <ul>
+          </ul>
+          <h2 id="delete-specific-title">Delete specific content without deleting your account</h2>
+          <p>If you just want to clean things up (without deleting your whole account), you can do any of the following at any time in the app:</p>
+          <ul>
           <li>Delete posts you created</li>
           <li>Delete comments you created</li>
           <li>Leave a Cliick</li>
           <li>Delete a Cliick you own</li>
-        </ul>
+          </ul>
+          <h2 id="help-title">Need help?</h2>
+          <p>Account deletion is self-serve and requires being signed in inside the app.</p>
+          <p>If you can’t access the app, contact <a href="mailto:support@cliick.com">support@cliick.com</a> or visit the <a href="/support/">Support</a> page. Because Cliick uses Apple and Google sign-in and doesn’t use email-based accounts, we can’t take deletion requests from an email alone. We can help you try to regain access so you can delete your account from inside the app.</p>
+          <p>If account access can’t be recovered through your sign-in provider, deletion may not be possible.</p>
+        </article>
       </div>
     </section>
 
-    <section class="delete-section" aria-labelledby="help-title">
-      <h2 id="help-title" class="section-title">Need help?</h2>
-      <div class="delete-body">
-        <p>Account deletion is self-serve and requires being signed in inside the app.</p>
-        <p>If you can’t access the app, contact <a href="mailto:support@cliick.com">support@cliick.com</a> or visit the <a href="../support/">Support</a> page. Because Cliick uses Apple and Google sign-in and doesn’t use email-based accounts, we can’t take deletion requests from an email alone. We can help you try to regain access so you can delete your account from inside the app.</p>
-        <p>If account access can’t be recovered through your sign-in provider, deletion may not be possible.</p>
+    <!-- FOOTER_START -->
+    <footer class="footer-v2">
+      <div class="wrap">
+        <h2>Join the Reset</h2>
+        <p class="footer-dl"><span>Download Cliick on iOS</span><span>Download on Android</span></p>
+        <div class="store-badges">
+          <a href="https://apps.apple.com/us/app/cliick-your-private-network/id6608980465"
+            ><img src="/images/redesign/badge-appstore.svg" alt="Download on the App Store"
+          /></a>
+          <a href="https://play.google.com/store/apps/details?id=com.derangedchicken.clique"
+            ><img src="/images/redesign/badge-googleplay.svg" alt="Get it on Google Play"
+          /></a>
+        </div>
+        <img class="footer-qr" src="/images/redesign/footer-qr.svg" alt="QR code linking to cliick.com/get to download Cliick" />
+        <p class="footer-qr-caption">Download Cliick</p>
+        <p class="footer-legal">
+          <a href="/terms/">Terms of Service</a>
+          <span class="sep" aria-hidden="true">|</span>
+          <a href="/privacy/">Privacy Policy</a>
+          <span class="sep" aria-hidden="true">|</span>
+          <a href="/deleteme/">Account Deletion</a>
+          <span class="sep" aria-hidden="true">|</span>
+          <a href="/support/">Support</a>
+        </p>
+        <div class="footer-bottom">
+          <p>© Deranged Chicken LLC. Member&#8209;funded. Ad-free. Always.</p>
+          <nav aria-label="Footer">
+            <a href="/">Home</a>
+            <a href="/about/">About</a>
+            <a href="/membership/">Membership</a>
+            <a href="/faq/">FAQ</a>
+          </nav>
+        </div>
       </div>
-    </section>
-  </main>
-
-  <!-- FOOTER_START -->
-<footer class="footer">
-  <div class="footer-container">
-    <div class="footer-menu">
-      <a href="../privacy/" class="footer-link">Privacy Policy</a>
-      <a href="../terms/" class="footer-link">Terms of Service</a>
-      <a href="../deleteme/" class="footer-link">Account Deletion</a>
-      <a href="../support/" class="footer-link">Support</a>
-    </div>
-    <div class="footer-info">
-      <p>&copy; Deranged Chicken LLC. All rights reserved.</p>
-    </div>
-  </div>
-</footer>
-<!-- FOOTER_END -->
-
-
-
-  <script>
-    // Mobile menu toggle functionality
-    const navToggle = document.querySelector('.nav-toggle');
-    const navMenu = document.querySelector('.nav-menu');
-
-    if (navToggle && navMenu) {
-      navToggle.addEventListener('click', () => {
-        navMenu.classList.toggle('active');
-        navToggle.classList.toggle('active');
-      });
-
-      // Close mobile menu when clicking on a link
-      const navLinks = document.querySelectorAll('.nav-link');
-      navLinks.forEach(link => {
-        link.addEventListener('click', () => {
-          navMenu.classList.remove('active');
-          navToggle.classList.remove('active');
-        });
-      });
-    }
-  </script>
-</body>
+    </footer>
+    <!-- FOOTER_END -->
+  </body>
 </html>
