@@ -1080,6 +1080,37 @@ body.nav-solid .nav-links a { color: #F2ECDE; }
    it changed colour at 1200 as the stage handed over to the fallback flow. */
 .scene--hero { width: calc(640 * var(--u, 1px)); }
 
+/* The stage in a portrait window 480px and wider (see STAGE in redesign.js):
+   the same composition the stacked Home uses there -- copy left, device
+   right -- but pinned, so the device stays put and the copy changes, rather
+   than every section's phone queueing down the page. The geometry above is
+   landscape's (a 758px window column, --u); here the phone is sized from
+   the width in the same steps as the stacked Home's, and the copy takes
+   what is left. */
+@media not all and (orientation: landscape) and (min-height: 520px) {
+  @media (min-width: 480px) and (min-height: 520px) {
+    .stage-frame {
+      --stage-z: 0.6;
+      --stage-gap: clamp(18px, 4vw, 40px);
+    }
+    .stage-phone {
+      --phone-h: min(calc(869px * var(--stage-z)), calc(100vh - var(--nav-h) - 60px));
+      right: var(--wrap-pad);
+    }
+    .scene,
+    .scene--hero {
+      left: var(--wrap-pad);
+      width: calc(100vw - 2 * var(--wrap-pad) - 403px * var(--stage-z) - var(--stage-gap));
+    }
+  }
+  @media (min-width: 480px) and (max-width: 720px) {
+    .stage-frame { --stage-z: 0.5; }
+  }
+  @media (min-width: 480px) and (max-width: 600px) {
+    .stage-frame { --stage-z: 0.42; }
+  }
+}
+
 /* --------------------------------------------------------------------------
    Latte band (home) + pricing cards (home & membership)
    -------------------------------------------------------------------------- */
@@ -2358,10 +2389,9 @@ body.page-gray .page-hero h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
 
   /* The page is displaced rather than covered. Everything but the bar slides
      down by the panel's height, so the menu opens into space instead of on
-     top of the argument. The sticky stage never runs in portrait
-     (.stage-track is display:none and .fallback-flow renders instead), so
-     nothing here is a transformed ancestor of a sticky or fixed element.
-     redesign.js measures the panel and sets --menu-h. */
+     top of the argument. redesign.js measures the panel and sets --menu-h.
+     Home's two versions each keep their backdrop in place (below): the
+     backdrop is the room, not the page. */
   body > *:not(.nav) {
     transition: transform 0.34s cubic-bezier(0.32, 0.72, 0, 1);
   }
@@ -2384,6 +2414,20 @@ body.page-gray .page-hero h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
   @media (prefers-reduced-motion: reduce) {
     .fallback-flow > * { transition: none; }
   }
+  /* The stage runs in portrait too from 480px wide (#66). Sliding the whole
+     track took its photograph and scrims down with it and left bare wall
+     behind the menu -- the same fault as the fallback's backdrop above. The
+     track stays; the phone and the scene copy move. `translate` rather than
+     `transform`, because the scenes' own enter/exit motion is a transform
+     and the two have to add, not replace each other. */
+  body.nav-open .stage-track { transform: none; }
+  .stage-frame .stage-phone,
+  .stage-frame .scene {
+    transition: opacity 0.5s ease, transform 0.5s ease,
+      translate 0.34s cubic-bezier(0.32, 0.72, 0, 1);
+  }
+  body.nav-open .stage-frame .stage-phone,
+  body.nav-open .stage-frame .scene { translate: 0 var(--menu-h, 0px); }
   @media (prefers-reduced-motion: reduce) {
     body > *:not(.nav) { transition: none; }
   }

@@ -7,13 +7,17 @@
 // move on the same clock. Small screens, reduced motion, and no-JS render
 // the .fallback-flow instead.
 const stageTrack = document.getElementById("stage");
-// The scenes run in LANDSCAPE — wider than tall and at least 520px tall — the
-// one rule every layout switch uses (see the top of redesign.css). They used
-// to need 1200px of width, so a 1024x640 laptop window got the stacked Home
-// while About and Membership sat side by side in the same window.
+// LANDSCAPE — wider than tall and at least 520px tall — is the one rule the
+// layout switches use (see the top of redesign.css).
 const LANDSCAPE = "(orientation: landscape) and (min-height: 520px)";
+// The scenes run wherever Home can sit side by side: every landscape window,
+// plus portrait ones 480px wide and up (a desktop window at its minimum, an
+// upright iPad). Only real phones (440 and under) and short windows (a phone
+// on its side) get the stacked Home. Every LANDSCAPE window passes this too,
+// since it is at least 520 in both directions.
+const STAGE = "(min-width: 480px) and (min-height: 520px)";
 const stageMotion = window.matchMedia(
-  LANDSCAPE + " and (prefers-reduced-motion: no-preference)"
+  STAGE + " and (prefers-reduced-motion: no-preference)"
 );
 
 if (stageTrack) {
@@ -90,7 +94,7 @@ if (stageTrack) {
   if (window.ResizeObserver) new ResizeObserver(update).observe(stageTrack);
 
   // Live gate: engage/disengage the motion experience whenever the media
-  // query flips (window resized across 1200px, reduced-motion toggled),
+  // query flips (window resized across the STAGE size, reduced-motion toggled),
   // not just at load.
   const applyMode = () => {
     const on = stageMotion.matches;
