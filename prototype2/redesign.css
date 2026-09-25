@@ -136,6 +136,13 @@
     --wrap-pad: max(20px, calc(62 * var(--u)));
   }
 }
+/* The portrait bar is the landscape bar at its floor (#70). It stayed at the
+   96px reference with a 34px logo floating in it, so narrowing a window
+   across the switch grew the bar 29px and pushed every heading down 48 --
+   on the screens with the least room to give. */
+@media not all and (orientation: landscape) and (min-height: 520px) {
+  :root { --nav-h: 64px; }
+}
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -1539,14 +1546,13 @@ body.page-gray .about-pinned h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
 @media not all and (orientation: landscape) and (min-height: 520px) {
   .page-hero .wrap { grid-template-columns: minmax(0, 1fr); }
   .page-hero-art { display: none; }
-  .page-hero { padding-top: calc(var(--nav-h) + 54px); padding-bottom: 54px; }
+  .page-hero { padding-top: calc(var(--nav-h) + 46px); padding-bottom: 54px; }
 }
-/* On a phone the menu bar is 70px tall, not --nav-h's 96, so that padding
-   left 80px of backdrop between the bar and the heading -- a tenth of the
-   screen before the page says anything. Home's hero takes the same value
-   below, so every page's heading starts at the same height. */
+/* A phone gets less: 43px between the logo and the heading, not 80 -- a
+   tenth of the screen before the page says anything. Home's hero takes the
+   same value below, so every page's heading starts at the same height. */
 @media (max-width: 720px) {
-  .page-hero { padding-top: calc(var(--nav-h) + 12px); }
+  .page-hero { padding-top: calc(var(--nav-h) + 28px); }
 }
 
 /* --------------------------------------------------------------------------
@@ -1736,6 +1742,11 @@ body.page-gray .about-pinned h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
 .about-pinned {
   --about-pin-top: calc(var(--nav-h) + 62 * var(--u, 1px));
   padding: var(--about-pin-top) 0 0;
+}
+/* An upright iPad runs this too; its heading starts where every other
+   portrait page's does (see .page-hero above). */
+@media not all and (orientation: landscape) and (min-height: 520px) {
+  .about-pinned { --about-pin-top: calc(var(--nav-h) + 46px); }
 }
 /* Beats .two-col, which stacks in portrait -- an upright iPad runs this too. */
 .about-pinned .about-pinned-grid {
@@ -2306,7 +2317,7 @@ body.page-gray .about-pinned h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
   /* The hero sizes to its content. At full-screen height an upright iPad
      centred ~300px of copy in 866px, leaving a band of bare backdrop above
      the headline. Phones get a tighter top in the 720 block below. */
-  .hero { min-height: 0; padding-top: calc(var(--nav-h) + 54px); padding-bottom: 0; }
+  .hero { min-height: 0; padding-top: calc(var(--nav-h) + 46px); padding-bottom: 0; }
   .hero .wrap { padding-block: 0; }
 }
 /* Real phones (440px and under) stack: copy, then the device. */
@@ -2406,7 +2417,7 @@ body.page-gray .about-pinned h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
      screen, and it keeps its crop at the hero's bottom edge. */
   .hero {
     min-height: 0;
-    padding-top: calc(var(--nav-h) + 12px);
+    padding-top: calc(var(--nav-h) + 28px);
     padding-bottom: 0;
   }
   .hero .wrap { padding-block: 0; }
