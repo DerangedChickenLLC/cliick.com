@@ -1652,9 +1652,10 @@ body.page-gray .about-pinned h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
 }
 .ledger-col ul { list-style: none; margin-top: 18px; }
 .ledger-col li {
+  --li-pad: 9px;
   font-size: var(--fs-body);
   line-height: 1.45;
-  padding: 9px 0 9px 26px;
+  padding: var(--li-pad) 0 var(--li-pad) 26px;
   position: relative;
 }
 .ledger-col li + li { border-top: 1px solid var(--line); }
@@ -1668,7 +1669,10 @@ body.page-gray .about-pinned h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
   content: "";
   position: absolute;
   left: 2px;
-  top: 1.02em;
+  /* Centred on the item's first line: its padding, then half the line box
+     (line-height 1.45) less half the mark. A fixed 1.02em sat 1.5-2.5px low,
+     and 4-5px low once the pinned About tightened the rows (#72). */
+  top: calc(var(--li-pad) + (1.45em - 10px) / 2);
   width: 10px;
   height: 10px;
   border-radius: 50%;
@@ -1815,7 +1819,7 @@ body.page-gray .about-pinned h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
   padding: calc(22 * var(--u, 1px)) max(16px, calc(26 * var(--u, 1px))) calc(22 * var(--u, 1px));
 }
 .about-pinned .ledger.is-compact .ledger-col ul { margin-top: 8px; }
-.about-pinned .ledger.is-compact .ledger-col li { padding-top: 5px; padding-bottom: 5px; }
+.about-pinned .ledger.is-compact .ledger-col li { --li-pad: 5px; }
 .about-pinned .ledger.is-side { grid-template-columns: 1fr 1fr; }
 
 /* The About close: the promise, centred on the page's own ground. It opts
@@ -2325,12 +2329,20 @@ body.page-gray .about-pinned h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
   /* Nested, not "and (max-width)": a leading `not` negates the whole query,
      width included, so the flat form matched every landscape window. */
   @media (max-width: 479px) {
+    /* One gap throughout, 60px between device and copy in both directions --
+       the hero phone to the first heading, which was the comfortable one.
+       Copy to its phone was 52 and a phone to the next heading 108, since
+       each row padded both ends. The .win adds 12 of its own each side. */
     .showcase .row {
       grid-template-columns: 1fr;
-      row-gap: 40px;
+      row-gap: 48px;
+      padding-block: 24px;
     }
+    .showcase .row:first-child { padding-top: 48px; }
+    .showcase .row:last-child { padding-bottom: 48px; }
     .showcase .win { order: 2; }
-    .hero .wrap { grid-template-columns: 1fr; }
+    /* The hero's copy to its phone takes the same 60 (48 + the .win's 12). */
+    .hero .wrap { grid-template-columns: 1fr; row-gap: 48px; }
   }
 }
 /* Anything wider -- a desktop window at its ~500px minimum, an upright
