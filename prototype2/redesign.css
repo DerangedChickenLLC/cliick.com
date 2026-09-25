@@ -2335,14 +2335,21 @@ body.page-gray .about-pinned h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
        each row padded both ends. The .win adds 12 of its own each side. */
     .showcase .row {
       grid-template-columns: 1fr;
-      row-gap: 48px;
+      row-gap: 52px;
       padding-block: 24px;
     }
     .showcase .row:first-child { padding-top: 48px; }
     .showcase .row:last-child { padding-bottom: 48px; }
+    /* Measured to the ink, not the boxes: a paragraph's box runs ~8px below
+       its last baseline and a heading's starts ~12px above its capitals, so
+       equal boxes read as unequal gaps. These give 72px of visible space
+       between text and device in both directions. The shadow is kept nearly
+       centred here: at 24px down it read as part of the device and made the
+       space below each phone look ~25px shorter than the space above. */
+    .fallback-flow .phone { box-shadow: 0 6px 48px rgba(0, 0, 0, 0.4); }
     .showcase .win { order: 2; }
-    /* The hero's copy to its phone takes the same 60 (48 + the .win's 12). */
-    .hero .wrap { grid-template-columns: 1fr; row-gap: 48px; }
+    /* The badges to the hero phone take the same 72 (60 + the .win's 12). */
+    .hero .wrap { grid-template-columns: 1fr; row-gap: 60px; }
   }
 }
 /* Anything wider -- a desktop window at its ~500px minimum, an upright
@@ -2415,7 +2422,10 @@ body.page-gray .about-pinned h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
    Measured: the fallback backdrop read 51,41,37 against the stage's
    70,57,52 with both shades stacked. */
 .fallback-flow .hero::after { display: none; }
-.fallback-flow .hero { color: var(--ink-strong); }
+/* No clipping here: overflow: hidden was for the full-bleed .hero-bg, which
+   this flow does not show, and it sliced the hero phone's shadow off at the
+   section's bottom edge. */
+.fallback-flow .hero { color: var(--ink-strong); overflow: visible; }
 
 
 @media (max-width: 720px) {
