@@ -596,11 +596,15 @@ body.stage-motion .nav-links a { transition: color 0.4s ease; }
   min-height: inherit;
   padding-top: var(--nav-h);
 }
+/* The hero headline is a sentence ("Imagine if every post…", #82), not a
+   three-word slogan: at full display size it stacked six lines deep, so it
+   runs at 70% with a wider measure and balanced lines. */
 .hero-title {
-  font-size: var(--fs-display);
+  font-size: calc(var(--fs-display) * 0.7);
   font-weight: 500;
-  line-height: 1.05;
-  max-width: 12ch;
+  line-height: 1.08;
+  max-width: 18ch;
+  text-wrap: balance;
 }
 .hero-tagline {
   margin-top: 28px;
