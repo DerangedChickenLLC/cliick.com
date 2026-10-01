@@ -100,7 +100,7 @@
   --fs-display: clamp(3.25rem, 6.6vw, 6rem);      /* 96px hero/page titles */
   --fs-h2: clamp(2.25rem, 3.75vw, 3.375rem);      /* 54px section heads */
   --fs-h2-sm: clamp(1.75rem, 3.3vw, 3rem);        /* 48px centered heads */
-  --fs-h3: clamp(2.125rem, 4.1vw, 3.25rem);       /* 52px scene + showcase heads */
+  --fs-scene: clamp(2.25rem, 4.6vw, 4.2rem);      /* 67px Home's scene heads, hero included (#82) */
   --fs-page-title: clamp(2.5rem, 4.9vw, 4rem);    /* 64px page headlines */
   --fs-body: clamp(1.0625rem, 1.4vw, 1.25rem);    /* 20px body */
   --fs-small: 1rem;                                /* 16px */
@@ -129,7 +129,7 @@
     --fs-page-title: calc(64 * var(--u));
     --fs-h2: calc(54 * var(--u));
     --fs-h2-sm: calc(48 * var(--u));
-    --fs-h3: calc(52 * var(--u));
+    --fs-scene: calc(67 * var(--u));
     --fs-body: max(15px, calc(20 * var(--u)));
     --fs-small: max(15px, calc(16 * var(--u)));
     --nav-h: max(64px, calc(96 * var(--u)));
@@ -597,10 +597,11 @@ body.stage-motion .nav-links a { transition: color 0.4s ease; }
   padding-top: var(--nav-h);
 }
 /* The hero headline is a sentence ("Imagine if every post…", #82), not a
-   three-word slogan: at full display size it stacked six lines deep, so it
-   runs at 70% with a wider measure and balanced lines. */
+   three-word slogan: at full display size it stacked six lines deep. It
+   runs at the scene size with a wider measure and balanced lines, so every
+   scene's head -- hero, stage, stacked -- is one size. */
 .hero-title {
-  font-size: calc(var(--fs-display) * 0.7);
+  font-size: var(--fs-scene);
   font-weight: 500;
   line-height: 1.08;
   max-width: 18ch;
@@ -643,10 +644,11 @@ body.stage-motion .nav-links a { transition: color 0.4s ease; }
   padding-block: 74px;
 }
 .showcase-copy h3 {
-  font-size: var(--fs-h3);
+  font-size: var(--fs-scene);
   font-weight: 500;
-  line-height: 1.4;
-  max-width: 14ch;
+  line-height: 1.08;
+  max-width: 18ch;
+  text-wrap: balance;
 }
 .showcase-copy ul {
   margin-top: 20px;
@@ -1055,7 +1057,7 @@ body.nav-solid .nav-links a { color: #F2ECDE; }
   position: absolute;
   top: 50%;
   left: max(calc(var(--wrap-pad) + 62 * var(--u, 1px)), calc((100vw - 1440 * var(--u, 1px)) / 2 + 124 * var(--u, 1px)));
-  width: min(calc(470 * var(--u, 1px)), 34vw); /* must stay clear of the window's left edge at all widths */
+  width: calc(640 * var(--u, 1px)); /* the hero's column: every scene head is the hero's size (#82) */
   transform: translateY(-50%);
   opacity: 1;
   transition: opacity 0.5s ease, transform 0.5s ease;
@@ -1071,10 +1073,11 @@ body.nav-solid .nav-links a { color: #F2ECDE; }
   transform: translateY(calc(-50% + 70px));
 }
 .scene h3 {
-  font-size: var(--fs-h3);
-  font-weight: 600;
-  line-height: 1.22;
-  max-width: 14ch;
+  font-size: var(--fs-scene);
+  font-weight: 500;
+  line-height: 1.08;
+  max-width: 18ch;
+  text-wrap: balance;
 }
 .scene ul { margin-top: 20px; list-style: none; }
 .scene li { font-size: var(--fs-body); line-height: 1.9; }
