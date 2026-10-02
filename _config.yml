@@ -17,6 +17,8 @@ exclude:
   - README.md
   - LOGO_SYNC.md
   - docs/
+  # Tests for the inline scripts (node --test tests/get-redirect.test.mjs).
+  - tests/
   # Start a Cliick is not ready for the live cut. The page is kept in the repo
   # and every link to it is removed; delete this line when it ships.
   - start/
