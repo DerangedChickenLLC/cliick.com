@@ -1,0 +1,4 @@
+# Every PR needs John's review before merge; "Require review from Code Owners" on main
+# enforces it. Bot PRs (cliick-bot, the mini) wait for it; John is on the bypass list.
+# See Circles/docs/MINI_RUNBOOK.md § 3.
+* @lordderanged
