@@ -11,8 +11,11 @@ which now only holds redirect pages to the live URLs.
 
 - `index.html` — Home (pinned scroll scenes in wide windows, stacked on phones)
 - `about/`, `membership/`, `faq/` — Subpages
-- `terms/`, `privacy/` — Wrappers that fetch the synced legal bodies
-  (`terms/tos.html`, `privacy/privacy.html`)
+- `terms/`, `privacy/` — Pages carrying the synced legal bodies, stamped
+  in between `LEGAL_START`/`LEGAL_END` markers by `build-legal.py` (the bare
+  fragments `terms/tos.html`, `privacy/privacy.html` are still written and
+  served). The text is in the HTML, not fetched: AI readers, crawlers and
+  reader modes see it without running a script (#87)
 - `support/`, `deleteme/` — Support form (mailto) and account-deletion policy
 - `get/` — The footer QR's target: sends iPhone/iPad to the App Store and
   Android to Google Play before paint; anything else sees both badges
@@ -33,7 +36,7 @@ URLs that must never change: `/terms/`, `/privacy/` (store listings),
 |------|---------|
 | Stamp the shared footer into every page | `python3 build-partials.py` |
 | Re-version the stylesheet/script links after editing either | `python3 stamp-assets.py` |
-| Sync legal docs from the Documents repo | `./sync-documents.sh` |
+| Sync legal docs from the Documents repo (converts, then stamps them into the pages via `build-legal.py`) | `./sync-documents.sh` |
 | Sync logos | `./sync-logos.sh` |
 
 Commit and push to deploy (GitHub Pages builds main). The Asset stamps
@@ -47,5 +50,8 @@ workflow fails a PR whose stylesheet/script stamps are stale.
   `python3 stamp-assets.py` — browsers keep the old copy otherwise (#75)
 - Never edit legal docs here directly — they are synced from the Documents
   repo. Edit them there and run `./sync-documents.sh`
+- Never load page content with a runtime `fetch` — anything a reader should
+  see must be in the served HTML (the legal pages did this and were blank to
+  every non-browser reader, #87)
 - Never add a working file (notes, scripts, review pages) outside `docs/`
   without adding it to `_config.yml` — every tracked file is public otherwise
