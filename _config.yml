@@ -23,6 +23,7 @@ exclude:
 
   # Tooling
   - build-partials.py
+  - build-legal.py
   - stamp-assets.py
   - sync-documents.sh
   - sync-logos.sh

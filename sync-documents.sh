@@ -101,10 +101,13 @@ cp /tmp/privacy-temp.html "$SCRIPT_DIR/privacy/privacy.html"
 # Clean up temp files
 rm /tmp/tos-temp.html /tmp/privacy-temp.html
 
+# Stamp the fragments into their pages so the text is served, not fetched (#87)
+python3 "$SCRIPT_DIR/build-legal.py"
+
 echo ""
 echo "✅ Successfully synced legal documents!"
-echo "   - terms/tos.html"
-echo "   - privacy/privacy.html"
+echo "   - terms/tos.html  -> terms/index.html"
+echo "   - privacy/privacy.html  -> privacy/index.html"
 echo ""
 
 # Check if pandoc is installed

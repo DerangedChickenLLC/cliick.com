@@ -451,46 +451,6 @@ if (faqSearch) {
   }
 }
 
-/* --- Legal pages --------------------------------------------------------------
-   Terms and Privacy are written in the Documents repo and synced here as bare
-   HTML fragments. The fragment uses <h1> for every section, which is fine on
-   its own but wrong inside a page that already has one, so headings are
-   stepped down a level on the way in. Nothing about the synced file changes,
-   so the next sync cannot undo this. */
-{
-  const legal = document.querySelector(".legal[data-src]");
-  if (legal) {
-    const src = legal.getAttribute("data-src");
-    const name = document.querySelector(".page-hero h1")?.textContent || "this page";
-    fetch(src, { cache: "no-store" })
-      .then((r) => {
-        if (!r.ok) throw new Error(r.status);
-        return r.text();
-      })
-      .then((html) => {
-        const doc = new DOMParser().parseFromString(html, "text/html");
-        const body = doc.body;
-        ["h5", "h4", "h3", "h2", "h1"].forEach((tag) => {
-          body.querySelectorAll(tag).forEach((h) => {
-            const next = document.createElement("h" + (Number(tag[1]) + 1));
-            next.id = h.id;
-            /* the fragment wraps each heading's text in <strong>; the heading
-               style carries the weight, so the inner tag only fights it */
-            next.textContent = h.textContent.trim();
-            h.replaceWith(next);
-          });
-        });
-        legal.replaceChildren(...body.childNodes);
-      })
-      .catch(() => {
-        legal.innerHTML =
-          '<p class="legal-status">The ' + name +
-          ' could not be loaded just now. <a href="' + src +
-          '">Open it directly</a>.</p>';
-      });
-  }
-}
-
 /* --- Support form -------------------------------------------------------------
    No backend: submitting composes an email in the reader's own mail app, so
    nothing leaves this page. The old version built the mailto even with every
