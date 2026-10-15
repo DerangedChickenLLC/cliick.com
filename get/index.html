@@ -7,15 +7,23 @@
          before anything paints — the site script is deferred and would show
          the page first. Anything else (a desktop, an unknown device, no
          script) gets the page with both badges. replace() rather than
-         assign() so Back does not bounce the reader into the store again. -->
+         assign() so Back does not bounce the reader into the store again.
+         An ad's campaign token (?c=…) is passed on to the store so the store
+         can count installs per campaign; nothing is stored here. -->
     <script>
       (function () {
+        var APPLE = "https://apps.apple.com/us/app/cliick-your-private-network/id6608980465";
+        var PLAY = "https://play.google.com/store/apps/details?id=com.derangedchicken.clique";
+        // A campaign token from an ad (?c=…). Forwarded to the store so the store
+        // can count installs per campaign. Nothing is stored here and no cookie is set.
+        var c = new URLSearchParams(location.search).get("c");
+        if (!c || !/^[a-z0-9-]{1,40}$/.test(c)) c = null;
         var ua = navigator.userAgent;
         var iPadOS = /Macintosh/.test(ua) && navigator.maxTouchPoints > 1;
         if (/iPhone|iPad|iPod/.test(ua) || iPadOS) {
-          location.replace("https://apps.apple.com/us/app/cliick-your-private-network/id6608980465");
+          location.replace(c ? APPLE + "?pt=677695&ct=" + c + "&mt=8" : APPLE);
         } else if (/Android/.test(ua)) {
-          location.replace("https://play.google.com/store/apps/details?id=com.derangedchicken.clique");
+          location.replace(c ? PLAY + "&referrer=" + encodeURIComponent("utm_source=meta&utm_medium=paid&utm_campaign=" + c) : PLAY);
         }
       })();
     </script>
