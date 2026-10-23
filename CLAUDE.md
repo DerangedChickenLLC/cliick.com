@@ -21,7 +21,9 @@ which now only holds redirect pages to the live URLs.
   Android to Google Play before paint; anything else sees both badges
 - `start/` — Start a Cliick, parked: excluded from the build, no links to it
 - `notes/` — Notes, the posts section (#90): `notes/index.html` lists posts
-  newest first (one `.note-card` each); a post lives at `notes/<slug>/`. A post
+  newest first: the newest is the feature (`li.note-feature`, full width; move the
+  class when a newer note lands), older ones follow in a grid of `.note-card`s.
+  A post lives at `notes/<slug>/`. A post
   joins `PAGES` in `build-partials.py`, uses the `.note` layout in
   `redesign.css`, may take a body theme (`theme-night`) and an opening stage
   (`.stage--note`, with a `.stage-fallback`), and gets a 1200 × 630 `og:image`.

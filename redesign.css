@@ -2977,19 +2977,23 @@ body.stage-motion.theme-night .note-head {
 }
 
 /* --- The Notes index (/notes/) -------------------------------------------
-   The section's front page, in the site's standard frame (page-gray). One
-   card per note, newest first, built from the site's panel tokens. A note
-   keeps its own theme on its own page; the card shows its art. */
+   The section's front page, in the site's standard frame (page-gray). The
+   newest note is the feature: a card the full width of the page (art beside
+   text on wide screens), so one note reads as "the latest", not a list of
+   one. Older notes follow in a grid. Cards are built from the panel tokens;
+   a note keeps its own theme on its own page, the card shows its art. */
 .note-list {
   list-style: none;
   display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(320px, 100%), 1fr));
   gap: clamp(20px, 3vw, 32px);
-  max-width: 880px;
-  margin: 0; /* under the page head's left edge, like the rest of the subpages */
+  margin: 0;
   padding-bottom: clamp(80px, 10vw, 128px);
 }
+.note-list .note-feature { grid-column: 1 / -1; }
 .note-card {
   display: grid;
+  height: 100%;
   overflow: hidden;
   background: var(--panel);
   border: 1px solid var(--panel-edge);
@@ -3001,7 +3005,7 @@ body.stage-motion.theme-night .note-head {
 }
 .note-card:hover { background: var(--panel-hover); transform: translateY(-2px); }
 .note-card img { width: 100%; height: auto; aspect-ratio: 1200 / 630; object-fit: cover; }
-.note-card-text { display: grid; gap: 12px; padding: clamp(22px, 3vw, 34px); }
+.note-card-text { display: grid; align-content: start; gap: 12px; padding: clamp(22px, 3vw, 34px); }
 .note-card-meta {
   font-size: 14px;
   letter-spacing: 0.16em;
@@ -3009,12 +3013,17 @@ body.stage-motion.theme-night .note-head {
   color: var(--ink-faint);
 }
 .note-card h2 {
-  font-size: clamp(1.6rem, 3vw, 2.25rem);
+  font-size: clamp(1.4rem, 2.2vw, 1.75rem);
   font-weight: 600;
   line-height: 1.15;
   letter-spacing: -0.02em;
   text-wrap: balance;
 }
 .note-card p { font-size: var(--fs-body); line-height: 1.6; color: var(--ink-muted); }
-.note-card .learn-more { color: var(--accent); font-weight: 500; }
 .note-card .learn-more { margin-top: 6px; } /* Home's learn-more sits 34px below a scene; a card's sits in the card's rhythm */
+.note-feature .note-card h2 { font-size: clamp(1.75rem, 3.2vw, 2.6rem); }
+@media (min-width: 900px) {
+  .note-feature .note-card { grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); }
+  .note-feature .note-card img { height: 100%; aspect-ratio: auto; }
+  .note-feature .note-card-text { align-content: center; padding: clamp(32px, 4vw, 56px); }
+}
