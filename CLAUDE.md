@@ -22,7 +22,7 @@ which now only holds redirect pages to the live URLs.
 - `start/` — Start a Cliick, parked: excluded from the build, no links to it
 - `redesign.css`, `js/redesign.js` — The one stylesheet and the one script
 - `images/` — Site images (`images/redesign/` for the redesign's assets)
-- `partials/footer.html` — The shared footer
+- `partials/nav.html`, `partials/footer.html` — The shared nav and footer (#92)
 - `docs/` — Working notes (go-live list, layout plan, punch list, brand lab);
   excluded from the build
 - `prototype2/` — Redirect pages only
@@ -34,7 +34,7 @@ URLs that must never change: `/terms/`, `/privacy/` (store listings),
 
 | Task | Command |
 |------|---------|
-| Stamp the shared footer into every page | `python3 build-partials.py` |
+| Stamp the shared nav and footer into every page (a new page joins `PAGES`; a nav page also joins `NAV_CURRENT`) | `python3 build-partials.py` |
 | Re-version the stylesheet/script links after editing either | `python3 stamp-assets.py` |
 | Sync legal docs from the Documents repo (converts, then stamps them into the pages via `build-legal.py`) | `./sync-documents.sh` |
 | Sync logos | `./sync-logos.sh` |
@@ -44,8 +44,8 @@ workflow fails a PR whose stylesheet/script stamps are stale.
 
 ## Anti-Patterns
 
-- Never edit footer HTML in individual page files — edit `partials/footer.html`
-  and run `python3 build-partials.py`
+- Never edit nav or footer HTML in individual page files — edit `partials/nav.html`
+  or `partials/footer.html` and run `python3 build-partials.py`
 - Never edit `redesign.css` or `js/redesign.js` without running
   `python3 stamp-assets.py` — browsers keep the old copy otherwise (#75)
 - Never edit legal docs here directly — they are synced from the Documents

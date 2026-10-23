@@ -1,10 +1,14 @@
 #!/usr/bin/env python3
-"""Stamp the shared footer into every live page.
+"""Stamp the shared nav and footer into every live page.
 
-partials/footer.html is the one footer. Each page carries a copy between
-<!-- FOOTER_START --> and <!-- FOOTER_END -->; edit the partial, run this,
-commit the result. Links in the footer are root-absolute, so every page
-gets the same text.
+partials/nav.html and partials/footer.html are the one nav and the one
+footer. Each page carries a copy between <!-- NAV_START --> / <!-- NAV_END -->
+and <!-- FOOTER_START --> / <!-- FOOTER_END -->; edit a partial, run this,
+commit the result. Links are root-absolute, so every page gets the same text.
+
+The nav marks the page you're on: the link whose href matches the page's URL
+gets aria-current="page" (NAV_CURRENT below). Pages outside the nav (support,
+legal, get) get no marker.
 
 Start a Cliick (start/) is not listed: it is parked, and its footer is the
 shared one plus a "Start a Cliick" link. When it ships, add that link to
@@ -14,9 +18,6 @@ the partial and start/index.html to PAGES.
 from __future__ import annotations
 
 from pathlib import Path
-
-START_MARKER = "<!-- FOOTER_START -->"
-END_MARKER = "<!-- FOOTER_END -->"
 
 PAGES = [
     "index.html",
@@ -30,24 +31,45 @@ PAGES = [
     "privacy/index.html",
 ]
 
+# Page -> the nav link that is "this page".
+NAV_CURRENT = {
+    "index.html": "/",
+    "about/index.html": "/about/",
+    "membership/index.html": "/membership/",
+    "faq/index.html": "/faq/",
+}
 
-def replace_between_markers(text: str, replacement: str, path: Path) -> str:
-    start = text.find(START_MARKER)
-    end = text.find(END_MARKER)
+
+def replace_between_markers(text: str, name: str, replacement: str, path: Path) -> str:
+    start_marker, end_marker = f"<!-- {name}_START -->", f"<!-- {name}_END -->"
+    start = text.find(start_marker)
+    end = text.find(end_marker)
     if start == -1 or end == -1 or end < start:
-        raise ValueError(f"{path}: missing or misordered footer markers")
-    return text[:start] + replacement + text[end + len(END_MARKER):]
+        raise ValueError(f"{path}: missing or misordered {name.lower()} markers")
+    return text[:start] + replacement + text[end + len(end_marker):]
+
+
+def nav_for(page: str, nav: str) -> str:
+    href = NAV_CURRENT.get(page)
+    if href is None:
+        return nav
+    link = f'<a href="{href}">'
+    if nav.count(link) != 1:
+        raise ValueError(f"nav partial: expected one {link} for {page}")
+    return nav.replace(link, f'<a href="{href}" aria-current="page">')
 
 
 def main() -> int:
     root = Path(__file__).resolve().parent
-    partial = (root / "partials" / "footer.html").read_text(encoding="utf-8").strip()
+    nav = (root / "partials" / "nav.html").read_text(encoding="utf-8").strip()
+    footer = (root / "partials" / "footer.html").read_text(encoding="utf-8").strip()
 
     changed = 0
     for page in PAGES:
         path = root / page
         original = path.read_text(encoding="utf-8")
-        updated = replace_between_markers(original, partial, path)
+        updated = replace_between_markers(original, "NAV", nav_for(page, nav), path)
+        updated = replace_between_markers(updated, "FOOTER", footer, path)
         if updated != original:
             path.write_text(updated, encoding="utf-8")
             changed += 1
