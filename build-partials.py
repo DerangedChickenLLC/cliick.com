@@ -29,6 +29,7 @@ PAGES = [
     "deleteme/index.html",
     "terms/index.html",
     "privacy/index.html",
+    "social-media-is-dead/index.html",
 ]
 
 # Page -> the nav link that is "this page".
