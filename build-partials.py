@@ -32,6 +32,12 @@ PAGES = [
     "social-media-is-dead/index.html",
 ]
 
+# Page -> the footer's headline, where a page says it in its own words.
+# Everything else in the footer stays shared.
+FOOTER_HEADING = {
+    "social-media-is-dead/index.html": "Download Cliick. Bring your peeps.",
+}
+
 # Page -> the nav link that is "this page".
 NAV_CURRENT = {
     "index.html": "/",
@@ -60,6 +66,16 @@ def nav_for(page: str, nav: str) -> str:
     return nav.replace(link, f'<a href="{href}" aria-current="page">')
 
 
+def footer_for(page: str, footer: str) -> str:
+    heading = FOOTER_HEADING.get(page)
+    if heading is None:
+        return footer
+    default = "<h2>Join the Reset</h2>"
+    if footer.count(default) != 1:
+        raise ValueError(f"footer partial: expected one {default} for {page}")
+    return footer.replace(default, f"<h2>{heading}</h2>")
+
+
 def main() -> int:
     root = Path(__file__).resolve().parent
     nav = (root / "partials" / "nav.html").read_text(encoding="utf-8").strip()
@@ -70,7 +86,7 @@ def main() -> int:
         path = root / page
         original = path.read_text(encoding="utf-8")
         updated = replace_between_markers(original, "NAV", nav_for(page, nav), path)
-        updated = replace_between_markers(updated, "FOOTER", footer, path)
+        updated = replace_between_markers(updated, "FOOTER", footer_for(page, footer), path)
         if updated != original:
             path.write_text(updated, encoding="utf-8")
             changed += 1

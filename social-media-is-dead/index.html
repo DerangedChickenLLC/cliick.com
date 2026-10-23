@@ -31,134 +31,11 @@
       href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Caveat:wght@500&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="/redesign.css?v=14dfdc7448" />
-    <script src="/js/redesign.js?v=9ce8ca6f95" defer></script>
-    <!-- This page only (cliick.com#90). The approved mockup's night sky and
-         reading column; everything else is the site's own nav, type and footer.
-         Values are from Nina's design (Option A), not the shared stylesheet. -->
-    <style>
-      body.page-note {
-        background-color: #0D0D0C;
-        background-image:
-          radial-gradient(ellipse 62% 9% at 50% 10%, rgba(92, 92, 90, 0.30), transparent 72%),
-          radial-gradient(ellipse 52% 8% at 6% 22%, rgba(122, 122, 120, 0.34), transparent 70%),
-          radial-gradient(ellipse 48% 7% at 95% 31%, rgba(112, 112, 110, 0.30), transparent 70%),
-          radial-gradient(ellipse 58% 9% at 4% 46%, rgba(128, 128, 126, 0.34), transparent 70%),
-          radial-gradient(ellipse 54% 9% at 96% 58%, rgba(140, 140, 138, 0.36), transparent 70%),
-          radial-gradient(ellipse 66% 10% at 12% 74%, rgba(124, 124, 122, 0.32), transparent 70%),
-          radial-gradient(ellipse 90% 13% at 72% 93%, rgba(146, 146, 144, 0.34), transparent 72%),
-          linear-gradient(180deg, #0D0D0C 0%, #050505 12%, #0D0D0C 26%, #161615 42%, #1E1E1D 58%, #262625 76%, #2F2F2E 100%);
-      }
-      .note-hero {
-        max-width: 1440px;
-        margin: 0 auto;
-        padding-top: var(--nav-h);
-      }
-      /* The brief: the hero's edges fade into the background. A mask keeps the
-         image's own black from meeting the night sky in a hard line. */
-      .note-hero img {
-        width: 100%;
-        height: auto;
-        -webkit-mask-image: linear-gradient(to bottom, #000 72%, transparent 100%),
-          linear-gradient(to right, transparent 0%, #000 6%, #000 94%, transparent 100%);
-        -webkit-mask-composite: source-in;
-        mask-image: linear-gradient(to bottom, #000 72%, transparent 100%),
-          linear-gradient(to right, transparent 0%, #000 6%, #000 94%, transparent 100%);
-        mask-composite: intersect;
-      }
-      .note {
-        max-width: 680px;
-        margin: 0 auto;
-        padding: clamp(32px, 5vw, 56px) clamp(20px, 4vw, 32px) clamp(80px, 10vw, 128px);
-        color: var(--ink-strong);
-      }
-      .note a { color: var(--accent); text-underline-offset: 3px; }
-      .note a:hover { color: #FFF4DC; }
-      .note-eyebrow {
-        margin: 0 0 16px;
-        font-size: 14px;
-        line-height: 1.4;
-        letter-spacing: 0.16em;
-        text-transform: uppercase;
-        color: var(--ink-faint);
-      }
-      .note h1 {
-        margin: 0 0 28px;
-        font-size: clamp(36px, 5vw, 54px);
-        line-height: 1.1;
-        font-weight: 600;
-        letter-spacing: -0.02em;
-        text-wrap: balance;
-      }
-      .note-byline {
-        display: flex;
-        align-items: center;
-        gap: 14px;
-        margin: 0 0 40px;
-        padding: 18px 0;
-        border-top: 1px solid rgba(226, 234, 255, 0.14);
-        border-bottom: 1px solid rgba(226, 234, 255, 0.14);
-      }
-      .note-byline-mark {
-        width: 48px;
-        height: 48px;
-        border-radius: 50%;
-        background: #000;
-        border: 1px solid rgba(226, 234, 255, 0.18);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-shrink: 0;
-        color: var(--ink-strong);
-      }
-      .note-byline-mark svg { height: 26px; width: auto; }
-      .note-byline-text { display: flex; flex-direction: column; gap: 2px; }
-      .note-byline-name { font-size: 16px; font-weight: 500; }
-      .note-byline-date { font-size: 14px; color: var(--ink-faint); }
-      .note-body p {
-        margin: 0 0 1.5em;
-        font-size: clamp(18px, 1.45vw, 20px);
-        line-height: 1.8;
-        color: #E4E3E0;
-      }
-      .note-body .note-lead { font-weight: 600; }
-      .note-body .note-signoff { margin: 2em 0 0; color: var(--ink-strong); }
-      .note-signoff span { color: var(--ink-faint); }
-      .note-download {
-        margin-top: 56px;
-        padding: 36px clamp(20px, 4vw, 40px);
-        border-radius: 22px;
-        background: rgba(234, 240, 255, 0.055);
-        border: 1px solid rgba(226, 234, 255, 0.10);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 20px;
-        text-align: center;
-      }
-      .note-download p {
-        margin: 0;
-        font-size: clamp(24px, 2.6vw, 30px);
-        font-weight: 600;
-        line-height: 1.3;
-      }
-      .note-badges { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
-      .note-badges img { height: 52px; width: auto; }
-      /* The night sky lifts to gray at the bottom; let it settle into the
-         shared footer's black instead of meeting it in a hard line. */
-      body.page-note .footer-v2 {
-        background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0, #000 220px);
-      }
-      .note-credit {
-        margin: 32px 0 0;
-        font-size: 15px;
-        line-height: 1.6;
-        font-style: italic;
-        color: var(--ink-faint);
-      }
-    </style>
+    <link rel="stylesheet" href="/redesign.css?v=01b8fedf6c" />
+    <script src="/js/redesign.js?v=efd93a3779" defer></script>
   </head>
-  <body class="page-note">
+  <body class="theme-night">
+    <!-- NAV_START -->
     <header class="nav">
       <div class="wrap">
         <svg class="nav-logo" viewBox="46.69 -4.01 282.11 380.43" aria-hidden="true" focusable="false">
@@ -186,20 +63,45 @@
         </button>
       </div>
     </header>
+    <!-- NAV_END -->
 
     <main>
-      <div class="note-hero">
-        <img
-          src="/images/notes/social-media-is-dead-hero.jpg"
-          width="1823"
-          height="829"
-          alt="A headstone reading Social Media 2005 to 2026, with Fluffy, the Cliick mascot, in a witch hat beside it under a full moon"
-        />
+      <!-- The opening: a short pinned stage where motion is on; the art as a
+           plain image everywhere else. The stage repeats the title, so it is
+           hidden from the accessibility tree; the article below carries it. -->
+      <div class="stage-track stage--note" data-bounds="0.3,0.62" aria-hidden="true">
+        <div class="stage-frame" data-scene="0">
+          <img class="note-art" src="/images/notes/social-media-is-dead-hero.jpg" width="1823" height="829" alt="" />
+          <div class="scene is-active">
+            <p class="note-eyebrow">Nina’s notes</p>
+            <p>Social Media Is Dead.</p>
+          </div>
+          <div class="scene is-future">
+            <p>Connection Isn’t.</p>
+          </div>
+          <div class="scene is-future">
+            <p class="note-pull">“One feed for discovery, and one for the people we choose.”</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="stage-fallback">
+        <div class="note-hero">
+          <img
+            class="note-art"
+            src="/images/notes/social-media-is-dead-hero.jpg"
+            width="1823"
+            height="829"
+            alt="A headstone reading Social Media 2005 to 2026, with Fluffy, the Cliick mascot, in a witch hat beside it under a full moon"
+          />
+        </div>
       </div>
 
       <article class="note">
-        <p class="note-eyebrow">Nina’s notes</p>
-        <h1>Social Media Is Dead. Connection Isn’t.</h1>
+        <header class="note-head">
+          <p class="note-eyebrow">Nina’s notes</p>
+          <h1>Social Media Is Dead. Connection Isn’t.</h1>
+        </header>
 
         <div class="note-byline">
           <div class="note-byline-mark" aria-hidden="true"><svg viewBox="46.69 -4.01 282.11 380.43" aria-hidden="true" focusable="false">
@@ -232,17 +134,6 @@
           <p class="note-signoff">With love,<br />Nina<br /><span>Co-founder, Cliick</span></p>
         </div>
 
-        <div class="note-download">
-          <p>Download Cliick. Bring your peeps.</p>
-          <div class="note-badges">
-            <a href="https://apps.apple.com/us/app/cliick-your-private-network/id6608980465" aria-label="Download on the App Store">
-              <img src="/images/redesign/badge-appstore.svg" alt="" />
-            </a>
-            <a href="https://play.google.com/store/apps/details?id=com.derangedchicken.clique" aria-label="Get it on Google Play">
-              <img src="/images/redesign/badge-googleplay.svg" alt="" />
-            </a>
-          </div>
-        </div>
 
         <p class="note-credit">
           Inspired by Gary Vaynerchuk’s
@@ -255,7 +146,7 @@
     <!-- FOOTER_START -->
     <footer class="footer-v2">
       <div class="wrap">
-        <h2>Join the Reset</h2>
+        <h2>Download Cliick. Bring your peeps.</h2>
         <p class="footer-dl"><span>Download Cliick on iOS</span><span>Download on Android</span></p>
         <div class="store-badges">
           <a href="https://apps.apple.com/us/app/cliick-your-private-network/id6608980465"
