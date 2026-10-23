@@ -20,6 +20,15 @@ which now only holds redirect pages to the live URLs.
 - `get/` — The footer QR's target: sends iPhone/iPad to the App Store and
   Android to Google Play before paint; anything else sees both badges
 - `start/` — Start a Cliick, parked: excluded from the build, no links to it
+- `notes/` — Notes, the posts section (#90): `notes/index.html` lists posts
+  newest first: the newest is the feature (`li.note-feature`, full width; move the
+  class when a newer note lands), older ones follow in a grid of `.note-card`s.
+  A post lives at `notes/<slug>/`. A post
+  joins `PAGES` in `build-partials.py`, uses the `.note` layout in
+  `redesign.css`, may take a body theme (`theme-night`) and an opening stage
+  (`.stage--note`, with a `.stage-fallback`), and gets a 1200 × 630 `og:image`.
+  A short address used in posts (e.g. `/social-media-is-dead/`) is a redirect
+  page to the post, like `prototype2/`
 - `redesign.css`, `js/redesign.js` — The one stylesheet and the one script
 - `images/` — Site images (`images/redesign/` for the redesign's assets)
 - `partials/nav.html`, `partials/footer.html` — The shared nav and footer (#92)
@@ -29,6 +38,8 @@ which now only holds redirect pages to the live URLs.
 
 URLs that must never change: `/terms/`, `/privacy/` (store listings),
 `/support/`, `/deleteme/` (App Store / Google Play).
+Any address that has been shared (a post, or its short address) keeps working
+forever: if a post moves, its old address becomes a redirect page.
 
 ## Build & Sync
 

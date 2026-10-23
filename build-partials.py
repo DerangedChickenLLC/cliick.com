@@ -29,6 +29,8 @@ PAGES = [
     "deleteme/index.html",
     "terms/index.html",
     "privacy/index.html",
+    "notes/index.html",
+    "notes/social-media-is-dead/index.html",
 ]
 
 # Page -> the nav link that is "this page".
@@ -37,6 +39,7 @@ NAV_CURRENT = {
     "about/index.html": "/about/",
     "membership/index.html": "/membership/",
     "faq/index.html": "/faq/",
+    "notes/index.html": "/notes/",
 }
 
 

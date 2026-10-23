@@ -6,7 +6,9 @@
 // is-future does all the motion, so copy, screen, window, and backdrop all
 // move on the same clock. Small screens, reduced motion, and no-JS render
 // the .fallback-flow instead.
-const stageTrack = document.getElementById("stage");
+// Any page can have one stage: Home's (#stage) and a note's opening
+// (.stage--note, cliick.com#90) run on the same engine.
+const stageTrack = document.querySelector(".stage-track");
 // LANDSCAPE — wider than tall and at least 520px tall — is the one rule the
 // layout switches use (see the top of redesign.css).
 const LANDSCAPE = "(orientation: landscape) and (min-height: 520px)";
@@ -26,8 +28,11 @@ if (stageTrack) {
   const screens = Array.from(frame.querySelectorAll("[data-screen]"));
 
   // Scene boundaries as fractions of track progress. Scene 0 (hero) holds a
-  // little longer; tune these to taste.
-  const BOUNDS = [0.22, 0.48, 0.74];
+  // little longer; tune these to taste. A page can set its own on the track
+  // (data-bounds="0.3,0.62"); Home uses the default.
+  const BOUNDS = stageTrack.dataset.bounds
+    ? stageTrack.dataset.bounds.split(",").map(Number)
+    : [0.22, 0.48, 0.74];
 
   let current = -1;
   const update = () => {

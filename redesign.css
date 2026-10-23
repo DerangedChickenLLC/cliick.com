@@ -755,7 +755,10 @@ body.stage-motion .stage-track {
   display: block;
   height: 460vh;
 }
-body.stage-motion .fallback-flow { display: none; }
+/* .fallback-flow is Home's stacked layout (with Home's own backdrop);
+   .stage-fallback is the plain "no stage" slot any other page uses. */
+body.stage-motion .fallback-flow,
+body.stage-motion .stage-fallback { display: none; }
 
 .stage-frame {
   position: sticky;
@@ -2797,3 +2800,230 @@ body.page-gray .about-pinned h1 { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
    photograph above it is a cup of coffee — cool it and the one warm beat in
    the site turns into a cold room with a hot drink in it. It is a single
    band, it is light, and nothing about it reads brown. Left alone. */
+
+/* ==========================================================================
+   Notes — a long-form post in a reading column (Nina's notes, cliick.com#90)
+   ==========================================================================
+   A note page is: the shared nav, an opening, the article, the shared footer.
+   The opening is a short pinned stage over the post's art where motion is on
+   (.stage--note, the homepage's stage engine with its own bounds), and the
+   art as a plain image everywhere else (.note-hero in .stage-fallback).
+
+   .theme-night is the Halloween palette from Nina's design: a night sky from
+   near-black to dark gray with soft mist at the edges. It is a body theme so
+   the shared footer can settle into it from here, not from the page. */
+
+body.theme-night {
+  background-color: #0D0D0C;
+  background-image:
+    radial-gradient(ellipse 62% 9% at 50% 10%, rgba(92, 92, 90, 0.30), transparent 72%),
+    radial-gradient(ellipse 52% 8% at 6% 22%, rgba(122, 122, 120, 0.34), transparent 70%),
+    radial-gradient(ellipse 48% 7% at 95% 31%, rgba(112, 112, 110, 0.30), transparent 70%),
+    radial-gradient(ellipse 58% 9% at 4% 46%, rgba(128, 128, 126, 0.34), transparent 70%),
+    radial-gradient(ellipse 54% 9% at 96% 58%, rgba(140, 140, 138, 0.36), transparent 70%),
+    radial-gradient(ellipse 66% 10% at 12% 74%, rgba(124, 124, 122, 0.32), transparent 70%),
+    radial-gradient(ellipse 90% 13% at 72% 93%, rgba(146, 146, 144, 0.34), transparent 72%),
+    linear-gradient(180deg, #0D0D0C 0%, #050505 12%, #0D0D0C 26%, #161615 42%, #1E1E1D 58%, #262625 76%, #2F2F2E 100%);
+}
+/* The sky lifts to gray at the bottom; the footer's black takes over over a
+   short fall instead of in a hard line. */
+body.theme-night .footer-v2 {
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0, #000 220px);
+}
+
+/* The post's art. Its edges fade into the page so the image's own black never
+   meets the sky in a line. */
+.note-art {
+  width: 100%;
+  height: auto;
+  -webkit-mask-image: linear-gradient(to bottom, #000 72%, transparent 100%),
+    linear-gradient(to right, transparent 0%, #000 6%, #000 94%, transparent 100%);
+  -webkit-mask-composite: source-in;
+  mask-image: linear-gradient(to bottom, #000 72%, transparent 100%),
+    linear-gradient(to right, transparent 0%, #000 6%, #000 94%, transparent 100%);
+  mask-composite: intersect;
+}
+.note-hero {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding-top: var(--nav-h);
+}
+
+.note {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: clamp(32px, 5vw, 56px) clamp(20px, 4vw, 32px) clamp(80px, 10vw, 128px);
+  color: var(--ink-strong);
+}
+.note a { color: var(--accent); text-underline-offset: 3px; }
+.note a:hover { color: #FFF4DC; }
+.note-eyebrow {
+  margin: 0 0 16px;
+  font-size: 14px;
+  line-height: 1.4;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+.note h1 {
+  margin: 0 0 28px;
+  font-size: clamp(36px, 5vw, 54px);
+  line-height: 1.1;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+.note-byline {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 0 0 40px;
+  padding: 18px 0;
+  border-top: 1px solid rgba(226, 234, 255, 0.14);
+  border-bottom: 1px solid rgba(226, 234, 255, 0.14);
+}
+.note-byline-mark {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #000;
+  border: 1px solid rgba(226, 234, 255, 0.18);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: var(--ink-strong);
+}
+.note-byline-mark svg { height: 26px; width: auto; }
+.note-byline-text { display: flex; flex-direction: column; gap: 2px; }
+.note-byline-name { font-size: 16px; font-weight: 500; }
+.note-byline-date { font-size: 14px; color: var(--ink-faint); }
+.note-body p {
+  margin: 0 0 1.5em;
+  font-size: clamp(18px, 1.45vw, 20px);
+  line-height: 1.8;
+  color: #E4E3E0;
+}
+.note-body .note-lead { font-weight: 600; }
+.note-body .note-signoff { margin: 2em 0 0; color: var(--ink-strong); }
+.note-signoff span { color: var(--ink-faint); }
+.note-credit {
+  margin: 48px 0 0;
+  font-size: 15px;
+  line-height: 1.6;
+  font-style: italic;
+  color: var(--ink-faint);
+}
+
+/* --- The opening stage --------------------------------------------------
+   The homepage's engine (redesign.js reads data-bounds), a note's own layout:
+   the art across the upper frame, one line at a time centred beneath it.
+   The stage is the overture; the article below carries the real heading, so
+   while the stage plays the article's head is kept for readers and the
+   outline, not shown twice. */
+body.stage-motion .stage-track.stage--note { height: 320vh; }
+.stage--note .stage-frame { background: transparent; }
+.stage--note .stage-frame::before { content: none; }
+.stage--note .note-art {
+  position: absolute;
+  top: var(--nav-h);
+  left: 50%;
+  width: min(1440px, 100vw);
+  height: calc((100vh - var(--nav-h)) * 0.66);
+  object-fit: cover;
+  transform: translateX(-50%) scale(1);
+  transition: opacity 0.9s ease, transform 1.2s ease;
+}
+.stage--note .stage-frame[data-scene="1"] .note-art { opacity: 0.72; transform: translateX(-50%) scale(1.03); }
+.stage--note .stage-frame[data-scene="2"] .note-art { opacity: 0.42; transform: translateX(-50%) scale(1.06); }
+.stage--note .scene {
+  top: auto;
+  bottom: calc((100vh - var(--nav-h)) * 0.08);
+  left: 50%;
+  width: min(960px, calc(100vw - 2 * var(--wrap-pad)));
+  text-align: center;
+  transform: translate(-50%, 0);
+}
+.stage--note .scene.is-past { transform: translate(-50%, -50px); }
+.stage--note .scene.is-future { transform: translate(-50%, 50px); }
+.stage--note .scene p {
+  margin: 0;
+  max-width: none; /* Home's scene captions cap at 44ch; a note's lines centre on the frame */
+  font-size: var(--fs-scene);
+  font-weight: 600;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  color: var(--ink-strong);
+  text-wrap: balance;
+}
+.stage--note .scene .note-eyebrow { font-size: 14px; font-weight: 400; letter-spacing: 0.16em; margin-bottom: 18px; }
+.stage--note .scene .note-pull {
+  font-size: clamp(1.5rem, 2.8vw, 2.4rem);
+  font-weight: 500;
+  font-style: italic;
+  line-height: 1.3;
+  color: #E4E3E0;
+}
+body.stage-motion.theme-night .note-head {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* --- The Notes index (/notes/) -------------------------------------------
+   The section's front page, in the site's standard frame (page-gray). The
+   newest note is the feature: a card the full width of the page (art beside
+   text on wide screens), so one note reads as "the latest", not a list of
+   one. Older notes follow in a grid. Cards are built from the panel tokens;
+   a note keeps its own theme on its own page, the card shows its art. */
+.note-list {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(320px, 100%), 1fr));
+  gap: clamp(20px, 3vw, 32px);
+  margin: 0;
+  padding-bottom: clamp(80px, 10vw, 128px);
+}
+.note-list .note-feature { grid-column: 1 / -1; }
+.note-card {
+  display: grid;
+  height: 100%;
+  overflow: hidden;
+  background: var(--panel);
+  border: 1px solid var(--panel-edge);
+  border-radius: var(--radius-card);
+  box-shadow: var(--panel-shadow), inset 0 1px 0 var(--panel-lip);
+  color: var(--ink-strong);
+  text-decoration: none;
+  transition: transform 0.18s ease, background-color 0.18s ease;
+}
+.note-card:hover { background: var(--panel-hover); transform: translateY(-2px); }
+.note-card img { width: 100%; height: auto; aspect-ratio: 1200 / 630; object-fit: cover; }
+.note-card-text { display: grid; align-content: start; gap: 12px; padding: clamp(22px, 3vw, 34px); }
+.note-card-meta {
+  font-size: 14px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+.note-card h2 {
+  font-size: clamp(1.4rem, 2.2vw, 1.75rem);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+.note-card p { font-size: var(--fs-body); line-height: 1.6; color: var(--ink-muted); }
+.note-card .learn-more { margin-top: 6px; } /* Home's learn-more sits 34px below a scene; a card's sits in the card's rhythm */
+.note-feature .note-card h2 { font-size: clamp(1.75rem, 3.2vw, 2.6rem); }
+@media (min-width: 900px) {
+  .note-feature .note-card { grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); }
+  .note-feature .note-card img { height: 100%; aspect-ratio: auto; }
+  .note-feature .note-card-text { align-content: center; padding: clamp(32px, 4vw, 56px); }
+}
